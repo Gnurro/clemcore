@@ -6,6 +6,7 @@ import backends
 import transformers
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import os
+import copy
 
 logger = backends.get_logger(__name__)
 
@@ -153,17 +154,23 @@ class HuggingfaceLocal(backends.Backend):
             logger.info(f"Finished loading huggingface model: {model}")
             logger.info(f"Model device map: {self.model.hf_device_map}")
 
+        # deepcopy messages to prevent reference issues:
+        current_messages = copy.deepcopy(messages)
+
         # flatten consecutive user messages:
-        for msg_idx, message in enumerate(messages):
-            if msg_idx > 0 and message['role'] == "user" and messages[msg_idx - 1]['role'] == "user":
-                messages[msg_idx - 1]['content'] += f" {message['content']}"
-                del messages[msg_idx]
+        for msg_idx, message in enumerate(current_messages):
+            if msg_idx > 0 and message['role'] == "user" and current_messages[msg_idx - 1]['role'] == "user":
+                current_messages[msg_idx - 1]['content'] += f" {message['content']}"
+                del current_messages[msg_idx]
+            elif msg_idx > 0 and message['role'] == "assistant" and current_messages[msg_idx - 1]['role'] == "assistant":
+                current_messages[msg_idx - 1]['content'] += f" {message['content']}"
+                del current_messages[msg_idx]
 
         # apply chat template & tokenize:
-        prompt_tokens = self.tokenizer.apply_chat_template(messages, return_tensors="pt")
+        prompt_tokens = self.tokenizer.apply_chat_template(current_messages, return_tensors="pt")
         prompt_tokens = prompt_tokens.to(self.device)
 
-        prompt_text = self.tokenizer.apply_chat_template(messages, tokenize=False)
+        prompt_text = self.tokenizer.batch_decode(prompt_tokens)[0]
         prompt = {"inputs": prompt_text, "max_new_tokens": max_new_tokens,
                   "temperature": self.temperature, "return_full_text": return_full_text}
 
@@ -189,15 +196,19 @@ class HuggingfaceLocal(backends.Backend):
                 do_sample=do_sample
             )
 
-        model_output = self.tokenizer.batch_decode(model_output_ids, skip_special_tokens=True)[0]
+        model_output = self.tokenizer.batch_decode(model_output_ids)[0]
+
+        response = {'response': model_output}
 
         # cull input context; equivalent to transformers.pipeline method:
         if not return_full_text:
             response_text = model_output.replace(prompt_text, '').strip()
+            # remove llama2 EOS token at the end of output:
+            if response_text[-4:len(response_text)] == "</s>":
+                response_text = response_text[:-4]
         else:
             response_text = model_output.strip()
 
-        response = {'response': model_output}
         return prompt, response, response_text
 
     def supports(self, model_name: str):

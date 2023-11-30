@@ -6,6 +6,7 @@ import backends
 import transformers
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import os
+import copy
 
 logger = backends.get_logger(__name__)
 
@@ -89,18 +90,24 @@ class Llama2LocalHF(backends.Backend):
         # turn off redundant transformers warnings:
         transformers.logging.set_verbosity_error()
 
+        # deepcopy messages to prevent reference issues:
+        current_messages = copy.deepcopy(messages)
+
         if model in self.chat_models:  # chat completion
             # flatten consecutive user messages:
-            for msg_idx, message in enumerate(messages):
-                if msg_idx > 0 and message['role'] == "user" and messages[msg_idx - 1]['role'] == "user":
-                    messages[msg_idx - 1]['content'] += f" {message['content']}"
-                    del messages[msg_idx]
+            for msg_idx, message in enumerate(current_messages):
+                if msg_idx > 0 and message['role'] == "user" and current_messages[msg_idx - 1]['role'] == "user":
+                    current_messages[msg_idx - 1]['content'] += f" {message['content']}"
+                    del current_messages[msg_idx]
+                elif msg_idx > 0 and message['role'] == "assistant" and current_messages[msg_idx - 1]['role'] == "assistant":
+                    current_messages[msg_idx - 1]['content'] += f" {message['content']}"
+                    del current_messages[msg_idx]
 
             # apply chat template & tokenize
-            prompt_tokens = self.tokenizer.apply_chat_template(messages, return_tensors="pt")
+            prompt_tokens = self.tokenizer.apply_chat_template(current_messages, return_tensors="pt")
             prompt_tokens = prompt_tokens.to(self.device)
             # apply chat template for records:
-            prompt_text = self.tokenizer.apply_chat_template(messages, tokenize=False)
+            prompt_text = self.tokenizer.batch_decode(prompt_tokens)[0]
             prompt = {"inputs": prompt_text, "max_new_tokens": max_new_tokens,
                       "temperature": self.temperature}
 
@@ -119,18 +126,20 @@ class Llama2LocalHF(backends.Backend):
                     max_new_tokens=max_new_tokens
                 )
 
-            model_output = self.tokenizer.batch_decode(model_output_ids, skip_special_tokens=True,
-                                                       clean_up_tokenization_spaces=False)[0]
+            model_output = self.tokenizer.batch_decode(model_output_ids)[0]
 
-            response = {
-                "role": "assistant",
-                "content": model_output.replace(prompt_text, ''),
-            }
+            response = {"response": model_output}
 
-            response_text = model_output.replace(prompt_text, '').strip()
+            # cull prompt from output:
+            response_text = model_output.replace(prompt_text, "").strip()
+            # remove EOS token at the end of output:
+            if response_text[-4:len(response_text)] == "</s>":
+                response_text = response_text[:-4]
+
+
 
         else:  # default (text completion)
-            prompt = "\n".join([message["content"] for message in messages])
+            prompt = "\n".join([message["content"] for message in current_messages])
 
             prompt_tokens = self.tokenizer.encode(
                 prompt,
@@ -153,8 +162,7 @@ class Llama2LocalHF(backends.Backend):
                     max_new_tokens=max_new_tokens
                 )
 
-            model_output = self.tokenizer.batch_decode(model_output_ids, skip_special_tokens=True,
-                                                       clean_up_tokenization_spaces=False)[0]
+            model_output = self.tokenizer.batch_decode(model_output_ids)[0]
 
             response_text = model_output.replace(prompt, '').strip()
 
