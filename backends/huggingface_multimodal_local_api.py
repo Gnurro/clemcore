@@ -207,6 +207,8 @@ class HuggingfaceMultimodalLocal(backends.Backend):
 if __name__ == "__main__":
     test_messages = [
         {"role": "user", "content": "How many dogs are in the picture?"},
+        {"role": "assistant", "content": "One dog."},
+        {"role": "user", "content": "Is there something else in the picture?"},
     ]
 
     test_backend = HuggingfaceMultimodalLocal()
