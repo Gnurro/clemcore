@@ -388,9 +388,37 @@
     "eos_to_cull": "<|endoftext|>"
   },
   {
+    "model_name": "Qwen1.5-0.5B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/Qwen1.5-0.5B-Chat",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
+    "model_name": "Qwen1.5-1.8B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/Qwen1.5-1.8B-Chat",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
     "model_name": "Qwen1.5-7B-Chat",
     "backend": "huggingface_local",
     "huggingface_id": "Qwen/Qwen1.5-7B-Chat",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
+    "model_name": "Qwen1.5-14B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/Qwen1.5-14B-Chat",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
+    "model_name": "Qwen1.5-32B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/Qwen1.5-32B-Chat",
     "premade_chat_template": true,
     "eos_to_cull": "<|im_end|>"
   },
@@ -400,6 +428,27 @@
     "huggingface_id": "Qwen/Qwen1.5-72B-Chat",
     "premade_chat_template": true,
     "eos_to_cull": "<|im_end|>"
+  },
+  {
+    "model_name": "c4ai-command-r-v01",
+    "backend": "huggingface_local",
+    "huggingface_id": "CohereForAI/c4ai-command-r-v01",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|END_OF_TURN_TOKEN|>"
+  },
+  {
+    "model_name": "c4ai-command-r-plus",
+    "backend": "huggingface_local",
+    "huggingface_id": "CohereForAI/c4ai-command-r-plus",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|END_OF_TURN_TOKEN|>"
+  },
+  {
+    "model_name": "c4ai-command-r-plus-4bit",
+    "backend": "huggingface_local",
+    "huggingface_id": "CohereForAI/c4ai-command-r-plus-4bit",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|END_OF_TURN_TOKEN|>"
   },
   {
     "model_name": "llama-2-7b-chat-hf",
