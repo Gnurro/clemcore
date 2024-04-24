@@ -37,6 +37,8 @@ class AdventureGameMaster(DialogueGameMaster):
     def _on_before_game(self):
         # Do something before the game start e.g. add the initial prompts to the message list for the players
         self.add_user_message(self.player, self.game_instance["prompt"])
+        # print(self.messages_by_names[self.player.descriptor])
+        # print(self.get_players())
 
     def _validate_player_response(self, player: Player, utterance: str) -> bool:
         # Check responses for specific players
@@ -53,6 +55,15 @@ class AdventureGameMaster(DialogueGameMaster):
                 if required_word not in utterance:
                     self.success = False
             """
+        return True
+
+    def _does_game_proceed(self) -> bool:
+        """
+        Template method: must be implemented
+        """
+        # raise NotImplementedError()
+        if len(self.turns) >= 1:
+            return False
         return True
 
     def _on_after_turn(self, turn_idx: int):
