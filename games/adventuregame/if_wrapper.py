@@ -3,6 +3,19 @@
 """
 
 
+def split_state_string(state_string: str, value_delimiter: str = "(", value_separator: str = ","):
+    """
+    Split a state predicate string and return its values as a tuple.
+    """
+    first_split = state_string.split(value_delimiter, 1)
+    predicate_type = first_split[0]
+    if value_separator in first_split[1]:
+        values_split = first_split[1][:-1].split(value_separator, 1)
+        return predicate_type, values_split[0], values_split[1]
+    else:
+        return predicate_type, first_split[1][:-1]
+
+
 class BasicIFInterpreter:
     """
     A basic/mock IF interpreter for prototyping adventuregame.
@@ -10,8 +23,10 @@ class BasicIFInterpreter:
     def __init__(self, game_instance: dict):
         self.game_instance: dict = game_instance
 
-        self.world_state: set = set(game_instance['initial_state'])
-        self.goal_state: set = set(game_instance['goal_state'])
+        self.world_state: set = set()
+        self.goal_state: set = set()
+
+        self.initialize_states_from_strings()
 
         # print("BasicIFInterpreter initialized:")
         # print("Game instance:", self.game_instance)
@@ -23,17 +38,14 @@ class BasicIFInterpreter:
 
         print(self.get_full_room_desc())
 
-    def split_state_string(self, state_string: str):
+    def initialize_states_from_strings(self):
         """
-        Split a state predicate string and return its values.
+        Convert List[Str] world state format into Set[Tuple].
         """
-        first_split = state_string.split("(", 1)
-        predicate_type = first_split[0]
-        if "," in first_split[1]:
-            values_split = first_split[1][:-1].split(",", 1)
-            return predicate_type, values_split[0], values_split[1]
-        else:
-            return predicate_type, first_split[1][:-1]
+        for state_string in self.game_instance['initial_state']:
+            self.world_state.add(split_state_string(state_string))
+        for state_string in self.game_instance['goal_state']:
+            self.goal_state.add(split_state_string(state_string))
 
     def get_full_room_desc(self):
         """
@@ -41,17 +53,15 @@ class BasicIFInterpreter:
         """
         # get player room:
         for state_pred in self.world_state:
-            split_state = self.split_state_string(state_pred)
-            if split_state[0] == 'at' and split_state[2] == 'player':
-                player_room = split_state[1]
+            if state_pred[0] == 'at' and state_pred[2] == 'player':
+                player_room = state_pred[1]
         # create room description start:
         player_at_str = f"You are in the {player_room}."
         # get player room contents:
         room_contents = list()
         for state_pred in self.world_state:
-            split_state = self.split_state_string(state_pred)
-            if split_state[0] == 'at' and split_state[1] == player_room and not split_state[2] == 'player':
-                room_contents.append(split_state[2])
+            if state_pred[0] == 'at' and state_pred[1] == player_room and not state_pred[2] == 'player':
+                room_contents.append(state_pred[2])
         print("Room contents:", room_contents)
         # check room content visibility:
         visible_contents = list()
@@ -59,18 +69,16 @@ class BasicIFInterpreter:
             print(f"Checking {thing}...")
             contained_in = None
             for state_pred in self.world_state:
-                split_state = self.split_state_string(state_pred)
-                if split_state[0] == 'in' and split_state[2] == thing:
+                if state_pred[0] == 'in' and state_pred[2] == thing:
                     print(f"'in' predicate found:", state_pred)
-                    contained_in = split_state[1]
+                    contained_in = state_pred[1]
                     print(f"{thing} contained in {contained_in}")
                     for state_pred2 in self.world_state:
-                        split_state2 = self.split_state_string(state_pred2)
-                        if split_state2[0] == 'closed' and split_state2[1] == contained_in:
+                        if state_pred2[0] == 'closed' and state_pred2[1] == contained_in:
                             # not visible in closed container
                             print(f"{contained_in} containing {thing} is closed.")
                             break
-                        elif split_state2[0] == 'open' and split_state2[1] == contained_in:
+                        elif state_pred2[0] == 'open' and state_pred2[1] == contained_in:
                             visible_contents.append(thing)
                             break
             if contained_in:
@@ -93,15 +101,14 @@ class BasicIFInterpreter:
         visible_content_state_strs = list()
         for thing in visible_contents:
             for state_pred in self.world_state:
-                split_state = self.split_state_string(state_pred)
-                if split_state[0] == 'closed' and split_state[1] == thing:
+                if state_pred[0] == 'closed' and state_pred[1] == thing:
                     visible_content_state_strs.append(f"The {thing} is closed.")
-                elif split_state[0] == 'open' and split_state[1] == thing:
+                elif state_pred[0] == 'open' and state_pred[1] == thing:
                     visible_content_state_strs.append(f"The {thing} is open.")
-                if split_state[0] == 'in' and split_state[2] == thing:
-                    visible_content_state_strs.append(f"The {thing} is in the {split_state[1]}.")
-                if split_state[0] == 'on' and split_state[2] == thing:
-                    visible_content_state_strs.append(f"The {thing} is on the {split_state[1]}.")
+                if state_pred[0] == 'in' and state_pred[2] == thing:
+                    visible_content_state_strs.append(f"The {thing} is in the {state_pred[1]}.")
+                if state_pred[0] == 'on' and state_pred[2] == thing:
+                    visible_content_state_strs.append(f"The {thing} is on the {state_pred[1]}.")
         visible_content_state_combined = " ".join(visible_content_state_strs)
         # combine full room description:
         room_description = f"{player_at_str} {visible_contents_str} {visible_content_state_combined}"
