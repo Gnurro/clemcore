@@ -31,6 +31,9 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             goal_str = adventures[adventure_id]['goal']
             first_room_str = adventures[adventure_id]['first_room']
 
+            initial_state = adventures[adventure_id]['initial_state']
+            goal_state = adventures[adventure_id]['goal_state']
+
             # Replace the goal in the templated initial prompt
             instance_prompt = prompt.replace("$GOAL$", goal_str)
             instance_prompt = instance_prompt.replace("$FIRST_ROOM$", first_room_str)
@@ -40,6 +43,8 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             game_instance["prompt"] = instance_prompt  # game parameters
             game_instance["goal_str"] = goal_str  # game parameters
             game_instance["first_room_str"] = first_room_str  # game parameters
+            game_instance["initial_state"] = initial_state  # game parameters
+            game_instance["goal_state"] = goal_state  # game parameters
 
 
 if __name__ == '__main__':

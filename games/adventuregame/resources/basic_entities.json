@@ -1,0 +1,20 @@
+[
+  {
+    "type_name": "table",
+    "support": true
+  },
+  {
+    "type_name": "counter",
+    "support": true
+  },
+  {
+    "type_name": "refrigerator",
+    "container": true,
+    "openable": true
+  },
+  {
+    "type_name": "sandwich",
+    "takeable": true,
+    "movable": true
+  }
+]

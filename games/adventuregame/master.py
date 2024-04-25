@@ -6,6 +6,8 @@ from clemgame import metrics
 from clemgame.clemgame import GameMaster, GameBenchmark, GameScorer, DialogueGameMaster, Player
 from clemgame import get_logger
 
+from games.adventuregame.if_wrapper import BasicIFInterpreter
+
 import re
 
 GAME_NAME = "adventuregame"
@@ -26,6 +28,11 @@ class AdventureGameMaster(DialogueGameMaster):
 
     def _on_setup(self, **game_instance):
         self.game_instance = game_instance  # fetch game parameters here
+
+        # print("game_instance type:", type(game_instance))
+
+        # initialize IF interpreter:
+        self.if_interpreter = BasicIFInterpreter(self.game_instance)
 
         # create player:
         self.player = Player(self.player_models[0])
@@ -67,7 +74,23 @@ class AdventureGameMaster(DialogueGameMaster):
         return True
 
     def _on_after_turn(self, turn_idx: int):
+        """
+        Play loop hook: Called after all players have been prompted and their responses have been parsed+validated.
+        """
+        # print("_on_after_turn call starts")
+        # IF INTERACTION
+        # get the last player action:
+        # print("Player messages:", self.messages_by_names[self.player.descriptor])
+        last_action: str = self.messages_by_names[self.player.descriptor][-1]['content']
+        # print("Last player message:", last_action)
+        # strip player action to IF input:
+        if_input: str = last_action[1:].strip()
+        # print("Stripped IF input:", if_input)
+
+        # record successful turn:
         self.turns.append(self.success)
+
+        # print("_on_after_turn call ends")
 
 
 class AdventureGameScorer(GameScorer):
