@@ -1,0 +1,8 @@
+[
+  {
+    "type_name": "open",
+    "object_req_attribute": "openable",
+    "object_pre_state": "closed",
+    "object_post_state": "open"
+  }
+]

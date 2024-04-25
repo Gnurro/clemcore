@@ -69,7 +69,7 @@ class AdventureGameMaster(DialogueGameMaster):
         Template method: must be implemented
         """
         # raise NotImplementedError()
-        if len(self.turns) >= 1:
+        if len(self.turns) >= 5:
             return False
         return True
 
@@ -86,6 +86,9 @@ class AdventureGameMaster(DialogueGameMaster):
         # strip player action to IF input:
         if_input: str = last_action[1:].strip()
         # print("Stripped IF input:", if_input)
+
+        if_result = self.if_interpreter.process_action(if_input)
+        self.add_user_message(self.player, if_result)
 
         # record successful turn:
         self.turns.append(self.success)
