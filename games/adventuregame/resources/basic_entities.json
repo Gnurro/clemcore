@@ -1,5 +1,13 @@
 [
   {
+    "type_name": "player"
+  },
+  {
+    "type_name": "floor",
+    "hidden": true,
+    "support": true
+  },
+  {
     "type_name": "table",
     "support": true
   },
@@ -15,6 +23,7 @@
   {
     "type_name": "sandwich",
     "takeable": true,
-    "movable": true
+    "movable": true,
+    "supported": true
   }
 ]

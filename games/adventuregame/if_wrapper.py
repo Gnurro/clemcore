@@ -5,6 +5,9 @@
 import json
 
 
+PATH = "games/adventuregame/"
+
+
 def split_state_string(state_string: str, value_delimiter: str = "(", value_separator: str = ","):
     """
     Split a state predicate string and return its values as a tuple.
@@ -25,30 +28,18 @@ class BasicIFInterpreter:
     def __init__(self, game_instance: dict):
         self.game_instance: dict = game_instance
 
+        self.entity_types = dict()
+        self.initialize_entity_types()
+        # print(self.entity_types)
+
+        self.action_types = dict()
+        self.initialize_action_types()
+        # print(self.action_types)
+
         self.world_state: set = set()
         self.goal_state: set = set()
 
         self.initialize_states_from_strings()
-
-        self.entity_types = dict()
-        with open("games/adventuregame/resources/basic_entities.json", 'r', encoding='utf-8') as entities_file:
-            entity_definitions = json.load(entities_file)
-            for entity_definition in entity_definitions:
-                self.entity_types[entity_definition['type_name']] = dict()
-                for entity_attribute in entity_definition:
-                    if not entity_attribute == 'type_name':
-                        self.entity_types[entity_definition['type_name']][entity_attribute] = entity_definition[entity_attribute]
-        # print(self.entity_types)
-
-        self.action_types = dict()
-        with open("games/adventuregame/resources/basic_actions.json", 'r', encoding='utf-8') as actions_file:
-            action_definitions = json.load(actions_file)
-            for action_definition in action_definitions:
-                self.action_types[action_definition['type_name']] = dict()
-                for action_attribute in action_definition:
-                    if not action_attribute == 'type_name':
-                        self.action_types[action_definition['type_name']][action_attribute] = action_definition[action_attribute]
-        # print(self.action_types)
 
         # print("BasicIFInterpreter initialized:")
         # print("Game instance:", self.game_instance)
@@ -60,12 +51,69 @@ class BasicIFInterpreter:
 
         # print(self.get_full_room_desc())
 
+    def initialize_entity_types(self):
+        """
+        Load and process entity types in this adventure.
+        """
+        # load basic entity types:
+        with open(f"{PATH}resources/basic_entities.json", 'r', encoding='utf-8') as entities_file:
+            entity_definitions = json.load(entities_file)
+            for entity_definition in entity_definitions:
+                self.entity_types[entity_definition['type_name']] = dict()
+                for entity_attribute in entity_definition:
+                    if not entity_attribute == 'type_name':
+                        self.entity_types[entity_definition['type_name']][entity_attribute] = entity_definition[
+                            entity_attribute]
+
+    def initialize_action_types(self):
+        """
+        Load and process action types in this adventure.
+        """
+        # load basic action types:
+        with open(f"{PATH}resources/basic_actions.json", 'r', encoding='utf-8') as actions_file:
+            action_definitions = json.load(actions_file)
+            for action_definition in action_definitions:
+                self.action_types[action_definition['type_name']] = dict()
+                for action_attribute in action_definition:
+                    if not action_attribute == 'type_name':
+                        self.action_types[action_definition['type_name']][action_attribute] = action_definition[
+                            action_attribute]
+        # for key, value in self.action_types.items():
+        # print(self.action_types)
+        for action_type in self.action_types:
+            print(self.action_types[action_type]['object_post_state'])
+            self.action_types[action_type]['object_post_state'] = split_state_string(self.action_types[action_type]['object_post_state'])
+
     def initialize_states_from_strings(self):
         """
         Convert List[Str] world state format into Set[Tuple].
         """
         for state_string in self.game_instance['initial_state']:
             self.world_state.add(split_state_string(state_string))
+
+        preds_to_add = set()
+        # add floors to rooms:
+        for state_pred in self.world_state:
+            if state_pred[0] == 'room':
+                # self.world_state.add(('at', state_pred[1], 'floor'))
+                preds_to_add.add(('at', state_pred[1], 'floor'))
+        # put 'supported' items on the floor if they are not 'in' or 'on':
+        for state_pred in self.world_state:
+            if state_pred[0] == 'at' and hasattr(self.entity_types[state_pred[2]], 'supported'):
+                currently_supported = False
+                for state_pred2 in self.world_state:
+                    if state_pred2[0] == 'on' and state_pred2[2] == state_pred[2]:
+                        currently_supported = True
+                        break
+                    if state_pred2[0] == 'in' and state_pred2[2] == state_pred[2]:
+                        currently_supported = True
+                        break
+                if not currently_supported:
+                    # self.world_state.add(('on', 'floor', state_pred[2]))
+                    preds_to_add.add(('on', 'floor', state_pred[2]))
+
+        self.world_state = self.world_state.union(preds_to_add)
+
         for state_string in self.game_instance['goal_state']:
             self.goal_state.add(split_state_string(state_string))
 
@@ -99,6 +147,7 @@ class BasicIFInterpreter:
             # print(f"Checking {thing}...")
             contained_in = None
             for state_pred in self.world_state:
+                # check if entity is 'in' closed container:
                 if state_pred[0] == 'in' and state_pred[2] == thing:
                     # print(f"'in' predicate found:", state_pred)
                     contained_in = state_pred[1]
@@ -111,6 +160,12 @@ class BasicIFInterpreter:
                         elif state_pred2[0] == 'open' and state_pred2[1] == contained_in:
                             visible_contents.append(thing)
                             break
+                        elif state_pred2[1] == 'inventory' and state_pred2[1] == contained_in:
+                            # TODO: figure out inventory item reporting
+                            visible_contents.append(thing)
+                            break
+                if self.entity_types[state_pred[2]]['hidden']:
+                    continue
             if contained_in:
                 continue
             # print(f"{thing} not contained in anything.")
@@ -190,7 +245,7 @@ class BasicIFInterpreter:
         object_post_state = self.action_types[action_tuple[0]]['object_post_state']
         state_changed = False
         for state_pred in self.world_state:
-            if state_pred[0] == object_pre_state and state_pred[1] == action_tuple[1]:
+            if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
                 # del state_pred
                 self.world_state.remove(state_pred)
                 new_predicate = (object_post_state, action_tuple[1])
@@ -236,3 +291,13 @@ class BasicIFInterpreter:
                 else:
                     print("New world state:", self.world_state)
                     return base_result_str
+
+
+if __name__ == "__main__":
+    PATH = ""
+
+    game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(kitchen,player)", "at(kitchen,refrigerator)", "closed(refrigerator)", "at(kitchen,table)", "at(kitchen,counter)", "at(kitchen,sandwich)", "in(refrigerator,sandwich)"], "goal_state": ["on(table,sandwich)"]}
+
+    test_interpreter = BasicIFInterpreter(game_instance_exmpl)
+
+    print(test_interpreter.action_types)
