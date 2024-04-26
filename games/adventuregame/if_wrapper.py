@@ -81,8 +81,9 @@ class BasicIFInterpreter:
         # for key, value in self.action_types.items():
         # print(self.action_types)
         for action_type in self.action_types:
-            print(self.action_types[action_type]['object_post_state'])
-            self.action_types[action_type]['object_post_state'] = split_state_string(self.action_types[action_type]['object_post_state'])
+            cur_action_type = self.action_types[action_type]
+            print(cur_action_type['object_post_state'])
+            cur_action_type['object_post_state'] = split_state_string(cur_action_type['object_post_state'])
 
     def initialize_states_from_strings(self):
         """
@@ -164,7 +165,7 @@ class BasicIFInterpreter:
                             # TODO: figure out inventory item reporting
                             visible_contents.append(thing)
                             break
-                if self.entity_types[state_pred[2]]['hidden']:
+                if len(state_pred) >= 3 and hasattr(self.entity_types[state_pred[2]], 'hidden'):
                     continue
             if contained_in:
                 continue
@@ -242,13 +243,39 @@ class BasicIFInterpreter:
             return False, f"{action_tuple[1]} is not {object_req_attribute}"
         # check object pre state:
         object_pre_state = self.action_types[action_tuple[0]]['object_pre_state']
+        pre_state_valence = len(object_pre_state)
         object_post_state = self.action_types[action_tuple[0]]['object_post_state']
+        post_state_valence = len(object_post_state)
+        print("post state valence:", post_state_valence)
+
+        # TODO: make predicates external to handle valence
+
         state_changed = False
         for state_pred in self.world_state:
+            print(state_pred)
             if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
                 # del state_pred
                 self.world_state.remove(state_pred)
-                new_predicate = (object_post_state, action_tuple[1])
+                object_idx = object_post_state.index('THING')
+                print("obj idx:", object_idx)
+
+                new_pred = [object_post_state[0]]
+
+                if post_state_valence == 2:
+                    new_pred.append(action_tuple[1])
+                elif post_state_valence == 3:
+                    if object_idx == 1:
+                        new_pred.append(action_tuple[1])
+                    else:
+                        new_pred.append(object_post_state[1])
+                    if object_idx == 2:
+                        new_pred.append(action_tuple[1])
+                    else:
+                        new_pred.append(object_post_state[2])
+
+                # new_predicate = (object_post_state, action_tuple[1])
+                new_predicate = tuple(new_pred)
+
                 self.world_state.add(new_predicate)
                 state_changed = True
                 break
@@ -301,3 +328,9 @@ if __name__ == "__main__":
     test_interpreter = BasicIFInterpreter(game_instance_exmpl)
 
     print(test_interpreter.action_types)
+
+    turn_1 = test_interpreter.process_action("open refrigerator")
+    print(turn_1)
+
+    turn_2 = test_interpreter.process_action("take sandwich")
+    print(turn_2)
