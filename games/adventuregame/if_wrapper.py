@@ -250,10 +250,38 @@ class BasicIFInterpreter:
 
         # TODO: make predicates external to handle valence
 
+        print(action_tuple)
+
         state_changed = False
         for state_pred in self.world_state:
             print(state_pred)
             if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
+                # del state_pred
+                self.world_state.remove(state_pred)
+                object_idx = object_post_state.index('THING')
+                print("obj idx:", object_idx)
+
+                new_pred = [object_post_state[0]]
+
+                if post_state_valence == 2:
+                    new_pred.append(action_tuple[1])
+                elif post_state_valence == 3:
+                    if object_idx == 1:
+                        new_pred.append(action_tuple[1])
+                    else:
+                        new_pred.append(object_post_state[1])
+                    if object_idx == 2:
+                        new_pred.append(action_tuple[1])
+                    else:
+                        new_pred.append(object_post_state[2])
+
+                # new_predicate = (object_post_state, action_tuple[1])
+                new_predicate = tuple(new_pred)
+
+                self.world_state.add(new_predicate)
+                state_changed = True
+                break
+            elif state_pred[0] in object_pre_state and state_pred[2] == action_tuple[1]:
                 # del state_pred
                 self.world_state.remove(state_pred)
                 object_idx = object_post_state.index('THING')
@@ -299,6 +327,8 @@ class BasicIFInterpreter:
             if not resolved:
                 return resolution_result
             else:
+                print(resolution_result)
+                # TODO: handle taking/inventory
                 base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
                 # check for new visibles:
                 post_visibles = set(self.get_player_room_contents_visible())
