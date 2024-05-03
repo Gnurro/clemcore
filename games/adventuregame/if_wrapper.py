@@ -266,6 +266,11 @@ class BasicIFInterpreter:
         if action_tuple[1] not in self.entity_types:
             return False, f"I don't know what a '{action_tuple[1]}' is."
 
+        # TODO: handle (optional) transitive; 'take THING from OTHERTHING'
+
+        # TODO: handle synonyms
+        # TODO: handle split verbs
+
         return True, action_tuple
 
     def resolve_action(self, action_tuple: tuple):
@@ -292,61 +297,101 @@ class BasicIFInterpreter:
         # TODO: make predicates external to handle valence?
 
         state_changed = False
-        for state_pred in self.world_state:
-            # print("checking state pred:", state_pred)
-            if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
-                # print(f"{state_pred} matches pre-state {object_pre_state} and {action_tuple[1]}")
 
-                self.world_state.remove(state_pred)
-                object_idx = object_post_state.index('THING')
-                # print("obj tuple idx:", object_idx)
 
-                new_pred = [object_post_state[0]]
+        if len(action_tuple) == 4:
+            for state_pred in self.world_state:
+                # print("checking state pred:", state_pred)
+                if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
+                    # print("len 4 action:", state_pred, action_tuple)
+                    self.world_state.remove(state_pred)
 
-                if post_state_valence == 2:
-                    new_pred.append(action_tuple[1])
-                elif post_state_valence == 3:
-                    if object_idx == 1:
+                    object_idx = object_post_state.index('THING')
+                    # print("obj tuple idx:", object_idx)
+
+                    target_idx = object_post_state.index('TARGET')
+                    # print("target tuple idx:", target_idx)
+
+                    new_pred = [object_post_state[0]]
+
+                    if post_state_valence == 2:
                         new_pred.append(action_tuple[1])
-                    else:
-                        new_pred.append(object_post_state[1])
-                    if object_idx == 2:
+                    elif post_state_valence == 3:
+                        if object_idx == 1:
+                            new_pred.append(action_tuple[1])
+                        else:
+                            # new_pred.append(object_post_state[1])
+                            new_pred.append(action_tuple[3])
+                        if object_idx == 2:
+                            new_pred.append(action_tuple[1])
+                        else:
+                            new_pred.append(action_tuple[3])
+
+                    new_predicate = tuple(new_pred)
+
+                    # print("new predicate:", new_predicate)
+
+                    self.world_state.add(new_predicate)
+                    state_changed = True
+
+        else:
+            for state_pred in self.world_state:
+                # print("checking state pred:", state_pred)
+                if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
+                    # print(f"{state_pred} matches pre-state {object_pre_state} and {action_tuple[1]}")
+
+                    self.world_state.remove(state_pred)
+                    object_idx = object_post_state.index('THING')
+                    # print("obj tuple idx:", object_idx)
+
+                    new_pred = [object_post_state[0]]
+
+                    if post_state_valence == 2:
                         new_pred.append(action_tuple[1])
-                    else:
-                        new_pred.append(object_post_state[2])
+                    elif post_state_valence == 3:
+                        if object_idx == 1:
+                            new_pred.append(action_tuple[1])
+                        else:
+                            new_pred.append(object_post_state[1])
+                        if object_idx == 2:
+                            new_pred.append(action_tuple[1])
+                        else:
+                            new_pred.append(object_post_state[2])
 
-                # new_predicate = (object_post_state, action_tuple[1])
-                new_predicate = tuple(new_pred)
+                    # new_predicate = (object_post_state, action_tuple[1])
+                    new_predicate = tuple(new_pred)
 
-                self.world_state.add(new_predicate)
-                state_changed = True
-                break
-            elif state_pred[0] in object_pre_state and state_pred[2] == action_tuple[1]:
-                # del state_pred
-                self.world_state.remove(state_pred)
-                object_idx = object_post_state.index('THING')
-                # print("obj tuple idx:", object_idx)
+                    self.world_state.add(new_predicate)
+                    state_changed = True
+                    break
+                elif state_pred[0] in object_pre_state and state_pred[2] == action_tuple[1]:
+                    # del state_pred
+                    self.world_state.remove(state_pred)
+                    object_idx = object_post_state.index('THING')
+                    # print("obj tuple idx:", object_idx)
 
-                new_pred = [object_post_state[0]]
+                    new_pred = [object_post_state[0]]
 
-                if post_state_valence == 2:
-                    new_pred.append(action_tuple[1])
-                elif post_state_valence == 3:
-                    if object_idx == 1:
+                    if post_state_valence == 2:
                         new_pred.append(action_tuple[1])
-                    else:
-                        new_pred.append(object_post_state[1])
-                    if object_idx == 2:
-                        new_pred.append(action_tuple[1])
-                    else:
-                        new_pred.append(object_post_state[2])
+                    elif post_state_valence == 3:
+                        if object_idx == 1:
+                            new_pred.append(action_tuple[1])
+                        else:
+                            new_pred.append(object_post_state[1])
+                        if object_idx == 2:
+                            new_pred.append(action_tuple[1])
+                        else:
+                            new_pred.append(object_post_state[2])
 
-                # new_predicate = (object_post_state, action_tuple[1])
-                new_predicate = tuple(new_pred)
+                    # new_predicate = (object_post_state, action_tuple[1])
+                    new_predicate = tuple(new_pred)
 
-                self.world_state.add(new_predicate)
-                state_changed = True
-                break
+                    self.world_state.add(new_predicate)
+                    state_changed = True
+                    break
+
+
         if state_changed:
             return True, new_predicate
         else:
@@ -367,13 +412,16 @@ class BasicIFInterpreter:
             if not resolved:
                 return resolution_result
             else:
-                # print("resolution result:", resolution_result)
+                print("resolution result:", resolution_result)
                 if len(resolution_result) == 2:
                     base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
                 elif len(resolution_result) == 3 and resolution_result[2] == 'inventory':
                     # handle taking/inventory:
                     base_result_str = f"You take the {resolution_result[1]}."
                     base_result_str += f" {self.get_inventory_desc()}"
+                else:
+                    base_result_str = (f"The {resolution_result[1]} is now {resolution_result[0]} "
+                                       f"the {resolution_result[2]}.")
 
                 # check for new visibles:
                 post_visibles = set(self.get_player_room_contents_visible())
@@ -414,3 +462,6 @@ if __name__ == "__main__":
 
     turn_2 = test_interpreter.process_action("take sandwich")
     print(turn_2)
+
+    turn_3 = test_interpreter.process_action("put sandwich on table")
+    print(turn_3)

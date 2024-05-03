@@ -17,5 +17,12 @@
     "object_req_attribute": "takeable",
     "object_pre_state": ["in", "on"],
     "object_post_state": "in(THING,inventory)"
+  },
+  {
+    "type_name": "put",
+    "synonyms": ["place", "set down"],
+    "object_req_attribute": "movable",
+    "object_pre_state": ["in", "on"],
+    "object_post_state": "on(THING,TARGET)"
   }
 ]
