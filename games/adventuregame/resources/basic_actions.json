@@ -16,6 +16,6 @@
     "synonyms": ["pick up", "grab"],
     "object_req_attribute": "takeable",
     "object_pre_state": ["in", "on"],
-    "object_post_state": "in(inventory,THING)"
+    "object_post_state": "in(THING,inventory)"
   }
 ]

@@ -82,7 +82,7 @@ class BasicIFInterpreter:
         # print(self.action_types)
         for action_type in self.action_types:
             cur_action_type = self.action_types[action_type]
-            print(cur_action_type['object_post_state'])
+            # print(cur_action_type['object_post_state'])
             cur_action_type['object_post_state'] = split_state_string(cur_action_type['object_post_state'])
 
     def initialize_states_from_strings(self):
@@ -96,22 +96,23 @@ class BasicIFInterpreter:
         # add floors to rooms:
         for state_pred in self.world_state:
             if state_pred[0] == 'room':
-                # self.world_state.add(('at', state_pred[1], 'floor'))
-                preds_to_add.add(('at', state_pred[1], 'floor'))
+                # print("room to add floor to found:", state_pred)
+                preds_to_add.add(('at', 'floor', state_pred[1]))
+                # print("pred to add:", preds_to_add)
         # put 'supported' items on the floor if they are not 'in' or 'on':
         for state_pred in self.world_state:
-            if state_pred[0] == 'at' and hasattr(self.entity_types[state_pred[2]], 'supported'):
+            if state_pred[0] == 'at' and hasattr(self.entity_types[state_pred[1]], 'supported'):
                 currently_supported = False
                 for state_pred2 in self.world_state:
-                    if state_pred2[0] == 'on' and state_pred2[2] == state_pred[2]:
+                    if state_pred2[0] == 'on' and state_pred2[2] == state_pred[1]:
                         currently_supported = True
                         break
-                    if state_pred2[0] == 'in' and state_pred2[2] == state_pred[2]:
+                    if state_pred2[0] == 'in' and state_pred2[2] == state_pred[1]:
                         currently_supported = True
                         break
                 if not currently_supported:
                     # self.world_state.add(('on', 'floor', state_pred[2]))
-                    preds_to_add.add(('on', 'floor', state_pred[2]))
+                    preds_to_add.add(('on', state_pred[1], 'floor'))
 
         self.world_state = self.world_state.union(preds_to_add)
 
@@ -123,8 +124,8 @@ class BasicIFInterpreter:
         Get the current room str.
         """
         for state_pred in self.world_state:
-            if state_pred[0] == 'at' and state_pred[2] == 'player':
-                player_room = state_pred[1]
+            if state_pred[0] == 'at' and state_pred[1] == 'player':
+                player_room = state_pred[2]
         return player_room
 
     def get_player_room_contents(self):
@@ -132,10 +133,11 @@ class BasicIFInterpreter:
         Get all contents of the current room.
         """
         player_room = self.get_player_room()
+        # print("player in room:", player_room)
         room_contents = list()
         for state_pred in self.world_state:
-            if state_pred[0] == 'at' and state_pred[1] == player_room and not state_pred[2] == 'player':
-                room_contents.append(state_pred[2])
+            if state_pred[0] == 'at' and state_pred[2] == player_room and not state_pred[1] == 'player':
+                room_contents.append(state_pred[1])
         return room_contents
 
     def get_player_room_contents_visible(self):
@@ -143,15 +145,17 @@ class BasicIFInterpreter:
         Get the visible contents of the current room.
         """
         room_contents = self.get_player_room_contents()
+        # print("player room contents:", room_contents)
         visible_contents = list()
         for thing in room_contents:
             # print(f"Checking {thing}...")
             contained_in = None
             for state_pred in self.world_state:
+                # print("checking for visiblity:", state_pred)
                 # check if entity is 'in' closed container:
-                if state_pred[0] == 'in' and state_pred[2] == thing:
+                if state_pred[0] == 'in' and state_pred[1] == thing:
                     # print(f"'in' predicate found:", state_pred)
-                    contained_in = state_pred[1]
+                    contained_in = state_pred[2]
                     # print(f"{thing} contained in {contained_in}")
                     for state_pred2 in self.world_state:
                         if state_pred2[0] == 'closed' and state_pred2[1] == contained_in:
@@ -159,14 +163,16 @@ class BasicIFInterpreter:
                             # print(f"{contained_in} containing {thing} is closed.")
                             break
                         elif state_pred2[0] == 'open' and state_pred2[1] == contained_in:
+                            # print(f"the {state_pred2[1]} is {state_pred2[0]}")
                             visible_contents.append(thing)
                             break
                         elif state_pred2[1] == 'inventory' and state_pred2[1] == contained_in:
                             # TODO: figure out inventory item reporting
                             visible_contents.append(thing)
                             break
-                if len(state_pred) >= 3 and hasattr(self.entity_types[state_pred[2]], 'hidden'):
-                    continue
+                if len(state_pred) >= 3 and state_pred[1] in self.entity_types:
+                    if hasattr(self.entity_types[state_pred[1]], 'hidden'):
+                        continue
             if contained_in:
                 continue
             # print(f"{thing} not contained in anything.")
@@ -214,13 +220,46 @@ class BasicIFInterpreter:
 
         return room_description
 
+    def get_inventory_content(self):
+        """
+        Get set of inventory content.
+        """
+        inventory_content = set()
+        for state_pred in self.world_state:
+            if state_pred[0] == 'in' and state_pred[2] == 'inventory':
+                inventory_content.add(state_pred[1])
+        return inventory_content
+
+    def get_inventory_desc(self):
+        """
+        Get a text description of the inventory content.
+        """
+        inventory_content: set = self.get_inventory_content()
+        inv_list = list(inventory_content)
+        # print(inv_list)
+        inv_item_cnt = len(inv_list)
+        if inv_item_cnt == 0:
+            inv_desc = "Your inventory is empty."
+            return inv_desc
+        elif inv_item_cnt == 1:
+            inv_str = f"a {inv_list[0]}"
+        else:
+            inv_strs = [f"a {inv_item}" for inv_item in inv_list]
+            # print(inv_strs)
+            inv_str = ", ".join(inv_strs[:-1])
+            inv_str += f" and {inv_strs[-1]}"
+            # print(inv_str)
+        inv_desc = f"In your inventory you have {inv_str}."
+        # print(inv_desc)
+        return inv_desc
+
     def parse_action_input(self, action_input: str):
         """
         Parse input action string to action tuple.
         Fail if action/entities are not registered.
         """
         # simple split for now:
-        action_tuple = action_input.split()
+        action_tuple = tuple(action_input.split())
         # assume VO:
         if action_tuple[0] not in self.action_types:
             return False, f"I don't know what '{action_tuple[0]}' means."
@@ -233,6 +272,7 @@ class BasicIFInterpreter:
         """
         Check action viability and change world state.
         """
+        # print("action tuple:", action_tuple)
         # check general action-object compatibility:
         compatible = False
         object_req_attribute = self.action_types[action_tuple[0]]['object_req_attribute']
@@ -245,21 +285,21 @@ class BasicIFInterpreter:
         object_pre_state = self.action_types[action_tuple[0]]['object_pre_state']
         pre_state_valence = len(object_pre_state)
         object_post_state = self.action_types[action_tuple[0]]['object_post_state']
+        # print("object post state:", object_post_state)
         post_state_valence = len(object_post_state)
-        print("post state valence:", post_state_valence)
+        # print("post state valence:", post_state_valence)
 
-        # TODO: make predicates external to handle valence
-
-        print(action_tuple)
+        # TODO: make predicates external to handle valence?
 
         state_changed = False
         for state_pred in self.world_state:
-            print(state_pred)
+            # print("checking state pred:", state_pred)
             if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
-                # del state_pred
+                # print(f"{state_pred} matches pre-state {object_pre_state} and {action_tuple[1]}")
+
                 self.world_state.remove(state_pred)
                 object_idx = object_post_state.index('THING')
-                print("obj idx:", object_idx)
+                # print("obj tuple idx:", object_idx)
 
                 new_pred = [object_post_state[0]]
 
@@ -285,7 +325,7 @@ class BasicIFInterpreter:
                 # del state_pred
                 self.world_state.remove(state_pred)
                 object_idx = object_post_state.index('THING')
-                print("obj idx:", object_idx)
+                # print("obj tuple idx:", object_idx)
 
                 new_pred = [object_post_state[0]]
 
@@ -327,9 +367,14 @@ class BasicIFInterpreter:
             if not resolved:
                 return resolution_result
             else:
-                print(resolution_result)
-                # TODO: handle taking/inventory
-                base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
+                # print("resolution result:", resolution_result)
+                if len(resolution_result) == 2:
+                    base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
+                elif len(resolution_result) == 3 and resolution_result[2] == 'inventory':
+                    # handle taking/inventory:
+                    base_result_str = f"You take the {resolution_result[1]}."
+                    base_result_str += f" {self.get_inventory_desc()}"
+
                 # check for new visibles:
                 post_visibles = set(self.get_player_room_contents_visible())
                 # print("Post visibles:", post_visibles)
@@ -337,11 +382,12 @@ class BasicIFInterpreter:
                 changed_visibles = post_visibles.difference(prior_visibles)
                 # print("Changed visibles:", changed_visibles)
                 if changed_visibles:
+                    # print("visibles changed!")
                     visible_content_state_strs = list()
                     for thing in changed_visibles:
                         for state_pred in self.world_state:
-                            if state_pred[0] == 'in' and state_pred[2] == thing:
-                                visible_content_state_strs.append(f"There is a {thing} in the {state_pred[1]}.")
+                            if state_pred[0] == 'in' and state_pred[1] == thing:
+                                visible_content_state_strs.append(f"There is a {thing} in the {state_pred[2]}.")
                     visible_content_state_combined = " ".join(visible_content_state_strs)
                     print("New world state:", self.world_state)
                     return f"{base_result_str} {visible_content_state_combined}"
@@ -353,11 +399,15 @@ class BasicIFInterpreter:
 if __name__ == "__main__":
     PATH = ""
 
-    game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(kitchen,player)", "at(kitchen,refrigerator)", "closed(refrigerator)", "at(kitchen,table)", "at(kitchen,counter)", "at(kitchen,sandwich)", "in(refrigerator,sandwich)"], "goal_state": ["on(table,sandwich)"]}
+    game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)"], "goal_state": ["on(sandwich,table)"]}
+
+    # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)"], "goal_state": ["on(sandwich,table)"]}
+    # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)", "in(yoyo,inventory)"], "goal_state": ["on(sandwich,table)"]}
 
     test_interpreter = BasicIFInterpreter(game_instance_exmpl)
 
-    print(test_interpreter.action_types)
+    # print(test_interpreter.action_types)
+    # print(test_interpreter.entity_types)
 
     turn_1 = test_interpreter.process_action("open refrigerator")
     print(turn_1)

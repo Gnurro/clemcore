@@ -3,22 +3,22 @@
     "goal": "Put a sandwich on the table.",
     "first_room": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.",
     "initial_state": [
-      "room(kitchen)", "at(kitchen,player)", "at(kitchen,refrigerator)", "closed(refrigerator)",
-      "at(kitchen,table)", "at(kitchen,counter)", "at(kitchen,sandwich)", "in(refrigerator,sandwich)"
+      "room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)",
+      "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)"
     ],
     "goal_state": [
-      "on(table,sandwich)"
+      "on(sandwich,table)"
     ]
   },
   {
     "goal": "Put a sandwich on the counter.",
     "first_room": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.",
     "initial_state": [
-      "room(kitchen)", "at(kitchen,player)", "at(kitchen,refrigerator)", "closed(refrigerator)",
-      "at(kitchen,table)", "at(kitchen,counter)", "at(kitchen,sandwich)", "in(refrigerator,sandwich)"
+      "room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)",
+      "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)"
     ],
     "goal_state": [
-      "on(counter,sandwich)"
+      "on(sandwich,counter)"
     ]
   }
 ]
