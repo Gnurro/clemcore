@@ -299,7 +299,7 @@ class BasicIFInterpreter:
         state_changed = False
 
 
-        if len(action_tuple) == 4:
+        if len(action_tuple) == 4 and action_tuple[0] == 'put':
             for state_pred in self.world_state:
                 # print("checking state pred:", state_pred)
                 if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
