@@ -655,6 +655,26 @@
     "eos_to_cull": "<|eot_id|>"
   },
   {
+    "model_name": "Meta-Llama-3-8B-Instruct-GGUF-q4",
+    "backend": "llamacpp",
+    "huggingface_id": "MaziyarPanahi/Meta-Llama-3-8B-Instruct-GGUF",
+    "filename": "*Q4_K_M.gguf",
+    "premade_chat_template": true,
+    "bos_string": "<|begin_of_text|>",
+    "eos_string": "<|eot_id|>",
+    "eos_to_cull": "<|eot_id|>"
+  },
+  {
+    "model_name": "Meta-Llama-3-8B-Instruct-GGUF-q8",
+    "backend": "llamacpp",
+    "huggingface_id": "MaziyarPanahi/Meta-Llama-3-8B-Instruct-GGUF",
+    "filename": "*Q8_0.gguf",
+    "premade_chat_template": true,
+    "bos_string": "<|begin_of_text|>",
+    "eos_string": "<|eot_id|>",
+    "eos_to_cull": "<|eot_id|>"
+  },
+  {
     "model_name": "c4ai-command-r-plus-GGUF-q4",
     "backend": "llamacpp",
     "huggingface_id": "pmysl/c4ai-command-r-plus-GGUF",
