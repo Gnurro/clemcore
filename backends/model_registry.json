@@ -372,6 +372,33 @@
     "eos_to_cull": "<|im_end|>"
   },
   {
+    "model_name": "Yi-1.5-34B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "01-ai/Yi-1.5-34B-Chat",
+    "premade_chat_template": true,
+    "slow_tokenizer": true,
+    "output_split_prefix": "assistant\n",
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
+    "model_name": "Yi-1.5-9B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "01-ai/Yi-1.5-9B-Chat",
+    "premade_chat_template": true,
+    "slow_tokenizer": true,
+    "output_split_prefix": "assistant\n",
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
+    "model_name": "Yi-1.5-6B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "01-ai/Yi-1.5-6B-Chat",
+    "premade_chat_template": true,
+    "slow_tokenizer": true,
+    "output_split_prefix": "assistant\n",
+    "eos_to_cull": "<|im_end|>"
+  },
+  {
     "model_name": "deepseek-llm-7b-chat",
     "backend": "huggingface_local",
     "huggingface_id": "deepseek-ai/deepseek-llm-7b-chat",
