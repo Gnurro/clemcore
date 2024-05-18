@@ -26,6 +26,10 @@ class GoogleModel(backends.Model):
     def __init__(self, model_spec: backends.ModelSpec):
         super().__init__(model_spec)
 
+        self.model = genai.GenerativeModel(
+            model_name=model_spec.model_id
+        )
+
     def upload_file(self, file_path, mime_type):
         """Uploads the given file to Gemini.
 
@@ -79,7 +83,7 @@ class GoogleModel(backends.Model):
             encoded_messages_for_logging.append(m_for_logging)
         return encoded_messages, encoded_messages_for_logging
 
-    @retry(tries=5, delay=30, logger=logger)
+    @retry(tries=5, delay=60, logger=logger)
     @ensure_messages_format
     def generate_response(self, messages: List[Dict]) -> Tuple[str, Any, str]:
         """
@@ -92,8 +96,6 @@ class GoogleModel(backends.Model):
                 ]
         :return: the continuation
         """
-
-        encoded_messages, encoded_messages_for_logging = self.encode_messages(messages)
 
         generation_config = {
             "temperature": self.get_temperature(),
@@ -120,25 +122,21 @@ class GoogleModel(backends.Model):
             },
         ]
 
-        model = genai.GenerativeModel(
-            model_name=self.model_spec.model_id,
-            safety_settings=safety_settings,
-            generation_config=generation_config,
-        )
+        encoded_messages, encoded_messages_for_logging = self.encode_messages(messages)
 
-        response = model.generate_content(
+        response = self.model.generate_content(
             contents=encoded_messages,
+            safety_settings=safety_settings,
             generation_config=generation_config)
 
         response_text = ''
+        response_json = {}
         if response.parts:
             response_text = response.text
+            response_json = {"text": response_text}
 
         if response_text == '':
             logger.error(
                 f"The backend {self.model_spec.__getattribute__('model_id')} returned empty string!")
-            raise Exception(
-                f"The backend {self.model_spec.__getattribute__('model_id')} returned empty string")
-        response = {"text": response_text}
 
-        return encoded_messages_for_logging, response, response_text
+        return encoded_messages_for_logging, response_json, response_text
