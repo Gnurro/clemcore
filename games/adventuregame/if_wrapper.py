@@ -325,6 +325,16 @@ class BasicIFInterpreter:
         transformed_command = self.act_transformer.transform(parsed_command)
         print(transformed_command)
 
+        if transformed_command['type'] not in self.action_types:
+            return False, f"I don't know what '{transformed_command['arg1']}' means."
+
+        if transformed_command['arg1'] not in self.entity_types:
+            return False, f"I don't know what a '{transformed_command['arg1']}' is."
+
+        if 'arg2' in transformed_command:
+            if transformed_command['arg2'] not in self.entity_types:
+                return False, f"I don't know what a '{transformed_command['arg2']}' is."
+
         return True, action_tuple
 
     def resolve_action(self, action_tuple: tuple):
