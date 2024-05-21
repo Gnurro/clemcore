@@ -3,7 +3,8 @@
 """
 
 import json
-
+import lark
+from lark import Lark, Transformer
 
 PATH = "games/adventuregame/"
 
@@ -19,6 +20,28 @@ def split_state_string(state_string: str, value_delimiter: str = "(", value_sepa
         return predicate_type, values_split[0], values_split[1]
     else:
         return predicate_type, first_split[1][:-1]
+
+
+class IFTransformer(Transformer):
+    def action(self, content):
+        action: lark.Tree = content[0]
+        action_type = action.data
+        action_content = action.children
+        all_tokens = action.scan_values(lambda v: isinstance(v, lark.Token))
+        all_tkn_list = [tkn for tkn in all_tokens]
+        arguments = [tkn for tkn in all_tkn_list if tkn.type == "WORD"]
+
+        parsed_action = {'type': str(action_type), 'arg1': arguments[0].value}
+
+        if len(arguments) == 2:
+            parsed_action['arg2'] = arguments[1].value
+
+        prep = [tkn.value for tkn in all_tkn_list if tkn.type == "PREP"]
+
+        if prep:
+            parsed_action['prep'] = prep[0]
+
+        return parsed_action
 
 
 class BasicIFInterpreter:
@@ -80,10 +103,37 @@ class BasicIFInterpreter:
                             action_attribute]
         # for key, value in self.action_types.items():
         # print(self.action_types)
+
+        act_grammar_rules = list()
+        act_grammar_larks = list()
+
         for action_type in self.action_types:
             cur_action_type = self.action_types[action_type]
             # print(cur_action_type['object_post_state'])
             cur_action_type['object_post_state'] = split_state_string(cur_action_type['object_post_state'])
+            # print(cur_action_type['lark'])
+            # action_lark: str = action_definition['lark']
+            # print(action_lark)
+            action_rule = cur_action_type['lark'].split(":")[0]
+            # print(action_rule)
+            act_grammar_rules.append(action_rule)
+            act_grammar_larks.append(cur_action_type['lark'])
+
+        # TODO: create lark grammar and init lark parser+transformer
+
+        act_grammar_action_line = f"action: {' | '.join(act_grammar_rules)} | unknown\n"
+        # print(action_line)
+        act_grammar_larks_str = "\n".join(act_grammar_larks)
+
+        with open(f"{PATH}resources/grammar_core.json", 'r', encoding='utf-8') as grammar_core_file:
+            grammar_core = json.load(grammar_core_file)
+            grammar_head = grammar_core['grammar_head']
+            grammar_foot = grammar_core['grammar_foot']
+
+        act_grammar = f"{grammar_head}{act_grammar_action_line}{act_grammar_larks_str}\n{grammar_foot}"
+
+        self.act_parser = Lark(act_grammar, start='action')
+        self.act_transformer = IFTransformer()
 
     def initialize_states_from_strings(self):
         """
@@ -269,7 +319,11 @@ class BasicIFInterpreter:
         # TODO: handle (optional) transitive; 'take THING from OTHERTHING'
 
         # TODO: handle synonyms
-        # TODO: handle split verbs
+        # TODO: handle split verbs?
+
+        parsed_command = self.act_parser.parse(action_input)
+        transformed_command = self.act_transformer.transform(parsed_command)
+        print(transformed_command)
 
         return True, action_tuple
 

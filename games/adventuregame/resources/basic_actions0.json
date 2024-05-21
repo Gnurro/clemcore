@@ -1,30 +1,28 @@
 [
   {
     "type_name": "open",
-    "lark": "open: OPEN WORD\nOPEN: \"open\"",
     "object_req_attribute": "openable",
     "object_pre_state": ["closed"],
     "object_post_state": "open(THING)"
   },
   {
     "type_name": "close",
-    "lark": "close: CLOSE WORD\nCLOSE: \"close\"",
     "object_req_attribute": "openable",
     "object_pre_state": ["open"],
     "object_post_state": "closed(THING)"
   },
   {
     "type_name": "take",
-    "lark": "take: TAKE [ WORD | WORD PREP WORD ]\nTAKE: \"take\" | \"grab\"",
+    "synonyms": ["pick up", "grab"],
     "object_req_attribute": "takeable",
     "object_pre_state": ["in", "on"],
     "object_post_state": "in(THING,inventory)"
   },
   {
     "type_name": "put",
-    "lark": "put: PUT WORD PREP WORD\nPUT: \"put\" | \"leave\"",
+    "synonyms": ["place", "set down"],
     "object_req_attribute": "movable",
     "object_pre_state": ["in", "on"],
-    "object_post_state": "PREP(THING,TARGET)"
+    "object_post_state": "on(THING,TARGET)"
   }
 ]

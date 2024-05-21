@@ -1,0 +1,4 @@
+{
+  "grammar_head": "%import common.WORD\n%import common.WS\n%ignore WS\n",
+  "grammar_foot": "PREP: \"on\" | \"in\" | \"from\"\n\nunknown: WORD+"
+}
