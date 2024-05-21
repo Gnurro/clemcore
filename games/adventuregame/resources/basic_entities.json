@@ -1,6 +1,7 @@
 [
   {
-    "type_name": "player"
+    "type_name": "player",
+    "hidden": true
   },
   {
     "type_name": "floor",
