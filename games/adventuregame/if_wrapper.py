@@ -322,38 +322,38 @@ class BasicIFInterpreter:
         # TODO: handle split verbs?
 
         parsed_command = self.act_parser.parse(action_input)
-        transformed_command = self.act_transformer.transform(parsed_command)
-        print(transformed_command)
+        action_dict = self.act_transformer.transform(parsed_command)
+        # print(action_dict)
 
-        if transformed_command['type'] not in self.action_types:
-            return False, f"I don't know what '{transformed_command['arg1']}' means."
+        if action_dict['type'] not in self.action_types:
+            return False, f"I don't know what '{action_dict['arg1']}' means."
 
-        if transformed_command['arg1'] not in self.entity_types:
-            return False, f"I don't know what a '{transformed_command['arg1']}' is."
+        if action_dict['arg1'] not in self.entity_types:
+            return False, f"I don't know what a '{action_dict['arg1']}' is."
 
-        if 'arg2' in transformed_command:
-            if transformed_command['arg2'] not in self.entity_types:
-                return False, f"I don't know what a '{transformed_command['arg2']}' is."
+        if 'arg2' in action_dict:
+            if action_dict['arg2'] not in self.entity_types:
+                return False, f"I don't know what a '{action_dict['arg2']}' is."
 
-        return True, action_tuple
+        return True, action_dict
 
-    def resolve_action(self, action_tuple: tuple):
+    def resolve_action(self, action_dict: dict):
         """
         Check action viability and change world state.
         """
         # print("action tuple:", action_tuple)
         # check general action-object compatibility:
         compatible = False
-        object_req_attribute = self.action_types[action_tuple[0]]['object_req_attribute']
-        if object_req_attribute in self.entity_types[action_tuple[1]]:
-            if self.entity_types[action_tuple[1]][object_req_attribute]:
+        object_req_attribute = self.action_types[action_dict['type']]['object_req_attribute']
+        if object_req_attribute in self.entity_types[action_dict['arg1']]:
+            if self.entity_types[action_dict['arg1']][object_req_attribute]:
                 compatible = True
         if not compatible:
-            return False, f"{action_tuple[1]} is not {object_req_attribute}"
+            return False, f"{action_dict['arg1']} is not {object_req_attribute}"
         # check object pre state:
-        object_pre_state = self.action_types[action_tuple[0]]['object_pre_state']
+        object_pre_state = self.action_types[action_dict['type']]['object_pre_state']
         pre_state_valence = len(object_pre_state)
-        object_post_state = self.action_types[action_tuple[0]]['object_post_state']
+        object_post_state = self.action_types[action_dict['type']]['object_post_state']
         # print("object post state:", object_post_state)
         post_state_valence = len(object_post_state)
         # print("post state valence:", post_state_valence)
@@ -362,104 +362,43 @@ class BasicIFInterpreter:
 
         state_changed = False
 
+        for state_pred in self.world_state:
+            # print("checking state pred:", state_pred)
+            if state_pred[0] in object_pre_state and state_pred[1] == action_dict['arg1']:
+                self.world_state.remove(state_pred)
 
-        if len(action_tuple) == 4 and action_tuple[0] == 'put':
-            for state_pred in self.world_state:
-                # print("checking state pred:", state_pred)
-                if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
-                    # print("len 4 action:", state_pred, action_tuple)
-                    self.world_state.remove(state_pred)
+                new_pred = []
 
-                    object_idx = object_post_state.index('THING')
-                    # print("obj tuple idx:", object_idx)
+                if object_post_state[0] == "PREP":
+                    new_pred.append(action_dict['prep'])
+                else:
+                    new_pred.append(object_post_state[0])
 
-                    target_idx = object_post_state.index('TARGET')
-                    # print("target tuple idx:", target_idx)
+                if object_post_state[1] == "THING":
+                    new_pred.append(action_dict['arg1'])
+                else:
+                    new_pred.append(object_post_state[1])
 
-                    new_pred = [object_post_state[0]]
+                if post_state_valence >= 3:
+                    if object_post_state[2] == "TARGET":
+                        new_pred.append(action_dict['arg2'])
+                    else:
+                        new_pred.append(object_post_state[2])
 
-                    if post_state_valence == 2:
-                        new_pred.append(action_tuple[1])
-                    elif post_state_valence == 3:
-                        if object_idx == 1:
-                            new_pred.append(action_tuple[1])
-                        else:
-                            # new_pred.append(object_post_state[1])
-                            new_pred.append(action_tuple[3])
-                        if object_idx == 2:
-                            new_pred.append(action_tuple[1])
-                        else:
-                            new_pred.append(action_tuple[3])
+                new_predicate = tuple(new_pred)
 
-                    new_predicate = tuple(new_pred)
+                # print("new predicate:", new_predicate)
 
-                    # print("new predicate:", new_predicate)
+                self.world_state.add(new_predicate)
+                state_changed = True
 
-                    self.world_state.add(new_predicate)
-                    state_changed = True
-
-        else:
-            for state_pred in self.world_state:
-                # print("checking state pred:", state_pred)
-                if state_pred[0] in object_pre_state and state_pred[1] == action_tuple[1]:
-                    # print(f"{state_pred} matches pre-state {object_pre_state} and {action_tuple[1]}")
-
-                    self.world_state.remove(state_pred)
-                    object_idx = object_post_state.index('THING')
-                    # print("obj tuple idx:", object_idx)
-
-                    new_pred = [object_post_state[0]]
-
-                    if post_state_valence == 2:
-                        new_pred.append(action_tuple[1])
-                    elif post_state_valence == 3:
-                        if object_idx == 1:
-                            new_pred.append(action_tuple[1])
-                        else:
-                            new_pred.append(object_post_state[1])
-                        if object_idx == 2:
-                            new_pred.append(action_tuple[1])
-                        else:
-                            new_pred.append(object_post_state[2])
-
-                    # new_predicate = (object_post_state, action_tuple[1])
-                    new_predicate = tuple(new_pred)
-
-                    self.world_state.add(new_predicate)
-                    state_changed = True
-                    break
-                elif state_pred[0] in object_pre_state and state_pred[2] == action_tuple[1]:
-                    # del state_pred
-                    self.world_state.remove(state_pred)
-                    object_idx = object_post_state.index('THING')
-                    # print("obj tuple idx:", object_idx)
-
-                    new_pred = [object_post_state[0]]
-
-                    if post_state_valence == 2:
-                        new_pred.append(action_tuple[1])
-                    elif post_state_valence == 3:
-                        if object_idx == 1:
-                            new_pred.append(action_tuple[1])
-                        else:
-                            new_pred.append(object_post_state[1])
-                        if object_idx == 2:
-                            new_pred.append(action_tuple[1])
-                        else:
-                            new_pred.append(object_post_state[2])
-
-                    # new_predicate = (object_post_state, action_tuple[1])
-                    new_predicate = tuple(new_pred)
-
-                    self.world_state.add(new_predicate)
-                    state_changed = True
-                    break
+                break
 
 
         if state_changed:
             return True, new_predicate
         else:
-            return False, f"{action_tuple[1]} is not {object_pre_state}"
+            return False, f"{action_dict['arg1']} is not {object_pre_state}"
 
     def process_action(self, action_input: str):
         """
