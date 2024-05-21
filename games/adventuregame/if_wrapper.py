@@ -4,9 +4,6 @@
 
 # TODO: entity states (colors, materials, etc)
 
-# TODO: multiple of same entity type; internal IDs vs response referentials
-
-
 import json
 import lark
 from lark import Lark, Transformer
@@ -28,30 +25,48 @@ def split_state_string(state_string: str, value_delimiter: str = "(", value_sepa
 
 
 class IFTransformer(Transformer):
+    # TODO: put in newer transformer
     def action(self, content):
         action: lark.Tree = content[0]
+
+        # print(action)
+
         action_type = action.data
+        # print("action type:", action_type)
+
         action_content = action.children
-        all_tokens = action.scan_values(lambda v: isinstance(v, lark.Token))
-        all_tkn_list = [tkn for tkn in all_tokens]
-        arguments = [tkn for tkn in all_tkn_list if tkn.type == "WORD"]
+        # print("action content:", action_content)
 
-        parsed_action = {'type': str(action_type), 'arg1': arguments[0].value}
+        action_dict = {'type': action_type.value}
 
-        if len(arguments) == 2:
-            parsed_action['arg2'] = arguments[1].value
+        arguments = []
 
-        prep = [tkn.value for tkn in all_tkn_list if tkn.type == "PREP"]
+        arg_idx = 1
 
-        if prep:
-            parsed_action['prep'] = prep[0]
+        for child in action_content:
+            if type(child) == lark.Tree and child.data == 'thing':
+                # print("thing:", child.children)
+                if len(child.children) == 1:
+                    arguments.append(child.children[0].value)
+                else:
+                    arguments.append(child.children[-1].value)
+                    argument_adjs = [adj.value for adj in child.children[:-1] if adj.type == 'ADJ']
+                    # print(argument_adjs)
+                    if argument_adjs:
+                        action_dict[f'arg{arg_idx}_adjs'] = argument_adjs
 
-        return parsed_action
+                action_dict[f'arg{arg_idx}'] = arguments[-1]
+
+                arg_idx += 1
+            if type(child) == lark.Token and child.type == 'PREP':
+                action_dict['prep'] = child.value
+
+        return action_dict
 
 
 class BasicIFInterpreter:
     """
-    A basic/mock IF interpreter for prototyping adventuregame.
+    A basic IF interpreter for adventuregame.
     """
     def __init__(self, game_instance: dict):
         self.game_instance: dict = game_instance
@@ -68,6 +83,8 @@ class BasicIFInterpreter:
         self.goal_state: set = set()
 
         self.initialize_states_from_strings()
+
+        self.initialize_action_parsing()
 
         # print("BasicIFInterpreter initialized:")
         # print("Game instance:", self.game_instance)
@@ -98,6 +115,7 @@ class BasicIFInterpreter:
         Load and process action types in this adventure.
         """
         # load basic action types:
+        # with open(f"{PATH}resources/basic_actions1.json", 'r', encoding='utf-8') as actions_file:
         with open(f"{PATH}resources/basic_actions.json", 'r', encoding='utf-8') as actions_file:
             action_definitions = json.load(actions_file)
             for action_definition in action_definitions:
@@ -108,14 +126,25 @@ class BasicIFInterpreter:
                             action_attribute]
         # for key, value in self.action_types.items():
         # print(self.action_types)
+        for action_type in self.action_types:
+            cur_action_type = self.action_types[action_type]
+            # print(cur_action_type['object_post_state'])
+            cur_action_type['object_post_state'] = split_state_string(cur_action_type['object_post_state'])
+
+    def initialize_action_parsing(self):
+        """
+        Initialize the lark action input parser and transformer.
+        """
+
+        # TODO: excise grammar init -> get adjectives from world state or entity defs
+
+        # TODO: define applicable instance adj states in entity type def? -> predefines set of adjs
 
         act_grammar_rules = list()
         act_grammar_larks = list()
 
         for action_type in self.action_types:
             cur_action_type = self.action_types[action_type]
-            # print(cur_action_type['object_post_state'])
-            cur_action_type['object_post_state'] = split_state_string(cur_action_type['object_post_state'])
             # print(cur_action_type['lark'])
             # action_lark: str = action_definition['lark']
             # print(action_lark)
@@ -128,12 +157,30 @@ class BasicIFInterpreter:
         # print(action_line)
         act_grammar_larks_str = "\n".join(act_grammar_larks)
 
+        all_adjs = set()
+        for entity_type, entity_def in self.entity_types.items():
+            if 'possible_adjs' in entity_def:
+                # print(entity_type)
+                # print(entity_def['possible_adjs'])
+                # print(entity_def.possible_adjs)
+                new_adj_set = set(entity_def['possible_adjs'])
+                all_adjs.update(new_adj_set)
+        # print(all_adjs)
+        all_adjs = [f'"{adj}"' for adj in all_adjs]
+
+        act_grammar_adj_line = f"ADJ: {' | '.join(all_adjs)}\n"
+
+        # print(act_grammar_adj_line)
+
         with open(f"{PATH}resources/grammar_core.json", 'r', encoding='utf-8') as grammar_core_file:
             grammar_core = json.load(grammar_core_file)
             grammar_head = grammar_core['grammar_head']
             grammar_foot = grammar_core['grammar_foot']
 
-        act_grammar = f"{grammar_head}{act_grammar_action_line}{act_grammar_larks_str}\n{grammar_foot}"
+        act_grammar = (f"{grammar_head}{act_grammar_action_line}"
+                       f"{act_grammar_larks_str}\n{act_grammar_adj_line}{grammar_foot}")
+
+        # print(act_grammar)
 
         self.act_parser = Lark(act_grammar, start='action')
         self.act_transformer = IFTransformer()
@@ -156,8 +203,8 @@ class BasicIFInterpreter:
 
         self.world_state = self.world_state.union(preds_to_add)
 
+        # get entity instance types from world state:
         self.inst_to_type_dict = dict()
-
         for state_pred in self.world_state:
             # entity instance to entity type mapping:
             if state_pred[0] == 'type':
@@ -183,6 +230,27 @@ class BasicIFInterpreter:
 
         for state_string in self.game_instance['goal_state']:
             self.goal_state.add(split_state_string(state_string))
+
+    def _get_inst_str(self, inst):
+        """
+        Get a full string representation of an entity instance with adjectives.
+        """
+        inst_adjs = list()
+        # get adj preds:
+        for state_pred in self.world_state:
+            if state_pred[0] == 'adj' and state_pred[1] == inst:
+                inst_adjs.append(state_pred[2])
+
+        inst_adjs.append(self.inst_to_type_dict[inst])
+
+        adj_str = " ".join(inst_adjs)
+
+        # full_inst_str = f"{adj_str} {self.inst_to_type_dict[inst]}"
+        # full_inst_str = f"{adj_str} {self.inst_to_type_dict[inst]}"
+
+        # return full_inst_str
+        return adj_str
+
 
     def get_player_room(self):
         """
@@ -223,9 +291,9 @@ class BasicIFInterpreter:
                 # print("checking for visiblity:", state_pred)
                 # check if entity is 'in' closed container:
                 if state_pred[0] == 'in' and state_pred[1] == thing:
-                    print(f"'in' predicate found:", state_pred)
+                    # print(f"'in' predicate found:", state_pred)
                     contained_in = state_pred[2]
-                    print(f"{thing} contained in {contained_in}")
+                    # print(f"{thing} contained in {contained_in}")
                     for state_pred2 in self.world_state:
                         if state_pred2[0] == 'closed' and state_pred2[1] == contained_in:
                             # not visible in closed container
@@ -236,7 +304,7 @@ class BasicIFInterpreter:
                             visible_contents.append(thing)
                             break
                         elif state_pred2[1] == 'inventory' and state_pred2[1] == contained_in:
-                            # TODO: figure out inventory item reporting
+                            # TODO: figure out inventory item reporting; handling in action resolve now
                             print("inventory?")
                             visible_contents.append(thing)
                             break
@@ -262,7 +330,8 @@ class BasicIFInterpreter:
 
         # convert to types:
         # print("visible contents:", internal_visible_contents)
-        visible_contents = [self.inst_to_type_dict[instance] for instance in internal_visible_contents]
+        # visible_contents = [self.inst_to_type_dict[instance] for instance in internal_visible_contents]
+        visible_contents = [self._get_inst_str(instance) for instance in internal_visible_contents]
 
         # create visible room content description:
         visible_contents_str = str()
@@ -369,7 +438,7 @@ class BasicIFInterpreter:
 
         # get inventory content:
         inventory_content = self.get_inventory_content()
-        print(inventory_content)
+        # print(inventory_content)
 
         # convert to types:
         # print("internal visible contents:", internal_visible_contents)
@@ -484,15 +553,15 @@ class BasicIFInterpreter:
                 print("resolution result:", resolution_result)
                 if len(resolution_result) == 2:
                     # base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
-                    base_result_str = f"The {self.inst_to_type_dict[resolution_result[1]]} is now {resolution_result[0]}."
+                    base_result_str = f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]}."
                 elif len(resolution_result) == 3 and resolution_result[2] == 'inventory':
                     # handle taking/inventory:
                     # base_result_str = f"You take the {resolution_result[1]}."
                     base_result_str = f"You take the {self.inst_to_type_dict[resolution_result[1]]}."
                     base_result_str += f" {self.get_inventory_desc()}"
                 else:
-                    base_result_str = (f"The {self.inst_to_type_dict[resolution_result[1]]} is now {resolution_result[0]} "
-                                       f"the {self.inst_to_type_dict[resolution_result[2]]}.")
+                    base_result_str = (f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]} "
+                                       f"the {self._get_inst_str(resolution_result[2])}.")
 
                 # check for new visibles:
                 post_visibles = set(self.get_player_room_contents_visible())
@@ -553,12 +622,11 @@ if __name__ == "__main__":
         "goal_str": "Put a sandwich on the table.",
         "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.",
         "initial_state":
-            ["room(kitchen)", "type(player1,player)", "at(player1,kitchen)", "type(fridge1,refrigerator)",
-             "at(fridge1,kitchen)",
-             "closed(fridge1)",
-             "type(table1,table)", "at(table1,kitchen)", "type(counter1,counter)", "at(counter1,kitchen)",
-             "type(sandwich1,sandwich)", "at(sandwich1,kitchen)",
-             "in(sandwich1,fridge1)"],
+            ["room(kitchen)", "type(player1,player)", "at(player1,kitchen)",
+             "type(fridge1,refrigerator)", "at(fridge1,kitchen)", "closed(fridge1)",
+             "type(table1,table)", "at(table1,kitchen)", "adj(table1,wooden)",
+             "type(counter1,counter)", "at(counter1,kitchen)",
+             "type(sandwich1,sandwich)", "at(sandwich1,kitchen)", "in(sandwich1,fridge1)"],
         "goal_state": ["on(sandwich1,table1)"]
     }
 
@@ -580,6 +648,7 @@ if __name__ == "__main__":
     print(turn_2)
     print()
 
-    turn_3 = test_interpreter.process_action("put sandwich on table")
+    # turn_3 = test_interpreter.process_action("put sandwich on table")
+    turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3)
     """"""

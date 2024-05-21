@@ -10,11 +10,13 @@
   },
   {
     "type_name": "table",
-    "support": true
+    "support": true,
+    "possible_adjs": ["wooden", "metal", "low", "high"]
   },
   {
     "type_name": "counter",
-    "support": true
+    "support": true,
+    "possible_adjs": ["wooden", "metal", "low", "high"]
   },
   {
     "type_name": "refrigerator",
