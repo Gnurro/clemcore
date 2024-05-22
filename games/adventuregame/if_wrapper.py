@@ -25,7 +25,6 @@ def split_state_string(state_string: str, value_delimiter: str = "(", value_sepa
 
 
 class IFTransformer(Transformer):
-    # TODO: put in newer transformer
     def action(self, content):
         action: lark.Tree = content[0]
 
@@ -100,6 +99,7 @@ class BasicIFInterpreter:
         """
         Load and process entity types in this adventure.
         """
+        # TODO: use clemgame resource loading
         # load basic entity types:
         with open(f"{PATH}resources/basic_entities.json", 'r', encoding='utf-8') as entities_file:
             entity_definitions = json.load(entities_file)
@@ -114,6 +114,7 @@ class BasicIFInterpreter:
         """
         Load and process action types in this adventure.
         """
+        # TODO: use clemgame resource loading
         # load basic action types:
         # with open(f"{PATH}resources/basic_actions1.json", 'r', encoding='utf-8') as actions_file:
         with open(f"{PATH}resources/basic_actions.json", 'r', encoding='utf-8') as actions_file:
@@ -171,6 +172,8 @@ class BasicIFInterpreter:
         act_grammar_adj_line = f"ADJ: {' | '.join(all_adjs)}\n"
 
         # print(act_grammar_adj_line)
+
+        # TODO: use clemgame resource loading
 
         with open(f"{PATH}resources/grammar_core.json", 'r', encoding='utf-8') as grammar_core_file:
             grammar_core = json.load(grammar_core_file)
@@ -539,6 +542,9 @@ class BasicIFInterpreter:
         """
         Fully process an action input.
         """
+
+        # TODO: track and return goal state achievement
+
         print("Old world state:", self.world_state)
         parsed, parse_result = self.parse_action_input(action_input)
         if not parsed:
@@ -644,11 +650,13 @@ if __name__ == "__main__":
     print(turn_1)
     print()
 
-    turn_2 = test_interpreter.process_action("take sandwich")
+    # turn_2 = test_interpreter.process_action("take sandwich")
+    turn_2 = test_interpreter.process_action("take sandwich from refrigerator")
     print(turn_2)
     print()
 
     # turn_3 = test_interpreter.process_action("put sandwich on table")
-    turn_3 = test_interpreter.process_action("put sandwich on wooden table")
+    turn_3 = test_interpreter.process_action("place sandwich on table")
+    # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3)
     """"""

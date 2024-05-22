@@ -34,6 +34,9 @@ class AdventureGameMaster(DialogueGameMaster):
         # initialize IF interpreter:
         self.if_interpreter = BasicIFInterpreter(self.game_instance)
 
+        # TODO: put all interpreter-relevant data into instances
+        # TODO: use clemgame resource loading
+
         # create player:
         self.player = Player(self.player_models[0])
 
@@ -42,15 +45,24 @@ class AdventureGameMaster(DialogueGameMaster):
         self.add_player(self.player)
 
     def _on_before_game(self):
+        # get initial room description from IF interpreter:
+        initial_room_desc = self.if_interpreter.get_full_room_desc()
+
+        first_message = self.game_instance["prompt"] + initial_room_desc
+
         # Do something before the game start e.g. add the initial prompts to the message list for the players
-        self.add_user_message(self.player, self.game_instance["prompt"])
+        # self.add_user_message(self.player, self.game_instance["prompt"])
+        self.add_user_message(self.player, first_message)
+
         # print(self.messages_by_names[self.player.descriptor])
         # print(self.get_players())
 
     def _validate_player_response(self, player: Player, utterance: str) -> bool:
+        # TODO: hook in and separate plans from IF inputs to allow different levels of feeding plans back into context
         # Check responses for specific players
         if player == self.player:
-            # Check rule: utterance starts with key word
+            # TODO: check for plan tag for planning version
+            # Check rule: utterance starts with IF >
             if not utterance.startswith(">"):
                 self.success = False
                 return True
@@ -84,7 +96,8 @@ class AdventureGameMaster(DialogueGameMaster):
         last_action: str = self.messages_by_names[self.player.descriptor][-1]['content']
         # print("Last player message:", last_action)
         # strip player action to IF input:
-        if_input: str = last_action[1:].strip()
+        # if_input: str = last_action[1:].strip()
+        if_input: str = last_action[1:].split("\n")[0].strip()
         # print("Stripped IF input:", if_input)
 
         if_result = self.if_interpreter.process_action(if_input)
