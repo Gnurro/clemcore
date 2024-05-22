@@ -80,7 +80,7 @@ class BasicIFInterpreter:
 
         self.world_state: set = set()
         self.goal_state: set = set()
-
+        self.goals_achieved: set = set()
         self.initialize_states_from_strings()
 
         self.initialize_action_parsing()
@@ -253,7 +253,6 @@ class BasicIFInterpreter:
 
         # return full_inst_str
         return adj_str
-
 
     def get_player_room(self):
         """
@@ -546,15 +545,18 @@ class BasicIFInterpreter:
         # TODO: track and return goal state achievement
 
         print("Old world state:", self.world_state)
+
+        # goals_achieved = set()
+
         parsed, parse_result = self.parse_action_input(action_input)
         if not parsed:
-            return parse_result
+            return self.goals_achieved, parse_result
         else:
             prior_visibles = set(self.get_player_room_contents_visible())
             # print("Prior visibles:", prior_visibles)
             resolved, resolution_result = self.resolve_action(parse_result)
             if not resolved:
-                return resolution_result
+                return self.goals_achieved, resolution_result
             else:
                 print("resolution result:", resolution_result)
                 if len(resolution_result) == 2:
@@ -568,6 +570,11 @@ class BasicIFInterpreter:
                 else:
                     base_result_str = (f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]} "
                                        f"the {self._get_inst_str(resolution_result[2])}.")
+
+                # check goal achievement:
+                # print("goals:", self.goal_state)
+                self.goals_achieved = self.goal_state & self.world_state
+                # print("goals achieved:", self.goals_achieved)
 
                 # check for new visibles:
                 post_visibles = set(self.get_player_room_contents_visible())
@@ -585,10 +592,10 @@ class BasicIFInterpreter:
                                 visible_content_state_strs.append(f"There is a {self.inst_to_type_dict[thing]} in the {self.inst_to_type_dict[state_pred[2]]}.")
                     visible_content_state_combined = " ".join(visible_content_state_strs)
                     print("New world state:", self.world_state)
-                    return f"{base_result_str} {visible_content_state_combined}"
+                    return self.goals_achieved, f"{base_result_str} {visible_content_state_combined}"
                 else:
                     print("New world state:", self.world_state)
-                    return base_result_str
+                    return self.goals_achieved, base_result_str
 
 
 if __name__ == "__main__":
@@ -655,8 +662,8 @@ if __name__ == "__main__":
     print(turn_2)
     print()
 
-    # turn_3 = test_interpreter.process_action("put sandwich on table")
-    turn_3 = test_interpreter.process_action("place sandwich on table")
+    turn_3 = test_interpreter.process_action("put sandwich on table")
+    # turn_3 = test_interpreter.process_action("place sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3)
     """"""
