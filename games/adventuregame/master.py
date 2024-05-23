@@ -134,8 +134,15 @@ class AdventureGameMaster(DialogueGameMaster):
         if_input: str = last_action[1:].split("\n")[0].strip()
         # print("Stripped IF input:", if_input)
 
+        prior_goal_count = len(self.goals_achieved)
+
         goals_achieved, if_response = self.if_interpreter.process_action(if_input)
         self.goals_achieved = goals_achieved
+
+        post_goal_count = len(self.goals_achieved)
+        turn_score = post_goal_count - prior_goal_count
+        print("turn score:", turn_score)
+
         self.add_user_message(self.player, if_response)
 
         # record successful turn:
