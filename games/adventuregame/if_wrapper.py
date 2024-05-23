@@ -24,6 +24,19 @@ def split_state_string(state_string: str, value_delimiter: str = "(", value_sepa
         return predicate_type, first_split[1][:-1]
 
 
+def state_tuple_to_str(state_tuple: tuple, value_delimiter_l: str = "(", value_separator: str = ",",
+                       value_delimiter_r: str = ")",):
+    """
+    Convert state predicate tuple to string version.
+    """
+    values = state_tuple[1:]
+    # print(values)
+    values_str = value_separator.join(values)
+    # print(values_str)
+    state_str = f"{state_tuple[0]}{value_delimiter_l}{values_str}{value_delimiter_r}"
+    return state_str
+
+
 class IFTransformer(Transformer):
     def action(self, content):
         action: lark.Tree = content[0]
@@ -544,7 +557,7 @@ class BasicIFInterpreter:
 
         # TODO: track and return goal state achievement
 
-        print("Old world state:", self.world_state)
+        # print("Old world state:", self.world_state)
 
         # goals_achieved = set()
 
@@ -574,7 +587,14 @@ class BasicIFInterpreter:
                 # check goal achievement:
                 # print("goals:", self.goal_state)
                 self.goals_achieved = self.goal_state & self.world_state
+                goals_achieved_response = list(self.goal_state & self.world_state)
                 # print("goals achieved:", self.goals_achieved)
+                # convert to goal states to string version:
+                for goal_state_idx, goal_state in enumerate(goals_achieved_response):
+                    # print("loop goal state:", goal_state)
+                    goals_achieved_response[goal_state_idx] = state_tuple_to_str(goal_state)
+                    # print("loop goal state post:", goal_state)
+                goals_achieved_response = set(goals_achieved_response)
 
                 # check for new visibles:
                 post_visibles = set(self.get_player_room_contents_visible())
@@ -591,11 +611,11 @@ class BasicIFInterpreter:
                                 # visible_content_state_strs.append(f"There is a {thing} in the {state_pred[2]}.")
                                 visible_content_state_strs.append(f"There is a {self.inst_to_type_dict[thing]} in the {self.inst_to_type_dict[state_pred[2]]}.")
                     visible_content_state_combined = " ".join(visible_content_state_strs)
-                    print("New world state:", self.world_state)
-                    return self.goals_achieved, f"{base_result_str} {visible_content_state_combined}"
+                    # print("New world state:", self.world_state)
+                    return goals_achieved_response, f"{base_result_str} {visible_content_state_combined}"
                 else:
-                    print("New world state:", self.world_state)
-                    return self.goals_achieved, base_result_str
+                    # print("New world state:", self.world_state)
+                    return goals_achieved_response, base_result_str
 
 
 if __name__ == "__main__":
@@ -667,3 +687,5 @@ if __name__ == "__main__":
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3)
     """"""
+
+    # print(state_tuple_to_str(('on', 'sandwich1', 'table1')))

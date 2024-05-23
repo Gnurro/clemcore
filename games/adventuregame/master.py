@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from backends import Model
 from clemgame import file_utils
@@ -28,8 +28,10 @@ class AdventureGameMaster(DialogueGameMaster):
 
     def _on_setup(self, **game_instance):
         self.game_instance = game_instance  # fetch game parameters here
-
         # print("game_instance type:", type(game_instance))
+
+        # check game variant:
+        self.if_variant = self.game_instance['variant']
 
         # initialize IF interpreter:
         self.if_interpreter = BasicIFInterpreter(self.game_instance)
@@ -43,6 +45,13 @@ class AdventureGameMaster(DialogueGameMaster):
         # Add the players: these will be logged to the records interactions.json
         # Note: During game play the players will be called in the order added here
         self.add_player(self.player)
+
+        # keep history of plans:
+        if self.if_variant == 'plan':
+            self.plan_history: list = list()
+
+        self.goals_required = set(self.game_instance['goal_state'])
+        self.goals_achieved = set()
 
     def _on_before_game(self):
         # get initial room description from IF interpreter:
@@ -58,14 +67,17 @@ class AdventureGameMaster(DialogueGameMaster):
         # print(self.get_players())
 
     def _validate_player_response(self, player: Player, utterance: str) -> bool:
-        # TODO: hook in and separate plans from IF inputs to allow different levels of feeding plans back into context
         # Check responses for specific players
         if player == self.player:
-            # TODO: check for plan tag for planning version
             # Check rule: utterance starts with IF >
             if not utterance.startswith(">"):
                 self.success = False
                 return True
+            if self.if_variant == 'plan':
+                if "\nNext actions:" not in utterance:
+                    self.success = False
+                    return True
+
             """
             # Check rule: required words are included
             utterance = utterance.lower()
@@ -76,11 +88,33 @@ class AdventureGameMaster(DialogueGameMaster):
             """
         return True
 
+    def _on_parse_response(self, player: Player, utterance: str) -> Tuple[str, bool]:
+        """
+        Hook
+
+        Decide if a response utterance should be modified. If not simply return the utterance.
+
+        When a modified utterance and a true value is returned, then a 'parse' event is logged.
+
+        :param player: that produced the response
+        :param utterance: to be potentially modified
+        :return: the (modified) utterance and if to log the parse action (default: True)
+        """
+        if self.if_variant == 'plan':
+            new_plan = utterance.split("\nNext actions:")[1]
+            self.plan_history.append(new_plan)
+            # print(self.plan_history)
+            # TODO: set up limited plan feedback by removing plans here and feeding them back into messages by args
+
+        return utterance, True
+
     def _does_game_proceed(self) -> bool:
         """
         Template method: must be implemented
         """
         # raise NotImplementedError()
+        if self.goals_achieved == self.goals_required:
+            return False
         if len(self.turns) >= 5:
             return False
         return True
@@ -101,6 +135,7 @@ class AdventureGameMaster(DialogueGameMaster):
         # print("Stripped IF input:", if_input)
 
         goals_achieved, if_response = self.if_interpreter.process_action(if_input)
+        self.goals_achieved = goals_achieved
         self.add_user_message(self.player, if_response)
 
         # record successful turn:
