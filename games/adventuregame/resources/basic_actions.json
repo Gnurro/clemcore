@@ -47,8 +47,8 @@
     "object_pre_state": ["at"],
     "object_post_state": "at(PLAYER,TARGET)",
     "state_changes": [
-      {"pre_state": "at(PLAYER,LOCATION)", "conditions": ["exit(LOCATION,TARGET)"], "post_state": "at(PLAYER,TARGET)"},
-      {"pre_state": "at(THING,LOCATION)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
+      {"pre_state": "at(PLAYER,HERE)", "conditions": ["exit(HERE,TARGET)"], "post_state": "at(PLAYER,TARGET)"},
+      {"pre_state": "at(THING,HERE)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
     ]
   }
 ]

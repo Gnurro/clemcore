@@ -517,11 +517,18 @@ class BasicIFInterpreter:
         state_changes = self.action_types[action_dict['type']]['state_changes']
         print("current action state changes:", state_changes)
         state_changed = False
+        facts_to_remove = list()
+        facts_to_add = list()
         for state_change in state_changes:
-            print("current state change:", state_change)
+            # NOTE: only resolve if all state changes go through
+            print("\ncurrent state change:", state_change)
 
-            if "LOCATION" in state_change['pre_state'] or "LOCATION" in state_change['post_state']:
-                print("LOCATION found in", state_change)
+            if "HERE" in state_change['pre_state'] or "HERE" in state_change['post_state']:
+
+                # get things here:
+                things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
+
+                print("HERE found in", state_change)
                 present_exits = self.get_player_room_exits()
                 # print("present exits:", present_exits)
                 # TODO: check exit passability (once doors exist)
@@ -531,7 +538,7 @@ class BasicIFInterpreter:
                 # print("passable exits:", passable_exits)
                 if action_dict['arg1'] not in passable_exits:
                     # print(f"There is no exit to {action_dict['arg1']}!")
-                    return False, f"There is no {action_dict['arg1']} here."
+                    return False, f"There is no exit to {action_dict['arg1']} here."
                 elif len(passable_exits[action_dict['arg1']]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     # TODO: handle multiple instances of same entity type
@@ -539,35 +546,85 @@ class BasicIFInterpreter:
                 else:
                     arg1_inst = passable_exits[action_dict['arg1']][0]
 
-                pre_state: str = state_change['pre_state'].replace("LOCATION", self.get_player_room())
+                pre_state: str = state_change['pre_state'].replace("HERE", self.get_player_room())
 
                 if "PLAYER" in pre_state:
                     pre_state = pre_state.replace("PLAYER", "player1")
+                    pre_state_tuple = split_state_string(pre_state)
+
+                    post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
+                    post_state = post_state.replace("PLAYER", "player1")
+                    post_state_tuple = split_state_string(post_state)
+                    # facts_to_add.append(post_state_tuple)
+
+                    # check conditions:
+                    conditions_fulfilled: bool = True
+                    for condition in state_change['conditions']:
+                        player_condition = condition.replace("HERE", self.get_player_room())
+                        player_condition = player_condition.replace("TARGET", arg1_inst)
+                        print("player condition:", player_condition)
+                        player_condition_tuple = split_state_string(player_condition)
+                        if player_condition_tuple not in self.world_state:
+                            conditions_fulfilled = False
+
+                    if conditions_fulfilled:
+                        facts_to_remove.append(pre_state_tuple)
+                        facts_to_add.append(post_state_tuple)
+
+                    # facts_to_remove.append(pre_state_tuple)
 
                 if "THING" in pre_state:
-                    pre_state = pre_state.replace("LOCATION", self.get_player_room())
+                    # pre_state = pre_state.replace("HERE", self.get_player_room())
                     # check things at location:
                     internal_visible_contents = self.get_player_room_contents_visible()
                     # print("vis cont type:", type(internal_visible_contents))
                     # print("inv cont type:", type(self.get_inventory_content()))
-                    things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
+                    # things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
                     print("things here:", things_here)
                     for thing_here in things_here:
-                        # TODO: make this outer loop to apply state change to all applicable facts
-                        print(thing_here)
+                        pre_state: str = state_change['pre_state'].replace("HERE", self.get_player_room())
+                        print("initial prestate:", pre_state)
+                        print("current thing here:", thing_here)
                         pre_state = pre_state.replace("THING", thing_here)
+                        print("current prestate for thing here:", pre_state)
+                        pre_state_tuple = split_state_string(pre_state)
+                        print("current prestate tuple for thing here:", pre_state_tuple)
+
+                        post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
+                        post_state = post_state.replace("THING", thing_here)
+                        post_state_tuple = split_state_string(post_state)
+
+                        # check conditions
+                        conditions_fulfilled: bool = True
+                        for condition in state_change['conditions']:
+                            thing_condition = condition.replace("THING", thing_here)
+                            thing_condition_tuple = split_state_string(thing_condition)
+                            if thing_condition_tuple not in self.world_state:
+                                conditions_fulfilled = False
+
+                        if conditions_fulfilled:
+                            facts_to_remove.append(pre_state_tuple)
+                            facts_to_add.append(post_state_tuple)
+                        print()
 
 
-                print("pre state:", pre_state)
-
+                # print("pre state:", pre_state)
+                """
                 post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
 
                 if "PLAYER" in post_state:
                     post_state = post_state.replace("PLAYER", "player1")
+                    post_state_tuple = split_state_string(post_state)
+                    facts_to_add.append(post_state_tuple)
+                """
+                # print("post state:", post_state)
 
-                print("post state:", post_state)
+                # print("facts to remove after HERE block:", facts_to_remove)
+                # print("facts to add after HERE block:", facts_to_add)
 
-            if "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
+                state_changed = True
+
+            elif "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
                 # get visible room content:
                 internal_visible_contents = self.get_player_room_contents_visible()
 
@@ -643,14 +700,25 @@ class BasicIFInterpreter:
                 pre_state_tuple = split_state_string(pre_state)
                 post_state_tuple = split_state_string(post_state)
 
+                facts_to_remove.append(pre_state_tuple)
+                facts_to_add.append(post_state_tuple)
+
                 # remove pre state and add post state:
-                self.world_state.remove(pre_state_tuple)
-                self.world_state.add(post_state_tuple)
+                # self.world_state.remove(pre_state_tuple)
+                # self.world_state.add(post_state_tuple)
 
                 state_changed = True
 
+        print("facts to remove:", facts_to_remove)
+        print("facts to add:", facts_to_add)
+
+        for remove_fact in facts_to_remove:
+            self.world_state.remove(remove_fact)
+        for add_fact in facts_to_add:
+            self.world_state.add(add_fact)
+
         if state_changed:
-            return True, post_state_tuple
+            return True, facts_to_add[0]
         else:
             return False, f"{action_dict['arg1']} is not {pre_state}"
         """
