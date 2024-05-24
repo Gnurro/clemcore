@@ -235,7 +235,7 @@ class BasicIFInterpreter:
         # add trait facts for objects:
         for state_pred in self.world_state:
             if state_pred[0] == 'type':
-                # print(self.entity_types[state_pred[2]])
+                # add trait facts by entity type:
                 if 'traits' in self.entity_types[state_pred[2]]:
                     type_traits: list = self.entity_types[state_pred[2]]['traits']
                     for type_trait in type_traits:
@@ -445,7 +445,7 @@ class BasicIFInterpreter:
         else:
             visible_content_state_combined = str()
 
-        # TODO: change exit description to not contain "you can go"; handle doors (once they exist)
+        # TODO: handle doors (once they exist)
 
         room_exits = self.get_player_room_exits()
         # convert target room IDs to type names:
@@ -999,17 +999,17 @@ if __name__ == "__main__":
     print(turn_2[1])
     print()
     """"""
-
+    """
     turn_3 = test_interpreter.process_action("put sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich in table")
     # turn_3 = test_interpreter.process_action("place sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3[1])
-    """"""
     """
+
     turn_3 = test_interpreter.process_action("go pantry")
     # turn_1 = test_interpreter.process_action("go to pantry")
     # print(turn_3[1])
     print(turn_3)
-    """
+    """"""
     # print(state_tuple_to_str(('on', 'sandwich1', 'table1')))

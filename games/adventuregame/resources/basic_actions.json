@@ -56,6 +56,6 @@
       {"pre_state": "at(PLAYER,HERE)", "conditions": ["exit(HERE,TARGET)"], "post_state": "at(PLAYER,TARGET)"},
       {"pre_state": "at(THING,HERE)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
     ],
-    "feedback_template": "{{ room_desc }}."
+    "feedback_template": "{{ room_desc }}"
   }
 ]
