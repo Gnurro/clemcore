@@ -7,6 +7,8 @@
 import json
 import lark
 from lark import Lark, Transformer
+import jinja2
+
 
 PATH = "games/adventuregame/"
 
@@ -226,7 +228,20 @@ class BasicIFInterpreter:
         for state_string in self.game_instance['initial_state']:
             self.world_state.add(split_state_string(state_string))
 
+        # print("unaugmented initial world:", self.world_state)
+
         preds_to_add = set()
+
+        # add trait facts for objects:
+        for state_pred in self.world_state:
+            if state_pred[0] == 'type':
+                # print(self.entity_types[state_pred[2]])
+                if 'traits' in self.entity_types[state_pred[2]]:
+                    type_traits: list = self.entity_types[state_pred[2]]['traits']
+                    for type_trait in type_traits:
+                        preds_to_add.add((type_trait, state_pred[1]))
+                """"""
+
         # add floors to rooms:
         for state_pred in self.world_state:
             if state_pred[0] == 'room':
@@ -255,20 +270,31 @@ class BasicIFInterpreter:
 
         # put 'supported' items on the floor if they are not 'in' or 'on':
         for state_pred in self.world_state:
-            if state_pred[0] == 'at' and hasattr(self.entity_types[self.inst_to_type_dict[state_pred[1]]], 'supported'):
+            # print("checking", state_pred)
+            if state_pred[1] in self.inst_to_type_dict:
+                if self.inst_to_type_dict[state_pred[1]] in self.entity_types:
+                    # print(self.entity_types[self.inst_to_type_dict[state_pred[1]]])
+                    pass
+            # if state_pred[0] == 'at' and hasattr(self.entity_types[self.inst_to_type_dict[state_pred[1]]], 'supported'):
+            # if state_pred[0] == 'at' and 'supported' in self.entity_types[self.inst_to_type_dict[state_pred[1]]]:
+            if state_pred[0] == 'at' and ('needs_support', state_pred[1]) in self.world_state:
+                # print("needs support:", state_pred)
                 currently_supported = False
                 for state_pred2 in self.world_state:
-                    if state_pred2[0] == 'on' and state_pred2[2] == state_pred[1]:
+                    if state_pred2[0] == 'on' and state_pred2[1] == state_pred[1]:
                         currently_supported = True
                         break
-                    if state_pred2[0] == 'in' and state_pred2[2] == state_pred[1]:
+                    if state_pred2[0] == 'in' and state_pred2[1] == state_pred[1]:
                         currently_supported = True
                         break
                 if not currently_supported:
                     # self.world_state.add(('on', 'floor', state_pred[2]))
-                    preds_to_add.add(('on', state_pred[1], 'floor'))
+                    # preds_to_add.add(('on', state_pred[1], 'floor'))
+                    preds_to_add.add(('on', state_pred[1], f'{state_pred[2]}floor'))
 
         self.world_state = self.world_state.union(preds_to_add)
+
+        # print("augmented initial world:", self.world_state)
 
         for state_string in self.game_instance['goal_state']:
             self.goal_state.add(split_state_string(state_string))
@@ -427,12 +453,15 @@ class BasicIFInterpreter:
             room_exits[target_room_idx] = self.room_to_type_dict[target_room]
         exits_str = str()
         if len(room_exits) == 1:
-            exits_str = f" You can go to a {room_exits[0]} from here."
+            # exits_str = f" You can go to a {room_exits[0]} from here."
+            exits_str = f" There is a passage to a {room_exits[0]} here."
         elif len(room_exits) == 2:
-            exits_str = f" You can go to a {room_exits[0]} and a {room_exits[1]} from here."
+            # exits_str = f" You can go to a {room_exits[0]} and a {room_exits[1]} from here."
+            exits_str = f" There are passages to a {room_exits[0]} and a {room_exits[1]} here."
         elif len(room_exits) >= 3:
-            comma_exits = ", ".join(room_exits[:-1])
-            exits_str = f" You can go to {comma_exits} and {room_exits[-1]} from here."
+            comma_exits = ", a ".join(room_exits[:-1])
+            # exits_str = f" You can go to {comma_exits} and {room_exits[-1]} from here."
+            exits_str = f" There are passages to a {comma_exits} and a {room_exits[-1]} here."
 
         # combine full room description:
         # room_description = f"{player_at_str} {visible_contents_str} {visible_content_state_combined} {exits_str}"
@@ -488,11 +517,10 @@ class BasicIFInterpreter:
         if action_tuple[1] not in self.entity_types:
             return False, f"I don't know what a '{action_tuple[1]}' is."
         """
-        # TODO: handle split verbs?
 
         parsed_command = self.act_parser.parse(action_input)
         action_dict = self.act_transformer.transform(parsed_command)
-        print("parse action input arg:", action_dict)
+        # print("parse action input arg:", action_dict)
 
         if action_dict['type'] not in self.action_types:
             return False, f"I don't know what '{action_dict['arg1']}' means."
@@ -515,20 +543,20 @@ class BasicIFInterpreter:
 
         # get state changes for current action:
         state_changes = self.action_types[action_dict['type']]['state_changes']
-        print("current action state changes:", state_changes)
+        # print("current action state changes:", state_changes)
         state_changed = False
         facts_to_remove = list()
         facts_to_add = list()
         for state_change in state_changes:
             # NOTE: only resolve if all state changes go through
-            print("\ncurrent state change:", state_change)
+            # print("\ncurrent state change:", state_change)
 
             if "HERE" in state_change['pre_state'] or "HERE" in state_change['post_state']:
 
                 # get things here:
                 things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
 
-                print("HERE found in", state_change)
+                # print("HERE found in", state_change)
                 present_exits = self.get_player_room_exits()
                 # print("present exits:", present_exits)
                 # TODO: check exit passability (once doors exist)
@@ -562,7 +590,7 @@ class BasicIFInterpreter:
                     for condition in state_change['conditions']:
                         player_condition = condition.replace("HERE", self.get_player_room())
                         player_condition = player_condition.replace("TARGET", arg1_inst)
-                        print("player condition:", player_condition)
+                        # print("player condition:", player_condition)
                         player_condition_tuple = split_state_string(player_condition)
                         if player_condition_tuple not in self.world_state:
                             conditions_fulfilled = False
@@ -580,15 +608,15 @@ class BasicIFInterpreter:
                     # print("vis cont type:", type(internal_visible_contents))
                     # print("inv cont type:", type(self.get_inventory_content()))
                     # things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
-                    print("things here:", things_here)
+                    # print("things here:", things_here)
                     for thing_here in things_here:
                         pre_state: str = state_change['pre_state'].replace("HERE", self.get_player_room())
-                        print("initial prestate:", pre_state)
-                        print("current thing here:", thing_here)
+                        # print("initial prestate:", pre_state)
+                        # print("current thing here:", thing_here)
                         pre_state = pre_state.replace("THING", thing_here)
-                        print("current prestate for thing here:", pre_state)
+                        # print("current prestate for thing here:", pre_state)
                         pre_state_tuple = split_state_string(pre_state)
-                        print("current prestate tuple for thing here:", pre_state_tuple)
+                        # print("current prestate tuple for thing here:", pre_state_tuple)
 
                         post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
                         post_state = post_state.replace("THING", thing_here)
@@ -605,7 +633,7 @@ class BasicIFInterpreter:
                         if conditions_fulfilled:
                             facts_to_remove.append(pre_state_tuple)
                             facts_to_add.append(post_state_tuple)
-                        print()
+                        # print()
 
 
                 # print("pre state:", pre_state)
@@ -643,6 +671,8 @@ class BasicIFInterpreter:
                     visible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
                 # print("visible contents:", visible_contents)
 
+                # TODO: move multiples handling to parsing step
+
                 if action_dict['arg1'] not in visible_contents:
                     print(f"There is no {action_dict['arg1']}!")
                     return False, f"There is no {action_dict['arg1']} here."
@@ -653,6 +683,7 @@ class BasicIFInterpreter:
                 else:
                     arg1_inst = visible_contents[action_dict['arg1']][0]
 
+                arg2_inst = None
                 if 'arg2' in action_dict:
                     if action_dict['arg2'] not in visible_contents:
                         print(f"There is no {action_dict['arg2']}!")
@@ -668,22 +699,22 @@ class BasicIFInterpreter:
                 pre_state: str = state_change['pre_state'].replace("THING", arg1_inst)
 
                 if "ANY" in pre_state:
-                    print("ANY found in precondition")
+                    # print("ANY found in precondition")
                     any_match = False
                     pred = split_state_string(pre_state)[0]
                     for state_pred in self.world_state:
                         if state_pred[0] == pred and state_pred[1] == arg1_inst:
-                            print(state_pred)
+                            # print(state_pred)
                             any_match = True
                             pre_state = pre_state.replace("ANY", state_pred[2])
-                            print(pre_state)
+                            # print(pre_state)
                             break
                     if not any_match:
-                        print("no matching pred for ANY found")
+                        # print("no matching pred for ANY found")
                         continue
 
 
-                print("pre state:", pre_state)
+                # print("pre state:", pre_state)
                 post_state: str = state_change['post_state'].replace("THING", arg1_inst)
 
                 if "PREP" in post_state:
@@ -692,7 +723,7 @@ class BasicIFInterpreter:
                 if "TARGET" in post_state:
                     post_state = post_state.replace("TARGET", arg2_inst)
 
-                print("post state:", post_state)
+                # print("post state:", post_state)
 
                 # check conditions
 
@@ -700,8 +731,27 @@ class BasicIFInterpreter:
                 pre_state_tuple = split_state_string(pre_state)
                 post_state_tuple = split_state_string(post_state)
 
-                facts_to_remove.append(pre_state_tuple)
-                facts_to_add.append(post_state_tuple)
+                # check conditions:
+                conditions_fulfilled: bool = True
+                for condition in state_change['conditions']:
+                    thing_condition = condition.replace("THING", arg1_inst)
+                    if arg2_inst:
+                        thing_condition = thing_condition.replace("TARGET", arg2_inst)
+                    # print("thing condition:", thing_condition)
+                    thing_condition_tuple = split_state_string(thing_condition)
+                    # print("thing condition tuple:", thing_condition_tuple)
+                    if thing_condition_tuple not in self.world_state:
+                        # print(thing_condition_tuple, "not in world state")
+                        conditions_fulfilled = False
+
+                if conditions_fulfilled:
+                    # print("conditions fulfilled:", state_change['conditions'])
+                    facts_to_remove.append(pre_state_tuple)
+                    facts_to_add.append(post_state_tuple)
+
+
+                # facts_to_remove.append(pre_state_tuple)
+                # facts_to_add.append(post_state_tuple)
 
                 # remove pre state and add post state:
                 # self.world_state.remove(pre_state_tuple)
@@ -709,8 +759,8 @@ class BasicIFInterpreter:
 
                 state_changed = True
 
-        print("facts to remove:", facts_to_remove)
-        print("facts to add:", facts_to_add)
+        # print("facts to remove:", facts_to_remove)
+        # print("facts to add:", facts_to_add)
 
         for remove_fact in facts_to_remove:
             self.world_state.remove(remove_fact)
@@ -721,190 +771,6 @@ class BasicIFInterpreter:
             return True, facts_to_add[0]
         else:
             return False, f"{action_dict['arg1']} is not {pre_state}"
-        """
-        if action_dict['type'] == 'go':
-            # print("go action")
-            present_exits = self.get_player_room_exits()
-            # print("present exits:", present_exits)
-            # TODO: check exit passability (once doors exist)
-            passable_exits = {self.room_to_type_dict[instance]: [] for instance in present_exits}
-            for instance in present_exits:
-                passable_exits[self.room_to_type_dict[instance]].append(instance)
-            # print("passable exits:", passable_exits)
-            if action_dict['arg1'] not in passable_exits:
-                # print(f"There is no exit to {action_dict['arg1']}!")
-                return False, f"There is no {action_dict['arg1']} here."
-            elif len(passable_exits[action_dict['arg1']]) > 1:
-                # print(f"There are multiple {action_dict['arg1']}!")
-                # TODO: handle multiple instances of same entity type
-                return False, f"There are multiple {action_dict['arg1']} here."
-            else:
-                arg1_inst = passable_exits[action_dict['arg1']][0]
-
-            # check object pre state:
-            object_pre_state = self.action_types[action_dict['type']]['object_pre_state']
-            pre_state_valence = len(object_pre_state)
-            object_post_state = self.action_types[action_dict['type']]['object_post_state']
-            # print("object post state:", object_post_state)
-            post_state_valence = len(object_post_state)
-
-            state_changed = False
-
-            for state_pred in self.world_state:
-                # print("checking state pred:", state_pred)
-                # if state_pred[0] in object_pre_state and state_pred[1] == action_dict['arg1']:
-                if state_pred[0] == "at" and state_pred[1] == "player1" and not state_pred[2] == arg1_inst:
-                    # print("found player at state:", state_pred)
-                    self.world_state.remove(state_pred)
-
-                    new_pred = ["at"]
-
-                    if object_post_state[1] == "PLAYER":
-                        # new_pred.append(action_dict['arg1'])
-                        new_pred.append("player1")
-
-                    if object_post_state[2] == "TARGET":
-                        # new_pred.append(action_dict['arg2'])
-                        new_pred.append(arg1_inst)
-
-                    new_predicate = tuple(new_pred)
-                    new_player_at_fact = new_predicate
-
-                    # print("new predicate for player move:", new_predicate)
-
-                    self.world_state.add(new_predicate)
-                    state_changed = True
-                # move inventory with player:
-                if state_pred[0] == "at" and not state_pred[2] == arg1_inst:
-                    # print("checking state pred:", state_pred)
-                    inventory_item = str()
-                    for state_pred2 in self.world_state:
-                        if state_pred2[0] == 'in' and state_pred2[1] == state_pred[1] and state_pred2[2] == 'inventory':
-                            inventory_item = state_pred2[1]
-                            break
-                    if inventory_item:
-                        # print("inventory item at found:", state_pred)
-                        self.world_state.remove(state_pred)
-
-                        new_pred = ["at", inventory_item, arg1_inst]
-
-                        new_predicate = tuple(new_pred)
-
-                        # print("new predicate:", new_predicate)
-
-                        self.world_state.add(new_predicate)
-                        # break
-            # print("go state changes done")
-            # print("state changed:", state_changed)
-            if state_changed:
-                return True, new_player_at_fact
-            else:
-                return False, f"You can't enter the {action_dict['arg1']}"
-
-        # TODO: check fitting entity instance at location
-
-        # get visible room content:
-        internal_visible_contents = self.get_player_room_contents_visible()
-
-        # get inventory content:
-        inventory_content = self.get_inventory_content()
-        # print(inventory_content)
-
-        # convert to types:
-        # print("internal visible contents:", internal_visible_contents)
-        visible_contents = {self.inst_to_type_dict[instance]: [] for instance in internal_visible_contents}
-        for instance in internal_visible_contents:
-            visible_contents[self.inst_to_type_dict[instance]].append(instance)
-        for inventory_item in inventory_content:
-            if self.inst_to_type_dict[inventory_item] not in visible_contents:
-                visible_contents[self.inst_to_type_dict[inventory_item]] = []
-            visible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
-        # print("visible contents:", visible_contents)
-
-        if action_dict['arg1'] not in visible_contents:
-            print(f"There is no {action_dict['arg1']}!")
-            return False, f"There is no {action_dict['arg1']} here."
-        elif len(visible_contents[action_dict['arg1']]) > 1:
-            print(f"There are multiple {action_dict['arg1']}!")
-            # TODO: handle multiple instances of same entity type
-            return False, f"There are multiple {action_dict['arg1']} here."
-        else:
-            arg1_inst = visible_contents[action_dict['arg1']][0]
-
-        if 'arg2' in action_dict:
-            if action_dict['arg2'] not in visible_contents:
-                print(f"There is no {action_dict['arg2']}!")
-                return False, f"There is no {action_dict['arg2']} here."
-            elif len(visible_contents[action_dict['arg2']]) > 1:
-                print(f"There are multiple {action_dict['arg2']}!")
-                # TODO: handle multiple instances of same entity type
-                return False, f"There are multiple {action_dict['arg2']} here."
-            else:
-                arg2_inst = visible_contents[action_dict['arg2']][0]
-
-        # TODO: entity type synonyms?
-
-        # check general action-object compatibility:
-        compatible = False
-        object_req_attribute = self.action_types[action_dict['type']]['object_req_attribute']
-        if object_req_attribute in self.entity_types[action_dict['arg1']]:
-            if self.entity_types[action_dict['arg1']][object_req_attribute]:
-                compatible = True
-        if not compatible:
-            # print("first comp check failed")
-            return False, f"{action_dict['arg1']} is not {object_req_attribute}"
-        # check object pre state:
-        object_pre_state = self.action_types[action_dict['type']]['object_pre_state']
-        pre_state_valence = len(object_pre_state)
-        object_post_state = self.action_types[action_dict['type']]['object_post_state']
-        # print("object post state:", object_post_state)
-        post_state_valence = len(object_post_state)
-        # print("post state valence:", post_state_valence)
-
-        # TODO: make predicates external to handle valence?
-
-        state_changed = False
-
-        for state_pred in self.world_state:
-            # print("checking state pred:", state_pred)
-            # if state_pred[0] in object_pre_state and state_pred[1] == action_dict['arg1']:
-            if state_pred[0] in object_pre_state and state_pred[1] == arg1_inst:
-                self.world_state.remove(state_pred)
-
-                new_pred = []
-
-                if object_post_state[0] == "PREP":
-                    new_pred.append(action_dict['prep'])
-                else:
-                    new_pred.append(object_post_state[0])
-
-                if object_post_state[1] == "THING":
-                    # new_pred.append(action_dict['arg1'])
-                    new_pred.append(arg1_inst)
-                else:
-                    new_pred.append(object_post_state[1])
-
-                if post_state_valence >= 3:
-                    if object_post_state[2] == "TARGET":
-                        # new_pred.append(action_dict['arg2'])
-                        new_pred.append(arg2_inst)
-                    else:
-                        new_pred.append(object_post_state[2])
-
-                new_predicate = tuple(new_pred)
-
-                # print("new predicate:", new_predicate)
-
-                self.world_state.add(new_predicate)
-                state_changed = True
-
-                break
-
-        if state_changed:
-            return True, new_predicate
-        else:
-            return False, f"{action_dict['arg1']} is not {object_pre_state}"
-        """
 
     def process_action(self, action_input: str):
         """
@@ -924,10 +790,28 @@ class BasicIFInterpreter:
             if not resolved:
                 return self.goals_achieved, resolution_result
             else:
-                print("resolution result:", resolution_result)
+                # print("resolution result:", resolution_result)
+                # get template:
+                feedback_template = self.action_types[parse_result['type']]['feedback_template']
+                # print("feedback template:", feedback_template)
+                feedback_jinja = jinja2.Template(feedback_template)
+                template_tags = ["thing", "inventory_desc", "prep", "target", "room_desc"]
+                jinja_args = dict()
+                for template_tag in template_tags:
+                    if template_tag in feedback_template:
+                        if template_tag == "thing":
+                            jinja_args[template_tag] = self._get_inst_str(resolution_result[1])
+                        if template_tag == "inventory_desc":
+                            jinja_args[template_tag] = self.get_inventory_desc()
+                        if template_tag == "prep":
+                            jinja_args[template_tag] = resolution_result[0]
+                        if template_tag == "target":
+                            jinja_args[template_tag] = self._get_inst_str(resolution_result[2])
+                        if template_tag == "room_desc":
+                            jinja_args[template_tag] = self.get_full_room_desc()
+                base_result_str = feedback_jinja.render(jinja_args)
 
-                # TODO: externalize result descriptions
-
+                """
                 if len(resolution_result) == 2:
                     # base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
                     base_result_str = f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]}."
@@ -941,7 +825,7 @@ class BasicIFInterpreter:
                 else:
                     base_result_str = (f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]} "
                                        f"the {self._get_inst_str(resolution_result[2])}.")
-
+                """
                 # check goal achievement:
                 # print("goals:", self.goal_state)
                 self.goals_achieved = self.goal_state & self.world_state
@@ -967,7 +851,8 @@ class BasicIFInterpreter:
                         for state_pred in self.world_state:
                             if state_pred[0] == 'in' and state_pred[1] == thing:
                                 # visible_content_state_strs.append(f"There is a {thing} in the {state_pred[2]}.")
-                                visible_content_state_strs.append(f"There is a {self.inst_to_type_dict[thing]} in the {self.inst_to_type_dict[state_pred[2]]}.")
+                                # visible_content_state_strs.append(f"There is a {self.inst_to_type_dict[thing]} in the {self.inst_to_type_dict[state_pred[2]]}.")
+                                visible_content_state_strs.append(f"There is a {self._get_inst_str(thing)} in the {self._get_inst_str(state_pred[2])}.")
                     visible_content_state_combined = " ".join(visible_content_state_strs)
                     # print("New world state:", self.world_state)
                     return goals_achieved_response, f"{base_result_str} {visible_content_state_combined}"
@@ -1054,6 +939,27 @@ if __name__ == "__main__":
              "type(sandwich1,sandwich)", "at(sandwich1,kitchen1)", "in(sandwich1,fridge1)"],
         "goal_state": ["on(sandwich1,table1)"]
     }
+    
+    game_instance_exmpl = {
+        "game_id": 0,
+        "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.",
+        "goal_str": "Put a sandwich on the table.",
+        "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.",
+        "initial_state":
+            ["room(kitchen1,kitchen)", "exit(kitchen1,pantry1)", "exit(kitchen1,hallway1)", "exit(kitchen1,livingroom1)",
+             "room(pantry1,pantry)", "exit(pantry1,kitchen1)",
+             "room(hallway1,hallway)", "exit(hallway1,kitchen1)",
+             "room(livingroom1,livingroom)", "exit(livingroom1,kitchen1)",
+             "type(player1,player)", "at(player1,kitchen1)",
+             "type(fridge1,refrigerator)", "at(fridge1,kitchen1)", "closed(fridge1)",
+             "type(table1,table)", "at(table1,kitchen1)", "adj(table1,wooden)",
+             "type(counter1,counter)", "at(counter1,kitchen1)",
+             "type(sandwich1,sandwich)", "at(sandwich1,kitchen1)", "in(sandwich1,fridge1)",
+             "type(apple1,apple)", "at(apple1,kitchen1)"
+             ],
+        "goal_state": ["at(sandwich1,pantry1)"]
+    }
+    
     """
     game_instance_exmpl = {
         "game_id": 0,
@@ -1064,10 +970,12 @@ if __name__ == "__main__":
             ["room(kitchen1,kitchen)", "exit(kitchen1,pantry1)",
              "room(pantry1,pantry)", "exit(pantry1,kitchen1)",
              "type(player1,player)", "at(player1,kitchen1)",
-             "type(fridge1,refrigerator)", "at(fridge1,kitchen1)", "closed(fridge1)",
+             "type(fridge1,refrigerator)", "at(fridge1,kitchen1)", "closed(fridge1)", "adj(fridge1,large)",
              "type(table1,table)", "at(table1,kitchen1)", "adj(table1,wooden)",
              "type(counter1,counter)", "at(counter1,kitchen1)",
-             "type(sandwich1,sandwich)", "at(sandwich1,kitchen1)", "in(sandwich1,fridge1)"],
+             "type(sandwich1,sandwich)", "at(sandwich1,kitchen1)", "in(sandwich1,fridge1)",
+             "type(apple1,apple)", "at(apple1,kitchen1)"
+             ],
         "goal_state": ["at(sandwich1,pantry1)"]
     }
 
@@ -1090,16 +998,18 @@ if __name__ == "__main__":
     # turn_2 = test_interpreter.process_action("take apple")
     print(turn_2[1])
     print()
-    """
+    """"""
+
     turn_3 = test_interpreter.process_action("put sandwich on table")
+    # turn_3 = test_interpreter.process_action("put sandwich in table")
     # turn_3 = test_interpreter.process_action("place sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3[1])
+    """"""
     """
-
     turn_3 = test_interpreter.process_action("go pantry")
     # turn_1 = test_interpreter.process_action("go to pantry")
     # print(turn_3[1])
     print(turn_3)
-    """"""
+    """
     # print(state_tuple_to_str(('on', 'sandwich1', 'table1')))

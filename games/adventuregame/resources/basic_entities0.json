@@ -6,40 +6,33 @@
   {
     "type_name": "floor",
     "hidden": true,
-    "support": true,
-    "traits": ["support"]
+    "support": true
   },
   {
     "type_name": "table",
     "support": true,
-    "traits": ["support"],
     "possible_adjs": ["wooden", "metal", "low", "high"]
   },
   {
     "type_name": "counter",
     "support": true,
-    "traits": ["support"],
     "possible_adjs": ["wooden", "metal", "low", "high"]
   },
   {
     "type_name": "refrigerator",
     "container": true,
-    "openable": true,
-    "traits": ["container", "openable"],
-    "possible_adjs": ["large", "fancy"]
+    "openable": true
   },
   {
     "type_name": "sandwich",
     "takeable": true,
     "movable": true,
-    "supported": true,
-    "traits": ["takeable", "movable", "needs_support"]
+    "supported": true
   },
   {
     "type_name": "apple",
     "takeable": true,
     "movable": true,
-    "supported": true,
-    "traits": ["takeable", "movable", "needs_support"]
+    "supported": true
   }
 ]

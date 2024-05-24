@@ -7,7 +7,8 @@
     "object_post_state": "open(THING)",
     "state_changes": [
       {"pre_state": "closed(THING)", "conditions": [], "post_state": "open(THING)"}
-    ]
+    ],
+    "feedback_template": "The {{ thing }} is now open."
   },
   {
     "type_name": "close",
@@ -17,7 +18,8 @@
     "object_post_state": "closed(THING)",
     "state_changes": [
       {"pre_state": "open(THING)", "conditions": [], "post_state": "closed(THING)"}
-    ]
+    ],
+    "feedback_template": "The {{ thing }} is now closed."
   },
   {
     "type_name": "take",
@@ -26,9 +28,10 @@
     "object_pre_state": ["in", "on"],
     "object_post_state": "in(THING,inventory)",
     "state_changes": [
-      {"pre_state": "on(THING,ANY)", "conditions": [], "post_state": "in(THING,inventory)"},
-      {"pre_state": "in(THING,ANY)", "conditions": [], "post_state": "in(THING,inventory)"}
-    ]
+      {"pre_state": "on(THING,ANY)", "conditions": ["takeable(THING)"], "post_state": "in(THING,inventory)"},
+      {"pre_state": "in(THING,ANY)", "conditions": ["takeable(THING)"], "post_state": "in(THING,inventory)"}
+    ],
+    "feedback_template": "You take the {{ thing }}. {{ inventory_desc }}"
   },
   {
     "type_name": "put",
@@ -37,9 +40,12 @@
     "object_pre_state": ["in", "on"],
     "object_post_state": "PREP(THING,TARGET)",
     "state_changes": [
-      {"pre_state": "on(THING,ANY)", "conditions": [], "post_state": "PREP(THING,TARGET)"},
-      {"pre_state": "in(THING,ANY)", "conditions": [], "post_state": "PREP(THING,TARGET)"}
-    ]
+      {"pre_state": "on(THING,ANY)", "conditions": ["movable(THING)", "support(TARGET)"], "post_state": "on(THING,TARGET)"},
+      {"pre_state": "on(THING,ANY)", "conditions": ["movable(THING)", "container(TARGET)"], "post_state": "in(THING,TARGET)"},
+      {"pre_state": "in(THING,ANY)", "conditions": ["movable(THING)", "support(TARGET)"], "post_state": "on(THING,TARGET)"},
+      {"pre_state": "in(THING,ANY)", "conditions": ["movable(THING)", "container(TARGET)"], "post_state": "in(THING,TARGET)"}
+    ],
+    "feedback_template": "The {{ thing }} is now {{ prep }} the {{ target }}."
   },
   {
     "type_name": "go",
@@ -49,6 +55,7 @@
     "state_changes": [
       {"pre_state": "at(PLAYER,HERE)", "conditions": ["exit(HERE,TARGET)"], "post_state": "at(PLAYER,TARGET)"},
       {"pre_state": "at(THING,HERE)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
-    ]
+    ],
+    "feedback_template": "{{ room_desc }}."
   }
 ]
