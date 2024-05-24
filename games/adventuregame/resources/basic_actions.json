@@ -4,27 +4,51 @@
     "lark": "open: OPEN thing\nOPEN: \"open\"",
     "object_req_attribute": "openable",
     "object_pre_state": ["closed"],
-    "object_post_state": "open(THING)"
+    "object_post_state": "open(THING)",
+    "state_changes": [
+      {"pre_state": "closed(THING)", "conditions": [], "post_state": "open(THING)"}
+    ]
   },
   {
     "type_name": "close",
     "lark": "close: CLOSE thing\nCLOSE: \"close\"",
     "object_req_attribute": "openable",
     "object_pre_state": ["open"],
-    "object_post_state": "closed(THING)"
+    "object_post_state": "closed(THING)",
+    "state_changes": [
+      {"pre_state": "open(THING)", "conditions": [], "post_state": "closed(THING)"}
+    ]
   },
   {
     "type_name": "take",
     "lark": "take: TAKE [ thing | thing PREP thing ]\nTAKE: \"take\" | \"grab\"",
     "object_req_attribute": "takeable",
     "object_pre_state": ["in", "on"],
-    "object_post_state": "in(THING,inventory)"
+    "object_post_state": "in(THING,inventory)",
+    "state_changes": [
+      {"pre_state": "on(THING,ANY)", "conditions": [], "post_state": "in(THING,inventory)"},
+      {"pre_state": "in(THING,ANY)", "conditions": [], "post_state": "in(THING,inventory)"}
+    ]
   },
   {
     "type_name": "put",
     "lark": "put: PUT thing PREP thing\nPUT: \"put\" | \"leave\"",
     "object_req_attribute": "movable",
     "object_pre_state": ["in", "on"],
-    "object_post_state": "PREP(THING,TARGET)"
+    "object_post_state": "PREP(THING,TARGET)",
+    "state_changes": [
+      {"pre_state": "on(THING,ANY)", "conditions": [], "post_state": "PREP(THING,TARGET)"},
+      {"pre_state": "in(THING,ANY)", "conditions": [], "post_state": "PREP(THING,TARGET)"}
+    ]
+  },
+  {
+    "type_name": "go",
+    "lark": "go: GO \"to\"* thing\nGO: \"go\"",
+    "object_pre_state": ["at"],
+    "object_post_state": "at(PLAYER,TARGET)",
+    "state_changes": [
+      {"pre_state": "at(PLAYER,LOCATION)", "conditions": ["exit(LOCATION,TARGET)"], "post_state": "at(PLAYER,TARGET)"},
+      {"pre_state": "at(THING,LOCATION)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
+    ]
   }
 ]

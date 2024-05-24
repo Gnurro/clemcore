@@ -112,9 +112,10 @@ class AdventureGameMaster(DialogueGameMaster):
         """
         Template method: must be implemented
         """
-        # raise NotImplementedError()
+        # stop game when all goal states have been achieved:
         if self.goals_achieved == self.goals_required:
             return False
+        # stop game when turn limit is reached:
         if len(self.turns) >= 5:
             return False
         return True

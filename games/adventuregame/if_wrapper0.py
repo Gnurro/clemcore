@@ -513,147 +513,6 @@ class BasicIFInterpreter:
         """
         # print("action dict:", action_dict)
 
-        # get state changes for current action:
-        state_changes = self.action_types[action_dict['type']]['state_changes']
-        print("current action state changes:", state_changes)
-        state_changed = False
-        for state_change in state_changes:
-            print("current state change:", state_change)
-
-            if "LOCATION" in state_change['pre_state'] or "LOCATION" in state_change['post_state']:
-                print("LOCATION found in", state_change)
-                present_exits = self.get_player_room_exits()
-                # print("present exits:", present_exits)
-                # TODO: check exit passability (once doors exist)
-                passable_exits = {self.room_to_type_dict[instance]: [] for instance in present_exits}
-                for instance in present_exits:
-                    passable_exits[self.room_to_type_dict[instance]].append(instance)
-                # print("passable exits:", passable_exits)
-                if action_dict['arg1'] not in passable_exits:
-                    # print(f"There is no exit to {action_dict['arg1']}!")
-                    return False, f"There is no {action_dict['arg1']} here."
-                elif len(passable_exits[action_dict['arg1']]) > 1:
-                    # print(f"There are multiple {action_dict['arg1']}!")
-                    # TODO: handle multiple instances of same entity type
-                    return False, f"There are multiple {action_dict['arg1']} here."
-                else:
-                    arg1_inst = passable_exits[action_dict['arg1']][0]
-
-                pre_state: str = state_change['pre_state'].replace("LOCATION", self.get_player_room())
-
-                if "PLAYER" in pre_state:
-                    pre_state = pre_state.replace("PLAYER", "player1")
-
-                if "THING" in pre_state:
-                    pre_state = pre_state.replace("LOCATION", self.get_player_room())
-                    # check things at location:
-                    internal_visible_contents = self.get_player_room_contents_visible()
-                    # print("vis cont type:", type(internal_visible_contents))
-                    # print("inv cont type:", type(self.get_inventory_content()))
-                    things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
-                    print("things here:", things_here)
-                    for thing_here in things_here:
-                        # TODO: make this outer loop to apply state change to all applicable facts
-                        print(thing_here)
-                        pre_state = pre_state.replace("THING", thing_here)
-
-
-                print("pre state:", pre_state)
-
-                post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
-
-                if "PLAYER" in post_state:
-                    post_state = post_state.replace("PLAYER", "player1")
-
-                print("post state:", post_state)
-
-            if "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
-                # get visible room content:
-                internal_visible_contents = self.get_player_room_contents_visible()
-
-                # get inventory content:
-                inventory_content = self.get_inventory_content()
-                # print(inventory_content)
-
-                # convert to types:
-                # print("internal visible contents:", internal_visible_contents)
-                visible_contents = {self.inst_to_type_dict[instance]: [] for instance in internal_visible_contents}
-                for instance in internal_visible_contents:
-                    visible_contents[self.inst_to_type_dict[instance]].append(instance)
-                for inventory_item in inventory_content:
-                    if self.inst_to_type_dict[inventory_item] not in visible_contents:
-                        visible_contents[self.inst_to_type_dict[inventory_item]] = []
-                    visible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
-                # print("visible contents:", visible_contents)
-
-                if action_dict['arg1'] not in visible_contents:
-                    print(f"There is no {action_dict['arg1']}!")
-                    return False, f"There is no {action_dict['arg1']} here."
-                elif len(visible_contents[action_dict['arg1']]) > 1:
-                    print(f"There are multiple {action_dict['arg1']}!")
-                    # TODO: handle multiple instances of same entity type
-                    return False, f"There are multiple {action_dict['arg1']} here."
-                else:
-                    arg1_inst = visible_contents[action_dict['arg1']][0]
-
-                if 'arg2' in action_dict:
-                    if action_dict['arg2'] not in visible_contents:
-                        print(f"There is no {action_dict['arg2']}!")
-                        return False, f"There is no {action_dict['arg2']} here."
-                    elif len(visible_contents[action_dict['arg2']]) > 1:
-                        print(f"There are multiple {action_dict['arg2']}!")
-                        # TODO: handle multiple instances of same entity type
-                        return False, f"There are multiple {action_dict['arg2']} here."
-                    else:
-                        arg2_inst = visible_contents[action_dict['arg2']][0]
-
-                # replace string placeholders with fact IDs:
-                pre_state: str = state_change['pre_state'].replace("THING", arg1_inst)
-
-                if "ANY" in pre_state:
-                    print("ANY found in precondition")
-                    any_match = False
-                    pred = split_state_string(pre_state)[0]
-                    for state_pred in self.world_state:
-                        if state_pred[0] == pred and state_pred[1] == arg1_inst:
-                            print(state_pred)
-                            any_match = True
-                            pre_state = pre_state.replace("ANY", state_pred[2])
-                            print(pre_state)
-                            break
-                    if not any_match:
-                        print("no matching pred for ANY found")
-                        continue
-
-
-                print("pre state:", pre_state)
-                post_state: str = state_change['post_state'].replace("THING", arg1_inst)
-
-                if "PREP" in post_state:
-                    post_state = post_state.replace("PREP", action_dict['prep'])
-
-                if "TARGET" in post_state:
-                    post_state = post_state.replace("TARGET", arg2_inst)
-
-                print("post state:", post_state)
-
-                # check conditions
-
-                # convert to fact tuples:
-                pre_state_tuple = split_state_string(pre_state)
-                post_state_tuple = split_state_string(post_state)
-
-                # remove pre state and add post state:
-                self.world_state.remove(pre_state_tuple)
-                self.world_state.add(post_state_tuple)
-
-                state_changed = True
-
-        if state_changed:
-            return True, post_state_tuple
-        else:
-            return False, f"{action_dict['arg1']} is not {pre_state}"
-        """
         if action_dict['type'] == 'go':
             # print("go action")
             present_exits = self.get_player_room_exits()
@@ -836,7 +695,6 @@ class BasicIFInterpreter:
             return True, new_predicate
         else:
             return False, f"{action_dict['arg1']} is not {object_pre_state}"
-        """
 
     def process_action(self, action_input: str):
         """
@@ -1033,5 +891,5 @@ if __name__ == "__main__":
     # turn_1 = test_interpreter.process_action("go to pantry")
     # print(turn_3[1])
     print(turn_3)
-    """"""
+
     # print(state_tuple_to_str(('on', 'sandwich1', 'table1')))

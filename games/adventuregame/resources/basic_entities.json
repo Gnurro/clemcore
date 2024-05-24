@@ -28,5 +28,11 @@
     "takeable": true,
     "movable": true,
     "supported": true
+  },
+  {
+    "type_name": "apple",
+    "takeable": true,
+    "movable": true,
+    "supported": true
   }
 ]
