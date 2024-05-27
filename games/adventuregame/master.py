@@ -73,14 +73,15 @@ class AdventureGameMaster(DialogueGameMaster):
         # TODO: reprompting?
         if player == self.player:
             # Check rule: utterance starts with IF >
-            # TODO: abort game before IF interaction if these fail
             if not utterance.startswith(">"):
                 self.success = False
-                return True
+                # return True
+                return False
             if self.if_variant == 'plan':
                 if "\nNext actions:" not in utterance:
                     self.success = False
-                    return True
+                    # return True
+                    return False
 
             """
             # Check rule: required words are included
@@ -109,6 +110,7 @@ class AdventureGameMaster(DialogueGameMaster):
             self.plan_history.append(new_plan)
             # print(self.plan_history)
             # TODO: set up limited plan feedback by removing plans here and feeding them back into messages by args
+            # TODO: log plans
 
         return utterance, True
 
@@ -134,38 +136,44 @@ class AdventureGameMaster(DialogueGameMaster):
         Play loop hook: Called after all players have been prompted and their responses have been parsed+validated.
         """
         # print("_on_after_turn call starts")
-        # IF INTERACTION
-        # get the last player action:
-        # print("Player messages:", self.messages_by_names[self.player.descriptor])
-        last_action: str = self.messages_by_names[self.player.descriptor][-1]['content']
-        # print("Last player message:", last_action)
-        # strip player action to IF input:
-        # if_input: str = last_action[1:].strip()
-        if_input: str = last_action[1:].split("\n")[0].strip()
-        # print("Stripped IF input:", if_input)
 
-        # count achieved goals:
-        prior_goal_count = len(self.goals_achieved)
-        # IF interpreter returns set of achieved goal states in string form:
-        goals_achieved, if_response = self.if_interpreter.process_action(if_input)
-        # TODO: catch lark exceptions
-        self.goals_achieved = goals_achieved
-        # count goals achieved this turn:
-        post_goal_count = len(self.goals_achieved)
-        turn_score = post_goal_count - prior_goal_count
-        # print("turn score:", turn_score)
+        if self._does_game_proceed():  # only pass last message to IF if the game is still going
+            # IF INTERACTION
+            # get the last player action:
+            # print("Player messages:", self.messages_by_names[self.player.descriptor])
+            last_action: str = self.messages_by_names[self.player.descriptor][-1]['content']
+            # print("Last player message:", last_action)
+            # strip player action to IF input:
+            # if_input: str = last_action[1:].strip()
+            if_input: str = last_action[1:].split("\n")[0].strip()
+            # print("Stripped IF input:", if_input)
 
-        goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
+            # count achieved goals:
+            prior_goal_count = len(self.goals_achieved)
+            # IF interpreter returns set of achieved goal states in string form:
+            goals_achieved, if_response = self.if_interpreter.process_action(if_input)
+            # TODO: catch lark exceptions
+            self.goals_achieved = goals_achieved
+            # count goals achieved this turn:
+            post_goal_count = len(self.goals_achieved)
+            turn_score = post_goal_count - prior_goal_count
+            # print("turn score:", turn_score)
 
-        self.log_to_self("goal_status", goal_status)
+            goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
 
-        # add IF response to dialog:
-        self.add_user_message(self.player, if_response)
+            self.log_to_self("goal_status", goal_status)
 
-        # record successful turn:
-        self.turns.append(self.success)
+            # add IF response to dialog:
+            self.add_user_message(self.player, if_response)
+
+            # record successful turn:
+            self.turns.append(self.success)
 
         # print("_on_after_turn call ends")
+
+    def _on_after_game(self):
+        game_result = {"goal_states_achieved": list(self.goals_achieved), "game_successfully_finished": self.finished}
+        self.log_to_self("game_result", game_result)
 
 
 class AdventureGameScorer(GameScorer):

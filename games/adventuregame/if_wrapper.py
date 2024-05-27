@@ -516,10 +516,10 @@ class BasicIFInterpreter:
         if action_tuple[1] not in self.entity_types:
             return False, f"I don't know what a '{action_tuple[1]}' is."
         """
-        print("action input:", action_input)
+        # print("action input:", action_input)
         parsed_command = self.act_parser.parse(action_input)
         action_dict = self.act_transformer.transform(parsed_command)
-        print("parse action input arg:", action_dict)
+        # print("parse action input arg:", action_dict)
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
