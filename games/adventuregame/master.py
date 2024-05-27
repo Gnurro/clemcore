@@ -73,6 +73,7 @@ class AdventureGameMaster(DialogueGameMaster):
         # TODO: reprompting?
         if player == self.player:
             # Check rule: utterance starts with IF >
+            # TODO: abort game before IF interaction if these fail
             if not utterance.startswith(">"):
                 self.success = False
                 return True
@@ -115,6 +116,8 @@ class AdventureGameMaster(DialogueGameMaster):
         """
         Template method: must be implemented
         """
+        if self.success == False:
+            return False
         # stop game when all goal states have been achieved:
         # TODO: log these
         if self.goals_achieved == self.goals_required:
@@ -145,13 +148,14 @@ class AdventureGameMaster(DialogueGameMaster):
         prior_goal_count = len(self.goals_achieved)
         # IF interpreter returns set of achieved goal states in string form:
         goals_achieved, if_response = self.if_interpreter.process_action(if_input)
+        # TODO: catch lark exceptions
         self.goals_achieved = goals_achieved
         # count goals achieved this turn:
         post_goal_count = len(self.goals_achieved)
         turn_score = post_goal_count - prior_goal_count
         # print("turn score:", turn_score)
 
-        goal_status = {"goal_states_achieved": self.goals_achieved, "turn_goal_score": turn_score}
+        goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
 
         self.log_to_self("goal_status", goal_status)
 
