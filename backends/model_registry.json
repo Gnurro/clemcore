@@ -555,6 +555,22 @@
     "eos_to_cull": "</s>"
   },
   {
+    "model_name": "Meta-Llama-3-8B-Instruct-hf",
+    "backend": "huggingface_local",
+    "requires_api_key": true,
+    "huggingface_id": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|eot_id|>"
+  },
+  {
+    "model_name": "Meta-Llama-3-70B-Instruct-hf",
+    "backend": "huggingface_local",
+    "requires_api_key": true,
+    "huggingface_id": "meta-llama/Meta-Llama-3-70B-Instruct",
+    "premade_chat_template": true,
+    "eos_to_cull": "<|eot_id|>"
+  },
+  {
     "model_name": "gemma-7b-it",
     "backend": "huggingface_local",
     "requires_api_key": true,
