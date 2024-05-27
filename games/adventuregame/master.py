@@ -2,9 +2,12 @@ from typing import List, Dict, Tuple
 
 from backends import Model
 from clemgame import file_utils
-from clemgame import metrics
+# from clemgame import metrics
+import clemgame.metrics as metrics
 from clemgame.clemgame import GameMaster, GameBenchmark, GameScorer, DialogueGameMaster, Player
 from clemgame import get_logger
+
+import numpy as np
 
 from games.adventuregame.if_wrapper import BasicIFInterpreter
 
@@ -181,6 +184,35 @@ class AdventureGameScorer(GameScorer):
     def __init__(self, name: str, experiment: Dict, game_instance: Dict):
         super().__init__(name, experiment, game_instance)
 
+    def compute_scores(self, episode_interactions: Dict) -> None:
+        """ Episode level scores"""
+        turn_scores = []
+        successfully_finished = False
+        for turn_idx, turn in enumerate(episode_interactions["turns"]):
+            # turn_score = {"guess": None, "clue": None, "request_count": 1}
+            turn_score = {}
+
+            for event in turn:
+                action = event["action"]
+                if action["type"] == "goal_status":
+                    turn_score["goal_score"] = action['content']['turn_goal_score']
+                if action["type"] == "game_result":
+                    successfully_finished = action['content']['game_successfully_finished']
+
+            self.log_turn_score(turn_idx, 'Goal score', turn_score["goal_score"])
+            # TODO: add standard metrics
+            turn_scores.append(turn_score)
+
+        # get final score:
+        final_goal_score = turn_scores[-1]["goal_score"]
+        # get goal achievement rating:
+        goal_rating = final_goal_score / len(turn_scores)
+
+        # TODO: add target/minimum number of turns to instances? -> 1-turn solutions are trivial
+
+        # log goal rating as main score:
+        # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
+        self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
 
 class AdventureGameBenchmark(GameBenchmark):
     def __init__(self):
