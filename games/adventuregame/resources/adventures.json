@@ -13,7 +13,8 @@
     ],
     "goal_state": [
       "on(sandwich1,table1)"
-    ]
+    ],
+    "max_turns": 10
   },
   {
     "goal": "Put a sandwich on the counter.",
@@ -29,6 +30,7 @@
     ],
     "goal_state": [
       "on(sandwich1,counter1)"
-    ]
+    ],
+    "max_turns": 10
   }
 ]

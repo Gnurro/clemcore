@@ -1,4 +1,4 @@
-You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.
+You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >.
 For example:
 > examine cupboard
 

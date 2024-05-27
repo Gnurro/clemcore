@@ -127,7 +127,8 @@ class AdventureGameMaster(DialogueGameMaster):
             return False
         # stop game when turn limit is reached:
         # TODO: get turn limit from game instance
-        if len(self.turns) >= 5:
+        # if len(self.turns) >= 5:
+        if len(self.turns) >= self.game_instance['max_turns']:
             return False
         return True
 

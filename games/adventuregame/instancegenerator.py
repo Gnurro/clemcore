@@ -50,6 +50,7 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             game_instance["first_room_str"] = first_room_str  # game parameters
             game_instance["initial_state"] = initial_state  # game parameters
             game_instance["goal_state"] = goal_state  # game parameters
+            game_instance["max_turns"] = adventures[adventure_id]['max_turns']  # game parameters
 
         # PLANNING
 
@@ -79,6 +80,7 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             game_instance["first_room_str"] = first_room_str  # game parameters
             game_instance["initial_state"] = initial_state  # game parameters
             game_instance["goal_state"] = goal_state  # game parameters
+            game_instance["max_turns"] = adventures[adventure_id]['max_turns']  # game parameters
 
 
 if __name__ == '__main__':
