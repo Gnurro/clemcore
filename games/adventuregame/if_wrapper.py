@@ -77,6 +77,11 @@ class IFTransformer(Transformer):
                 action_dict[f'arg{arg_idx}'] = child.value
                 break
 
+        # TODO: improve parsing feedback
+        #  '> take sandwich out of fridge' should not give feedback "I don't know what 'take' means."
+        #  but sth like "I don't know what 'out' means."
+        #  currently openchat tries variations of the command until it hits 'grab' which is covered by 'take' lark atm
+
         return action_dict
 
 
