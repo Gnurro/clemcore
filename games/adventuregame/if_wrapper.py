@@ -73,6 +73,9 @@ class IFTransformer(Transformer):
                 arg_idx += 1
             if type(child) == lark.Token and child.type == 'PREP':
                 action_dict['prep'] = child.value
+            if action_type.value == 'unknown' and type(child) == lark.Token and child.type == 'WORD':
+                action_dict[f'arg{arg_idx}'] = child.value
+                break
 
         return action_dict
 
@@ -1001,13 +1004,18 @@ if __name__ == "__main__":
     print(turn_2[1])
     print()
     """"""
-
+    """
     # turn_3 = test_interpreter.process_action("put sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich in table")
     turn_3 = test_interpreter.process_action("place sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3[1])
-    """"""
+    """
+
+    turn_3 = test_interpreter.process_action("examine sandwich")
+    # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
+    print(turn_3[1])
+
     """
     turn_3 = test_interpreter.process_action("go pantry")
     # turn_1 = test_interpreter.process_action("go to pantry")
