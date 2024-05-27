@@ -214,6 +214,18 @@ class AdventureGameScorer(GameScorer):
         # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
         self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
 
+        # TODO: handle aborting
+        self.log_episode_score(metrics.METRIC_ABORTED, 0)
+
+        # log successful/failed play:
+        if successfully_finished:
+            self.log_episode_score(metrics.METRIC_SUCCESS, 1)
+            self.log_episode_score(metrics.METRIC_LOSE, 0)
+        else:
+            self.log_episode_score(metrics.METRIC_SUCCESS, 0)
+            self.log_episode_score(metrics.METRIC_LOSE, 1)
+
+
 class AdventureGameBenchmark(GameBenchmark):
     def __init__(self):
         super().__init__(GAME_NAME)
