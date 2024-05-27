@@ -2,7 +2,6 @@
     Module wrapping IF interpreter(s) for adventuregame.
 """
 
-# TODO: entity states (colors, materials, etc)
 
 import json
 import lark
@@ -517,13 +516,16 @@ class BasicIFInterpreter:
         if action_tuple[1] not in self.entity_types:
             return False, f"I don't know what a '{action_tuple[1]}' is."
         """
-
+        print("action input:", action_input)
         parsed_command = self.act_parser.parse(action_input)
         action_dict = self.act_transformer.transform(parsed_command)
-        # print("parse action input arg:", action_dict)
+        print("parse action input arg:", action_dict)
 
         if action_dict['type'] not in self.action_types:
-            return False, f"I don't know what '{action_dict['arg1']}' means."
+            if 'arg1' in action_dict:
+                return False, f"I don't know what '{action_dict['arg1']}' means."
+            else:
+                return False, f"I don't know what you mean."
 
         if action_dict['arg1'] not in self.entity_types:
             if action_dict['arg1'] not in self.room_types:
@@ -999,17 +1001,17 @@ if __name__ == "__main__":
     print(turn_2[1])
     print()
     """"""
-    """
-    turn_3 = test_interpreter.process_action("put sandwich on table")
+
+    # turn_3 = test_interpreter.process_action("put sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich in table")
-    # turn_3 = test_interpreter.process_action("place sandwich on table")
+    turn_3 = test_interpreter.process_action("place sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3[1])
+    """"""
     """
-
     turn_3 = test_interpreter.process_action("go pantry")
     # turn_1 = test_interpreter.process_action("go to pantry")
     # print(turn_3[1])
     print(turn_3)
-    """"""
+    """
     # print(state_tuple_to_str(('on', 'sandwich1', 'table1')))

@@ -25,6 +25,7 @@ class AdventureGameMaster(DialogueGameMaster):
         # self.game_instance = None
         self.turns = []
         self.success = True
+        self.finished: bool = False  # game finished successfully
 
     def _on_setup(self, **game_instance):
         self.game_instance = game_instance  # fetch game parameters here
@@ -68,6 +69,8 @@ class AdventureGameMaster(DialogueGameMaster):
 
     def _validate_player_response(self, player: Player, utterance: str) -> bool:
         # Check responses for specific players
+        # TODO: log these properly
+        # TODO: reprompting?
         if player == self.player:
             # Check rule: utterance starts with IF >
             if not utterance.startswith(">"):
@@ -113,9 +116,12 @@ class AdventureGameMaster(DialogueGameMaster):
         Template method: must be implemented
         """
         # stop game when all goal states have been achieved:
+        # TODO: log these
         if self.goals_achieved == self.goals_required:
+            self.finished = True
             return False
         # stop game when turn limit is reached:
+        # TODO: get turn limit from game instance
         if len(self.turns) >= 5:
             return False
         return True
@@ -135,15 +141,21 @@ class AdventureGameMaster(DialogueGameMaster):
         if_input: str = last_action[1:].split("\n")[0].strip()
         # print("Stripped IF input:", if_input)
 
+        # count achieved goals:
         prior_goal_count = len(self.goals_achieved)
-
+        # IF interpreter returns set of achieved goal states in string form:
         goals_achieved, if_response = self.if_interpreter.process_action(if_input)
         self.goals_achieved = goals_achieved
-
+        # count goals achieved this turn:
         post_goal_count = len(self.goals_achieved)
         turn_score = post_goal_count - prior_goal_count
-        print("turn score:", turn_score)
+        # print("turn score:", turn_score)
 
+        goal_status = {"goal_states_achieved": self.goals_achieved, "turn_goal_score": turn_score}
+
+        self.log_to_self("goal_status", goal_status)
+
+        # add IF response to dialog:
         self.add_user_message(self.player, if_response)
 
         # record successful turn:
