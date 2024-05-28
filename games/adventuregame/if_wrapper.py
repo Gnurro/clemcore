@@ -320,6 +320,8 @@ class BasicIFInterpreter:
 
         adj_str = " ".join(inst_adjs)
 
+        # TODO: add proper output strings to room and entities
+
         # full_inst_str = f"{adj_str} {self.inst_to_type_dict[inst]}"
         # full_inst_str = f"{adj_str} {self.inst_to_type_dict[inst]}"
 

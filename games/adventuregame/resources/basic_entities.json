@@ -13,33 +13,89 @@
     "type_name": "table",
     "support": true,
     "traits": ["support"],
-    "possible_adjs": ["wooden", "metal", "low", "high"]
+    "possible_adjs": ["wooden", "metal", "low", "high"],
+    "standard_locations": ["kitchen", "livingroom"]
   },
   {
     "type_name": "counter",
     "support": true,
     "traits": ["support"],
-    "possible_adjs": ["wooden", "metal", "low", "high"]
+    "possible_adjs": ["wooden", "metal", "low", "high"],
+    "standard_locations": ["kitchen"]
   },
   {
     "type_name": "refrigerator",
     "container": true,
     "openable": true,
     "traits": ["container", "openable"],
-    "possible_adjs": ["large", "fancy"]
+    "possible_adjs": ["large", "fancy"],
+    "standard_locations": ["kitchen", "pantry"]
+  },
+  {
+    "type_name": "shelf",
+    "support": true,
+    "traits": ["support"],
+    "possible_adjs": ["wooden", "metal", "low", "high"],
+    "standard_locations": ["kitchen", "pantry"]
+  },
+  {
+    "type_name": "freezer",
+    "container": true,
+    "openable": true,
+    "traits": ["container", "openable"],
+    "possible_adjs": ["large", "deep"],
+    "standard_locations": ["pantry"]
+  },
+  {
+    "type_name": "pottedplant",
+    "takeable": true,
+    "movable": true,
+    "supported": true,
+    "traits": ["takeable", "movable", "needs_support"],
+    "possible_adjs": ["large", "small"],
+    "standard_locations": ["livingroom", "hallway"]
+  },
+  {
+    "type_name": "chair",
+    "possible_adjs": ["comfy", "wooden", "padded"],
+    "standard_locations": ["livingroom"]
+  },
+  {
+    "type_name": "couch",
+    "possible_adjs": ["comfy", "wooden", "padded"],
+    "standard_locations": ["livingroom"]
+  },
+  {
+    "type_name": "broom",
+    "takeable": true,
+    "movable": true,
+    "supported": true,
+    "traits": ["takeable", "movable", "needs_support"],
+    "standard_locations": ["broomcloset"]
   },
   {
     "type_name": "sandwich",
     "takeable": true,
     "movable": true,
     "supported": true,
-    "traits": ["takeable", "movable", "needs_support"]
+    "traits": ["takeable", "movable", "needs_support"],
+    "standard_locations": ["kitchen", "pantry"]
   },
   {
     "type_name": "apple",
     "takeable": true,
     "movable": true,
     "supported": true,
-    "traits": ["takeable", "movable", "needs_support"]
+    "traits": ["takeable", "movable", "needs_support"],
+    "standard_locations": ["kitchen", "pantry"]
+  },
+  {
+    "type_name": "banana",
+    "takeable": true,
+    "movable": true,
+    "supported": true,
+    "possible_adjs": ["ripe", "jelly"],
+    "traits": ["takeable", "movable", "needs_support"],
+    "standard_locations": ["kitchen", "pantry"]
   }
 ]
