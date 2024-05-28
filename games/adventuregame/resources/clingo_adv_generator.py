@@ -1,10 +1,12 @@
 import json
 from clingo.control import Control
 
+
 class AdventureGenerationConfig(dict):
     """
     Holds configuration for adventure generation.
     """
+
 
 class ClingoAdventureGenerator:
     """
@@ -49,47 +51,42 @@ class ClingoAdventureGenerator:
             for room_type_name, room_type_values in self.room_definitions.items():
                 # basic atoms:
                 room_id = f"{room_type_name}1"  # default to 'kitchen1' etc
+                # print("room:", room_id)
                 type_atom = f"room({room_id},{room_type_name})."
                 # add type atom to clingo controller:
                 self.clingo_control.add(type_atom)
                 clingo_str += "\n" + type_atom
                 # add exit rule:
+                permitted_exits_list = list()
                 for exit_target in room_type_values['exit_targets']:
-                    if 'max_connections' in room_type_values:
-                        exit_rule = "1 { exit(ROOM,TARGET) } $EXITLIMIT$ :- room(ROOM,$ROOMTYPE$), room(TARGET,$TARGETTYPE$), TARGET != ROOM."
-                        # -> there can be 1 or 2 exits from this room type to the exit_target room type
-                        exit_rule = exit_rule.replace("$EXITLIMIT$", str(room_type_values['max_connections']))
-                        exit_rule = exit_rule.replace("$ROOMTYPE$", room_type_name)
-                        exit_rule = exit_rule.replace("$TARGETTYPE$", exit_target)
-                        # print(exit_rule)
-                        # add exit rule to clingo controller:
-                        self.clingo_control.add(exit_rule)
-                        clingo_str += "\n" + exit_rule
-                    else:
-                        # print(exit_target)
-                        exit_rule = "1 { exit(ROOM,TARGET) } 2 :- room(ROOM,$ROOMTYPE$), room(TARGET,$TARGETTYPE$), TARGET != ROOM."
-                        # -> there can be 1 or 2 exits from this room type to the exit_target room type
-                        exit_rule = exit_rule.replace("$ROOMTYPE$", room_type_name)
-                        exit_rule = exit_rule.replace("$TARGETTYPE$", exit_target)
-                        # print(exit_rule)
-                        # add exit rule to clingo controller:
-                        self.clingo_control.add(exit_rule)
-                        clingo_str += "\n" + exit_rule
+                    # print(exit_target)
+                    exit_target_permit = f"exit(ROOM,TARGET):room(ROOM,{room_type_name}),room(TARGET,{exit_target})"
+                    permitted_exits_list.append(exit_target_permit)
+                permitted_exits = ";".join(permitted_exits_list)
 
+                exit_rule = "1 { $PERMITTEDEXITS$ } $MAXCONNECTIONS$."
+                # print(exit_rule)
+                exit_rule = exit_rule.replace("$PERMITTEDEXITS$", permitted_exits)
+                # print(exit_rule)
+                exit_rule = exit_rule.replace("$MAXCONNECTIONS$", str(room_type_values['max_connections']))
 
-                    # TODO: add single-access rooms
-                    # TODO: add 'passage' helper atoms
-                    """
-                    if 'max_connections' in room_type_values:
-                        max_connection_rule = ":- $EXITLIMIT$ { exit($ROOMID$,OTHERROOM): room(OTHERROOM,_) }."
-                        max_connection_rule = max_connection_rule.replace("$EXITLIMIT$", str(room_type_values['max_connections']+2))
-                        max_connection_rule = max_connection_rule.replace("$ROOMID$", room_id)
-                        print(max_connection_rule)
-                        self.clingo_control.add(max_connection_rule)
-                        clingo_str += "\n" + max_connection_rule
-                        """
+                # print(exit_rule)
+                # add exit rule to clingo controller:
+                self.clingo_control.add(exit_rule)
+                clingo_str += "\n" + exit_rule
+            # add exit pairing rule:
+            exit_pairing_rule = "exit(ROOM,TARGET) :- exit(TARGET,ROOM)."
+            self.clingo_control.add(exit_pairing_rule)
+            clingo_str += "\n" + exit_pairing_rule
+            # add rule assuring all rooms are reachable from each other:
+            # reachable_rule = "reachable(ROOM,TARGET) :- exit(ROOM,TARGET). reachable(ROOM,TARGET) :- reachable(TARGET,ROOM). reachable(ROOM,TARGET) :- reachable(ROOM,TARGET1), reachable(TARGET1,TARGET), ROOM != TARGET. :- room(ROOM,_), room(TARGET,_), ROOM != TARGET, not reachable(ROOM,TARGET). #hide reachable/2."
+            reachable_rule = "reachable(ROOM,TARGET) :- exit(ROOM,TARGET). reachable(ROOM,TARGET) :- reachable(TARGET,ROOM). reachable(ROOM,TARGET) :- reachable(ROOM,TARGET1), reachable(TARGET1,TARGET), ROOM != TARGET. :- room(ROOM,_), room(TARGET,_), ROOM != TARGET, not reachable(ROOM,TARGET)."
+            self.clingo_control.add(reachable_rule)
+            clingo_str += "\n" + reachable_rule
+            # self.clingo_control.add("#hide reachable/2")
+            # clingo_str += "\n" + "#hide reachable/2"
 
-        print(clingo_str)
+        # print(clingo_str)
 
         # CLINGO SOLVING
         # ground the combined LP:
@@ -110,6 +107,8 @@ class ClingoAdventureGenerator:
         result_adventures = list()
         for raw_adventure in raw_adventures:
             fact_list = raw_adventure.split()
+            # remove 'reachable' helper atoms:
+            fact_list = [fact for fact in fact_list if "reachable" not in fact]
             result_adventures.append(fact_list)
 
         print(result_adventures)
