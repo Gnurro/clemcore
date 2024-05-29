@@ -253,6 +253,10 @@ class ClingoAdventureSolver(ClingoAdventureBase):
 
         # print(self.action_definitions)
 
+        # load action definitions:
+        with open("clingo_templates.json", 'r', encoding='utf-8') as templates_file:
+            self.clingo_templates = json.load(templates_file)
+
     def convert_actions(self):
         """
         Convert action definitions into ASP rules.
@@ -271,8 +275,6 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                     print(action_t_rule)
             # break
 
-
-
     def initialize_adventure(self, initial_world_state):
         """
         Set up initial world state add facts to clingo controller.
@@ -284,7 +286,7 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         # convert fact strings to tuples:
         initial_facts = [fact_str_to_tuple(fact) for fact in initial_world_state]
         # iterate over initial world state, add fixed basic facts, add turn facts for changeable facts
-        mutable_fact_types = ["at", "in", "on", "closed"]  # TODO: externalize these?
+        mutable_fact_types = ["at", "in", "on", "closed", "open"]  # TODO: externalize these?
         for fact in initial_facts:
             # print(fact)
             if fact[0] in mutable_fact_types:
@@ -304,9 +306,64 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                 self.clingo_control.add(const_atom)
                 clingo_str += "\n" + const_atom
 
-        print(clingo_str)
+        # print(clingo_str)
 
+    def solve_optimally(self, initial_world_state, goal_facts: list, turn_limit: int = 10,
+                        return_only_actions: bool = True):
+        """
+        Generates an optimized solution to an adventure.
+        """
+        # add turn generation and limit first:
+        turns_template: str = self.clingo_templates["turns"]
+        turns_clingo = turns_template.replace("$TURNLIMIT$", str(turn_limit))
+        self.clingo_control.add(turns_clingo)
 
+        # add initial world state facts:
+        self.initialize_adventure(initial_world_state)
+
+        # add actions:
+        # TODO: make ASP for take and put
+        for action_name, action_def in self.action_definitions.items():
+            print(action_def['asp'])
+
+        # add goals:
+        for goal in goal_facts:
+            goal_tuple = fact_str_to_tuple(goal)
+            if len(goal_tuple) == 2:
+                goal_template: str = self.clingo_templates["goal_1"]
+                goal_clingo = goal_template.replace("$PREDICATE$", goal_tuple[0])
+                goal_clingo = goal_clingo.replace("$THING$", goal_tuple[1])
+            if len(goal_tuple) == 3:
+                goal_template: str = self.clingo_templates["goal_2"]
+                goal_clingo = goal_template.replace("$PREDICATE$", goal_tuple[0])
+                goal_clingo = goal_clingo.replace("$THING$", goal_tuple[1])
+                goal_clingo = goal_clingo.replace("$TARGET$", goal_tuple[2])
+            self.clingo_control.add(goal_clingo)
+        # TODO: figure out check at last turn
+
+        # add optimization:
+        minimize_clingo = self.clingo_templates["minimize"]
+        self.clingo_control.add(minimize_clingo)
+
+        # add output only actions:
+        if return_only_actions:
+            only_actions_clingo = self.clingo_templates["return_only_actions"]
+            self.clingo_control.add(only_actions_clingo)
+
+        # ground and solve:
+        self.clingo_control.ground()
+        # solve combined LP for raw solutions:
+        raw_solutions = list()
+
+        with self.clingo_control.solve(yield_=True) as solve:
+            for model in solve:
+                # print("model:", model)
+                raw_solutions.append(model.__str__())
+                # break
+            solvable = solve.get()
+            # print("solve get:", solvable)
+
+        return raw_solutions
 
 
 if __name__ == "__main__":
@@ -325,4 +382,5 @@ if __name__ == "__main__":
     test_adv = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
     # test_solver.initialize_adventure(test_adv)
 
-    test_solver.convert_actions()
+    # test_solver.convert_actions()
+    test_solver.solve_optimally(test_adv, ["open(refrigerator1)"])

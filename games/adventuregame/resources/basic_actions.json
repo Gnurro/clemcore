@@ -8,7 +8,8 @@
     "state_changes": [
       {"pre_state": "closed(THING)", "conditions": ["openable(THING)"], "post_state": "open(THING)"}
     ],
-    "feedback_template": "The {{ thing }} is now open."
+    "feedback_template": "The {{ thing }} is now open.",
+    "asp": "{ action_t(TURN,open,THING):at_t(TURN,THING,ROOM),closed_t(TURN,THING) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nopen_t(TURN+1,THING) :- action_t(TURN,open,THING).\nopen_t(TURN+1,THING) :- turn(TURN), open_t(TURN,THING), not action_t(TURN,close,THING)."
   },
   {
     "type_name": "close",
@@ -19,7 +20,8 @@
     "state_changes": [
       {"pre_state": "open(THING)", "conditions": ["openable(THING)"], "post_state": "closed(THING)"}
     ],
-    "feedback_template": "The {{ thing }} is now closed."
+    "feedback_template": "The {{ thing }} is now closed.",
+    "asp": "{ action_t(TURN,close,THING):at_t(TURN,THING,ROOM),open_t(TURN,THING) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nclosed_t(TURN+1,THING) :- action_t(TURN,close,THING).\nclosed_t(TURN+1,THING) :- turn(TURN), closed_t(TURN,THING), not action_t(TURN,open,THING)."
   },
   {
     "type_name": "take",
@@ -56,6 +58,7 @@
       {"pre_state": "at(PLAYER,HERE)", "conditions": ["exit(HERE,TARGET)"], "post_state": "at(PLAYER,TARGET)"},
       {"pre_state": "at(THING,HERE)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
     ],
-    "feedback_template": "{{ room_desc }}"
+    "feedback_template": "{{ room_desc }}",
+    "asp": "{ action_t(TURN,go,TARGET):exit(ROOM,TARGET) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nat_t(TURN+1,player1,TARGET) :- action_t(TURN,go,TARGET).\nat_t(TURN+1,player1,ROOM) :- turn(TURN), at_t(TURN,player1,ROOM), not action_t(TURN,go,_).\n% things in inventory move with player:\nat_t(TURN+1,THING,TARGET) :- action_t(TURN,go,TARGET), in_t(TURN,THING,inventory).\n% things not in inventory stay in the room they are:\nat_t(TURN+1,THING,ROOM) :- turn(TURN), at_t(TURN,THING,ROOM), not in_t(TURN,THING,inventory), not turn_limit(TURN)."
   }
 ]
