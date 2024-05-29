@@ -2,18 +2,13 @@ import json
 from clingo.control import Control
 
 
-class AdventureGenerationConfig(dict):
-    """
-    Holds configuration for adventure generation.
-    """
+# TODO: define/doc adventure generation config format and contents
 
 
-class ClingoAdventureGenerator:
+class ClingoAdventureBase(object):
     """
-    Wraps the clingo ASP solver module.
-    Generates initial adventure state sets based on room and entity definitions.
+    Wraps the clingo ASP module. Base class for adventure generator and adventure solver.
     """
-
     def __init__(self):
         # initialize clingo controller:
         self.clingo_control: Control = Control(["0"])  # ["0"] argument to return all models
@@ -46,11 +41,16 @@ class ClingoAdventureGenerator:
                     type_def_dict[type_key] = type_value
             self.entity_definitions[type_def['type_name']] = type_def_dict
 
-        print(self.entity_definitions)
+        # print(self.entity_definitions)
 
-        # generation config:
-        self.generation_config = dict()
-        # TODO: set up generation config usage; load from json
+
+class ClingoAdventureGenerator(ClingoAdventureBase):
+    """
+    Generates initial adventure state sets based on room and entity definitions.
+    """
+
+    def __init__(self):
+        super().__init__()
 
     def generate_adventures(self, generation_config: dict = {}):
 
