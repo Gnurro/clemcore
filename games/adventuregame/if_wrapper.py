@@ -235,6 +235,10 @@ class BasicIFInterpreter:
         for state_string in self.game_instance['initial_state']:
             self.world_state.add(split_state_string(state_string))
 
+        # NOTE: The following world state augmentations are left in here to make manual adventure creation/modification
+        # convenient. Initial adventure world states generated with the clingo adventure generator already cover these
+        # augmentations.
+
         # print("unaugmented initial world:", self.world_state)
 
         preds_to_add = set()

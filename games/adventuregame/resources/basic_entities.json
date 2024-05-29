@@ -1,16 +1,19 @@
 [
   {
     "type_name": "player",
+    "repr_str": "you",
     "hidden": true
   },
   {
     "type_name": "floor",
+    "repr_str": "floor",
     "hidden": true,
     "support": true,
     "traits": ["support"]
   },
   {
     "type_name": "table",
+    "repr_str": "table",
     "support": true,
     "traits": ["support"],
     "possible_adjs": ["wooden", "metal", "low", "high"],
@@ -18,6 +21,7 @@
   },
   {
     "type_name": "counter",
+    "repr_str": "counter",
     "support": true,
     "traits": ["support"],
     "possible_adjs": ["wooden", "metal", "low", "high"],
@@ -25,6 +29,7 @@
   },
   {
     "type_name": "refrigerator",
+    "repr_str": "refrigerator",
     "container": true,
     "openable": true,
     "traits": ["container", "openable"],
@@ -33,6 +38,7 @@
   },
   {
     "type_name": "shelf",
+    "repr_str": "shelf",
     "support": true,
     "traits": ["support"],
     "possible_adjs": ["wooden", "metal", "low", "high"],
@@ -40,6 +46,7 @@
   },
   {
     "type_name": "freezer",
+    "repr_str": "freezer",
     "container": true,
     "openable": true,
     "traits": ["container", "openable"],
@@ -48,6 +55,7 @@
   },
   {
     "type_name": "pottedplant",
+    "repr_str": "potted plant",
     "takeable": true,
     "movable": true,
     "supported": true,
@@ -57,16 +65,19 @@
   },
   {
     "type_name": "chair",
+    "repr_str": "chair",
     "possible_adjs": ["comfy", "wooden", "padded"],
     "standard_locations": ["livingroom"]
   },
   {
     "type_name": "couch",
+    "repr_str": "couch",
     "possible_adjs": ["comfy", "wooden", "padded"],
     "standard_locations": ["livingroom"]
   },
   {
     "type_name": "broom",
+    "repr_str": "broom",
     "takeable": true,
     "movable": true,
     "supported": true,
@@ -75,6 +86,7 @@
   },
   {
     "type_name": "sandwich",
+    "repr_str": "sandwich",
     "takeable": true,
     "movable": true,
     "supported": true,
@@ -83,6 +95,7 @@
   },
   {
     "type_name": "apple",
+    "repr_str": "apple",
     "takeable": true,
     "movable": true,
     "supported": true,
@@ -91,6 +104,7 @@
   },
   {
     "type_name": "banana",
+    "repr_str": "banana",
     "takeable": true,
     "movable": true,
     "supported": true,

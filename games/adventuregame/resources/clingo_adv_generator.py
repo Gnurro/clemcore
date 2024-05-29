@@ -63,6 +63,7 @@ class ClingoAdventureGenerator:
         player_fact = "type(player1,player)."
         self.clingo_control.add(player_fact)
         clingo_str += "\n" + player_fact
+        # add rule for random player start location:
         player_location_rule = "1 { at(player1,ROOM):room(ROOM,_) } 1."
         self.clingo_control.add(player_location_rule)
         clingo_str += "\n" + player_location_rule
@@ -76,6 +77,21 @@ class ClingoAdventureGenerator:
             # add type atom to clingo controller:
             self.clingo_control.add(type_atom)
             clingo_str += "\n" + type_atom
+
+            # add floor to room:
+            floor_id = f"{room_id}floor"
+            floor_atom = f"type({floor_id},floor)"
+            self.clingo_control.add(floor_atom)
+            clingo_str += "\n" + floor_atom
+            # add at() for room floor:
+            floor_at = f"at({floor_id},{room_id})"
+            self.clingo_control.add(floor_at)
+            clingo_str += "\n" + floor_at
+            # add support trait atom for floor:
+            floor_support = f"support({floor_id})"
+            self.clingo_control.add(floor_support)
+            clingo_str += "\n" + floor_support
+
             # add exit rule:
             permitted_exits_list = list()
             for exit_target in room_type_values['exit_targets']:
@@ -130,15 +146,11 @@ class ClingoAdventureGenerator:
                 clingo_str += "\n" + location_rule
 
                 if "traits" in entity_type_values:
-                    if "support" in entity_type_values['traits']:
-                        support_fact = f"support({entity_id})."
-                        self.clingo_control.add(support_fact)
-                        clingo_str += "\n" + support_fact
-
-                    if "container" in entity_type_values['traits']:
-                        container_fact = f"container({entity_id})."
-                        self.clingo_control.add(container_fact)
-                        clingo_str += "\n" + container_fact
+                    # add atoms for all traits of this entity type:
+                    for trait in entity_type_values['traits']:
+                        trait_atom = f"{trait}({entity_id})"
+                        self.clingo_control.add(trait_atom)
+                        clingo_str += "\n" + trait_atom
 
                     if "needs_support" in entity_type_values['traits']:
                         # on/in rule:
@@ -146,7 +158,7 @@ class ClingoAdventureGenerator:
                         in_positions = "in(entity_id,SUPPORT):at(entity_id,ROOM),at(CONTAINER,ROOM),container(CONTAINER)"
                         # support_rule = "1 { on(ENTITY,SUPPORT):at(ENTITY,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in(ENTITY,CONTAINER):at(ENTITY,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
                         # support_rule = "1 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
-                        support_rule = "0 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
+                        support_rule = "1 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
                         support_rule = support_rule.replace("$ENTITY$", entity_id)
                         # support_rule = "1 { "
                         # support_rule += on_positions
@@ -170,6 +182,8 @@ class ClingoAdventureGenerator:
 
                     # make sure that same-type entities do not have same adjective:
                     diff_adj_rule = ":- adj(ENTITY1,ADJ), adj(ENTITY2,ADJ), type(ENTITY1,TYPE), type(ENTITY2,TYPE), ENTITY1 != ENTITY2."
+                    self.clingo_control.add(diff_adj_rule)
+                    clingo_str += "\n" + diff_adj_rule
 
         # print(clingo_str)
 
