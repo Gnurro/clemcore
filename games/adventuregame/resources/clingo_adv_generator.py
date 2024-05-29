@@ -52,7 +52,7 @@ class ClingoAdventureGenerator:
         self.generation_config = dict()
         # TODO: set up generation config usage; load from json
 
-    def generate_adventures(self):
+    def generate_adventures(self, generation_config: dict = {}):
 
         clingo_str = str()
 
@@ -80,15 +80,15 @@ class ClingoAdventureGenerator:
 
             # add floor to room:
             floor_id = f"{room_id}floor"
-            floor_atom = f"type({floor_id},floor)"
+            floor_atom = f"type({floor_id},floor)."
             self.clingo_control.add(floor_atom)
             clingo_str += "\n" + floor_atom
             # add at() for room floor:
-            floor_at = f"at({floor_id},{room_id})"
+            floor_at = f"at({floor_id},{room_id})."
             self.clingo_control.add(floor_at)
             clingo_str += "\n" + floor_at
             # add support trait atom for floor:
-            floor_support = f"support({floor_id})"
+            floor_support = f"support({floor_id})."
             self.clingo_control.add(floor_support)
             clingo_str += "\n" + floor_support
 
@@ -148,7 +148,7 @@ class ClingoAdventureGenerator:
                 if "traits" in entity_type_values:
                     # add atoms for all traits of this entity type:
                     for trait in entity_type_values['traits']:
-                        trait_atom = f"{trait}({entity_id})"
+                        trait_atom = f"{trait}({entity_id})."
                         self.clingo_control.add(trait_atom)
                         clingo_str += "\n" + trait_atom
 
@@ -167,23 +167,27 @@ class ClingoAdventureGenerator:
                         # print(support_rule)
                         self.clingo_control.add(support_rule)
                         clingo_str += "\n" + support_rule
+                if not generation_config["entity_adjectives"] == "none":
+                    if "possible_adjs" in entity_type_values:
+                        # adjective rule:
+                        possible_adj_list = list()
+                        for possible_adj in entity_type_values["possible_adjs"]:
+                            possible_adj_str = f"adj({entity_id},{possible_adj})"
+                            possible_adj_list.append(possible_adj_str)
+                        possible_adjs = ";".join(possible_adj_list)
+                        if generation_config["entity_adjectives"] == "optional":
+                            adj_rule = "0 { $POSSIBLEADJS$ } 1."
+                        elif generation_config["entity_adjectives"] == "all":
+                            adj_rule = "1 { $POSSIBLEADJS$ } 1."
+                        adj_rule = adj_rule.replace("$POSSIBLEADJS$", possible_adjs)
+                        self.clingo_control.add(adj_rule)
+                        clingo_str += "\n" + adj_rule
 
-                if "possible_adjs" in entity_type_values:
-                    # adjective rule:
-                    possible_adj_list = list()
-                    for possible_adj in entity_type_values["possible_adjs"]:
-                        possible_adj_str = f"adj({entity_id},{possible_adj})"
-                        possible_adj_list.append(possible_adj_str)
-                    possible_adjs = ";".join(possible_adj_list)
-                    adj_rule = "0 { $POSSIBLEADJS$ } 1."
-                    adj_rule = adj_rule.replace("$POSSIBLEADJS$", possible_adjs)
-                    self.clingo_control.add(adj_rule)
-                    clingo_str += "\n" + adj_rule
+                        # make sure that same-type entities do not have same adjective:
+                        diff_adj_rule = ":- adj(ENTITY1,ADJ), adj(ENTITY2,ADJ), type(ENTITY1,TYPE), type(ENTITY2,TYPE), ENTITY1 != ENTITY2."
+                        self.clingo_control.add(diff_adj_rule)
+                        clingo_str += "\n" + diff_adj_rule
 
-                    # make sure that same-type entities do not have same adjective:
-                    diff_adj_rule = ":- adj(ENTITY1,ADJ), adj(ENTITY2,ADJ), type(ENTITY1,TYPE), type(ENTITY2,TYPE), ENTITY1 != ENTITY2."
-                    self.clingo_control.add(diff_adj_rule)
-                    clingo_str += "\n" + diff_adj_rule
 
         # print(clingo_str)
 
@@ -197,7 +201,7 @@ class ClingoAdventureGenerator:
             for model in solve:
                 # print("model:", model)
                 raw_adventures.append(model.__str__())
-                break
+                # break
             # print("solve get:", solve.get())
 
         # print(raw_adventures)
@@ -224,4 +228,9 @@ class ClingoAdventureGenerator:
 
 if __name__ == "__main__":
     test_generator = ClingoAdventureGenerator()
-    test_gen = test_generator.generate_adventures()
+
+    # test_gen_config = {"entity_adjectives": "optional"}  # "optional" takes a long time to generate due to the amount of variations
+    # test_gen_config = {"entity_adjectives": "all"}  # "all" takes a long time to generate due to the amount of variations
+    test_gen_config = {"entity_adjectives": "none"}  # "none" takes the shortest time (<1m for basic) to generate due to the low amount of variations
+
+    test_gen = test_generator.generate_adventures(test_gen_config)
