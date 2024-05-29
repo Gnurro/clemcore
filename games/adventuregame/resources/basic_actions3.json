@@ -6,7 +6,7 @@
     "object_pre_state": ["closed"],
     "object_post_state": "open(THING)",
     "state_changes": [
-      {"pre_state": "closed(THING)", "conditions": ["openable(THING)"], "post_state": "open(THING)"}
+      {"pre_state": "closed(THING)", "conditions": [], "post_state": "open(THING)"}
     ],
     "feedback_template": "The {{ thing }} is now open."
   },
@@ -17,7 +17,7 @@
     "object_pre_state": ["open"],
     "object_post_state": "closed(THING)",
     "state_changes": [
-      {"pre_state": "open(THING)", "conditions": ["openable(THING)"], "post_state": "closed(THING)"}
+      {"pre_state": "open(THING)", "conditions": [], "post_state": "closed(THING)"}
     ],
     "feedback_template": "The {{ thing }} is now closed."
   },
