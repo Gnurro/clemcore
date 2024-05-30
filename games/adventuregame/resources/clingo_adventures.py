@@ -11,6 +11,7 @@ from adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 # TODO: define/doc adventure generation config format and contents
 
+# TODO: expose definitions loading
 
 class ClingoAdventureBase(object):
     """
@@ -58,11 +59,11 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
     def __init__(self):
         super().__init__()
 
-    def generate_adventures(self, generation_config: dict = {}):
+    def generate_adventures(self, generation_config: dict = {},
+                            save_to_file: bool = False, out_file_path: str = "generated_adventures.json"):
 
         clingo_str = str()
 
-        # TODO: use generation config once implemented
         # if not self.generation_config:
 
         # add player type fact:
@@ -205,6 +206,7 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         # CLINGO SOLVING
         # ground the combined LP:
         self.clingo_control.ground()
+        print("Grounded!")
         # solve combined LP for raw adventures:
         raw_adventures = list()
 
@@ -225,16 +227,22 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
             fact_list = [fact for fact in fact_list if "reachable" not in fact]
             result_adventures.append(fact_list)
 
-        print(result_adventures)
-        """
-        for result_adventure in result_adventures:
-            for fact in result_adventure:
-                # if "in(" in fact:
-                #    print(fact)
-                if "on(" in fact:
-                    print(fact)
-        """
+        # print(result_adventures)
+
+        if save_to_file:
+            with open(out_file_path, 'w', encoding='utf-8') as out_file:
+                out_file.write(json.dumps(result_adventures))
+
         return result_adventures
+
+
+class ClingoGoalGenerator(ClingoAdventureBase):
+    """
+    Generate goals for adventures, based on initial world states.
+    NOTE: May implement later.
+    """
+    def __init__(self):
+        super().__init__()
 
 
 class ClingoAdventureSolver(ClingoAdventureBase):
@@ -292,11 +300,23 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         if return_encoding:
             clingo_str = str()
 
+        self.id_to_type_dict: dict = dict()
+
         # convert fact strings to tuples:
-        initial_facts = [fact_str_to_tuple(fact) for fact in initial_world_state]
+        self.initial_facts = [fact_str_to_tuple(fact) for fact in initial_world_state]
         # iterate over initial world state, add fixed basic facts, add turn facts for changeable facts
-        for fact in initial_facts:
-            # print(fact)
+        for fact in self.initial_facts:
+            # print("initial fact:", fact)
+            if fact[0] == "type":
+                self.id_to_type_dict[fact[1]] = {'type': fact[2],
+                                                 'repr_str': self.entity_definitions[fact[2]]['repr_str']}
+                if 'traits' in self.entity_definitions[fact[2]]:
+                    self.id_to_type_dict[fact[1]]['traits'] = self.entity_definitions[fact[2]]['traits']
+            if fact[0] == "room":
+                self.id_to_type_dict[fact[1]] = {'type': fact[2],
+                                                 'repr_str': self.room_definitions[fact[2]]['repr_str']}
+                if 'traits' in self.room_definitions[fact[2]]:
+                    self.id_to_type_dict[fact[1]]['traits'] = self.room_definitions[fact[2]]['traits']
             if fact[0] in mutable_fact_types:
                 # add turn 0 turn fact atom:
                 if len(fact) == 3:
@@ -315,6 +335,8 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                 self.clingo_control.add(const_atom)
                 if return_encoding:
                     clingo_str += "\n" + const_atom
+
+        # print(self.id_to_type_dict)
 
         if return_encoding:
             return clingo_str
@@ -356,6 +378,12 @@ class ClingoAdventureSolver(ClingoAdventureBase):
             if return_encoding:
                 clingo_str += "\n" + action_asp
 
+        # add action/turn restraints:
+        actions_turns_clingo: str = self.clingo_templates["action_limits"]
+        self.clingo_control.add(actions_turns_clingo)
+        if return_encoding:
+            clingo_str += "\n" + actions_turns_clingo
+
         # add goals:
         for goal in goal_facts:
             goal_tuple = fact_str_to_tuple(goal)
@@ -393,37 +421,140 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         with self.clingo_control.solve(yield_=True) as solve:
             for model in solve:
                 raw_solutions.append(model.__str__())
-            satisfiable = solve.get()
+            # satisfiable = solve.get()
+            satisfiable = str(solve.get())
             if satisfiable == "SAT":
                 solvable = True
             elif satisfiable == "UNSAT":
                 solvable = False
 
-        if return_only_optimal:
-            if return_encoding:
-                return solvable, raw_solutions[-1], clingo_str
-            return solvable, raw_solutions[-1], clingo_str
+        if return_only_optimal and raw_solutions:
+            raw_solutions = raw_solutions[-1]
 
         if return_encoding:
             return solvable, raw_solutions, clingo_str
-        return solvable, raw_solutions
+        else:
+            return solvable, raw_solutions
+
+    def convert_adventure_solution(self, adventure_solution: str):
+        """
+        Convert a raw solution string into list of IF commands and get additional information. Expects only-actions raw
+        string from ClingoAdventureSolver.
+        """
+        actions_list: list = adventure_solution.split()
+        action_tuples = [convert_action_to_tuple(action) for action in actions_list]
+        action_tuples.sort(key=lambda turn: turn[0])
+        # TODO: handle adjectives; use adj facts in self.initial_state
+        action_commands: list = list()
+        for action_tuple in action_tuples:
+            if len(action_tuple) == 3:
+                command: str = f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']}"
+            if len(action_tuple) == 4:
+                if action_tuple[1] == "put":
+                    if "support" in self.id_to_type_dict[action_tuple[3]]['traits']:
+                        command: str = (f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']} "
+                                        f"on {self.id_to_type_dict[action_tuple[3]]['repr_str']}")
+                    if "container" in self.id_to_type_dict[action_tuple[3]]['traits']:
+                        command: str = (f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']} "
+                                        f"in {self.id_to_type_dict[action_tuple[3]]['repr_str']}")
+                else:
+                    command: str = (f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']} "
+                                    f"{self.id_to_type_dict[action_tuple[3]]['repr_str']}")
+            action_commands.append(command)
+        # print(action_commands)
+        return action_commands, len(action_tuples)
+
+
+def convert_action_to_tuple(action: str):
+    action_splice = action[9:-1]
+    action_split = action_splice.split(",")
+    action_split[0] = int(action_split[0])
+    action_tuple = tuple(action_split)
+    return action_tuple
 
 
 if __name__ == "__main__":
     """
+    import time
     test_generator = ClingoAdventureGenerator()
 
     # test_gen_config = {"entity_adjectives": "optional"}  # "optional" takes a long time to generate due to the amount of variations
     # test_gen_config = {"entity_adjectives": "all"}  # "all" takes a long time to generate due to the amount of variations
     test_gen_config = {"entity_adjectives": "none"}  # "none" takes the shortest time (<1m for basic) to generate due to the low amount of variations
 
+    gen_start_time = time.time()
+
     test_gen = test_generator.generate_adventures(test_gen_config)
+    # test_gen = test_generator.generate_adventures(test_gen_config, save_to_file=True)
+
+    gen_end_time = time.time()
+
+    print(f"Generated {len(test_gen)} adventure initial world states in {gen_end_time - gen_start_time}s.")
+    """
+    """
+    # different amounts of rooms/things
+    test_gen_config = {
+        "entity_adjectives": "none",
+        "rooms": {
+            "kitchen": {
+                "min": 1,
+                "max": 1
+            },
+            "pantry": {
+                "min": 0,
+                "max": 1
+            },
+            "hallway": {
+                "min": 1,
+                "max": 1
+            },
+            "livingroom": {
+                "min": 1,
+                "max": 1
+            },
+            "broomcloset": {
+                "min": 0,
+                "max": 1
+            }
+        },
+        "things": {
+            
+        }
+    }
+    """
+    """
+    with open("generated_adventures.json", 'r', encoding='utf-8') as advs_file:
+        adventures = json.load(advs_file)
+        adventure = adventures[0]
+        print(adventure)
     """
 
+    """"""
     test_solver = ClingoAdventureSolver()
-
-    test_adv = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
+    test_adv = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'closed(refrigerator1)', 'closed(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
+    # test_adv = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
     # test_solver.initialize_adventure(test_adv)
 
     # test_solver.convert_actions()
-    test_solver.solve_optimally(test_adv, ["open(refrigerator1)"])
+    solvable, solution = test_solver.solve_optimally(test_adv, ["on(sandwich1,table1)"], turn_limit=50)
+    # solvable, solution, encoding = test_solver.solve_optimally(test_adv, ["on(sandwich1,table1)"], turn_limit=50, return_encoding=True)
+
+    # print(encoding)
+
+    print("Adventure is solvable:", solvable)
+    # print(solution)
+
+    commands, turns = test_solver.convert_adventure_solution(solution)
+    print(f"The adventure is optimally solved in {turns} turns with the following action sequence:")
+    print(commands)
+
+    """
+    solution = "action_t(0,go,hallway1) action_t(3,open,refrigerator1) action_t(4,take,sandwich1) action_t(1,go,kitchen1) action_t(6,go,hallway1) action_t(2,go,pantry1) action_t(5,go,kitchen1) action_t(7,go,livingroom1) action_t(8,put,sandwich1,table1)"
+
+    convert_adventure_solution(solution)
+
+    """
+    """
+    for initial_adv in test_gen:
+        adv_solver = ClingoAdventureSolver()
+    """

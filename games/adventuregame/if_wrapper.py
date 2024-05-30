@@ -56,6 +56,8 @@ class IFTransformer(Transformer):
 
         arg_idx = 1
 
+        # TODO: parse split terms like 'living room' properly!
+
         for child in action_content:
             if type(child) == lark.Tree and child.data == 'thing':
                 # print("thing:", child.children)
@@ -176,10 +178,6 @@ class BasicIFInterpreter:
         """
         Initialize the lark action input parser and transformer.
         """
-
-        # TODO: excise grammar init -> get adjectives from world state or entity defs
-
-        # TODO: define applicable instance adj states in entity type def? -> predefines set of adjs
 
         act_grammar_rules = list()
         act_grammar_larks = list()
@@ -385,7 +383,7 @@ class BasicIFInterpreter:
                             visible_contents.append(thing)
                             break
                         elif state_pred2[1] == 'inventory' and state_pred2[1] == contained_in:
-                            # TODO: figure out inventory item reporting; handling in action resolve now
+                            # TODO?: figure out inventory item reporting; handling in action resolve now
                             print("inventory?")
                             visible_contents.append(thing)
                             break
@@ -458,7 +456,7 @@ class BasicIFInterpreter:
         else:
             visible_content_state_combined = str()
 
-        # TODO: handle doors (once they exist)
+        # TODO: handle doors (once they exist); if they will exist...
 
         room_exits = self.get_player_room_exits()
         # convert target room IDs to type names:
@@ -585,7 +583,7 @@ class BasicIFInterpreter:
                     return False, f"There is no exit to {action_dict['arg1']} here."
                 elif len(passable_exits[action_dict['arg1']]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
-                    # TODO: handle multiple instances of same entity type
+                    # TODO: handle multiple instances of same entity type -> going for adjective solution for now
                     return False, f"There are multiple {action_dict['arg1']} here."
                 else:
                     arg1_inst = passable_exits[action_dict['arg1']][0]
@@ -687,7 +685,7 @@ class BasicIFInterpreter:
                     visible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
                 # print("visible contents:", visible_contents)
 
-                # TODO: move multiples handling to parsing step
+                # TODO: move multiples handling to parsing step?
 
                 if action_dict['arg1'] not in visible_contents:
                     print(f"There is no {action_dict['arg1']}!")
