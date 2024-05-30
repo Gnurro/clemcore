@@ -6,7 +6,7 @@
     "object_pre_state": ["closed"],
     "object_post_state": "open(THING)",
     "state_changes": [
-      {"pre_state": "closed(THING)", "conditions": ["openable(THING)"], "post_state": "open(THING)"}
+      {"pre_state": "closed(THING)", "conditions": [], "post_state": "open(THING)"}
     ],
     "feedback_template": "The {{ thing }} is now open.",
     "asp": "{ action_t(TURN,open,THING):at_t(TURN,THING,ROOM),closed_t(TURN,THING) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nopen_t(TURN+1,THING) :- action_t(TURN,open,THING).\nopen_t(TURN+1,THING) :- turn(TURN), open_t(TURN,THING), not action_t(TURN,close,THING)."
@@ -18,7 +18,7 @@
     "object_pre_state": ["open"],
     "object_post_state": "closed(THING)",
     "state_changes": [
-      {"pre_state": "open(THING)", "conditions": ["openable(THING)"], "post_state": "closed(THING)"}
+      {"pre_state": "open(THING)", "conditions": [], "post_state": "closed(THING)"}
     ],
     "feedback_template": "The {{ thing }} is now closed.",
     "asp": "{ action_t(TURN,close,THING):at_t(TURN,THING,ROOM),open_t(TURN,THING) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nclosed_t(TURN+1,THING) :- action_t(TURN,close,THING).\nclosed_t(TURN+1,THING) :- turn(TURN), closed_t(TURN,THING), not action_t(TURN,open,THING)."
@@ -33,7 +33,8 @@
       {"pre_state": "on(THING,ANY)", "conditions": ["takeable(THING)"], "post_state": "in(THING,inventory)"},
       {"pre_state": "in(THING,ANY)", "conditions": ["takeable(THING)"], "post_state": "in(THING,inventory)"}
     ],
-    "feedback_template": "You take the {{ thing }}. {{ inventory_desc }}"
+    "feedback_template": "You take the {{ thing }}. {{ inventory_desc }}",
+    "asp": "{ action_t(TURN,take,THING):at_t(TURN,THING,ROOM),takeable(THING),in_t(TURN,THING,CONTAINER),open_t(TURN,CONTAINER),at_t(TURN,player1,ROOM);action_t(TURN,take,THING):at_t(TURN,THING,ROOM),takeable(THING),on_t(TURN,THING,SUPPORT),support(SUPPORT),at_t(TURN,player1,ROOM) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nin_t(TURN+1,THING,inventory) :- action_t(TURN,take,THING).\nin_t(TURN+1,THING,TARGET) :- turn(TURN), in_t(TURN,THING,TARGET), not action_t(TURN,take,THING), TARGET != inventory.\non_t(TURN+1,THING,TARGET) :- turn(TURN), on_t(TURN,THING,TARGET), not action_t(TURN,take,THING)."
   },
   {
     "type_name": "put",
@@ -47,7 +48,8 @@
       {"pre_state": "in(THING,ANY)", "conditions": ["movable(THING)", "support(TARGET)"], "post_state": "on(THING,TARGET)"},
       {"pre_state": "in(THING,ANY)", "conditions": ["movable(THING)", "container(TARGET)"], "post_state": "in(THING,TARGET)"}
     ],
-    "feedback_template": "The {{ thing }} is now {{ prep }} the {{ target }}."
+    "feedback_template": "The {{ thing }} is now {{ prep }} the {{ target }}.",
+    "asp": "{ action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),in_t(TURN,THING,TARGET),open_t(TURN,TARGET),at_t(TURN,player1,ROOM);action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),on_t(TURN,THING,TARGET),support(TARGET),at_t(TURN,player1,ROOM);action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),in_t(TURN,THING,inventory),at_t(TURN,player1,ROOM),TARGET!=player1 } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nin_t(TURN+1,THING,TARGET) :- turn(TURN), action_t(TURN,put,THING,TARGET), container(TARGET).\non_t(TURN+1,THING,TARGET) :- turn(TURN), action_t(TURN,put,THING,TARGET), support(TARGET).\nin_t(TURN+1,THING,inventory) :- turn(TURN), in_t(TURN,THING,inventory), not action_t(TURN,put,THING,_)."
   },
   {
     "type_name": "go",
@@ -59,6 +61,6 @@
       {"pre_state": "at(THING,HERE)", "conditions": ["in(THING,inventory)"], "post_state": "at(THING,TARGET)"}
     ],
     "feedback_template": "{{ room_desc }}",
-    "asp": "{ action_t(TURN,go,TARGET):exit(ROOM,TARGET) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nat_t(TURN+1,player1,TARGET) :- action_t(TURN,go,TARGET).\nat_t(TURN+1,player1,ROOM) :- turn(TURN), at_t(TURN,player1,ROOM), not action_t(TURN,go,_).\n% things in inventory move with player:\nat_t(TURN+1,THING,TARGET) :- action_t(TURN,go,TARGET), in_t(TURN,THING,inventory).\n% things not in inventory stay in the room they are:\nat_t(TURN+1,THING,ROOM) :- turn(TURN), at_t(TURN,THING,ROOM), not in_t(TURN,THING,inventory), not turn_limit(TURN)."
+    "asp": "{ action_t(TURN,go,TARGET):exit(ROOM,TARGET) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nat_t(TURN+1,player1,TARGET) :- action_t(TURN,go,TARGET).\nat_t(TURN+1,player1,ROOM) :- turn(TURN), at_t(TURN,player1,ROOM), not action_t(TURN,go,_).\nat_t(TURN+1,THING,TARGET) :- action_t(TURN,go,TARGET), in_t(TURN,THING,inventory).\nat_t(TURN+1,THING,ROOM) :- turn(TURN), at_t(TURN,THING,ROOM), not in_t(TURN,THING,inventory), not turn_limit(TURN), THING != player1."
   }
 ]
