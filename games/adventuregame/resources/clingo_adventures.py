@@ -1,3 +1,8 @@
+"""
+Clingo-based adventure generation and optimal solving.
+"""
+
+from typing import List, Dict, Tuple, Any, Union, Optional
 import json
 from clingo.control import Control
 
@@ -261,7 +266,10 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         """
         Convert action definitions into ASP rules.
         """
-        # TODO: consider if this is necessary vs just putting the ASP for it into the action def
+        # NOTE: this has not been implemented due to time constraints
+        # ASP encodings have been developed more directly and are simply stored in the action definition JSON
+        # time permitting, the state change definitions of action will be overhauled to be more directly usable for ASP
+        # as well as for the IF interpreter
         for action_name, action_def in self.action_definitions.items():
             print(action_name)
             # print(action_def['state_changes'])
@@ -275,18 +283,18 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                     print(action_t_rule)
             # break
 
-    def initialize_adventure(self, initial_world_state):
+    def initialize_adventure(self, initial_world_state, mutable_fact_types: List = ["at", "in", "on", "closed", "open"],
+                             return_encoding: bool = False):
         """
-        Set up initial world state add facts to clingo controller.
+        Set up initial world state and add facts to clingo controller.
         Turn facts have _t in the fact/atom type, and their first value is the turn at which they are true.
         """
-
-        clingo_str = str()
+        if return_encoding:
+            clingo_str = str()
 
         # convert fact strings to tuples:
         initial_facts = [fact_str_to_tuple(fact) for fact in initial_world_state]
         # iterate over initial world state, add fixed basic facts, add turn facts for changeable facts
-        mutable_fact_types = ["at", "in", "on", "closed", "open"]  # TODO: externalize these?
         for fact in initial_facts:
             # print(fact)
             if fact[0] in mutable_fact_types:
@@ -294,37 +302,59 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                 if len(fact) == 3:
                     turn_atom = f"{fact[0]}_t(0,{fact[1]},{fact[2]})."
                     self.clingo_control.add(turn_atom)
-                    clingo_str += "\n" + turn_atom
+                    if return_encoding:
+                        clingo_str += "\n" + turn_atom
                 if len(fact) == 2:
                     turn_atom = f"{fact[0]}_t(0,{fact[1]})."
                     self.clingo_control.add(turn_atom)
-                    clingo_str += "\n" + turn_atom
-
+                    if return_encoding:
+                        clingo_str += "\n" + turn_atom
             else:
                 # add constant fact atom:
                 const_atom = f"{fact_tuple_to_str(fact)}."
                 self.clingo_control.add(const_atom)
-                clingo_str += "\n" + const_atom
+                if return_encoding:
+                    clingo_str += "\n" + const_atom
 
-        # print(clingo_str)
+        if return_encoding:
+            return clingo_str
 
     def solve_optimally(self, initial_world_state, goal_facts: list, turn_limit: int = 10,
-                        return_only_actions: bool = True):
+                        return_only_actions: bool = True, return_only_optimal: bool = True,
+                        return_encoding: bool = False) -> Tuple[bool, Union[List[str], List[List[str]]], Optional[str]]:
         """
         Generates an optimized solution to an adventure.
+        :param initial_world_state: Initial world state fact list.
+        :param goal_facts: List of goal facts in string format, ie 'on(sandwich1,table1)'.
+        :param turn_limit: Limit number of turns/actions to solve adventure. NOTE: Main factor for solvability.
+        :param return_only_actions: Return only a list of action-at-turn atoms. If False, ALL model atoms are returned.
+        :param return_only_optimal: Return only the optimal solution model's atoms.
+        :param return_encoding: Return the entire adventure solving ASP encoding generated.
+        :return: Tuple of: Solvability, list of solution models or optimal solution model, ASP solving encoding.
         """
+        if return_encoding:
+            clingo_str = str()
+
         # add turn generation and limit first:
         turns_template: str = self.clingo_templates["turns"]
         turns_clingo = turns_template.replace("$TURNLIMIT$", str(turn_limit))
         self.clingo_control.add(turns_clingo)
+        if return_encoding:
+            clingo_str += "\n" + turns_clingo
 
         # add initial world state facts:
-        self.initialize_adventure(initial_world_state)
+        if return_encoding:
+            initial_state_clingo = self.initialize_adventure(initial_world_state, return_encoding=True)
+            clingo_str += "\n" + initial_state_clingo
+        else:
+            self.initialize_adventure(initial_world_state)
 
         # add actions:
-        # TODO: make ASP for take and put
         for action_name, action_def in self.action_definitions.items():
-            print(action_def['asp'])
+            action_asp = action_def['asp']
+            self.clingo_control.add(action_asp)
+            if return_encoding:
+                clingo_str += "\n" + action_asp
 
         # add goals:
         for goal in goal_facts:
@@ -339,16 +369,21 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                 goal_clingo = goal_clingo.replace("$THING$", goal_tuple[1])
                 goal_clingo = goal_clingo.replace("$TARGET$", goal_tuple[2])
             self.clingo_control.add(goal_clingo)
-        # TODO: figure out check at last turn
+            if return_encoding:
+                clingo_str += "\n" + goal_clingo
 
         # add optimization:
         minimize_clingo = self.clingo_templates["minimize"]
         self.clingo_control.add(minimize_clingo)
+        if return_encoding:
+            clingo_str += "\n" + minimize_clingo
 
         # add output only actions:
         if return_only_actions:
             only_actions_clingo = self.clingo_templates["return_only_actions"]
             self.clingo_control.add(only_actions_clingo)
+            if return_encoding:
+                clingo_str += "\n" + only_actions_clingo
 
         # ground and solve:
         self.clingo_control.ground()
@@ -357,13 +392,21 @@ class ClingoAdventureSolver(ClingoAdventureBase):
 
         with self.clingo_control.solve(yield_=True) as solve:
             for model in solve:
-                # print("model:", model)
                 raw_solutions.append(model.__str__())
-                # break
-            solvable = solve.get()
-            # print("solve get:", solvable)
+            satisfiable = solve.get()
+            if satisfiable == "SAT":
+                solvable = True
+            elif satisfiable == "UNSAT":
+                solvable = False
 
-        return raw_solutions
+        if return_only_optimal:
+            if return_encoding:
+                return solvable, raw_solutions[-1], clingo_str
+            return solvable, raw_solutions[-1], clingo_str
+
+        if return_encoding:
+            return solvable, raw_solutions, clingo_str
+        return solvable, raw_solutions
 
 
 if __name__ == "__main__":
