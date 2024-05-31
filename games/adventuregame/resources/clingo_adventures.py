@@ -4,6 +4,9 @@ Clingo-based adventure generation and optimal solving.
 
 from typing import List, Dict, Tuple, Any, Union, Optional
 import json
+from itertools import permutations
+
+import numpy as np
 from clingo.control import Control
 
 from adv_util import fact_str_to_tuple, fact_tuple_to_str
@@ -52,19 +55,19 @@ class ClingoAdventureBase(object):
         # print(self.entity_definitions)
 
 
-class ClingoAdventureGenerator(ClingoAdventureBase):
+class ClingoInitialStateGenerator(ClingoAdventureBase):
     """
     Generates initial adventure state sets based on room and entity definitions.
     """
     def __init__(self):
         super().__init__()
 
-    def generate_adventures(self, generation_config: dict = {},
-                            save_to_file: bool = False, out_file_path: str = "generated_adventures.json"):
+    def generate_initial_states(self, initial_state_config: dict = {},
+                                save_to_file: bool = False, out_file_path: str = "generated_initial_states.json"):
 
         clingo_str = str()
 
-        # if not self.generation_config:
+        # if not self.initial_state_config:
 
         # add player type fact:
         player_fact = "type(player1,player)."
@@ -180,7 +183,7 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
                         self.clingo_control.add(closed_atom)
                         clingo_str += "\n" + closed_atom
 
-                if not generation_config["entity_adjectives"] == "none":
+                if not initial_state_config["entity_adjectives"] == "none":
                     if "possible_adjs" in entity_type_values:
                         # adjective rule:
                         possible_adj_list = list()
@@ -188,9 +191,9 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
                             possible_adj_str = f"adj({entity_id},{possible_adj})"
                             possible_adj_list.append(possible_adj_str)
                         possible_adjs = ";".join(possible_adj_list)
-                        if generation_config["entity_adjectives"] == "optional":
+                        if initial_state_config["entity_adjectives"] == "optional":
                             adj_rule = "0 { $POSSIBLEADJS$ } 1."
-                        elif generation_config["entity_adjectives"] == "all":
+                        elif initial_state_config["entity_adjectives"] == "all":
                             adj_rule = "1 { $POSSIBLEADJS$ } 1."
                         adj_rule = adj_rule.replace("$POSSIBLEADJS$", possible_adjs)
                         self.clingo_control.add(adj_rule)
@@ -239,10 +242,130 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
 class ClingoGoalGenerator(ClingoAdventureBase):
     """
     Generate goals for adventures, based on initial world states.
-    NOTE: May implement later.
+    NOTE: Technically does not use clingo currently, but other tasks than 'deliver' might use it.
     """
-    def __init__(self):
+    def __init__(self, rng_seed: int = 42):
         super().__init__()
+        self.goal_yield_counter = -1
+        self.rng = np.random.default_rng(seed=rng_seed)
+
+    def initialize_adventure_state(self, initial_world_state):
+        """
+        Set up initial world state and add facts to clingo controller.
+        Turn facts have _t in the fact/atom type, and their first value is the turn at which they are true.
+        """
+        self.id_to_type_dict: dict = dict()
+
+        # convert fact strings to tuples:
+        self.initial_facts = [fact_str_to_tuple(fact) for fact in initial_world_state]
+        # iterate over initial world state, add fixed basic facts, add turn facts for changeable facts
+        for fact in self.initial_facts:
+            # print("initial fact:", fact)
+            if fact[0] == "type":
+                self.id_to_type_dict[fact[1]] = {'type': fact[2],
+                                                 'repr_str': self.entity_definitions[fact[2]]['repr_str']}
+                if 'traits' in self.entity_definitions[fact[2]]:
+                    self.id_to_type_dict[fact[1]]['traits'] = self.entity_definitions[fact[2]]['traits']
+            if fact[0] == "room":
+                self.id_to_type_dict[fact[1]] = {'type': fact[2],
+                                                 'repr_str': self.room_definitions[fact[2]]['repr_str']}
+                if 'traits' in self.room_definitions[fact[2]]:
+                    self.id_to_type_dict[fact[1]]['traits'] = self.room_definitions[fact[2]]['traits']
+
+    def generate_goal_facts(self, initial_world_state,
+                            task_config: dict = {'task': "deliver", 'deliver_to_floor': False},
+                            goal_count: int = 2):
+        """
+        Generate goal facts based on task type and given adventure initial world state.
+        Task types:
+            'deliver': Bring takeable objects to support or container; goal facts are of type 'on' or 'in'.
+        """
+        # initialize adventure world state:
+        self.initialize_adventure_state(initial_world_state)
+        if task_config['task'] == "deliver":
+            # get initial in/on of takeables:
+            takeables: dict = dict()
+            holders: dict = dict()
+            for fact in self.initial_facts:
+                if fact[0] == "takeable":
+                    # print(fact)
+                    if fact[1] not in takeables:
+                        takeables[fact[1]] = {'type': self.id_to_type_dict[fact[1]]['type']}
+                    else:
+                        takeables[fact[1]]['type'] = self.id_to_type_dict[fact[1]]['type']
+                if fact[0] in ["on", "in"]:
+                    # print(fact)
+                    if fact[1] not in takeables:
+                        takeables[fact[1]] = {'state': fact[0], 'holder': fact[2]}
+                    else:
+                        takeables[fact[1]]['state'] = fact[0]
+                        takeables[fact[1]]['holder'] = fact[2]
+                if fact[0] in ["container", "support"]:
+                    # print(fact)
+                    if fact[1] not in holders:
+                        holders[fact[1]] = {'type': self.id_to_type_dict[fact[1]]['type'], 'holder_type': fact[0]}
+                    else:
+                        holders[fact[1]]['type'] = self.id_to_type_dict[fact[1]]['type']
+                        holders[fact[1]]['holder_type'] = fact[0]
+
+            if not task_config['deliver_to_floor']:
+                bad_holders: list = list()
+                for holder, holder_values in holders.items():
+                    if holder_values['type'] == "floor":
+                        bad_holders.append(holder)
+                for bad_holder in bad_holders:
+                    del holders[bad_holder]
+
+            # print(takeables)
+            # print(holders)
+
+            # TODO?: add reasonable destinations/supports/containers to entity definitions? -> would be useful for cleanup adventure too
+
+            possible_destinations: dict = dict()
+
+            for takeable, takeable_values in takeables.items():
+                # print(takeable)
+                for holder, holder_values in holders.items():
+                    if not takeable_values['holder'] == holder:
+                        # print(holder)
+                        if takeable not in possible_destinations:
+                            possible_destinations[takeable] = [holder]
+                        else:
+                            possible_destinations[takeable].append(holder)
+
+            # print(possible_destinations)
+
+            all_possible_goals: list = list()
+            for takeable, destinations in possible_destinations.items():
+                for destination in destinations:
+                    # if self.id_to_type_dict[destination]['holder_type'] == "container":
+                    if holders[destination]['holder_type'] == "container":
+                        pred_type = "in"
+                    # elif self.id_to_type_dict[destination]['holder_type'] == "support":
+                    elif holders[destination]['holder_type'] == "support":
+                        pred_type = "on"
+                    goal_str: str = f"{pred_type}({takeable},{destination})"
+                    all_possible_goals.append(goal_str)
+            # print(all_possible_goals)
+
+            self.goal_combos = list(permutations(all_possible_goals, goal_count))
+            # print(self.goal_combos)
+
+    def get_goals_iter(self):
+        """
+        Generator method to iteratively get generated goal combos.
+        """
+        assert self.goal_combos, "No goal combos have been generated, please run .generate_goal_facts() first."
+        self.goal_yield_counter += 1
+        yield list(self.goal_combos[self.goal_yield_counter])
+
+    def get_goals_random(self, amount: int = 1, replace: bool = False):
+        """
+        Get a specified number of random goal combos, by default does not return the same combo multiple times.
+        """
+        assert self.goal_combos, "No goal combos have been generated, please run .generate_goal_facts() first."
+        choice_list = self.rng.choice(self.goal_combos, size=amount, replace=replace, shuffle=False).tolist()
+        return choice_list
 
 
 class ClingoAdventureSolver(ClingoAdventureBase):
@@ -291,8 +414,8 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                     print(action_t_rule)
             # break
 
-    def initialize_adventure(self, initial_world_state, mutable_fact_types: List = ["at", "in", "on", "closed", "open"],
-                             return_encoding: bool = False):
+    def initialize_adventure_turns(self, initial_world_state, mutable_fact_types: List = ["at", "in", "on", "closed", "open"],
+                                   return_encoding: bool = False):
         """
         Set up initial world state and add facts to clingo controller.
         Turn facts have _t in the fact/atom type, and their first value is the turn at which they are true.
@@ -366,10 +489,10 @@ class ClingoAdventureSolver(ClingoAdventureBase):
 
         # add initial world state facts:
         if return_encoding:
-            initial_state_clingo = self.initialize_adventure(initial_world_state, return_encoding=True)
+            initial_state_clingo = self.initialize_adventure_turns(initial_world_state, return_encoding=True)
             clingo_str += "\n" + initial_state_clingo
         else:
-            self.initialize_adventure(initial_world_state)
+            self.initialize_adventure_turns(initial_world_state)
 
         # add actions:
         for action_name, action_def in self.action_definitions.items():
@@ -473,6 +596,148 @@ def convert_action_to_tuple(action: str):
     return action_tuple
 
 
+class ClingoAdventureGenerator(object):
+    """
+    Generates full adventures (initial state and goals), solves each to check optimal number of turns.
+    """
+    def __init__(self, rng_seed: int = 42):
+        self.rng_seed = rng_seed
+        self.rng = np.random.default_rng(seed=self.rng_seed)
+
+        self.initial_state_generator: ClingoInitialStateGenerator = ClingoInitialStateGenerator()
+        self.initial_states: list = list()
+
+        # self.goal_generator: ClingoGoalGenerator = ClingoGoalGenerator()
+        # self.adventure_solver: ClingoAdventureSolver = ClingoAdventureSolver()
+
+    def _generate_initial_states(self):
+        """
+        Generate initial adventure world states.
+        Currently relies on hardcoded default settings, config yet to be implemented.
+        """
+        self.initial_states = self.initial_state_generator.generate_initial_states()
+
+    def _load_initial_states_from_file(self, initial_states_file_path: str):
+        """
+        Load pre-generated initial adventure world states from file.
+        """
+        with open(initial_states_file_path, 'r', encoding='utf-8') as initial_states_file:
+            self.initial_states = json.load(initial_states_file)
+
+    def _generate_goals(self, initial_state: list, task_config: dict,
+                        goals_per_adventure: int = 2, goal_set_limit: int = 0, goal_set_picking: str = "iterate"):
+        """
+        Generate goals for an initial state.
+        :param initial_state:
+        :param task_config: Task configuration; currently only 'deliver' exists.
+        :param goals_per_adventure: How many goal facts each adventure has.
+        :param goal_set_limit: How many goals sets for different adventures with the same initial state to generate.
+            If 0 (default), ALL possible permutations of goal facts of size goals_per_adventure are generated.
+        :param goal_set_picking: Method to pick from all possible goal states:
+            "iterate" - Picks goal sets from the first permutation iteratively until goal_set_limit is reached.
+            "random" - Picks random goal sets from all permutations until goal_set_limit is reached.
+        """
+        goal_generator = ClingoGoalGenerator(rng_seed=self.rng_seed)
+        if not task_config:
+            task_config = {'task': "deliver", 'deliver_to_floor': False}
+        goal_generator.generate_goal_facts(initial_state, task_config, goals_per_adventure)
+
+        if goal_set_picking == "iterative":
+            if goal_set_limit:
+                goal_sets = [next(goal_generator.get_goals_iter()) for goal_set in range(goal_set_limit)]
+            else:
+                goal_sets = goal_generator.goal_combos
+
+        elif goal_set_picking == "random":
+            assert goal_set_limit > 0, ("Random goal set picking without a limit is equivalent to getting all sets "
+                                        "iteratively.")
+            goal_sets = goal_generator.get_goals_random(amount=goal_set_limit)
+
+        return goal_sets
+
+    def _solve_adventure(self, adventure_core: dict, turn_limit: int = 50):
+        """
+        Solve an adventure to get optimal solution, with action sequence and turn count.
+        :param adventure_core: Dict with initial state and goals.
+        """
+        adventure_solver = ClingoAdventureSolver()
+        solvable, solution = adventure_solver.solve_optimally(
+            adventure_core['initial_state'], adventure_core['goals'], turn_limit=turn_limit)
+
+        if solvable:
+            action_sequence, optimal_turns = adventure_solver.convert_adventure_solution(solution)
+            return solvable, action_sequence, optimal_turns
+        else:
+            return solvable, [], 0
+
+
+    def _generate_adventures(self, task_config: dict, load_initial_states_from_file: str = "",
+                             initial_state_limit: int = 0, initial_state_picking: str = "iterative",
+                             adventures_per_initial_state: int = 0, goals_per_adventure: int = 2,
+                             goal_set_picking: str = "iterative",
+                             turn_limit: int = 50, min_optimal_turns: int = 5, max_optimal_turns: int = 50):
+        """
+        Generate adventures based on parameters.
+        The total number of adventures generated is initial_state_limit * adventures_per_initial_state - if both are 0,
+        a very large number of adventures will be generated. All 1-object-per-type, non-adjective basic/house initial
+        states already number over 240k, so these values should be limited. Use RNG seeds to reproduce smaller sets of
+        adventures that have been picked randomly.
+        :param task_config: Task configuration, currently only 'deliver' exists. (Might also determine initial state
+            generation in the future.)
+        :param load_initial_states_from_file: If a file path is passed, pre-generated initial states are loaded,
+            otherwise all possible initial states are generated.
+        :param initial_state_limit: The maximum number of initial states to generate adventures for. If 0 (default), ALL
+            available initial states will be used.
+        :param initial_state_picking: Method to pick from all possible goal states:
+            "iterate" - Picks initial states from the first available iteratively until initial_state_limit is reached.
+            "random" - Picks random initial states from all available until initial_state_limit is reached.
+        :param adventures_per_initial_state: How many adventures to generate for each initial state.
+        :param goals_per_adventure: How many goals each adventure has.
+        :param goal_set_picking: Method to pick from all possible goal states:
+            "iterate" - Picks goal sets from the first permutation iteratively until goals_per_adventure is met.
+            "random" - Picks random goal sets from all permutations until goals_per_adventure is met.
+        :param turn_limit: Maximum number of turns that optimal solution generator can take.
+        :param min_optimal_turns: Adventures that need less than this number of turns to solve will be discarded.
+        :param max_optimal_turns: Adventures that need more than this number of turns to solve will be discarded.
+        """
+        # set up initial states:
+        if load_initial_states_from_file:
+            self._load_initial_states_from_file(load_initial_states_from_file)
+        else:
+            self._generate_initial_states()
+
+        # get initial states to generate adventures with:
+        if initial_state_picking == "iterative":
+            if initial_state_limit:
+                initial_states_used = [self.initial_states[idx] for idx in range(initial_state_limit)]
+            else:
+                initial_states_used = self.initial_states
+        elif initial_state_picking == "random":
+            assert initial_state_limit > 0, ("Random initial state picking without a limit is equivalent to getting all"
+                                             " iteratively.")
+            initial_states_used = self.rng.choice(
+                self.initial_states, size=initial_state_limit, replace=False, shuffle=False).tolist()
+
+        # iterate over initial states used:
+        for initial_state in initial_states_used:
+            adventure_count = 0
+            keep_generating_adventures = True
+
+            while keep_generating_adventures:
+                # generate an adventure with the current initial state:
+
+                # TODO: refactor goal generation to enable discarding
+
+
+                adventure_count += 1
+                if adventures_per_initial_state and adventure_count == adventures_per_initial_state:
+                    keep_generating_adventures = False
+
+
+
+
+
+
 if __name__ == "__main__":
     """
     import time
@@ -491,37 +756,7 @@ if __name__ == "__main__":
 
     print(f"Generated {len(test_gen)} adventure initial world states in {gen_end_time - gen_start_time}s.")
     """
-    """
-    # different amounts of rooms/things
-    test_gen_config = {
-        "entity_adjectives": "none",
-        "rooms": {
-            "kitchen": {
-                "min": 1,
-                "max": 1
-            },
-            "pantry": {
-                "min": 0,
-                "max": 1
-            },
-            "hallway": {
-                "min": 1,
-                "max": 1
-            },
-            "livingroom": {
-                "min": 1,
-                "max": 1
-            },
-            "broomcloset": {
-                "min": 0,
-                "max": 1
-            }
-        },
-        "things": {
-            
-        }
-    }
-    """
+
     """
     with open("generated_adventures.json", 'r', encoding='utf-8') as advs_file:
         adventures = json.load(advs_file)
@@ -529,10 +764,27 @@ if __name__ == "__main__":
         print(adventure)
     """
 
-    """"""
-    test_solver = ClingoAdventureSolver()
     test_adv = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'closed(refrigerator1)', 'closed(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
     # test_adv = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
+    """
+    test_goal_gen = ClingoGoalGenerator()
+
+    test_goal_gen.generate_goal_facts(test_adv)
+    # print(test_goal_gen.get_goals_random(amount=2))
+    
+    test_iter_goals = [next(test_goal_gen.get_goals_iter()) for goal_combo in range(3)]
+    print(test_iter_goals)
+    test_iter_goals = [next(test_goal_gen.get_goals_iter()) for goal_combo in range(3)]
+    print(test_iter_goals)
+    
+    test_iter_goals = next(test_goal_gen.get_goals_iter())
+    print(test_iter_goals)
+    test_iter_goals = next(test_goal_gen.get_goals_iter())
+    print(test_iter_goals)
+    """
+    """"""
+    test_solver = ClingoAdventureSolver()
+    
     # test_solver.initialize_adventure(test_adv)
 
     # test_solver.convert_actions()
