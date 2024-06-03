@@ -500,6 +500,8 @@ class ClingoAdventureSolver(ClingoAdventureBase):
             self.clingo_control.add(action_asp)
             if return_encoding:
                 clingo_str += "\n" + action_asp
+        # TODO: make 'put' action respect closed containers
+
 
         # add action/turn restraints:
         actions_turns_clingo: str = self.clingo_templates["action_limits"]
@@ -507,8 +509,11 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         if return_encoding:
             clingo_str += "\n" + actions_turns_clingo
 
+        # print("goal set", goal_facts)
+
         # add goals:
         for goal in goal_facts:
+            # print("goal fact:", goal)
             goal_tuple = fact_str_to_tuple(goal)
             if len(goal_tuple) == 2:
                 goal_template: str = self.clingo_templates["goal_1"]
@@ -623,6 +628,7 @@ class ClingoAdventureGenerator(object):
         """
         with open(initial_states_file_path, 'r', encoding='utf-8') as initial_states_file:
             self.initial_states = json.load(initial_states_file)
+        print(f"Initial states loaded from {initial_states_file_path}.")
 
     def _generate_goals(self, initial_state: list, task_config: dict,
                         goals_per_adventure: int = 2, goal_set_limit: int = 0, goal_set_picking: str = "iterate"):
@@ -661,9 +667,15 @@ class ClingoAdventureGenerator(object):
         :param adventure_core: Dict with initial state and goals.
         """
         adventure_solver = ClingoAdventureSolver()
+
         solvable, solution = adventure_solver.solve_optimally(
             adventure_core['initial_state'], adventure_core['goals'], turn_limit=turn_limit)
+        """
+        solvable, solution, encoding = adventure_solver.solve_optimally(
+            adventure_core['initial_state'], adventure_core['goals'], turn_limit=turn_limit, return_encoding=True)
 
+        print(encoding)
+        """
         if solvable:
             action_sequence, optimal_turns = adventure_solver.convert_adventure_solution(solution)
             return solvable, action_sequence, optimal_turns
@@ -671,7 +683,7 @@ class ClingoAdventureGenerator(object):
             return solvable, [], 0
 
 
-    def _generate_adventures(self, task_config: dict, load_initial_states_from_file: str = "",
+    def generate_adventures(self, task_config: dict, load_initial_states_from_file: str = "",
                              initial_state_limit: int = 0, initial_state_picking: str = "iterative",
                              adventures_per_initial_state: int = 0, goals_per_adventure: int = 2,
                              goal_set_picking: str = "iterative",
@@ -715,8 +727,13 @@ class ClingoAdventureGenerator(object):
         elif initial_state_picking == "random":
             assert initial_state_limit > 0, ("Random initial state picking without a limit is equivalent to getting all"
                                              " iteratively.")
-            initial_states_used = self.rng.choice(
-                self.initial_states, size=initial_state_limit, replace=False, shuffle=False).tolist()
+            # initial_states_used = self.rng.choice(self.initial_states, size=initial_state_limit, replace=False, shuffle=False).tolist()
+            # print(type(self.initial_states))
+            initial_state_indices = self.rng.choice(len(self.initial_states), size=initial_state_limit, replace=False, shuffle=False)
+            initial_states_used = [self.initial_states[idx] for idx in initial_state_indices]
+            # print(initial_states_used)
+
+        generated_adventures: list = list()
 
         # iterate over initial states used:
         for initial_state in initial_states_used:
@@ -726,15 +743,46 @@ class ClingoAdventureGenerator(object):
             while keep_generating_adventures:
                 # generate an adventure with the current initial state:
 
-                # TODO: refactor goal generation to enable discarding
+                goal_generator = ClingoGoalGenerator(rng_seed=self.rng_seed)
+                if not task_config:
+                    task_config = {'task': "deliver", 'deliver_to_floor': False}
+                goal_generator.generate_goal_facts(initial_state, task_config, goals_per_adventure)
 
+                if goal_set_picking == "iterative":
+                    goal_set = next(goal_generator.get_goals_iter())
 
-                adventure_count += 1
-                if adventures_per_initial_state and adventure_count == adventures_per_initial_state:
-                    keep_generating_adventures = False
+                elif goal_set_picking == "random":
+                    # goal_set = goal_generator.get_goals_random(amount=1)
+                    goal_set = self.rng.choice(goal_generator.goal_combos, size=1).tolist()[0]
 
+                # print(goal_set)
 
+                cur_adventure = {'initial_state': initial_state, 'goals': goal_set}
 
+                # solve adventure
+
+                solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure, turn_limit=turn_limit)
+
+                # print("solvable:", solvable)
+                # print("solution:", action_sequence)
+                # print("optimal turns:", optimal_turns)
+
+                if not solvable:
+                    # print("not solvable, continuing")
+                    continue
+
+                # check if optimal turns within bounds
+
+                if min_optimal_turns <= optimal_turns <= max_optimal_turns:
+                    viable_adventure = {'initial_state': initial_state, 'goals': goal_set,
+                                        'optimal_turns': optimal_turns, 'optimal_solution': action_sequence}
+                    generated_adventures.append(viable_adventure)
+                    adventure_count += 1
+                    if adventures_per_initial_state and adventure_count == adventures_per_initial_state:
+                        keep_generating_adventures = False
+                else:
+                    continue
+        print(generated_adventures)
 
 
 
@@ -782,7 +830,7 @@ if __name__ == "__main__":
     test_iter_goals = next(test_goal_gen.get_goals_iter())
     print(test_iter_goals)
     """
-    """"""
+    """
     test_solver = ClingoAdventureSolver()
     
     # test_solver.initialize_adventure(test_adv)
@@ -799,7 +847,7 @@ if __name__ == "__main__":
     commands, turns = test_solver.convert_adventure_solution(solution)
     print(f"The adventure is optimally solved in {turns} turns with the following action sequence:")
     print(commands)
-
+    """
     """
     solution = "action_t(0,go,hallway1) action_t(3,open,refrigerator1) action_t(4,take,sandwich1) action_t(1,go,kitchen1) action_t(6,go,hallway1) action_t(2,go,pantry1) action_t(5,go,kitchen1) action_t(7,go,livingroom1) action_t(8,put,sandwich1,table1)"
 
@@ -810,3 +858,9 @@ if __name__ == "__main__":
     for initial_adv in test_gen:
         adv_solver = ClingoAdventureSolver()
     """
+    """"""
+    test_generator = ClingoAdventureGenerator()
+    test_generator.generate_adventures(task_config={}, load_initial_states_from_file="generated_adventures.json",
+                                       initial_state_limit=1, initial_state_picking="random",
+                                       adventures_per_initial_state=2, goal_set_picking="random",
+                                       max_optimal_turns=30)

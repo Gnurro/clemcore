@@ -146,9 +146,16 @@ on_t(TURN+1,THING,TARGET) :- turn(TURN), on_t(TURN,THING,TARGET), not action_t(T
 
 % put action
 {
-action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),in_t(TURN,THING,TARGET),open_t(TURN,TARGET),at_t(TURN,player1,ROOM);
-action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),on_t(TURN,THING,TARGET),support(TARGET),at_t(TURN,player1,ROOM);
-action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),in_t(TURN,THING,inventory),at_t(TURN,player1,ROOM),TARGET!=player1
+% put thing from open container in open container:
+action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,player1,ROOM),at_t(TURN,TARGET,ROOM),at_t(TURN,SOURCE,ROOM),movable(THING),container(SOURCE),in_t(TURN,THING,SOURCE),open_t(TURN,SOURCE),container(TARGET),open_t(TURN,TARGET);
+% put thing from open container on support:
+action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,player1,ROOM),at_t(TURN,TARGET,ROOM),at_t(TURN,SOURCE,ROOM),movable(THING),container(SOURCE),in_t(TURN,THING,SOURCE),open_t(TURN,SOURCE),support(TARGET);
+% put thing from support on support:
+action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,player1,ROOM),at_t(TURN,TARGET,ROOM),support(TARGET),movable(THING),on_t(TURN,THING,SOURCE),support(SOURCE);
+% put thing from inventory in open container:
+action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,player1,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),in_t(TURN,THING,inventory),container(TARGET),open_t(TURN,TARGET);
+% put thing from inventory on support:
+action_t(TURN,put,THING,TARGET):at_t(TURN,THING,ROOM),at_t(TURN,player1,ROOM),at_t(TURN,TARGET,ROOM),movable(THING),in_t(TURN,THING,inventory),support(TARGET)
  } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).
 % things put are in container target or on support target in next turn:
 in_t(TURN+1,THING,TARGET) :- turn(TURN), action_t(TURN,put,THING,TARGET), container(TARGET).
