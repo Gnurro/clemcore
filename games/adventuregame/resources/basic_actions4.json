@@ -1,7 +1,7 @@
 [
   {
     "type_name": "open",
-    "lark": "open: OPEN thing\nOPEN.1: \"open\"",
+    "lark": "open: OPEN thing\nOPEN: \"open\"",
     "object_req_attribute": "openable",
     "object_pre_state": ["closed"],
     "object_post_state": "open(THING)",
@@ -13,7 +13,7 @@
   },
   {
     "type_name": "close",
-    "lark": "close: CLOSE thing\nCLOSE.1: \"close\"",
+    "lark": "close: CLOSE thing\nCLOSE: \"close\"",
     "object_req_attribute": "openable",
     "object_pre_state": ["open"],
     "object_post_state": "closed(THING)",
@@ -25,7 +25,7 @@
   },
   {
     "type_name": "take",
-    "lark": "take: TAKE PREP* thing PREP* thing*\nTAKE.1: \"take\" | \"grab\"",
+    "lark": "take: TAKE [ thing | thing PREP thing ]\nTAKE: \"take\" | \"grab\"",
     "object_req_attribute": "takeable",
     "object_pre_state": ["in", "on"],
     "object_post_state": "in(THING,inventory)",
@@ -38,7 +38,7 @@
   },
   {
     "type_name": "put",
-    "lark": "put: PUT thing PREP thing\nPUT.1: \"put\" | \"leave\"",
+    "lark": "put: PUT thing PREP thing\nPUT: \"put\" | \"leave\"",
     "object_req_attribute": "movable",
     "object_pre_state": ["in", "on"],
     "object_post_state": "PREP(THING,TARGET)",
@@ -53,7 +53,7 @@
   },
   {
     "type_name": "go",
-    "lark": "go: GO \"to\"* thing\nGO.1: \"go\"",
+    "lark": "go: GO \"to\"* thing\nGO: \"go\"",
     "object_pre_state": ["at"],
     "object_post_state": "at(PLAYER,TARGET)",
     "state_changes": [

@@ -1,4 +1,4 @@
 {
   "grammar_head": "%import common.WORD\n%import common.WS\n%ignore WS\n",
-  "grammar_foot": "PREP: \"on\" | \"in\" | \"from\"\nthing: ADJ* WORD | WORD\nunknown: WORD+"
+  "grammar_foot": "ADJ.1: \"deep\" | \"comfy\" | \"jelly\" | \"padded\" | \"ripe\" | \"wooden\" | \"large\" | \"small\" | \"low\" | \"fancy\" | \"metal\" | \"high\"\nPREP.1: \"on\" | \"in\" | \"from\" | \"out of\" | \"out\" | \"into\"\nDET.1: \"the\" | \"a\" | \"an\"\nthing: DET? ( ADJ+ WORD | ADJ+ WORD WORD | WORD WORD | WORD )\nunknown.-1: WORD+"
 }

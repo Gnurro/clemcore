@@ -91,7 +91,7 @@ class BasicIFInterpreter:
     """
     A basic IF interpreter for adventuregame.
     """
-    def __init__(self, game_instance: dict):
+    def __init__(self, game_instance: dict, verbose: bool = False):
         self.game_instance: dict = game_instance
 
         self.entity_types = dict()
@@ -110,7 +110,7 @@ class BasicIFInterpreter:
         self.goals_achieved: set = set()
         self.initialize_states_from_strings()
 
-        self.initialize_action_parsing()
+        self.initialize_action_parsing(print_lark_grammar=verbose)
 
         # print("BasicIFInterpreter initialized:")
         # print("Game instance:", self.game_instance)
@@ -174,7 +174,7 @@ class BasicIFInterpreter:
             # print(cur_action_type['object_post_state'])
             cur_action_type['object_post_state'] = split_state_string(cur_action_type['object_post_state'])
 
-    def initialize_action_parsing(self):
+    def initialize_action_parsing(self, print_lark_grammar: bool = False):
         """
         Initialize the lark action input parser and transformer.
         """
@@ -221,7 +221,8 @@ class BasicIFInterpreter:
         act_grammar = (f"{grammar_head}{act_grammar_action_line}"
                        f"{act_grammar_larks_str}\n{act_grammar_adj_line}{grammar_foot}")
 
-        # print(act_grammar)
+        if print_lark_grammar:
+            print(act_grammar)
 
         self.act_parser = Lark(act_grammar, start='action')
         self.act_transformer = IFTransformer()
@@ -996,11 +997,12 @@ if __name__ == "__main__":
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)"], "goal_state": ["on(sandwich,table)"]}
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)", "in(yoyo,inventory)"], "goal_state": ["on(sandwich,table)"]}
 
-    test_interpreter = BasicIFInterpreter(game_instance_exmpl)
+    # test_interpreter = BasicIFInterpreter(game_instance_exmpl)
+    test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
-
+    """
     print(test_interpreter.get_full_room_desc())
 
     turn_1 = test_interpreter.process_action("open refrigerator")
@@ -1012,7 +1014,7 @@ if __name__ == "__main__":
     # turn_2 = test_interpreter.process_action("take apple")
     print(turn_2[1])
     print()
-    """"""
+    """
     """
     # turn_3 = test_interpreter.process_action("put sandwich on table")
     # turn_3 = test_interpreter.process_action("put sandwich in table")
@@ -1020,11 +1022,11 @@ if __name__ == "__main__":
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3[1])
     """
-
+    """
     turn_3 = test_interpreter.process_action("examine sandwich")
     # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
     print(turn_3[1])
-
+    """
     """
     turn_3 = test_interpreter.process_action("go pantry")
     # turn_1 = test_interpreter.process_action("go to pantry")
