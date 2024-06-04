@@ -56,14 +56,18 @@ class IFTransformer(Transformer):
 
         arg_idx = 1
 
-        # TODO: parse split terms like 'living room' properly!
-
         for child in action_content:
             if type(child) == lark.Tree and child.data == 'thing':
                 # print("thing:", child.children)
                 if len(child.children) == 1:
                     arguments.append(child.children[0].value)
                 else:
+                    if child.children[-2].type == "WORD":
+                        # print("split noun?!")
+                        split_noun = " ".join([child.children[-2].value, child.children[-1].value])
+                        arguments.append(split_noun)
+                    else:
+                        arguments.append(child.children[-1].value)
                     arguments.append(child.children[-1].value)
                     argument_adjs = [adj.value for adj in child.children[:-1] if adj.type == 'ADJ']
                     # print(argument_adjs)
