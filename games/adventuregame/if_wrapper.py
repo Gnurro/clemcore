@@ -211,7 +211,7 @@ class BasicIFInterpreter:
         # print(all_adjs)
         all_adjs = [f'"{adj}"' for adj in all_adjs]
 
-        act_grammar_adj_line = f"ADJ: {' | '.join(all_adjs)}\n"
+        act_grammar_adj_line = f"ADJ.1: {' | '.join(all_adjs)}\n"
 
         # print(act_grammar_adj_line)
 
