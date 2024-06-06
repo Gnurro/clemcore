@@ -131,6 +131,9 @@ class BasicIFInterpreter:
         Load and process entity types in this adventure.
         """
         # TODO: use clemgame resource loading
+
+        # TODO: load all entity definition files determined by game_instance/adventure
+
         # load basic entity types:
         with open(f"{PATH}resources/basic_entities.json", 'r', encoding='utf-8') as entities_file:
             entity_definitions = json.load(entities_file)
@@ -146,6 +149,9 @@ class BasicIFInterpreter:
         Load and process room types in this adventure.
         """
         # TODO: use clemgame resource loading
+
+        # TODO: load all room definition files determined by game_instance/adventure
+
         # load basic entity types:
         with open(f"{PATH}resources/basic_rooms.json", 'r', encoding='utf-8') as rooms_file:
             room_definitions = json.load(rooms_file)
@@ -161,6 +167,9 @@ class BasicIFInterpreter:
         Load and process action types in this adventure.
         """
         # TODO: use clemgame resource loading
+
+        # TODO: load all action definition files determined by game_instance/adventure
+
         # load basic action types:
         # with open(f"{PATH}resources/basic_actions1.json", 'r', encoding='utf-8') as actions_file:
         with open(f"{PATH}resources/basic_actions.json", 'r', encoding='utf-8') as actions_file:
@@ -1001,8 +1010,8 @@ if __name__ == "__main__":
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)"], "goal_state": ["on(sandwich,table)"]}
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)", "in(yoyo,inventory)"], "goal_state": ["on(sandwich,table)"]}
 
-    # test_interpreter = BasicIFInterpreter(game_instance_exmpl)
-    test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
+    test_interpreter = BasicIFInterpreter(game_instance_exmpl)
+    # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
