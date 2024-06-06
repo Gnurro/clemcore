@@ -1,0 +1,12 @@
+{
+  "home_deliver_two": {
+    "action_definitions": ["basic_actions.json"],
+    "room_definitions": ["home_rooms.json"],
+    "entity_definitions": ["home_entities.json"],
+    "task_config": {
+      "task": "deliver",
+      "deliver_to_floor": false
+    },
+    "goal_count": 2
+  }
+}

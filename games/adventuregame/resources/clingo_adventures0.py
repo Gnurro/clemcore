@@ -12,35 +12,23 @@ from clingo.control import Control
 from adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 
-# TODO: doc adventure generation config format and contents
+# TODO: define/doc adventure generation config format and contents
 
-# TODO: make convenient generation function
+# TODO: expose definitions loading
 
 class ClingoAdventureBase(object):
     """
     Wraps the clingo ASP module. Base class for adventure generator and adventure solver.
     """
-    def __init__(self, adventure_type: str = "home_deliver_two"):
+    def __init__(self):
         # initialize clingo controller:
         self.clingo_control: Control = Control(["0"])  # ["0"] argument to return all models
 
-        self.adv_type: str = adventure_type
-        # load adventure type definition:
-        with open("definitions/adventure_types.json", 'r', encoding='utf-8') as adventure_types_file:
-            adventure_type_definitions = json.load(adventure_types_file)
-            self.adv_type_def = adventure_type_definitions[self.adv_type]
-
-        # print("adv type:", self.adv_type)
-        # print("adv type def:", self.adv_type_def)
-
         # load room type definitions:
-        room_definitions: list = list()
-        for room_def_source in self.adv_type_def["room_definitions"]:
-            with open(f"definitions/{room_def_source}", 'r', encoding='utf-8') as rooms_file:
-                room_definitions += json.load(rooms_file)
+        with open("basic_rooms.json", 'r', encoding='utf-8') as rooms_file:
+            room_definitions = json.load(rooms_file)
 
         # print(room_definitions)
-
         self.room_definitions = dict()
         for type_def in room_definitions:
             type_def_dict = dict()
@@ -52,10 +40,8 @@ class ClingoAdventureBase(object):
         # print(self.room_definitions)
 
         # load entity type definitions:
-        entity_definitions: list = list()
-        for entity_def_source in self.adv_type_def["entity_definitions"]:
-            with open(f"definitions/{entity_def_source}", 'r', encoding='utf-8') as entities_file:
-                entity_definitions += json.load(entities_file)
+        with open("basic_entities.json", 'r', encoding='utf-8') as entities_file:
+            entity_definitions = json.load(entities_file)
 
         # print(entity_definitions)
         self.entity_definitions = dict()
@@ -68,34 +54,20 @@ class ClingoAdventureBase(object):
 
         # print(self.entity_definitions)
 
-        # load action type definitions:
-        action_definitions: list = list()
-        for action_def_source in self.adv_type_def["action_definitions"]:
-            with open(f"definitions/{action_def_source}", 'r', encoding='utf-8') as actions_file:
-                action_definitions += json.load(actions_file)
-
-        # print(room_definitions)
-
-        self.action_definitions = dict()
-        for type_def in action_definitions:
-            type_def_dict = dict()
-            for type_key, type_value in type_def.items():
-                if not type_key == 'type_name':
-                    type_def_dict[type_key] = type_value
-            self.action_definitions[type_def['type_name']] = type_def_dict
-
-        # print(self.room_definitions)
-
 
 class ClingoInitialStateGenerator(ClingoAdventureBase):
     """
     Generates initial adventure state sets based on room and entity definitions.
     """
-    def __init__(self, adventure_type: str = "home_deliver_two"):
-        super().__init__(adventure_type=adventure_type)
+    def __init__(self):
+        super().__init__()
 
-    def generate_initial_states(self, save_to_file: bool = False, out_file_path: str = "generated_initial_states.json"):
+    def generate_initial_states(self, initial_state_config: dict = {},
+                                save_to_file: bool = False, out_file_path: str = "generated_initial_states.json"):
+
         clingo_str = str()
+
+        # if not self.initial_state_config:
 
         # add player type fact:
         player_fact = "type(player1,player)."
@@ -211,7 +183,7 @@ class ClingoInitialStateGenerator(ClingoAdventureBase):
                         self.clingo_control.add(closed_atom)
                         clingo_str += "\n" + closed_atom
 
-                if not self.adv_type_def['initial_state_config']["entity_adjectives"] == "none":
+                if not initial_state_config["entity_adjectives"] == "none":
                     if "possible_adjs" in entity_type_values:
                         # adjective rule:
                         possible_adj_list = list()
@@ -219,9 +191,9 @@ class ClingoInitialStateGenerator(ClingoAdventureBase):
                             possible_adj_str = f"adj({entity_id},{possible_adj})"
                             possible_adj_list.append(possible_adj_str)
                         possible_adjs = ";".join(possible_adj_list)
-                        if self.adv_type_def['initial_state_config']["entity_adjectives"] == "optional":
+                        if initial_state_config["entity_adjectives"] == "optional":
                             adj_rule = "0 { $POSSIBLEADJS$ } 1."
-                        elif self.adv_type_def['initial_state_config']["entity_adjectives"] == "all":
+                        elif initial_state_config["entity_adjectives"] == "all":
                             adj_rule = "1 { $POSSIBLEADJS$ } 1."
                         adj_rule = adj_rule.replace("$POSSIBLEADJS$", possible_adjs)
                         self.clingo_control.add(adj_rule)
@@ -272,8 +244,8 @@ class ClingoGoalGenerator(ClingoAdventureBase):
     Generate goals for adventures, based on initial world states.
     NOTE: Technically does not use clingo currently, but other tasks than 'deliver' might use it.
     """
-    def __init__(self, adventure_type: str = "home_deliver_two", rng_seed: int = 42):
-        super().__init__(adventure_type=adventure_type)
+    def __init__(self, rng_seed: int = 42):
+        super().__init__()
         self.goal_yield_counter = -1
         self.rng = np.random.default_rng(seed=rng_seed)
 
@@ -300,7 +272,9 @@ class ClingoGoalGenerator(ClingoAdventureBase):
                 if 'traits' in self.room_definitions[fact[2]]:
                     self.id_to_type_dict[fact[1]]['traits'] = self.room_definitions[fact[2]]['traits']
 
-    def generate_goal_facts(self, initial_world_state):
+    def generate_goal_facts(self, initial_world_state,
+                            task_config: dict = {'task': "deliver", 'deliver_to_floor': False},
+                            goal_count: int = 2):
         """
         Generate goal facts based on task type and given adventure initial world state.
         Task types:
@@ -308,10 +282,6 @@ class ClingoGoalGenerator(ClingoAdventureBase):
         """
         # initialize adventure world state:
         self.initialize_adventure_state(initial_world_state)
-
-        task_config = self.adv_type_def['task_config']
-        goal_count = self.adv_type_def['goal_count']
-
         if task_config['task'] == "deliver":
             # get initial in/on of takeables:
             takeables: dict = dict()
@@ -400,10 +370,24 @@ class ClingoAdventureSolver(ClingoAdventureBase):
     """
     Solves adventure with given goal states, optimizing action sequence.
     """
-    def __init__(self, adventure_type: str = "home_deliver_two"):
-        super().__init__(adventure_type=adventure_type)
+    def __init__(self):
+        super().__init__()
+        # load action definitions:
+        with open("basic_actions.json", 'r', encoding='utf-8') as actions_file:
+            action_definitions = json.load(actions_file)
 
-        # load clingo ASP templates:
+        # print(room_definitions)
+        self.action_definitions = dict()
+        for type_def in action_definitions:
+            type_def_dict = dict()
+            for type_key, type_value in type_def.items():
+                if not type_key == 'type_name':
+                    type_def_dict[type_key] = type_value
+            self.action_definitions[type_def['type_name']] = type_def_dict
+
+        # print(self.action_definitions)
+
+        # load action definitions:
         with open("clingo_templates.json", 'r', encoding='utf-8') as templates_file:
             self.clingo_templates = json.load(templates_file)
 
@@ -428,13 +412,12 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                     print(action_t_rule)
             # break
 
-    def initialize_adventure_turns(self, initial_world_state, return_encoding: bool = False):
+    def initialize_adventure_turns(self, initial_world_state, mutable_fact_types: List = ["at", "in", "on", "closed", "open"],
+                                   return_encoding: bool = False):
         """
         Set up initial world state and add facts to clingo controller.
         Turn facts have _t in the fact/atom type, and their first value is the turn at which they are true.
         """
-        mutable_fact_types: list = self.adv_type_def["mutable_fact_types"]
-
         if return_encoding:
             clingo_str = str()
 
@@ -479,7 +462,7 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         if return_encoding:
             return clingo_str
 
-    def solve_optimally(self, initial_world_state, goal_facts: list,
+    def solve_optimally(self, initial_world_state, goal_facts: list, turn_limit: int = 10,
                         return_only_actions: bool = True, return_only_optimal: bool = True,
                         return_encoding: bool = False) -> Tuple[bool, Union[List[str], List[List[str]]], Optional[str]]:
         """
@@ -492,9 +475,6 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         :param return_encoding: Return the entire adventure solving ASP encoding generated.
         :return: Tuple of: Solvability, list of solution models or optimal solution model, ASP solving encoding.
         """
-
-        turn_limit: int = self.adv_type_def["optimal_solver_turn_limit"]
-
         if return_encoding:
             clingo_str = str()
 
@@ -594,7 +574,6 @@ class ClingoAdventureSolver(ClingoAdventureBase):
             if len(action_tuple) == 3:
                 command: str = f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']}"
             if len(action_tuple) == 4:
-                # TODO?: extract this to action def?
                 if action_tuple[1] == "put":
                     if "support" in self.id_to_type_dict[action_tuple[3]]['traits']:
                         command: str = (f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']} "
@@ -622,13 +601,12 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
     """
     Generates full adventures (initial state and goals), solves each to check optimal number of turns.
     """
-    def __init__(self, adventure_type: str = "home_deliver_two", rng_seed: int = 42):
-        super().__init__(adventure_type=adventure_type)
+    def __init__(self, rng_seed: int = 42):
+        super().__init__()
         self.rng_seed = rng_seed
         self.rng = np.random.default_rng(seed=self.rng_seed)
 
-        self.initial_state_generator: ClingoInitialStateGenerator = ClingoInitialStateGenerator(
-            adventure_type=self.adv_type)
+        self.initial_state_generator: ClingoInitialStateGenerator = ClingoInitialStateGenerator()
         self.initial_states: list = list()
 
         # self.goal_generator: ClingoGoalGenerator = ClingoGoalGenerator()
@@ -650,7 +628,7 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         print(f"Initial states loaded from {initial_states_file_path}.")
 
     def _generate_goals(self, initial_state: list, task_config: dict,
-                        goal_set_limit: int = 0, goal_set_picking: str = "iterate"):
+                        goals_per_adventure: int = 2, goal_set_limit: int = 0, goal_set_picking: str = "iterate"):
         """
         Generate goals for an initial state.
         :param initial_state:
@@ -662,10 +640,7 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
             "iterate" - Picks goal sets from the first permutation iteratively until goal_set_limit is reached.
             "random" - Picks random goal sets from all permutations until goal_set_limit is reached.
         """
-
-        goals_per_adventure: int = self.adv_type_def["goal_count"]
-
-        goal_generator = ClingoGoalGenerator(adventure_type=self.adv_type, rng_seed=self.rng_seed)
+        goal_generator = ClingoGoalGenerator(rng_seed=self.rng_seed)
         if not task_config:
             task_config = {'task': "deliver", 'deliver_to_floor': False}
         goal_generator.generate_goal_facts(initial_state, task_config, goals_per_adventure)
@@ -688,10 +663,10 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         Solve an adventure to get optimal solution, with action sequence and turn count.
         :param adventure_core: Dict with initial state and goals.
         """
-        adventure_solver = ClingoAdventureSolver(adventure_type=self.adv_type)
+        adventure_solver = ClingoAdventureSolver()
 
-        # solvable, solution = adventure_solver.solve_optimally(adventure_core['initial_state'], adventure_core['goals'], turn_limit=turn_limit)
-        solvable, solution = adventure_solver.solve_optimally(adventure_core['initial_state'], adventure_core['goals'])
+        solvable, solution = adventure_solver.solve_optimally(
+            adventure_core['initial_state'], adventure_core['goals'], turn_limit=turn_limit)
         """
         solvable, solution, encoding = adventure_solver.solve_optimally(
             adventure_core['initial_state'], adventure_core['goals'], turn_limit=turn_limit, return_encoding=True)
@@ -704,12 +679,13 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         else:
             return solvable, [], 0
 
-    def generate_adventures(self,
+    def generate_adventures(self, task_config: dict = {'task': "deliver", 'deliver_to_floor': False},
                             load_initial_states_from_file: str = "",
                             initial_state_limit: int = 0, initial_state_picking: str = "iterative",
-                            adventures_per_initial_state: int = 0,
+                            adventures_per_initial_state: int = 0, goals_per_adventure: int = 2,
                             goal_set_picking: str = "iterative",
-                            save_to_file: bool = True, indent_output_json: bool = True):
+                            turn_limit: int = 50, min_optimal_turns: int = 5, max_optimal_turns: int = 50,
+                            save_to_file: str = "generated_adventures.json"):
         """
         Generate adventures based on parameters.
         The total number of adventures generated is initial_state_limit * adventures_per_initial_state - if both are 0,
@@ -736,15 +712,6 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         :param save_to_file: File name for saving generated adventures. If empty string, generated adventures will not
             be saved.
         """
-
-        task_config: dict = self.adv_type_def["task_config"]
-
-        goals_per_adventure: int = self.adv_type_def["goal_count"]
-
-        turn_limit: int = self.adv_type_def["optimal_solver_turn_limit"]
-        min_optimal_turns: int = self.adv_type_def["min_optimal_turns"]
-        max_optimal_turns: int = self.adv_type_def["max_optimal_turns"]
-
         # set up initial states:
         if load_initial_states_from_file:
             self._load_initial_states_from_file(load_initial_states_from_file)
@@ -777,11 +744,10 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
                 # print("adv count:", adventure_count)
 
                 # generate an adventure with the current initial state:
-                goal_generator = ClingoGoalGenerator(adventure_type=self.adv_type, rng_seed=self.rng_seed)
+                goal_generator = ClingoGoalGenerator(rng_seed=self.rng_seed)
                 if not task_config:
                     task_config = {'task': "deliver", 'deliver_to_floor': False}
-                # goal_generator.generate_goal_facts(initial_state, task_config, goals_per_adventure)
-                goal_generator.generate_goal_facts(initial_state)
+                goal_generator.generate_goal_facts(initial_state, task_config, goals_per_adventure)
 
                 if goal_set_picking == "iterative":
                     goal_set = next(goal_generator.get_goals_iter())
@@ -796,8 +762,7 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
 
                 # solve adventure
 
-                # solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure, turn_limit=turn_limit)
-                solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure)
+                solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure, turn_limit=turn_limit)
 
                 # print("solvable:", solvable)
                 # print("solution:", action_sequence)
@@ -864,17 +829,8 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
 
                         # print(goal_desc)
 
-                    viable_adventure = {
-                        'adventure_type': self.adv_type,
-                        'goal': goal_desc, 'initial_state': initial_state, 'goal_state': goal_set,
-                        'optimal_turns': optimal_turns, 'optimal_solution': action_sequence,
-                        'action_definitions': self.adv_type_def['action_definitions'],
-                        'room_definitions': self.adv_type_def['room_definitions'],
-                        'entity_definitions': self.adv_type_def['entity_definitions'],
-                        'bench_turn_limit': self.adv_type_def['bench_turn_limit']
-                    }
-
-                    # TODO: use one absolute turn limit for everything
+                    viable_adventure = {'goal': goal_desc, 'initial_state': initial_state, 'goal_state': goal_set,
+                                        'optimal_turns': optimal_turns, 'optimal_solution': action_sequence}
 
                     generated_adventures.append(viable_adventure)
                     adventure_count += 1
@@ -885,11 +841,8 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         # print(generated_adventures)
 
         if save_to_file:
-            with open(f"generated_{self.adv_type}_adventures.json", 'w', encoding='utf-8') as out_adv_file:
-                if indent_output_json:
-                    out_adv_file.write(json.dumps(generated_adventures, indent=2))
-                else:
-                    out_adv_file.write(json.dumps(generated_adventures))
+            with open(save_to_file, 'w', encoding='utf-8') as out_adv_file:
+                out_adv_file.write(json.dumps(generated_adventures))
 
         return generated_adventures
 
@@ -966,18 +919,9 @@ if __name__ == "__main__":
     for initial_adv in test_gen:
         adv_solver = ClingoAdventureSolver()
     """
-
+    """"""
     test_generator = ClingoAdventureGenerator()
-    """
     test_generator.generate_adventures(task_config={}, load_initial_states_from_file="generated_initial_states.json",
                                        initial_state_limit=1, initial_state_picking="random",
                                        adventures_per_initial_state=2, goal_set_picking="random", goals_per_adventure=3,
                                        max_optimal_turns=30)
-    """
-    test_generator.generate_adventures(load_initial_states_from_file="generated_home_deliver_initial_states.json",
-                                       initial_state_limit=1, initial_state_picking="random",
-                                       adventures_per_initial_state=2, goal_set_picking="random")
-
-    """"""
-
-    # test_base = ClingoAdventureBase()

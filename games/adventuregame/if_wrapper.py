@@ -1,5 +1,5 @@
 """
-    Module wrapping IF interpreter(s) for adventuregame.
+    IF interpreter for adventuregame.
 """
 
 
@@ -93,7 +93,7 @@ class IFTransformer(Transformer):
 
 class BasicIFInterpreter:
     """
-    A basic IF interpreter for adventuregame.
+    IF interpreter for adventuregame.
     """
     def __init__(self, game_instance: dict, verbose: bool = False):
         self.game_instance: dict = game_instance
