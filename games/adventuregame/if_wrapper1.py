@@ -34,17 +34,20 @@ class IFTransformer(Transformer):
         for child in action_content:
             if type(child) == lark.Tree and child.data == 'thing':
                 # print("thing:", child.children)
-
-                argument_words = [word.value for word in child.children if word.type == 'WORD']
-                # print("argument words:", argument_words)
-
-                arguments.append(" ".join(argument_words))
-
-                # arguments.append(child.children[-1].value)
-                argument_adjs = [adj.value for adj in child.children[:-1] if adj.type == 'ADJ']
-                # print(argument_adjs)
-                if argument_adjs:
-                    action_dict[f'arg{arg_idx}_adjs'] = argument_adjs
+                if len(child.children) == 1:
+                    arguments.append(child.children[0].value)
+                else:
+                    if child.children[-2].type == "WORD":
+                        # print("split noun?!")
+                        split_noun = " ".join([child.children[-2].value, child.children[-1].value])
+                        arguments.append(split_noun)
+                    else:
+                        arguments.append(child.children[-1].value)
+                    arguments.append(child.children[-1].value)
+                    argument_adjs = [adj.value for adj in child.children[:-1] if adj.type == 'ADJ']
+                    # print(argument_adjs)
+                    if argument_adjs:
+                        action_dict[f'arg{arg_idx}_adjs'] = argument_adjs
 
                 action_dict[f'arg{arg_idx}'] = arguments[-1]
 
@@ -69,8 +72,6 @@ class BasicIFInterpreter:
     """
     def __init__(self, game_instance: dict, verbose: bool = False):
         self.game_instance: dict = game_instance
-
-        self.repr_str_to_type_dict: dict = dict()
 
         self.entity_types = dict()
         self.initialize_entity_types()
@@ -106,6 +107,7 @@ class BasicIFInterpreter:
         """
         # TODO: use clemgame resource loading
 
+        # TODO: load all entity definition files determined by game_instance/adventure
         # load entity type definitions in game instance:
         entity_definitions: list = list()
         for entity_def_source in self.game_instance["entity_definitions"]:
@@ -115,9 +117,7 @@ class BasicIFInterpreter:
         for entity_definition in entity_definitions:
             self.entity_types[entity_definition['type_name']] = dict()
             for entity_attribute in entity_definition:
-                if entity_attribute == 'type_name':
-                    self.repr_str_to_type_dict[entity_definition['repr_str']] = entity_definition[entity_attribute]
-                else:
+                if not entity_attribute == 'type_name':
                     self.entity_types[entity_definition['type_name']][entity_attribute] = entity_definition[
                         entity_attribute]
 
@@ -138,13 +138,9 @@ class BasicIFInterpreter:
         for room_definition in room_definitions:
             self.room_types[room_definition['type_name']] = dict()
             for room_attribute in room_definition:
-                if room_attribute == 'type_name':
-                    self.repr_str_to_type_dict[room_definition['repr_str']] = room_definition[room_attribute]
-                else:
+                if not room_attribute == 'type_name':
                     self.room_types[room_definition['type_name']][room_attribute] = room_definition[
                         room_attribute]
-
-        print("repr to type:", self.repr_str_to_type_dict)
 
     def initialize_action_types(self):
         """
@@ -205,7 +201,7 @@ class BasicIFInterpreter:
         # print(all_adjs)
         all_adjs = [f'"{adj}"' for adj in all_adjs]
 
-        act_grammar_adj_line = f"ADJ.1: ({' | '.join(all_adjs)}) WS\n"
+        act_grammar_adj_line = f"ADJ.1: {' | '.join(all_adjs)}\n"
 
         # print(act_grammar_adj_line)
 
@@ -529,9 +525,9 @@ class BasicIFInterpreter:
         if action_tuple[1] not in self.entity_types:
             return False, f"I don't know what a '{action_tuple[1]}' is."
         """
-        # print("action input:", action_input)
+        print("action input:", action_input)
         parsed_command = self.act_parser.parse(action_input)
-        # print("parsed command:", parsed_command)
+        print("parsed command:", parsed_command)
         action_dict = self.act_transformer.transform(parsed_command)
         print("transformed action dict:", action_dict)
 
@@ -541,22 +537,13 @@ class BasicIFInterpreter:
             else:
                 return False, f"I don't know what you mean."
 
-        # convert arg1 from repr to internal type:
-        action_dict['arg1'] = self.repr_str_to_type_dict[action_dict['arg1']]
-        """
-        if self.repr_str_to_type_dict[action_dict['arg1']] not in self.entity_types:
-            if self.repr_str_to_type_dict[action_dict['arg1']] not in self.room_types:
-                return False, f"I don't know what a '{action_dict['arg1']}' is."
-        """
         if action_dict['arg1'] not in self.entity_types:
             if action_dict['arg1'] not in self.room_types:
                 return False, f"I don't know what a '{action_dict['arg1']}' is."
 
         if 'arg2' in action_dict:
-            if self.repr_str_to_type_dict[action_dict['arg2']] not in self.entity_types:
+            if action_dict['arg2'] not in self.entity_types:
                 return False, f"I don't know what a '{action_dict['arg2']}' is."
-
-        print("known type checks passed")
 
         return True, action_dict
 
@@ -919,10 +906,10 @@ if __name__ == "__main__":
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)"], "goal_state": ["on(sandwich,table)"]}
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)", "in(yoyo,inventory)"], "goal_state": ["on(sandwich,table)"]}
 
-    test_interpreter = BasicIFInterpreter(game_instance_exmpl)
-    # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
+    # test_interpreter = BasicIFInterpreter(game_instance_exmpl)
+    test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
-    test_interpreter.execute_optimal_solution()
+    # test_interpreter.execute_optimal_solution()
 
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
