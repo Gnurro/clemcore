@@ -144,7 +144,7 @@ class BasicIFInterpreter:
                     self.room_types[room_definition['type_name']][room_attribute] = room_definition[
                         room_attribute]
 
-        print("repr to type:", self.repr_str_to_type_dict)
+        # print("repr to type:", self.repr_str_to_type_dict)
 
     def initialize_action_types(self):
         """
@@ -315,11 +315,21 @@ class BasicIFInterpreter:
         """
         inst_adjs = list()
         # get adj preds:
-        for state_pred in self.world_state:
-            if state_pred[0] == 'adj' and state_pred[1] == inst:
-                inst_adjs.append(state_pred[2])
+        for fact in self.world_state:
+            if fact[0] == 'adj' and fact[1] == inst:
+                inst_adjs.append(fact[2])
 
-        inst_adjs.append(self.inst_to_type_dict[inst])
+        if inst in self.inst_to_type_dict:
+            inst_type: str = self.inst_to_type_dict[inst]
+        elif inst in self.room_to_type_dict:
+            inst_type: str = self.room_to_type_dict[inst]
+
+        if inst_type in self.entity_types:
+            inst_str: str = self.entity_types[inst_type]['repr_str']
+        elif inst_type in self.room_types:
+            inst_str: str = self.room_types[inst_type]['repr_str']
+
+        inst_adjs.append(inst_str)
 
         adj_str = " ".join(inst_adjs)
 
@@ -425,6 +435,8 @@ class BasicIFInterpreter:
         # visible_contents = [self.inst_to_type_dict[instance] for instance in internal_visible_contents]
         visible_contents = [self._get_inst_str(instance) for instance in internal_visible_contents]
 
+        # print("visible contents:", visible_contents)
+
         # create visible room content description:
         visible_contents_str = str()
         if len(visible_contents) >= 3:
@@ -441,16 +453,29 @@ class BasicIFInterpreter:
 
         # get predicate states of visible objects and create textual representations:
         visible_content_state_strs = list()
-        for thing in visible_contents:
-            for state_pred in self.world_state:
-                if state_pred[0] == 'closed' and state_pred[1] == thing:
-                    visible_content_state_strs.append(f"The {thing} is closed.")
-                elif state_pred[0] == 'open' and state_pred[1] == thing:
-                    visible_content_state_strs.append(f"The {thing} is open.")
-                if state_pred[0] == 'in' and state_pred[2] == thing:
-                    visible_content_state_strs.append(f"The {thing} is in the {state_pred[1]}.")
-                if state_pred[0] == 'on' and state_pred[2] == thing:
-                    visible_content_state_strs.append(f"The {thing} is on the {state_pred[1]}.")
+        # for thing in visible_contents:
+        for thing in internal_visible_contents:
+            # print("visible thing:", thing)
+            for fact in self.world_state:
+                if fact[0] == 'closed' and fact[1] == thing:
+                    # visible_content_state_strs.append(f"The {thing} is closed.")
+                    visible_content_state_strs.append(f"The {self._get_inst_str(thing)} is closed.")
+                elif fact[0] == 'open' and fact[1] == thing:
+                    # visible_content_state_strs.append(f"The {thing} is open.")
+                    visible_content_state_strs.append(f"The {self._get_inst_str(thing)} is open.")
+                # if fact[0] == 'in' and fact[2] == thing:
+                if fact[0] == 'in' and fact[1] == thing:
+                    # print(f"The {thing} is in the {fact[2]}.")
+                    # visible_content_state_strs.append(f"The {thing} is in the {fact[2]}.")
+                    visible_content_state_strs.append(f"The {self._get_inst_str(thing)} is in the {self._get_inst_str(fact[2])}.")
+                # if fact[0] == 'on' and fact[2] == thing:
+                if fact[0] == 'on' and fact[1] == thing:
+                    # print(f"The {thing} is on the {fact[2]}.")
+                    # visible_content_state_strs.append(f"The {thing} is on the {fact[2]}.")
+                    visible_content_state_strs.append(f"The {self._get_inst_str(thing)} is on the {self._get_inst_str(fact[2])}.")
+
+        # TODO?: list multiple things in/on same container/support?
+
         if visible_content_state_strs:
             visible_content_state_combined = " ".join(visible_content_state_strs)
             visible_content_state_combined = " " + visible_content_state_combined
@@ -460,20 +485,26 @@ class BasicIFInterpreter:
         # TODO: handle doors (once they exist); if they will exist...
 
         room_exits = self.get_player_room_exits()
+        # print("room exits:", room_exits)
+        """
         # convert target room IDs to type names:
         for target_room_idx, target_room in enumerate(room_exits):
             room_exits[target_room_idx] = self.room_to_type_dict[target_room]
+        """
         exits_str = str()
         if len(room_exits) == 1:
             # exits_str = f" You can go to a {room_exits[0]} from here."
-            exits_str = f" There is a passage to a {room_exits[0]} here."
+            # exits_str = f" There is a passage to a {room_exits[0]} here."
+            exits_str = f" There is a passage to a {self._get_inst_str(room_exits[0])} here."
         elif len(room_exits) == 2:
             # exits_str = f" You can go to a {room_exits[0]} and a {room_exits[1]} from here."
-            exits_str = f" There are passages to a {room_exits[0]} and a {room_exits[1]} here."
+            # exits_str = f" There are passages to a {room_exits[0]} and a {room_exits[1]} here."
+            exits_str = f" There are passages to a {self._get_inst_str(room_exits[0])} and a {self._get_inst_str(room_exits[1])} here."
         elif len(room_exits) >= 3:
-            comma_exits = ", a ".join(room_exits[:-1])
+            comma_exits = ", a ".join([self._get_inst_str(room_exit) for room_exit in room_exits[:-1]])
             # exits_str = f" You can go to {comma_exits} and {room_exits[-1]} from here."
-            exits_str = f" There are passages to a {comma_exits} and a {room_exits[-1]} here."
+            # exits_str = f" There are passages to a {comma_exits} and a {room_exits[-1]} here."
+            exits_str = f" There are passages to a {comma_exits} and a {self._get_inst_str(room_exits[-1])} here."
 
         # combine full room description:
         # room_description = f"{player_at_str} {visible_contents_str} {visible_content_state_combined} {exits_str}"
@@ -504,9 +535,11 @@ class BasicIFInterpreter:
             inv_desc = "Your inventory is empty."
             return inv_desc
         elif inv_item_cnt == 1:
-            inv_str = f"a {self.inst_to_type_dict[inv_list[0]]}"
+            # inv_str = f"a {self.inst_to_type_dict[inv_list[0]]}"
+            inv_str = f"a {self._get_inst_str(inv_list[0])}"
         else:
-            inv_strs = [f"a {self.inst_to_type_dict[inv_item]}" for inv_item in inv_list]
+            # inv_strs = [f"a {self.inst_to_type_dict[inv_item]}" for inv_item in inv_list]
+            inv_strs = [f"a {self._get_inst_str(inv_item)}" for inv_item in inv_list]
             # print(inv_strs)
             inv_str = ", ".join(inv_strs[:-1])
             inv_str += f" and {inv_strs[-1]}"
@@ -533,7 +566,7 @@ class BasicIFInterpreter:
         parsed_command = self.act_parser.parse(action_input)
         # print("parsed command:", parsed_command)
         action_dict = self.act_transformer.transform(parsed_command)
-        print("transformed action dict:", action_dict)
+        # print("transformed action dict:", action_dict)
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
@@ -556,7 +589,7 @@ class BasicIFInterpreter:
             if self.repr_str_to_type_dict[action_dict['arg2']] not in self.entity_types:
                 return False, f"I don't know what a '{action_dict['arg2']}' is."
 
-        print("known type checks passed")
+        # print("known type checks passed")
 
         return True, action_dict
 
@@ -906,7 +939,33 @@ if __name__ == "__main__":
           "game_id": 0,
           "variant": "basic",
           "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the potted plant in the freezer and the apple on the table.\n\n",
-          "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)", "at(livingroom1floor,livingroom1)", "at(broomcloset1floor,broomcloset1)", "at(table1,livingroom1)", "at(counter1,kitchen1)", "at(refrigerator1,pantry1)", "at(shelf1,pantry1)", "at(freezer1,pantry1)", "at(pottedplant1,livingroom1)", "at(chair1,livingroom1)", "at(couch1,livingroom1)", "at(broom1,broomcloset1)", "at(sandwich1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)", "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)", "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)", "exit(kitchen1,pantry1)", "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)", "exit(hallway1,kitchen1)", "exit(hallway1,livingroom1)", "exit(hallway1,broomcloset1)", "exit(livingroom1,hallway1)", "exit(broomcloset1,hallway1)", "type(player1,player)", "type(kitchen1floor,floor)", "type(pantry1floor,floor)", "type(hallway1floor,floor)", "type(livingroom1floor,floor)", "type(broomcloset1floor,floor)", "type(table1,table)", "type(counter1,counter)", "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(freezer1,freezer)", "type(pottedplant1,pottedplant)", "type(chair1,chair)", "type(couch1,couch)", "type(broom1,broom)", "type(sandwich1,sandwich)", "type(apple1,apple)", "type(banana1,banana)", "support(kitchen1floor)", "support(pantry1floor)", "support(hallway1floor)", "support(livingroom1floor)", "support(broomcloset1floor)", "support(table1)", "support(counter1)", "support(shelf1)", "on(apple1,shelf1)", "on(sandwich1,shelf1)", "on(broom1,broomcloset1floor)", "on(pottedplant1,livingroom1floor)", "container(refrigerator1)", "container(freezer1)", "in(banana1,refrigerator1)", "openable(refrigerator1)", "openable(freezer1)", "closed(refrigerator1)", "closed(freezer1)", "takeable(pottedplant1)", "takeable(broom1)", "takeable(sandwich1)", "takeable(apple1)", "takeable(banana1)", "movable(pottedplant1)", "movable(broom1)", "movable(sandwich1)", "movable(apple1)", "movable(banana1)", "needs_support(pottedplant1)", "needs_support(broom1)", "needs_support(sandwich1)", "needs_support(apple1)", "needs_support(banana1)"],
+          "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
+                            "at(livingroom1floor,livingroom1)", "at(broomcloset1floor,broomcloset1)",
+                            "at(table1,livingroom1)", "at(counter1,kitchen1)", "at(refrigerator1,pantry1)",
+                            "at(shelf1,pantry1)", "at(freezer1,pantry1)", "at(pottedplant1,livingroom1)",
+                            "at(chair1,livingroom1)", "at(couch1,livingroom1)", "at(broom1,broomcloset1)",
+                            "at(sandwich1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)",
+                            "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)",
+                            "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)", "exit(kitchen1,pantry1)",
+                            "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)", "exit(hallway1,kitchen1)",
+                            "exit(hallway1,livingroom1)", "exit(hallway1,broomcloset1)", "exit(livingroom1,hallway1)",
+                            "exit(broomcloset1,hallway1)", "type(player1,player)", "type(kitchen1floor,floor)",
+                            "type(pantry1floor,floor)", "type(hallway1floor,floor)", "type(livingroom1floor,floor)",
+                            "type(broomcloset1floor,floor)", "type(table1,table)", "type(counter1,counter)",
+                            "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(freezer1,freezer)",
+                            "type(pottedplant1,pottedplant)", "type(chair1,chair)", "type(couch1,couch)",
+                            "type(broom1,broom)", "type(sandwich1,sandwich)", "type(apple1,apple)",
+                            "type(banana1,banana)", "support(kitchen1floor)", "support(pantry1floor)",
+                            "support(hallway1floor)", "support(livingroom1floor)", "support(broomcloset1floor)",
+                            "support(table1)", "support(counter1)", "support(shelf1)", "on(apple1,shelf1)",
+                            "on(sandwich1,shelf1)", "on(broom1,broomcloset1floor)", "on(pottedplant1,livingroom1floor)",
+                            "container(refrigerator1)", "container(freezer1)", "in(banana1,refrigerator1)",
+                            "openable(refrigerator1)", "openable(freezer1)", "closed(refrigerator1)", "closed(freezer1)",
+                            "takeable(pottedplant1)", "takeable(broom1)", "takeable(sandwich1)", "takeable(apple1)",
+                            "takeable(banana1)", "movable(pottedplant1)", "movable(broom1)", "movable(sandwich1)",
+                            "movable(apple1)", "movable(banana1)", "needs_support(pottedplant1)",
+                            "needs_support(broom1)", "needs_support(sandwich1)", "needs_support(apple1)",
+                            "needs_support(banana1)"],
           "goal_state": ["in(pottedplant1,freezer1)", "on(apple1,table1)"],
           "max_turns": 50,
           "optimal_turns": 11,
