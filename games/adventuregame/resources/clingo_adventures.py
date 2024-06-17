@@ -585,7 +585,7 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         Convert a raw solution string into list of IF commands and get additional information. Expects only-actions raw
         string from ClingoAdventureSolver.
         """
-        print("adventure solution to convert:", adventure_solution)
+        # print("adventure solution to convert:", adventure_solution)
         actions_list: list = adventure_solution.split()
         action_tuples = [convert_action_to_tuple(action) for action in actions_list]
         action_tuples.sort(key=lambda turn: turn[0])
