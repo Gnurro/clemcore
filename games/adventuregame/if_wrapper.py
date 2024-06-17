@@ -923,7 +923,7 @@ class BasicIFInterpreter:
         Used to verify parity of IF interpreter and solution generation.
         """
         print(self.get_full_room_desc())
-        for command in self.game_instance["optimal_solution"]:
+        for command in self.game_instance["optimal_commands"]:
             print(f"> {command}")
             goals_achieved, response = self.process_action(command)
             print(response)

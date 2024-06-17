@@ -585,14 +585,18 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         Convert a raw solution string into list of IF commands and get additional information. Expects only-actions raw
         string from ClingoAdventureSolver.
         """
+        print("adventure solution to convert:", adventure_solution)
         actions_list: list = adventure_solution.split()
         action_tuples = [convert_action_to_tuple(action) for action in actions_list]
         action_tuples.sort(key=lambda turn: turn[0])
+        # print("sorted action tuples:", action_tuples)
         # TODO: handle adjectives; use adj facts in self.initial_state
+        actions_abstract: list = list()
         action_commands: list = list()
         for action_tuple in action_tuples:
             if len(action_tuple) == 3:
                 command: str = f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']}"
+                abstract_action = [action_tuple[1], action_tuple[2]]
             if len(action_tuple) == 4:
                 # TODO?: extract this to action def?
                 if action_tuple[1] == "put":
@@ -605,9 +609,12 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                 else:
                     command: str = (f"{action_tuple[1]} {self.id_to_type_dict[action_tuple[2]]['repr_str']} "
                                     f"{self.id_to_type_dict[action_tuple[3]]['repr_str']}")
+                abstract_action = [action_tuple[1], action_tuple[2], action_tuple[3]]
             action_commands.append(command)
+            actions_abstract.append(abstract_action)
         # print(action_commands)
-        return action_commands, len(action_tuples)
+        # print("abstract actions:", actions_abstract)
+        return actions_abstract, len(action_tuples), action_commands
 
 
 def convert_action_to_tuple(action: str):
@@ -699,10 +706,11 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
         print(encoding)
         """
         if solvable:
-            action_sequence, optimal_turns = adventure_solver.convert_adventure_solution(solution)
-            return solvable, action_sequence, optimal_turns
+            # action_sequence, optimal_turns = adventure_solver.convert_adventure_solution(solution)
+            action_sequence, optimal_turns, command_sequence = adventure_solver.convert_adventure_solution(solution)
+            return solvable, action_sequence, optimal_turns, command_sequence
         else:
-            return solvable, [], 0
+            return solvable, [], 0, []
 
     def generate_adventures(self,
                             load_initial_states_from_file: str = "",
@@ -797,7 +805,7 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
                 # solve adventure
 
                 # solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure, turn_limit=turn_limit)
-                solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure)
+                solvable, action_sequence, optimal_turns, command_sequence = self._solve_adventure(cur_adventure)
 
                 # print("solvable:", solvable)
                 # print("solution:", action_sequence)
@@ -867,7 +875,8 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
                     viable_adventure = {
                         'adventure_type': self.adv_type,
                         'goal': goal_desc, 'initial_state': initial_state, 'goal_state': goal_set,
-                        'optimal_turns': optimal_turns, 'optimal_solution': action_sequence,
+                        'optimal_turns': optimal_turns,
+                        'optimal_solution': action_sequence, 'optimal_commands': command_sequence,
                         'action_definitions': self.adv_type_def['action_definitions'],
                         'room_definitions': self.adv_type_def['room_definitions'],
                         'entity_definitions': self.adv_type_def['entity_definitions'],

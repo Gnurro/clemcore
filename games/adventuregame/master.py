@@ -137,7 +137,7 @@ class AdventureGameMaster(DialogueGameMaster):
         # stop game when all goal states have been achieved:
         if self.goals_achieved == self.goals_required:
             self.finished = True
-            self.log_to_self("adventure_finished", str(list(self.goals_achieved)))
+            self.log_to_self("adventure_finished", list(self.goals_achieved))
             return False
 
         # stop game when turn limit is reached:
@@ -204,6 +204,7 @@ class AdventureGameScorer(GameScorer):
         adventure_info: dict = dict()
         turn_scores = []
         invalid_format: str = ""
+        turn_limit_loss: bool = False
         successfully_finished = False
         final_goals_achieved: list = list()
         for turn_idx, turn in enumerate(episode_interactions["turns"]):
@@ -218,6 +219,9 @@ class AdventureGameScorer(GameScorer):
 
                 if action["type"] == "invalid_format":
                     invalid_format = action['content']
+
+                if action["type"] == "turn_limit_reached":
+                    turn_limit_loss = True
 
                 if action["type"] == "goal_status":
                     turn_score["goal_score"] = action['content']['turn_goal_score']
@@ -237,7 +241,7 @@ class AdventureGameScorer(GameScorer):
             self.log_turn_score(turn_idx, metrics.METRIC_REQUEST_COUNT_PARSED, turn_score["parsed_request_count"])
             self.log_turn_score(turn_idx, metrics.METRIC_REQUEST_COUNT_VIOLATED, turn_score["violated_request_count"])
             # turn-level goal score:
-            self.log_turn_score(turn_idx, 'Goal score', turn_score["goal_score"])
+            self.log_turn_score(turn_idx, 'goal_score', turn_score["goal_score"])
 
             turn_scores.append(turn_score)
 
@@ -253,6 +257,13 @@ class AdventureGameScorer(GameScorer):
 
         self.log_episode_score(metrics.METRIC_REQUEST_SUCCESS, parsed_request_count / request_count)
 
+        # record turn limit exceeding loss:
+        if turn_limit_loss:
+            self.log_episode_score("turn_limit_loss", 1)
+        else:
+            self.log_episode_score("turn_limit_loss", 0)
+
+        # turn count for metrics based on it:
         turn_count: int = len(turn_scores)
 
         # get optimal turns for this episode:
@@ -299,6 +310,7 @@ class AdventureGameScorer(GameScorer):
         # TODO: how to handle BENCH_SCORE for aborted episodes?
 
         # invalid format aborted:
+        # TODO: handle different types of format aborts for planning variant
         if invalid_format:
             self.log_episode_score(metrics.METRIC_ABORTED, 1)
         else:

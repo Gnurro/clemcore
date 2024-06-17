@@ -3,7 +3,7 @@ Interactive Fiction/Text Adventure clemgame
 ## Metrics
 Standard clembench metrics are implemented, metrics listed here are adventuregame-specific metrics.
 ### Turn-level
-Goal score: How many goal states have been achieved at this turn. Records **change** of the number of achieved goal 
+goal_score: How many goal states have been achieved at this turn. Records **change** of the number of achieved goal 
 states, meaning that if less goal states are achieved at this turn, the number is negative.
 ### Episode-level
 turns_over_par: Number of turns taken over the optimal number of turns. If adventure is finished as fast as possible, 
