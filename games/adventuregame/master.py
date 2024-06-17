@@ -26,8 +26,12 @@ class AdventureGameMaster(DialogueGameMaster):
         # self.experiment = experiment
         # self.game = None
         # self.game_instance = None
+
         self.turns = []
         self.success = True
+
+        self.invalid_format: str = ""  # to track responses with invalid format
+
         self.finished: bool = False  # game finished successfully
 
     def _on_setup(self, **game_instance):
@@ -55,7 +59,16 @@ class AdventureGameMaster(DialogueGameMaster):
             self.plan_history: list = list()
 
         self.goals_required = set(self.game_instance['goal_state'])
+        self.goals_required_cnt = len(self.goals_required)
         self.goals_achieved = set()
+
+        # TODO: use 'optimal_turns'
+        # TODO: log scoring-relevant instance values to be retrieved by GameScorer
+
+        adventure_info: dict = {"variant": self.game_instance['variant'], "max_turns": self.game_instance['max_turns'],
+                                "optimal_turns": self.game_instance['optimal_turns'],
+                                "goal_count": self.goals_required_cnt}
+        self.log_to_self("adventure_info", adventure_info)
 
     def _on_before_game(self):
         # get initial room description from IF interpreter:
@@ -72,28 +85,21 @@ class AdventureGameMaster(DialogueGameMaster):
 
     def _validate_player_response(self, player: Player, utterance: str) -> bool:
         # Check responses for specific players
-        # TODO: log these properly
-        # TODO: reprompting?
+        # TODO?: reprompting? -> different from IF action processing responses?
+        # TODO: check if invalid responses are recorded for inspection if this returns False
         if player == self.player:
             # Check rule: utterance starts with IF >
             if not utterance.startswith(">"):
                 self.success = False
+                self.invalid_format = "if_tag_missing"
                 # return True
                 return False
             if self.if_variant == 'plan':
                 if "\nNext actions:" not in utterance:
                     self.success = False
+                    self.invalid_format = "next_actions_missing"
                     # return True
                     return False
-
-            """
-            # Check rule: required words are included
-            utterance = utterance.lower()
-            utterance = utterance.translate(str.maketrans("", "", string.punctuation))
-            for required_word in self.required_words:
-                if required_word not in utterance:
-                    self.success = False
-            """
         return True
 
     def _on_parse_response(self, player: Player, utterance: str) -> Tuple[str, bool]:
@@ -121,17 +127,22 @@ class AdventureGameMaster(DialogueGameMaster):
         """
         Template method: must be implemented
         """
-        if self.success == False:
+        # if self.success == False:
+        #    return False
+
+        if self.invalid_format:
+            self.log_to_self("invalid_format", self.invalid_format)
             return False
+
         # stop game when all goal states have been achieved:
-        # TODO: log these
         if self.goals_achieved == self.goals_required:
             self.finished = True
+            self.log_to_self("adventure_finished", str(list(self.goals_achieved)))
             return False
+
         # stop game when turn limit is reached:
-        # TODO: get turn limit from game instance
-        # if len(self.turns) >= 5:
         if len(self.turns) >= self.game_instance['max_turns']:
+            self.log_to_self("turn_limit_reached", self.game_instance['max_turns'])
             return False
         return True
 
@@ -157,14 +168,18 @@ class AdventureGameMaster(DialogueGameMaster):
             # IF interpreter returns set of achieved goal states in string form:
             goals_achieved, if_response = self.if_interpreter.process_action(if_input)
             # TODO: catch lark exceptions
+            # TODO: return details about parsing and action processing
+            # TODO: return concise success/failure info
+
             self.goals_achieved = goals_achieved
             # count goals achieved this turn:
             post_goal_count = len(self.goals_achieved)
             turn_score = post_goal_count - prior_goal_count
             # print("turn score:", turn_score)
 
-            goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
+            # TODO: expose more detailed goal status
 
+            goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
             self.log_to_self("goal_status", goal_status)
 
             # add IF response to dialog:
@@ -186,36 +201,108 @@ class AdventureGameScorer(GameScorer):
 
     def compute_scores(self, episode_interactions: Dict) -> None:
         """ Episode level scores"""
+        adventure_info: dict = dict()
         turn_scores = []
+        invalid_format: str = ""
         successfully_finished = False
+        final_goals_achieved: list = list()
         for turn_idx, turn in enumerate(episode_interactions["turns"]):
-            # turn_score = {"guess": None, "clue": None, "request_count": 1}
-            turn_score = {}
+            turn_score = {"request_count": 1}  # only one request per turn for now: reprompting pending
+            # turn_score = {}
 
             for event in turn:
                 action = event["action"]
+
+                if action["type"] == "adventure_info":
+                    adventure_info = action['content']
+
+                if action["type"] == "invalid_format":
+                    invalid_format = action['content']
+
                 if action["type"] == "goal_status":
                     turn_score["goal_score"] = action['content']['turn_goal_score']
+
                 if action["type"] == "game_result":
                     successfully_finished = action['content']['game_successfully_finished']
+                    final_goals_achieved = action['content']['goal_states_achieved']
 
+            if invalid_format:
+                turn_score["violated_request_count"] = 1
+                turn_score["parsed_request_count"] = 0
+            else:
+                turn_score["violated_request_count"] = 0
+                turn_score["parsed_request_count"] = 1
+            # standard turn-level request scores:
+            self.log_turn_score(turn_idx, metrics.METRIC_REQUEST_COUNT, turn_score["request_count"])
+            self.log_turn_score(turn_idx, metrics.METRIC_REQUEST_COUNT_PARSED, turn_score["parsed_request_count"])
+            self.log_turn_score(turn_idx, metrics.METRIC_REQUEST_COUNT_VIOLATED, turn_score["violated_request_count"])
+            # turn-level goal score:
             self.log_turn_score(turn_idx, 'Goal score', turn_score["goal_score"])
-            # TODO: add standard metrics
+
             turn_scores.append(turn_score)
 
+        # standard episode-level request scores:
+        violated_request_count = sum([turn["violated_request_count"] for turn in turn_scores])
+        self.log_episode_score(metrics.METRIC_REQUEST_COUNT_VIOLATED, violated_request_count)
+
+        parsed_request_count = sum([turn["parsed_request_count"] for turn in turn_scores])
+        self.log_episode_score(metrics.METRIC_REQUEST_COUNT_PARSED, parsed_request_count)
+
+        request_count = sum([turn["request_count"] for turn in turn_scores])
+        self.log_episode_score(metrics.METRIC_REQUEST_COUNT, request_count)
+
+        self.log_episode_score(metrics.METRIC_REQUEST_SUCCESS, parsed_request_count / request_count)
+
+        turn_count: int = len(turn_scores)
+
+        # get optimal turns for this episode:
+        optimal_turns: int = adventure_info['optimal_turns']
+        # 'on par' score:
+        turns_over_par: int = turn_count - optimal_turns
+        if successfully_finished:
+            self.log_episode_score("turns_over_par", turns_over_par)
+        else:
+            self.log_episode_score("turns_over_par", np.nan)
+
+        # range of possible number of turns:
+        turn_range = adventure_info['max_turns'] - adventure_info['optimal_turns']
+        # ratio of turns taken / possible turn range:
+        turn_ratio = 1 - turns_over_par / turn_range
+        # TODO: handle fails/loss/abort at turn < optimal
+        if successfully_finished:
+            self.log_episode_score("turn_ratio", turn_ratio)
+        else:
+            self.log_episode_score("turn_ratio", np.nan)
+
         # get final score:
-        final_goal_score = turn_scores[-1]["goal_score"]
+        # final_goal_score = turn_scores[-1]["goal_score"]
+        final_goal_score = len(final_goals_achieved)
+
+        goal_count: int = adventure_info['goal_count']
+        achieved_ratio = final_goal_score / goal_count
+        self.log_episode_score("achieved_goal_ratio", achieved_ratio)
+
         # get goal achievement rating:
         goal_rating = final_goal_score / len(turn_scores)
 
-        # TODO: add target/minimum number of turns to instances? -> 1-turn solutions are trivial
-
         # log goal rating as main score:
         # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
-        self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
+        # self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
 
-        # TODO: handle aborting
-        self.log_episode_score(metrics.METRIC_ABORTED, 0)
+        # combine goals/turns into overall rating:
+        full_rating = achieved_ratio * turn_ratio
+
+        # log full rating as main score:
+        # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
+        self.log_episode_score(metrics.BENCH_SCORE, full_rating)
+
+        # TODO: how to handle BENCH_SCORE for aborted episodes?
+
+        # invalid format aborted:
+        if invalid_format:
+            self.log_episode_score(metrics.METRIC_ABORTED, 1)
+        else:
+            self.log_episode_score(metrics.METRIC_ABORTED, 0)
 
         # log successful/failed play:
         if successfully_finished:
