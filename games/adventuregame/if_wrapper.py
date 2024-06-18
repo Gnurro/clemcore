@@ -566,7 +566,6 @@ class BasicIFInterpreter:
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action_verb", 'arg': action_dict['arg1']}
-                # TODO: properly tie in with parse/transform to not respond with defined verb
                 return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
             else:
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action", 'arg': action_input}
@@ -649,7 +648,7 @@ class BasicIFInterpreter:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     # TODO: handle multiple instances of same entity type -> going for adjective solution for now
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_exits_to", 'arg': action_dict['arg1']}
-                    return False, f"There are multiple {action_dict['arg1']} here.", fail_dict
+                    return False, f"There are multiple {self.room_types[action_dict['arg1']]['repr_str']}s here.", fail_dict
                 else:
                     arg1_inst = passable_exits[action_dict['arg1']][0]
 
@@ -849,6 +848,7 @@ class BasicIFInterpreter:
             self.world_state.add(add_fact)
 
         if state_changed:
+            # TODO: make second return item more useful
             return True, facts_to_add[0], {}
         else:
             # TODO: make this proper pre_state/conditions feedback
@@ -1013,7 +1013,7 @@ if __name__ == "__main__":
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
 
-    # print(test_interpreter.get_full_room_desc())
+    print(test_interpreter.get_full_room_desc())
 
     # turn_1 = test_interpreter.process_action("go bunk")
     # turn_1 = test_interpreter.process_action("go apple")
@@ -1033,10 +1033,18 @@ if __name__ == "__main__":
     # turn_1 = test_interpreter.process_action("gloop apple")
     # turn_1 = test_interpreter.process_action("gloop onion")
 
-    turn_1 = test_interpreter.process_action("open refrigerator door")
+    # turn_1 = test_interpreter.process_action("open refrigerator door")
+    turn_1 = test_interpreter.process_action("take sandwich")
     # print(turn_1[1])
     print(turn_1)
     print()
+
+    # turn_2 = test_interpreter.process_action("put sandwich on shelf")
+    turn_2 = test_interpreter.process_action("go kitchen")
+    # print(turn_1[1])
+    print(turn_2)
+    print()
+
     """"""
     """
     turn_1 = test_interpreter.process_action("go living room")
