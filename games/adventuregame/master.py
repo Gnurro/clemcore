@@ -305,7 +305,10 @@ class AdventureGameScorer(GameScorer):
 
         # log full rating as main score:
         # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
-        self.log_episode_score(metrics.BENCH_SCORE, full_rating)
+        if successfully_finished:
+            self.log_episode_score(metrics.BENCH_SCORE, full_rating)
+        else:
+            self.log_episode_score(metrics.BENCH_SCORE, np.nan)
 
         # TODO: how to handle BENCH_SCORE for aborted episodes?
 
