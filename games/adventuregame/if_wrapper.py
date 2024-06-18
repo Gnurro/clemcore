@@ -13,6 +13,7 @@ PATH = "games/adventuregame/"
 
 RESOURCES_SUBPATH = "resources/"
 
+
 class IFTransformer(Transformer):
     def action(self, content):
         action: lark.Tree = content[0]
@@ -553,13 +554,13 @@ class BasicIFInterpreter:
         try:
             parsed_command = self.act_parser.parse(action_input)
         except Exception as exception:
-            print("lark exception:", exception)
+            # print("lark exception:", exception)
             # fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': exception}
             fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': exception}
             return False, f"I don't know what you mean.", fail_dict
         # print("parsed command:", parsed_command)
         action_dict = self.act_transformer.transform(parsed_command)
-        # print("transformed action dict:", action_dict)
+        print("transformed action dict:", action_dict)
 
         # TODO: return details of parsing failures to gamemaster
 
@@ -575,6 +576,7 @@ class BasicIFInterpreter:
         if action_dict['arg1'] in self.repr_str_to_type_dict:
             # convert arg1 from repr to internal type:
             action_dict['arg1'] = self.repr_str_to_type_dict[action_dict['arg1']]
+            # TODO: check if this conversion might be better elsewhere
         else:
             fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg1']}
             return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
@@ -591,9 +593,13 @@ class BasicIFInterpreter:
                 return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
 
         if 'arg2' in action_dict:
-            if self.repr_str_to_type_dict[action_dict['arg2']] not in self.entity_types:
+            if action_dict['arg2'] not in self.repr_str_to_type_dict:
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg2']}
                 return False, f"I don't know what a '{action_dict['arg2']}' is.", fail_dict
+            else:
+                if self.repr_str_to_type_dict[action_dict['arg2']] not in self.entity_types:
+                    fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg2']}
+                    return False, f"I don't know what a '{action_dict['arg2']}' is.", fail_dict
 
         # print("known type checks passed")
 
@@ -632,12 +638,12 @@ class BasicIFInterpreter:
                     # print(f"There is no exit to {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "no_exit_to", 'arg': action_dict['arg1']}
                     no_exit_to_str: str = f"There is no exit to a {self.room_types[action_dict['arg1']]['repr_str']} here."
-                    return False, no_exit_to_str
+                    return False, no_exit_to_str, fail_dict
                 elif len(passable_exits[action_dict['arg1']]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     # TODO: handle multiple instances of same entity type -> going for adjective solution for now
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_exits_to", 'arg': action_dict['arg1']}
-                    return False, f"There are multiple {action_dict['arg1']} here."
+                    return False, f"There are multiple {action_dict['arg1']} here.", fail_dict
                 else:
                     arg1_inst = passable_exits[action_dict['arg1']][0]
 
@@ -706,18 +712,6 @@ class BasicIFInterpreter:
                             facts_to_add.append(post_state_tuple)
                         # print()
 
-
-                # print("pre state:", pre_state)
-                """
-                post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
-
-                if "PLAYER" in post_state:
-                    post_state = post_state.replace("PLAYER", "player1")
-                    post_state_tuple = fact_str_to_tuple(post_state)
-                    facts_to_add.append(post_state_tuple)
-                """
-                # print("post state:", post_state)
-
                 # print("facts to remove after HERE block:", facts_to_remove)
                 # print("facts to add after HERE block:", facts_to_add)
 
@@ -744,14 +738,15 @@ class BasicIFInterpreter:
 
                 if action_dict['arg1'] not in visible_contents:
                     # print(f"There is no {action_dict['arg1']}!")
-                    fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible", 'arg': action_dict['arg1']}
-                    return False, f"There is no {action_dict['arg1']} here."
+                    fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
+                                       'arg': action_dict['arg1']}
+                    return False, f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here.", fail_dict
                 elif len(visible_contents[action_dict['arg1']]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                        'arg': action_dict['arg1']}
                     # TODO: handle multiple instances of same entity type
-                    return False, f"There are multiple {action_dict['arg1']} here."
+                    return False, f"There are multiple {action_dict['arg1']} here.", fail_dict
                 else:
                     arg1_inst = visible_contents[action_dict['arg1']][0]
 
@@ -762,13 +757,14 @@ class BasicIFInterpreter:
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                            'arg': action_dict['arg2']}
                         # TODO: change to sth like "you can't see a X"
-                        return False, f"There is no {action_dict['arg2']} here."
+                        thing_not_accessible_str: str = f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here."
+                        return False, thing_not_accessible_str, fail_dict
                     elif len(visible_contents[action_dict['arg2']]) > 1:
                         # print(f"There are multiple {action_dict['arg2']}!")
                         # TODO: handle multiple instances of same entity type
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                            'arg': action_dict['arg2']}
-                        return False, f"There are multiple {action_dict['arg2']} here."
+                        return False, f"There are multiple {action_dict['arg2']} here.", fail_dict
                     else:
                         arg2_inst = visible_contents[action_dict['arg2']][0]
 
@@ -847,9 +843,12 @@ class BasicIFInterpreter:
             self.world_state.add(add_fact)
 
         if state_changed:
-            return True, facts_to_add[0]
+            return True, facts_to_add[0], {}
         else:
-            return False, f"{action_dict['arg1']} is not {pre_state}"
+            # TODO: make this proper pre_state/conditions feedback
+            fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
+                               'arg': [action_dict['arg1'], pre_state]}
+            return False, f"{action_dict['arg1']} is not {pre_state}", fail_dict
 
     def process_action(self, action_input: str):
         """
@@ -865,9 +864,9 @@ class BasicIFInterpreter:
         else:
             prior_visibles = set(self.get_player_room_contents_visible())
             # print("Prior visibles:", prior_visibles)
-            resolved, resolution_result = self.resolve_action(parse_result)
+            resolved, resolution_result, fail = self.resolve_action(parse_result)
             if not resolved:
-                return self.goals_achieved, resolution_result
+                return self.goals_achieved, resolution_result, fail
             else:
                 # print("resolution result:", resolution_result)
                 # get template:
@@ -875,6 +874,7 @@ class BasicIFInterpreter:
                 # print("feedback template:", feedback_template)
                 feedback_jinja = jinja2.Template(feedback_template)
                 template_tags = ["thing", "inventory_desc", "prep", "target", "room_desc"]
+                # TODO?: externalize template tags?
                 jinja_args = dict()
                 for template_tag in template_tags:
                     if template_tag in feedback_template:
@@ -934,10 +934,10 @@ class BasicIFInterpreter:
                                 visible_content_state_strs.append(f"There is a {self._get_inst_str(thing)} in the {self._get_inst_str(fact[2])}.")
                     visible_content_state_combined = " ".join(visible_content_state_strs)
                     # print("New world state:", self.world_state)
-                    return goals_achieved_response, f"{base_result_str} {visible_content_state_combined}"
+                    return goals_achieved_response, f"{base_result_str} {visible_content_state_combined}", {}
                 else:
                     # print("New world state:", self.world_state)
-                    return goals_achieved_response, base_result_str
+                    return goals_achieved_response, base_result_str, {}
 
     def execute_optimal_solution(self):
         """
@@ -1009,7 +1009,13 @@ if __name__ == "__main__":
 
     print(test_interpreter.get_full_room_desc())
 
-    turn_1 = test_interpreter.process_action("take onion")
+    # turn_1 = test_interpreter.process_action("take onion")
+    # turn_1 = test_interpreter.process_action("take ripe apple")
+    # turn_1 = test_interpreter.process_action("take potted plant")
+    turn_1 = test_interpreter.process_action("take sandwich at shelf")
+    # turn_1 = test_interpreter.process_action("put potted plant on shelf")
+    # turn_1 = test_interpreter.process_action("put nasty sandwich on shelf")
+    # turn_1 = test_interpreter.process_action("put sandwich on dirty shelf")
     # turn_1 = test_interpreter.process_action("gloop apple")
     # turn_1 = test_interpreter.process_action("gloop onion")
     # print(turn_1[1])

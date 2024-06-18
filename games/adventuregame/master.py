@@ -310,8 +310,6 @@ class AdventureGameScorer(GameScorer):
         else:
             self.log_episode_score(metrics.BENCH_SCORE, np.nan)
 
-        # TODO: how to handle BENCH_SCORE for aborted episodes?
-
         # invalid format aborted:
         # TODO: handle different types of format aborts for planning variant
         if invalid_format:
