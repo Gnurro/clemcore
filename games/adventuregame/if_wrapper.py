@@ -42,7 +42,8 @@ class IFTransformer(Transformer):
                 arguments.append(" ".join(argument_words))
 
                 # arguments.append(child.children[-1].value)
-                argument_adjs = [adj.value for adj in child.children[:-1] if adj.type == 'ADJ']
+                # argument_adjs = [adj.value for adj in child.children[:-1] if adj.type == 'ADJ']
+                argument_adjs = [adj.value.strip() for adj in child.children[:-1] if adj.type == 'ADJ']
                 # print(argument_adjs)
                 if argument_adjs:
                     action_dict[f'arg{arg_idx}_adjs'] = argument_adjs
@@ -51,15 +52,13 @@ class IFTransformer(Transformer):
 
                 arg_idx += 1
             if type(child) == lark.Token and child.type == 'PREP':
-                action_dict['prep'] = child.value
+                # action_dict['prep'] = child.value
+                action_dict['prep'] = child.value.strip()
             if action_type.value == 'unknown' and type(child) == lark.Token and child.type == 'WORD':
                 action_dict[f'arg{arg_idx}'] = child.value
                 break
 
-        # TODO: improve parsing feedback
-        #  '> take sandwich out of fridge' should not give feedback "I don't know what 'take' means."
-        #  but sth like "I don't know what 'out' means."
-        #  currently openchat tries variations of the command until it hits 'grab' which is covered by 'take' lark atm
+        # TODO: improve parsing feedback further
 
         return action_dict
 
@@ -566,7 +565,7 @@ class BasicIFInterpreter:
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
-                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action", 'arg': action_dict['arg1']}
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action_verb", 'arg': action_dict['arg1']}
                 # TODO: properly tie in with parse/transform to not respond with defined verb
                 return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
             else:
@@ -578,8 +577,9 @@ class BasicIFInterpreter:
             action_dict['arg1'] = self.repr_str_to_type_dict[action_dict['arg1']]
             # TODO: check if this conversion might be better elsewhere
         else:
-            fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg1']}
-            return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
+            # TODO: if arg not in repr_str dict, it's already undefined -> refactor
+            fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_repr_str", 'arg': action_dict['arg1']}
+            return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
 
 
         """
@@ -622,6 +622,12 @@ class BasicIFInterpreter:
             # print("\ncurrent state change:", state_change)
 
             if "HERE" in state_change['pre_state'] or "HERE" in state_change['post_state']:
+
+                # check if arg is a room type:
+                if action_dict['arg1'] not in self.room_types:
+                    fail_dict: dict = {'phase': "resolution", 'fail_type': "not_room_type", 'arg': action_dict['arg1']}
+                    not_room_type_str: str = f"I don't know what room '{action_dict['arg1']}' is."
+                    return False, not_room_type_str, fail_dict
 
                 # get things here:
                 things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
@@ -1007,21 +1013,31 @@ if __name__ == "__main__":
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
 
-    print(test_interpreter.get_full_room_desc())
+    # print(test_interpreter.get_full_room_desc())
+
+    # turn_1 = test_interpreter.process_action("go bunk")
+    # turn_1 = test_interpreter.process_action("go apple")
 
     # turn_1 = test_interpreter.process_action("take onion")
-    # turn_1 = test_interpreter.process_action("take ripe apple")
+    # turn_1 = test_interpreter.process_action("take old apple at shelf")
+    # turn_1 = test_interpreter.process_action("take apple at shelf")
     # turn_1 = test_interpreter.process_action("take potted plant")
-    turn_1 = test_interpreter.process_action("take sandwich at shelf")
+    # turn_1 = test_interpreter.process_action("take sandwich at shelf")
+    # turn_1 = test_interpreter.process_action("take jelly sandwich from dirty shelf")
     # turn_1 = test_interpreter.process_action("put potted plant on shelf")
+    # turn_1 = test_interpreter.process_action("put wooden potted plant on shelf")
     # turn_1 = test_interpreter.process_action("put nasty sandwich on shelf")
     # turn_1 = test_interpreter.process_action("put sandwich on dirty shelf")
+    # turn_1 = test_interpreter.process_action("put sandwich at shelf")
+    # turn_1 = test_interpreter.process_action("put sandwich on wooden shelf")
     # turn_1 = test_interpreter.process_action("gloop apple")
     # turn_1 = test_interpreter.process_action("gloop onion")
+
+    turn_1 = test_interpreter.process_action("open refrigerator door")
     # print(turn_1[1])
     print(turn_1)
     print()
-
+    """"""
     """
     turn_1 = test_interpreter.process_action("go living room")
     # print(turn_1[1])
