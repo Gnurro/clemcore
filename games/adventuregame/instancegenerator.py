@@ -52,6 +52,7 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             game_instance["max_turns"] = adventures[adventure_id]['bench_turn_limit']  # game parameters
             game_instance["optimal_turns"] = adventures[adventure_id]['optimal_turns']  # game parameters
             game_instance["optimal_solution"] = adventures[adventure_id]['optimal_solution']  # game parameters
+            game_instance["optimal_commands"] = adventures[adventure_id]['optimal_commands']  # game parameters
             game_instance["action_definitions"] = adventures[adventure_id]['action_definitions']  # game parameters
             game_instance["room_definitions"] = adventures[adventure_id]['room_definitions']  # game parameters
             game_instance["entity_definitions"] = adventures[adventure_id]['entity_definitions']  # game parameters
@@ -87,6 +88,7 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             game_instance["max_turns"] = adventures[adventure_id]['bench_turn_limit']  # game parameters
             game_instance["optimal_turns"] = adventures[adventure_id]['optimal_turns']  # game parameters
             game_instance["optimal_solution"] = adventures[adventure_id]['optimal_solution']  # game parameters
+            game_instance["optimal_commands"] = adventures[adventure_id]['optimal_commands']  # game parameters
             game_instance["action_definitions"] = adventures[adventure_id]['action_definitions']  # game parameters
             game_instance["room_definitions"] = adventures[adventure_id]['room_definitions']  # game parameters
             game_instance["entity_definitions"] = adventures[adventure_id]['entity_definitions']  # game parameters

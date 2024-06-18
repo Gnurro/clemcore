@@ -507,6 +507,7 @@ class BasicIFInterpreter:
         room_description = f"{player_at_str}{visible_contents_str}{visible_content_state_combined}{exits_str}"
         # room_description = " ".join([player_at_str, visible_contents_str, visible_content_state_combined, exits_str])
 
+        # return room_description
         return room_description
 
     def get_inventory_content(self):
@@ -559,9 +560,12 @@ class BasicIFInterpreter:
             return False, f"I don't know what you mean.", fail_dict
         # print("parsed command:", parsed_command)
         action_dict = self.act_transformer.transform(parsed_command)
-        print("transformed action dict:", action_dict)
+        # print("transformed action dict:", action_dict)
 
-        # TODO: return details of parsing failures to gamemaster
+        # catch 'unknown' action parses:
+        if action_dict['type'] == "unknown":
+            if action_dict['arg1'] in self.action_types:
+                print("defined action verb, malformed command!")
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
@@ -896,21 +900,8 @@ class BasicIFInterpreter:
                             jinja_args[template_tag] = self.get_full_room_desc()
                 base_result_str = feedback_jinja.render(jinja_args)
 
-                """
-                if len(resolution_result) == 2:
-                    # base_result_str = f"The {resolution_result[1]} is now {resolution_result[0]}."
-                    base_result_str = f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]}."
-                elif len(resolution_result) == 3 and resolution_result[2] == 'inventory':
-                    # handle taking/inventory:
-                    # base_result_str = f"You take the {resolution_result[1]}."
-                    base_result_str = f"You take the {self.inst_to_type_dict[resolution_result[1]]}."
-                    base_result_str += f" {self.get_inventory_desc()}"
-                elif len(resolution_result) == 3 and resolution_result[0] == 'at' and resolution_result[1] == 'player1':
-                    base_result_str = self.get_full_room_desc()
-                else:
-                    base_result_str = (f"The {self._get_inst_str(resolution_result[1])} is now {resolution_result[0]} "
-                                       f"the {self._get_inst_str(resolution_result[2])}.")
-                """
+                # print("base result string after jinja:", base_result_str)
+
                 # check goal achievement:
                 # print("goals:", self.goal_state)
                 self.goals_achieved = self.goal_state & self.world_state
@@ -939,8 +930,12 @@ class BasicIFInterpreter:
                                 # visible_content_state_strs.append(f"There is a {self.inst_to_type_dict[thing]} in the {self.inst_to_type_dict[fact[2]]}.")
                                 visible_content_state_strs.append(f"There is a {self._get_inst_str(thing)} in the {self._get_inst_str(fact[2])}.")
                     visible_content_state_combined = " ".join(visible_content_state_strs)
+                    if visible_content_state_combined:
+                        # print("visible_content_state_combined is a thing!")
+                        visible_content_state_combined = " " + visible_content_state_combined
                     # print("New world state:", self.world_state)
-                    return goals_achieved_response, f"{base_result_str} {visible_content_state_combined}", {}
+                    # return goals_achieved_response, f"{base_result_str} {visible_content_state_combined}", {}
+                    return goals_achieved_response, f"{base_result_str}{visible_content_state_combined}", {}
                 else:
                     # print("New world state:", self.world_state)
                     return goals_achieved_response, base_result_str, {}
@@ -953,15 +948,16 @@ class BasicIFInterpreter:
         print(self.get_full_room_desc())
         for command in self.game_instance["optimal_commands"]:
             print(f"> {command}")
-            goals_achieved, response = self.process_action(command)
+            goals_achieved, response, fail = self.process_action(command)
             print(response)
             print("Goals achieved:", goals_achieved)
+            print("Fail:", fail)
             print()
 
 
 if __name__ == "__main__":
     PATH = ""
-
+    """
     game_instance_exmpl = {
           "game_id": 0,
           "variant": "basic",
@@ -1001,20 +997,60 @@ if __name__ == "__main__":
           "room_definitions": ["home_rooms.json"],
           "entity_definitions": ["home_entities.json"]
         }
-
+    """
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)"], "goal_state": ["on(sandwich,table)"]}
     # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)", "in(yoyo,inventory)"], "goal_state": ["on(sandwich,table)"]}
+
+    game_instance_exmpl = {"game_id": 0, "variant": "basic",
+     "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the potted plant in the freezer and the apple on the table.\n\n",
+     "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
+                       "at(livingroom1floor,livingroom1)", "at(broomcloset1floor,broomcloset1)",
+                       "at(table1,livingroom1)", "at(counter1,kitchen1)", "at(refrigerator1,pantry1)",
+                       "at(shelf1,pantry1)", "at(freezer1,pantry1)", "at(pottedplant1,livingroom1)",
+                       "at(chair1,livingroom1)", "at(couch1,livingroom1)", "at(broom1,broomcloset1)",
+                       "at(sandwich1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)",
+                       "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)",
+                       "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)", "exit(kitchen1,pantry1)",
+                       "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)", "exit(hallway1,kitchen1)",
+                       "exit(hallway1,livingroom1)", "exit(hallway1,broomcloset1)", "exit(livingroom1,hallway1)",
+                       "exit(broomcloset1,hallway1)", "type(player1,player)", "type(kitchen1floor,floor)",
+                       "type(pantry1floor,floor)", "type(hallway1floor,floor)", "type(livingroom1floor,floor)",
+                       "type(broomcloset1floor,floor)", "type(table1,table)", "type(counter1,counter)",
+                       "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(freezer1,freezer)",
+                       "type(pottedplant1,pottedplant)", "type(chair1,chair)", "type(couch1,couch)",
+                       "type(broom1,broom)", "type(sandwich1,sandwich)", "type(apple1,apple)", "type(banana1,banana)",
+                       "support(kitchen1floor)", "support(pantry1floor)", "support(hallway1floor)",
+                       "support(livingroom1floor)", "support(broomcloset1floor)", "support(table1)",
+                       "support(counter1)", "support(shelf1)", "on(apple1,shelf1)", "on(sandwich1,shelf1)",
+                       "on(broom1,broomcloset1floor)", "on(pottedplant1,livingroom1floor)", "container(refrigerator1)",
+                       "container(freezer1)", "in(banana1,refrigerator1)", "openable(refrigerator1)",
+                       "openable(freezer1)", "closed(refrigerator1)", "closed(freezer1)", "takeable(pottedplant1)",
+                       "takeable(broom1)", "takeable(sandwich1)", "takeable(apple1)", "takeable(banana1)",
+                       "movable(pottedplant1)", "movable(broom1)", "movable(sandwich1)", "movable(apple1)",
+                       "movable(banana1)", "needs_support(pottedplant1)", "needs_support(broom1)",
+                       "needs_support(sandwich1)", "needs_support(apple1)", "needs_support(banana1)"],
+     "goal_state": ["in(pottedplant1,freezer1)", "on(apple1,table1)"], "max_turns": 50, "optimal_turns": 11,
+     "optimal_solution": [["take", "apple1"], ["open", "freezer1"], ["go", "kitchen1"], ["go", "hallway1"],
+                          ["go", "livingroom1"], ["put", "apple1", "table1"], ["take", "pottedplant1"],
+                          ["go", "hallway1"], ["go", "kitchen1"], ["go", "pantry1"],
+                          ["put", "pottedplant1", "freezer1"]],
+     "optimal_commands": ["take apple", "open freezer", "go kitchen", "go hallway", "go living room",
+                          "put apple on table", "take potted plant", "go hallway", "go kitchen", "go pantry",
+                          "put potted plant in freezer"],
+     "action_definitions": ["basic_actions.json"],
+     "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
+
 
     test_interpreter = BasicIFInterpreter(game_instance_exmpl)
     # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
-    # test_interpreter.execute_optimal_solution()
+    test_interpreter.execute_optimal_solution()
 
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
 
-    print(test_interpreter.get_full_room_desc())
-
+    # print(test_interpreter.get_full_room_desc())
+    """
     # turn_1 = test_interpreter.process_action("go bunk")
     # turn_1 = test_interpreter.process_action("go apple")
 
@@ -1034,7 +1070,9 @@ if __name__ == "__main__":
     # turn_1 = test_interpreter.process_action("gloop onion")
 
     # turn_1 = test_interpreter.process_action("open refrigerator door")
-    turn_1 = test_interpreter.process_action("take sandwich")
+    # turn_1 = test_interpreter.process_action("take sandwich")
+
+    turn_1 = test_interpreter.process_action("open refrigerator")
     # print(turn_1[1])
     print(turn_1)
     print()
@@ -1044,8 +1082,8 @@ if __name__ == "__main__":
     # print(turn_1[1])
     print(turn_2)
     print()
+    """
 
-    """"""
     """
     turn_1 = test_interpreter.process_action("go living room")
     # print(turn_1[1])
