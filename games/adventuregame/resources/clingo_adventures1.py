@@ -242,8 +242,12 @@ class ClingoInitialStateGenerator(ClingoAdventureBase):
         raw_adventures = list()
 
         with self.clingo_control.solve(yield_=True) as solve:
+            # model_count = 0
             for model in solve:
+                # print("model count:", model_count)
+                # model_count += 1
                 # print("model:", model)
+                # print(model.__str__())
                 raw_adventures.append(model.__str__())
                 # break
             # print("solve get:", solve.get())
@@ -259,11 +263,11 @@ class ClingoInitialStateGenerator(ClingoAdventureBase):
             result_adventures.append(fact_list)
 
         # print(result_adventures)
-
+        """
         if save_to_file:
             with open(out_file_path, 'w', encoding='utf-8') as out_file:
                 out_file.write(json.dumps(result_adventures))
-
+        """
         return result_adventures
 
 
