@@ -8,7 +8,6 @@ from itertools import permutations
 
 import numpy as np
 from clingo.control import Control
-from tqdm import tqdm
 
 from adv_util import fact_str_to_tuple, fact_tuple_to_str
 
@@ -86,11 +85,6 @@ class ClingoAdventureBase(object):
             self.action_definitions[type_def['type_name']] = type_def_dict
 
         # print(self.room_definitions)
-    def reset_clingo_controller(self):
-        """
-        Resets the clingo controller by initializing a new one.
-        """
-        self.clingo_control: Control = Control(["0"])  # ["0"] argument to return all models
 
 
 class ClingoInitialStateGenerator(ClingoAdventureBase):
@@ -100,11 +94,17 @@ class ClingoInitialStateGenerator(ClingoAdventureBase):
     def __init__(self, adventure_type: str = "home_deliver_two"):
         super().__init__(adventure_type=adventure_type)
 
-    def generate_room_layouts(self, layout_file_path: str = "generated_home_layouts.json"):
-        # reset clingo controller:
-        self.reset_clingo_controller()
-
+    def generate_initial_states(self, save_to_file: bool = False, out_file_path: str = "generated_initial_states.json"):
         clingo_str = str()
+
+        # add player type fact:
+        player_fact = "type(player1,player)."
+        self.clingo_control.add(player_fact)
+        clingo_str += "\n" + player_fact
+        # add rule for random player start location:
+        player_location_rule = "1 { at(player1,ROOM):room(ROOM,_) } 1."
+        self.clingo_control.add(player_location_rule)
+        clingo_str += "\n" + player_location_rule
 
         # generate with one room each:
         for room_type_name, room_type_values in self.room_definitions.items():
@@ -160,177 +160,112 @@ class ClingoInitialStateGenerator(ClingoAdventureBase):
         # self.clingo_control.add("#hide reachable/2")
         # clingo_str += "\n" + "#hide reachable/2"
 
+        for entity_type_name, entity_type_values in self.entity_definitions.items():
+            if "standard_locations" in entity_type_values:
+                # basic atoms:
+                entity_id = f"{entity_type_name}1"  # default to 'kitchen1' etc
+                # print("room:", room_id)
+                type_atom = f"type({entity_id},{entity_type_name})."
+                # add type atom to clingo controller:
+                self.clingo_control.add(type_atom)
+                clingo_str += "\n" + type_atom
+                # location rule:
+                permitted_location_list = list()
+
+                for location in entity_type_values['standard_locations']:
+                    permitted_location = f"at(ENTITY,ROOM):type(ENTITY,{entity_type_name}),room(ROOM,{location})"
+                    permitted_location_list.append(permitted_location)
+                permitted_locations_str = ";".join(permitted_location_list)
+
+                location_rule = "1 { $PERMITTEDLOCATIONS$ } 1."
+                location_rule = location_rule.replace("$PERMITTEDLOCATIONS$", permitted_locations_str)
+                # print(location_rule)
+                self.clingo_control.add(location_rule)
+                clingo_str += "\n" + location_rule
+
+                if "traits" in entity_type_values:
+                    # add atoms for all traits of this entity type:
+                    for trait in entity_type_values['traits']:
+                        trait_atom = f"{trait}({entity_id})."
+                        self.clingo_control.add(trait_atom)
+                        clingo_str += "\n" + trait_atom
+
+                    if "needs_support" in entity_type_values['traits']:
+                        # on/in rule:
+                        on_positions = "on(entity_id,SUPPORT):at(entity_id,ROOM),at(SUPPORT,ROOM),support(SUPPORT);"
+                        in_positions = "in(entity_id,SUPPORT):at(entity_id,ROOM),at(CONTAINER,ROOM),container(CONTAINER)"
+                        # support_rule = "1 { on(ENTITY,SUPPORT):at(ENTITY,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in(ENTITY,CONTAINER):at(ENTITY,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
+                        # support_rule = "1 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
+                        support_rule = "1 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
+                        support_rule = support_rule.replace("$ENTITY$", entity_id)
+                        # support_rule = "1 { "
+                        # support_rule += on_positions
+                        # support_rule += in_positions
+                        # support_rule += " } 1."
+                        # print(support_rule)
+                        self.clingo_control.add(support_rule)
+                        clingo_str += "\n" + support_rule
+
+                    if "openable" in entity_type_values['traits']:
+                        closed_atom = f"closed({entity_id})."
+                        self.clingo_control.add(closed_atom)
+                        clingo_str += "\n" + closed_atom
+
+                if not self.adv_type_def['initial_state_config']["entity_adjectives"] == "none":
+                    if "possible_adjs" in entity_type_values:
+                        # adjective rule:
+                        possible_adj_list = list()
+                        for possible_adj in entity_type_values["possible_adjs"]:
+                            possible_adj_str = f"adj({entity_id},{possible_adj})"
+                            possible_adj_list.append(possible_adj_str)
+                        possible_adjs = ";".join(possible_adj_list)
+                        if self.adv_type_def['initial_state_config']["entity_adjectives"] == "optional":
+                            adj_rule = "0 { $POSSIBLEADJS$ } 1."
+                        elif self.adv_type_def['initial_state_config']["entity_adjectives"] == "all":
+                            adj_rule = "1 { $POSSIBLEADJS$ } 1."
+                        adj_rule = adj_rule.replace("$POSSIBLEADJS$", possible_adjs)
+                        self.clingo_control.add(adj_rule)
+                        clingo_str += "\n" + adj_rule
+
+                        # make sure that same-type entities do not have same adjective:
+                        diff_adj_rule = ":- adj(ENTITY1,ADJ), adj(ENTITY2,ADJ), type(ENTITY1,TYPE), type(ENTITY2,TYPE), ENTITY1 != ENTITY2."
+                        self.clingo_control.add(diff_adj_rule)
+                        clingo_str += "\n" + diff_adj_rule
+
+        # print(clingo_str)
+
         # CLINGO SOLVING
         # ground the combined LP:
         self.clingo_control.ground()
-        # print("Grounded!")
-        # solve combined LP for room layouts:
-        room_layouts = list()
+        print("Grounded!")
+        # solve combined LP for raw adventures:
+        raw_adventures = list()
 
         with self.clingo_control.solve(yield_=True) as solve:
             for model in solve:
                 # print("model:", model)
-                room_layouts.append(model.__str__())
+                raw_adventures.append(model.__str__())
                 # break
             # print("solve get:", solve.get())
 
         # print(raw_adventures)
         """"""
         # ADVENTURE FORMAT CONVERSION
-        result_layouts = list()
-        for result_layout in room_layouts:
-            fact_list = result_layout.split()
+        result_adventures = list()
+        for raw_adventure in raw_adventures:
+            fact_list = raw_adventure.split()
             # remove 'reachable' helper atoms:
             fact_list = [fact for fact in fact_list if "reachable" not in fact]
-            result_layouts.append(fact_list)
+            result_adventures.append(fact_list)
 
         # print(result_adventures)
 
-        with open(layout_file_path, 'w', encoding='utf-8') as out_file:
-            out_file.write(json.dumps(result_layouts))
-
-        return result_layouts
-
-    def generate_initial_states(self, layout_file_path: str = "generated_home_layouts.json",
-                                initial_state_file_path: str = "generated_home_initial_states.jsonl"):
-        # reset clingo controller:
-        self.reset_clingo_controller()
-
-        # load room layouts:
-        with open(layout_file_path, 'r', encoding='utf-8') as layout_file:
-            room_layouts = json.load(layout_file)
-
-        # print(room_layouts)
-        layout_count = len(room_layouts)
-
-        clingo_str = str()
-
-        for rooms_layout in tqdm(room_layouts):
-            # reset clingo controller:
-            self.reset_clingo_controller()
-            # convert/add room layout facts:
-            cur_layout = "\n".join([fact + "." for fact in rooms_layout])
-            # print(cur_layout)
-            self.clingo_control.add(cur_layout)
-
-            # add player type fact:
-            player_fact = "type(player1,player)."
-            self.clingo_control.add(player_fact)
-            clingo_str += "\n" + player_fact
-            # add rule for random player start location:
-            player_location_rule = "1 { at(player1,ROOM):room(ROOM,_) } 1."
-            self.clingo_control.add(player_location_rule)
-            clingo_str += "\n" + player_location_rule
-
-            for entity_type_name, entity_type_values in self.entity_definitions.items():
-                if "standard_locations" in entity_type_values:
-                    # basic atoms:
-                    entity_id = f"{entity_type_name}1"  # default to 'kitchen1' etc
-                    # print("room:", room_id)
-                    type_atom = f"type({entity_id},{entity_type_name})."
-                    # add type atom to clingo controller:
-                    self.clingo_control.add(type_atom)
-                    clingo_str += "\n" + type_atom
-                    # location rule:
-                    permitted_location_list = list()
-
-                    for location in entity_type_values['standard_locations']:
-                        permitted_location = f"at(ENTITY,ROOM):type(ENTITY,{entity_type_name}),room(ROOM,{location})"
-                        permitted_location_list.append(permitted_location)
-                    permitted_locations_str = ";".join(permitted_location_list)
-
-                    location_rule = "1 { $PERMITTEDLOCATIONS$ } 1."
-                    location_rule = location_rule.replace("$PERMITTEDLOCATIONS$", permitted_locations_str)
-                    # print(location_rule)
-                    self.clingo_control.add(location_rule)
-                    clingo_str += "\n" + location_rule
-
-                    if "traits" in entity_type_values:
-                        # add atoms for all traits of this entity type:
-                        for trait in entity_type_values['traits']:
-                            trait_atom = f"{trait}({entity_id})."
-                            self.clingo_control.add(trait_atom)
-                            clingo_str += "\n" + trait_atom
-
-                        if "needs_support" in entity_type_values['traits']:
-                            # on/in rule:
-                            on_positions = "on(entity_id,SUPPORT):at(entity_id,ROOM),at(SUPPORT,ROOM),support(SUPPORT);"
-                            in_positions = "in(entity_id,SUPPORT):at(entity_id,ROOM),at(CONTAINER,ROOM),container(CONTAINER)"
-                            # support_rule = "1 { on(ENTITY,SUPPORT):at(ENTITY,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in(ENTITY,CONTAINER):at(ENTITY,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
-                            # support_rule = "1 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
-                            support_rule = "1 { on($ENTITY$,SUPPORT):at($ENTITY$,ROOM),at(SUPPORT,ROOM),support(SUPPORT);in($ENTITY$,CONTAINER):at($ENTITY$,ROOM),at(CONTAINER,ROOM),container(CONTAINER) } 1."
-                            support_rule = support_rule.replace("$ENTITY$", entity_id)
-                            # support_rule = "1 { "
-                            # support_rule += on_positions
-                            # support_rule += in_positions
-                            # support_rule += " } 1."
-                            # print(support_rule)
-                            self.clingo_control.add(support_rule)
-                            clingo_str += "\n" + support_rule
-
-                        if "openable" in entity_type_values['traits']:
-                            closed_atom = f"closed({entity_id})."
-                            self.clingo_control.add(closed_atom)
-                            clingo_str += "\n" + closed_atom
-
-                    if not self.adv_type_def['initial_state_config']["entity_adjectives"] == "none":
-                        if "possible_adjs" in entity_type_values:
-                            # adjective rule:
-                            possible_adj_list = list()
-                            for possible_adj in entity_type_values["possible_adjs"]:
-                                possible_adj_str = f"adj({entity_id},{possible_adj})"
-                                possible_adj_list.append(possible_adj_str)
-                            possible_adjs = ";".join(possible_adj_list)
-                            if self.adv_type_def['initial_state_config']["entity_adjectives"] == "optional":
-                                adj_rule = "0 { $POSSIBLEADJS$ } 1."
-                            elif self.adv_type_def['initial_state_config']["entity_adjectives"] == "all":
-                                adj_rule = "1 { $POSSIBLEADJS$ } 1."
-                            adj_rule = adj_rule.replace("$POSSIBLEADJS$", possible_adjs)
-                            self.clingo_control.add(adj_rule)
-                            clingo_str += "\n" + adj_rule
-
-                            # make sure that same-type entities do not have same adjective:
-                            diff_adj_rule = ":- adj(ENTITY1,ADJ), adj(ENTITY2,ADJ), type(ENTITY1,TYPE), type(ENTITY2,TYPE), ENTITY1 != ENTITY2."
-                            self.clingo_control.add(diff_adj_rule)
-                            clingo_str += "\n" + diff_adj_rule
-
-            # print(clingo_str)
-
-            # CLINGO SOLVING
-            # ground the combined LP:
-            self.clingo_control.ground()
-            # print("Grounded!")
-            # solve combined LP for raw adventures:
-            raw_adventures = list()
-
-            with self.clingo_control.solve(yield_=True) as solve:
-                with open(initial_state_file_path, 'a', encoding='utf-8') as out_file:
-                    for model in solve:
-                        # print("model:", model)
-                        # raw_adventures.append(model.__str__())
-                        raw_adventure = model.__str__()
-                        fact_list = raw_adventure.split()
-                        out_file.write(json.dumps(fact_list) + "\n")
-                        # break
-                    # print("solve get:", solve.get())
-
-            # print(raw_adventures)
-            """
-            # ADVENTURE FORMAT CONVERSION
-            result_adventures = list()
-            for raw_adventure in raw_adventures:
-                fact_list = raw_adventure.split()
-                # remove 'reachable' helper atoms:
-                fact_list = [fact for fact in fact_list if "reachable" not in fact]
-                result_adventures.append(fact_list)
-
-            # print(result_adventures)
-
-            with open(initial_state_file_path, 'a', encoding='utf-8') as out_file:
+        if save_to_file:
+            with open(out_file_path, 'w', encoding='utf-8') as out_file:
                 out_file.write(json.dumps(result_adventures))
 
         return result_adventures
-        """
+
 
 class ClingoGoalGenerator(ClingoAdventureBase):
     """
@@ -988,14 +923,8 @@ if __name__ == "__main__":
     """
 
     initial_state_gen = ClingoInitialStateGenerator(adventure_type="home_deliver_three")
-
-    generated_layouts_path = "generated_home_layouts.json"
-    # initial_state_gen.generate_room_layouts(layout_file_path=generated_layouts_path)
-
-    # generated_initials_path = "generated_home_deliver_initial_states.json"
-    generated_initials_path = "test_home_deliver_initial_states.jsonl"
-    initial_state_gen.generate_initial_states(layout_file_path=generated_layouts_path,
-                                              initial_state_file_path=generated_initials_path)
+    generated_initials_path = "generated_home_deliver_initial_states.json"
+    initial_state_gen.generate_initial_states(save_to_file=True, out_file_path=generated_initials_path)
 
     """
     with open("generated_adventures.json", 'r', encoding='utf-8') as advs_file:
