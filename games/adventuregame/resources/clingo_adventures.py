@@ -652,6 +652,7 @@ class ClingoAdventureSolver(ClingoAdventureBase):
         # iterate over initial world state, add fixed basic facts, add turn facts for changeable facts
         for fact in self.initial_facts:
             # print("initial fact:", fact)
+            # set up id_to_type:
             if fact[0] == "type":
                 self.id_to_type_dict[fact[1]] = {'type': fact[2],
                                                  'repr_str': self.entity_definitions[fact[2]]['repr_str']}
@@ -662,6 +663,7 @@ class ClingoAdventureSolver(ClingoAdventureBase):
                                                  'repr_str': self.room_definitions[fact[2]]['repr_str']}
                 if 'traits' in self.room_definitions[fact[2]]:
                     self.id_to_type_dict[fact[1]]['traits'] = self.room_definitions[fact[2]]['traits']
+            # set up per-turn mutable facts at turn 0:
             if fact[0] in mutable_fact_types:
                 # add turn 0 turn fact atom:
                 if len(fact) == 3:
@@ -685,6 +687,51 @@ class ClingoAdventureSolver(ClingoAdventureBase):
 
         if return_encoding:
             return clingo_str
+
+    def initialize_adventure_turns_asp(self, initial_world_state):
+        """
+        Set up initial world state and create ASP encoding of mutable facts.
+        Turn facts have _t in the fact/atom type, and their first value is the turn at which they are true.
+        """
+        mutable_fact_types: list = self.adv_type_def["mutable_fact_types"]
+
+        clingo_str = str()
+
+        self.id_to_type_dict: dict = dict()
+
+        # convert fact strings to tuples:
+        self.initial_facts = [fact_str_to_tuple(fact) for fact in initial_world_state]
+        # iterate over initial world state, add fixed basic facts, add turn facts for changeable facts
+        for fact in self.initial_facts:
+            # print("initial fact:", fact)
+            # set up id_to_type:
+            if fact[0] == "type":
+                self.id_to_type_dict[fact[1]] = {'type': fact[2],
+                                                 'repr_str': self.entity_definitions[fact[2]]['repr_str']}
+                if 'traits' in self.entity_definitions[fact[2]]:
+                    self.id_to_type_dict[fact[1]]['traits'] = self.entity_definitions[fact[2]]['traits']
+            if fact[0] == "room":
+                self.id_to_type_dict[fact[1]] = {'type': fact[2],
+                                                 'repr_str': self.room_definitions[fact[2]]['repr_str']}
+                if 'traits' in self.room_definitions[fact[2]]:
+                    self.id_to_type_dict[fact[1]]['traits'] = self.room_definitions[fact[2]]['traits']
+            # set up per-turn mutable facts at turn 0:
+            if fact[0] in mutable_fact_types:
+                # add turn 0 turn fact atom:
+                if len(fact) == 3:
+                    turn_atom = f"{fact[0]}_t(0,{fact[1]},{fact[2]})."
+                    clingo_str += "\n" + turn_atom
+                if len(fact) == 2:
+                    turn_atom = f"{fact[0]}_t(0,{fact[1]})."
+                    clingo_str += "\n" + turn_atom
+            else:
+                # add constant fact atom:
+                const_atom = f"{fact_tuple_to_str(fact)}."
+                clingo_str += "\n" + const_atom
+
+        # print(self.id_to_type_dict)
+
+        return clingo_str
 
     def solve_optimally(self, initial_world_state, goal_facts: list,
                         return_only_actions: bool = True, return_only_optimal: bool = True,
@@ -786,6 +833,70 @@ class ClingoAdventureSolver(ClingoAdventureBase):
             return solvable, raw_solutions, clingo_str
         else:
             return solvable, raw_solutions
+
+    def solve_optimally_asp(self, initial_world_state, goal_facts: list,
+                        return_only_actions: bool = True, return_only_optimal: bool = True,
+                        ) -> Tuple[bool, Union[List[str], List[List[str]]], Optional[str]]:
+        """
+        Generates an optimized solution to an adventure.
+        :param initial_world_state: Initial world state fact list.
+        :param goal_facts: List of goal facts in string format, ie 'on(sandwich1,table1)'.
+        :param turn_limit: Limit number of turns/actions to solve adventure. NOTE: Main factor for solvability.
+        :param return_only_actions: Return only a list of action-at-turn atoms. If False, ALL model atoms are returned.
+        :param return_only_optimal: Return only the optimal solution model's atoms.
+        :param return_encoding: Return the entire adventure solving ASP encoding generated.
+        :return: Tuple of: Solvability, list of solution models or optimal solution model, ASP solving encoding.
+        """
+
+        turn_limit: int = self.adv_type_def["optimal_solver_turn_limit"]
+
+        clingo_str = str()
+
+        # add turn generation and limit first:
+        turns_template: str = self.clingo_templates["turns"]
+        turns_clingo = turns_template.replace("$TURNLIMIT$", str(turn_limit))
+        clingo_str += "\n" + turns_clingo
+
+        # add initial world state facts:
+        initial_state_clingo = self.initialize_adventure_turns(initial_world_state, return_encoding=True)
+        clingo_str += "\n" + initial_state_clingo
+
+        # add actions:
+        for action_name, action_def in self.action_definitions.items():
+            action_asp = action_def['asp']
+            clingo_str += "\n" + action_asp
+
+        # add action/turn restraints:
+        actions_turns_clingo: str = self.clingo_templates["action_limits"]
+        clingo_str += "\n" + actions_turns_clingo
+
+        # print("goal set", goal_facts)
+
+        # add goals:
+        for goal in goal_facts:
+            # print("goal fact:", goal)
+            goal_tuple = fact_str_to_tuple(goal)
+            if len(goal_tuple) == 2:
+                goal_template: str = self.clingo_templates["goal_1"]
+                goal_clingo = goal_template.replace("$PREDICATE$", goal_tuple[0])
+                goal_clingo = goal_clingo.replace("$THING$", goal_tuple[1])
+            if len(goal_tuple) == 3:
+                goal_template: str = self.clingo_templates["goal_2"]
+                goal_clingo = goal_template.replace("$PREDICATE$", goal_tuple[0])
+                goal_clingo = goal_clingo.replace("$THING$", goal_tuple[1])
+                goal_clingo = goal_clingo.replace("$TARGET$", goal_tuple[2])
+            clingo_str += "\n" + goal_clingo
+
+        # add optimization:
+        minimize_clingo = self.clingo_templates["minimize"]
+        clingo_str += "\n" + minimize_clingo
+
+        # add output only actions:
+        if return_only_actions:
+            only_actions_clingo = self.clingo_templates["return_only_actions"]
+            clingo_str += "\n" + only_actions_clingo
+
+        return clingo_str
 
     def convert_adventure_solution(self, adventure_solution: str):
         """
