@@ -1220,6 +1220,201 @@ class ClingoAdventureGenerator(ClingoAdventureBase):
 
         return generated_adventures
 
+    def generate_adventures_(self,
+                            load_initial_states_from_file: str = "",
+                            initial_state_limit: int = 0, initial_state_picking: str = "iterative",
+                            adventures_per_initial_state: int = 0,
+                            goal_set_picking: str = "iterative",
+                            save_to_file: bool = True, indent_output_json: bool = True):
+        """
+        Generate adventures based on parameters.
+        The total number of adventures generated is initial_state_limit * adventures_per_initial_state - if both are 0,
+        a very large number of adventures will be generated. All 1-object-per-type, non-adjective basic/house initial
+        states already number over 240k, so these values should be limited. Use RNG seeds to reproduce smaller sets of
+        adventures that have been picked randomly.
+        :param task_config: Task configuration, currently only 'deliver' exists. (Might also determine initial state
+            generation in the future.)
+        :param load_initial_states_from_file: If a file path is passed, pre-generated initial states are loaded,
+            otherwise all possible initial states are generated.
+        :param initial_state_limit: The maximum number of initial states to generate adventures for. If 0 (default), ALL
+            available initial states will be used.
+        :param initial_state_picking: Method to pick from all possible goal states:
+            "iterate" - Picks initial states from the first available iteratively until initial_state_limit is reached.
+            "random" - Picks random initial states from all available until initial_state_limit is reached.
+        :param adventures_per_initial_state: How many adventures to generate for each initial state.
+        :param goals_per_adventure: How many goals each adventure has.
+        :param goal_set_picking: Method to pick from all possible goal states:
+            "iterate" - Picks goal sets from the first permutation iteratively until goals_per_adventure is met.
+            "random" - Picks random goal sets from all permutations until goals_per_adventure is met.
+        :param turn_limit: Maximum number of turns that optimal solution generator can take.
+        :param min_optimal_turns: Adventures that need less than this number of turns to solve will be discarded.
+        :param max_optimal_turns: Adventures that need more than this number of turns to solve will be discarded.
+        :param save_to_file: File name for saving generated adventures. If empty string, generated adventures will not
+            be saved.
+        """
+
+        task_config: dict = self.adv_type_def["task_config"]
+
+        goals_per_adventure: int = self.adv_type_def["goal_count"]
+
+        turn_limit: int = self.adv_type_def["optimal_solver_turn_limit"]
+        min_optimal_turns: int = self.adv_type_def["min_optimal_turns"]
+        max_optimal_turns: int = self.adv_type_def["max_optimal_turns"]
+
+        # INTIAL STATES
+        # NOTE: As the number of room layouts is relatively small, generating all to iterate over is viable.
+        # generate room layouts:
+
+
+        # set up initial states:
+        if load_initial_states_from_file:
+            self._load_initial_states_from_file(load_initial_states_from_file)
+        else:
+            self._generate_initial_states()
+
+        # get initial states to generate adventures with:
+        if initial_state_picking == "iterative":
+            if initial_state_limit:
+                initial_states_used = [self.initial_states[idx] for idx in range(initial_state_limit)]
+            else:
+                initial_states_used = self.initial_states
+        elif initial_state_picking == "random":
+            assert initial_state_limit > 0, ("Random initial state picking without a limit is equivalent to getting all"
+                                             " iteratively.")
+            # initial_states_used = self.rng.choice(self.initial_states, size=initial_state_limit, replace=False, shuffle=False).tolist()
+            # print(type(self.initial_states))
+            initial_state_indices = self.rng.choice(len(self.initial_states), size=initial_state_limit, replace=False, shuffle=False)
+            initial_states_used = [self.initial_states[idx] for idx in initial_state_indices]
+            # print(initial_states_used)
+
+        generated_adventures: list = list()
+
+        # iterate over initial states used:
+        for initial_state in initial_states_used:
+            adventure_count = 0
+            keep_generating_adventures = True
+
+            while keep_generating_adventures:
+                # print("adv count:", adventure_count)
+
+                # generate an adventure with the current initial state:
+                goal_generator = ClingoGoalGenerator(adventure_type=self.adv_type, rng_seed=self.rng_seed)
+                if not task_config:
+                    task_config = {'task': "deliver", 'deliver_to_floor': False}
+                # goal_generator.generate_goal_facts(initial_state, task_config, goals_per_adventure)
+                goal_generator.generate_goal_facts(initial_state)
+
+                if goal_set_picking == "iterative":
+                    goal_set = next(goal_generator.get_goals_iter())
+
+                elif goal_set_picking == "random":
+                    # goal_set = goal_generator.get_goals_random(amount=1)
+                    goal_set = self.rng.choice(goal_generator.goal_combos, size=1).tolist()[0]
+
+                # print(goal_set)
+
+                cur_adventure = {'initial_state': initial_state, 'goals': goal_set}
+
+                # solve adventure
+
+                # solvable, action_sequence, optimal_turns = self._solve_adventure(cur_adventure, turn_limit=turn_limit)
+                solvable, action_sequence, optimal_turns, command_sequence = self._solve_adventure(cur_adventure)
+
+                # print("solvable:", solvable)
+                # print("solution:", action_sequence)
+                # print("optimal turns:", optimal_turns)
+
+                if not solvable:
+                    # print("not solvable, continuing")
+                    continue
+
+                # check if optimal turns within bounds
+
+                if min_optimal_turns <= optimal_turns <= max_optimal_turns:
+
+                    # get tuple world state:
+                    world_state: set = set()
+                    for fact in initial_state:
+                        world_state.add(fact_str_to_tuple(fact))
+
+                    # get tuple goals:
+                    goal_tuples: list = list()
+                    for goal in goal_set:
+                        goal_tuples.append(fact_str_to_tuple(goal))
+
+                    if task_config['task'] == 'deliver':
+                        goal_strings: list = list()
+                        for goal_tuple in goal_tuples:
+                            # get string representations of delivery item and target:
+                            item_type: str = str()
+                            item_adjs: list = list()
+                            target_type: str = str()
+                            target_adjs: list = list()
+                            for fact in world_state:
+                                if fact[0] == "type":
+                                    if goal_tuple[1] == fact[1]:
+                                        item_type = self.entity_definitions[fact[2]]['repr_str']
+                                    if goal_tuple[2] == fact[1]:
+                                        target_type = self.entity_definitions[fact[2]]['repr_str']
+                                if fact[0] == "adj":
+                                    if goal_tuple[1] == fact[1]:
+                                        item_adjs.append(fact[2])
+                                    if goal_tuple[2] == fact[1]:
+                                        target_adjs.append(fact[2])
+                            item_adjs_str: str = " ".join(item_adjs)
+                            if item_adjs:
+                                item_str: str = f"{item_adjs_str} {item_type}"
+                            else:
+                                item_str: str = f"{item_type}"
+                            target_adjs_str: str = " ".join(target_adjs)
+                            if target_adjs:
+                                target_str: str = f"{target_adjs_str} {target_type}"
+                            else:
+                                target_str: str = f"{target_type}"
+                            goal_str: str = f"the {item_str} {goal_tuple[0]} the {target_str}"
+                            goal_strings.append(goal_str)
+                        # print(goal_strings)
+
+                        if len(goal_strings) == 1:
+                            goal_desc: str = f"Put {goal_strings[0]}."
+                        if len(goal_strings) == 2:
+                            goal_desc: str = f"Put {goal_strings[0]} and {goal_strings[1]}."
+                        if len(goal_strings) >= 3:
+                            goal_listing_str: str = ", ".join(goal_strings[:-1])
+                            goal_desc: str = f"Put {goal_listing_str} and {goal_strings[-1]}."
+
+                        # print(goal_desc)
+
+                    viable_adventure = {
+                        'adventure_type': self.adv_type,
+                        'goal': goal_desc, 'initial_state': initial_state, 'goal_state': goal_set,
+                        'optimal_turns': optimal_turns,
+                        'optimal_solution': action_sequence, 'optimal_commands': command_sequence,
+                        'action_definitions': self.adv_type_def['action_definitions'],
+                        'room_definitions': self.adv_type_def['room_definitions'],
+                        'entity_definitions': self.adv_type_def['entity_definitions'],
+                        'bench_turn_limit': self.adv_type_def['bench_turn_limit']
+                    }
+
+                    # TODO: use one absolute turn limit for everything
+
+                    generated_adventures.append(viable_adventure)
+                    adventure_count += 1
+                    if adventures_per_initial_state and adventure_count == adventures_per_initial_state:
+                        keep_generating_adventures = False
+                else:
+                    continue
+        # print(generated_adventures)
+
+        if save_to_file:
+            with open(f"generated_{self.adv_type}_adventures.json", 'w', encoding='utf-8') as out_adv_file:
+                if indent_output_json:
+                    out_adv_file.write(json.dumps(generated_adventures, indent=2))
+                else:
+                    out_adv_file.write(json.dumps(generated_adventures))
+
+        return generated_adventures
+
 
 if __name__ == "__main__":
     """
