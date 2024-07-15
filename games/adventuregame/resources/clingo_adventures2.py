@@ -2,7 +2,7 @@
 Clingo-based adventure generation and optimal solving.
 """
 
-from typing import List, Dict, Tuple, Any, Union, Optional
+from typing import List, Tuple, Union, Optional
 import json
 from itertools import permutations
 
@@ -10,7 +10,7 @@ import numpy as np
 from clingo.control import Control
 from tqdm import tqdm
 
-from adv_util import fact_str_to_tuple, fact_tuple_to_str
+from games.adventuregame.adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 
 # TODO: doc adventure generation config format and contents

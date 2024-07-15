@@ -6,13 +6,17 @@ import json
 import lark
 from lark import Lark, Transformer
 import jinja2
+import os
 
-from resources.adv_util import fact_str_to_tuple, fact_tuple_to_str
+from clemgame.clemgame import GameResourceLocator
+
+from games.adventuregame.adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 PATH = "games/adventuregame/"
 
 RESOURCES_SUBPATH = "resources/"
 
+GAME_NAME = "adventuregame"
 
 class IFTransformer(Transformer):
     def action(self, content):
@@ -63,11 +67,13 @@ class IFTransformer(Transformer):
         return action_dict
 
 
-class BasicIFInterpreter:
+class BasicIFInterpreter(GameResourceLocator):
     """
     IF interpreter for adventuregame.
     """
-    def __init__(self, game_instance: dict, verbose: bool = False):
+    def __init__(self, game_instance: dict, name: str = GAME_NAME, verbose: bool = False):
+        super().__init__(name)
+
         self.game_instance: dict = game_instance
 
         self.repr_str_to_type_dict: dict = dict()
@@ -109,8 +115,8 @@ class BasicIFInterpreter:
         # load entity type definitions in game instance:
         entity_definitions: list = list()
         for entity_def_source in self.game_instance["entity_definitions"]:
-            with open(f"{RESOURCES_SUBPATH}definitions/{entity_def_source}", 'r', encoding='utf-8') as entities_file:
-                entity_definitions += json.load(entities_file)
+            entities_file = self.load_json(f"resources{os.sep}definitions{os.sep}{entity_def_source[:-5]}")
+            entity_definitions += entities_file
 
         for entity_definition in entity_definitions:
             self.entity_types[entity_definition['type_name']] = dict()
@@ -132,8 +138,8 @@ class BasicIFInterpreter:
         # load room type definitions in game instance:
         room_definitions: list = list()
         for room_def_source in self.game_instance["room_definitions"]:
-            with open(f"{RESOURCES_SUBPATH}definitions/{room_def_source}", 'r', encoding='utf-8') as rooms_file:
-                room_definitions += json.load(rooms_file)
+            rooms_file = self.load_json(f"resources{os.sep}definitions{os.sep}{room_def_source[:-5]}")
+            room_definitions += rooms_file
 
         for room_definition in room_definitions:
             self.room_types[room_definition['type_name']] = dict()
@@ -155,8 +161,8 @@ class BasicIFInterpreter:
         # load action type definitions in game instance:
         action_definitions: list = list()
         for action_def_source in self.game_instance["action_definitions"]:
-            with open(f"{RESOURCES_SUBPATH}definitions/{action_def_source}", 'r', encoding='utf-8') as actions_file:
-                action_definitions += json.load(actions_file)
+            actions_file = self.load_json(f"resources{os.sep}definitions{os.sep}{action_def_source[:-5]}")
+            action_definitions += actions_file
 
         for action_definition in action_definitions:
             self.action_types[action_definition['type_name']] = dict()

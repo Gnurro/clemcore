@@ -7,7 +7,7 @@ import lark
 from lark import Lark, Transformer
 import jinja2
 
-from resources.adv_util import fact_str_to_tuple, fact_tuple_to_str
+from games.adventuregame.adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 PATH = "games/adventuregame/"
 
