@@ -17,9 +17,13 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
     def __init__(self):
         super().__init__(GAME_NAME)
 
-    def on_generate(self):
+    def on_generate(self, raw_adventures_file: str):
+        """
+        Generate both basic and planning variant instances from raw adventures.
+        :param raw_adventures_file: File name of the JSON file containing raw adventures data.
+        """
         # load generated home_deliver_two adventures:
-        adventures = self.load_json("resources/generated_home_deliver_two_adventures")
+        adventures = self.load_json(f"resources/{raw_adventures_file}")
 
         # home_deliver_two w/o planning:
 
@@ -79,7 +83,7 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             # Create a game instance
             game_instance = self.add_game_instance(planning_experiment, adventure_id)
             game_instance["variant"] = "plan"  # game parameters
-            # TODO: add parameter for plan retention
+            # TODO?: add parameter for plan retention?
             game_instance["prompt"] = instance_prompt  # game parameters
             # game_instance["goal_str"] = goal_str  # game parameters
             # game_instance["first_room_str"] = first_room_str  # game parameters
@@ -96,4 +100,4 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
 
 if __name__ == '__main__':
     # The resulting instances.json is automatically saved to the "in" directory of the game folder
-    AdventureGameInstanceGenerator().generate()
+    AdventureGameInstanceGenerator().generate(raw_adventures_file="generated_home_deliver_three_adventures")
