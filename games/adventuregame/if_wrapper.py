@@ -572,6 +572,7 @@ class BasicIFInterpreter(GameResourceLocator):
         if action_dict['type'] == "unknown":
             if action_dict['arg1'] in self.action_types:
                 print("defined action verb, malformed command!")
+                # TODO: log/score malformed commands properly
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:

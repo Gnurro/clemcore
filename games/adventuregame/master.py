@@ -68,7 +68,8 @@ class AdventureGameMaster(DialogueGameMaster):
         adventure_info: dict = {"variant": self.game_instance['variant'], "max_turns": self.game_instance['max_turns'],
                                 "optimal_turns": self.game_instance['optimal_turns'],
                                 "goal_count": self.goals_required_cnt}
-        self.log_to_self("adventure_info", adventure_info)
+        # self.log_to_self("adventure_info", adventure_info)
+        self.log_key("adventure_info", adventure_info)
 
     def _on_before_game(self):
         # get initial room description from IF interpreter:
