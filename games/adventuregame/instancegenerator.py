@@ -24,19 +24,16 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
         """
         # load generated home_deliver_two adventures:
         adventures = self.load_json(f"resources/{raw_adventures_file}")
-
-        # home_deliver_two w/o planning:
-
+        # get adventure type from first raw adventure:
+        adventure_type = adventures[0]['adventure_type']
         # create an experiment:
-        basic_experiment = self.add_experiment(f"home_deliver_two_basic")
+        basic_experiment = self.add_experiment(f"{adventure_type}_basic")
 
         # Load the prepared initial prompt
         basic_prompt = self.load_template("resources/initial_prompts/basic_prompt")
 
         for adventure_id in tqdm(range(len(adventures))):
             goal_str = adventures[adventure_id]['goal']
-
-            # first_room_str = adventures[adventure_id]['first_room']
 
             initial_state = adventures[adventure_id]['initial_state']
             goal_state = adventures[adventure_id]['goal_state']
