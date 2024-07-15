@@ -25,7 +25,7 @@ def convert_action_to_tuple(action: str):
 
 class ClingoAdventureGenerator(object):
     """
-    Generates full adventures (initial state and goals), solves each to check optimal number of turns.
+    Generates full raw adventures (initial state and goals), solves each to check optimal number of turns.
     """
     def __init__(self, adventure_type: str = "home_deliver_two", rng_seed: int = 42):
         self.adv_type: str = adventure_type
@@ -393,9 +393,8 @@ class ClingoAdventureGenerator(object):
 
         return clingo_str
 
-    def _solve_optimally_asp(self, initial_world_state, goal_facts: list,
-                        return_only_actions: bool = True, return_only_optimal: bool = True,
-                        ) -> Tuple[bool, Union[List[str], List[List[str]]], Optional[str]]:
+    def _solve_optimally_asp(self, initial_world_state, goal_facts: list, return_only_actions: bool = True) \
+            -> Tuple[bool, Union[List[str], List[List[str]]], Optional[str]]:
         """
         Generates an optimized solution to an adventure.
         :param initial_world_state: Initial world state fact list.
@@ -739,12 +738,14 @@ class ClingoAdventureGenerator(object):
 
 if __name__ == "__main__":
     import time
-    test_generator = ClingoAdventureGenerator()
-
+    # init generator:
+    adventure_generator = ClingoAdventureGenerator(adventure_type="home_deliver_three")
     gen_start_time = time.time()
-
-    test_gen = test_generator.generate_adventures()
-
+    # generate raw adventures:
+    generated_raw_adventures = adventure_generator.generate_adventures(
+        initial_states_per_layout=1,
+        initial_state_limit=16
+    )
     gen_end_time = time.time()
-    print(f"Generated {len(test_gen)} raw adventures in {gen_end_time - gen_start_time}s.")
+    print(f"Generated {len(generated_raw_adventures)} raw adventures in {gen_end_time - gen_start_time}s.")
 
