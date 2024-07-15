@@ -854,7 +854,11 @@ class BasicIFInterpreter(GameResourceLocator):
         # print("facts to add:", facts_to_add)
 
         for remove_fact in facts_to_remove:
-            self.world_state.remove(remove_fact)
+            if remove_fact in self.world_state:
+                self.world_state.remove(remove_fact)
+            else:
+                # TODO: handle commands removing facts that don't hold
+                pass
         for add_fact in facts_to_add:
             self.world_state.add(add_fact)
 

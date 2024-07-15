@@ -61,7 +61,7 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
         # PLANNING
 
         # create an experiment:
-        planning_experiment = self.add_experiment(f"home_deliver_two_planning")
+        planning_experiment = self.add_experiment(f"{adventure_type}_planning")
 
         # Load the prepared initial prompt
         planning_prompt = self.load_template("resources/initial_prompts/plan_prompt")
