@@ -427,7 +427,8 @@ class BasicIFInterpreter(GameResourceLocator):
         # get player room:
         player_room = self.get_player_room()
         # create room description start:
-        player_at_str = f"You are in a {self.room_to_type_dict[player_room]}."
+        room_repr_str = self.room_types[self.room_to_type_dict[player_room]]['repr_str']
+        player_at_str = f"You are in a {room_repr_str}."
 
         # get visible room content:
         internal_visible_contents = self.get_player_room_contents_visible()
@@ -603,6 +604,11 @@ class BasicIFInterpreter(GameResourceLocator):
                 return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
 
         if 'arg2' in action_dict:
+            if action_dict['type'] == "take":
+                if action_dict['arg2'] == "inventory":
+                    # print("taking from inventory")
+                    fail_dict: dict = {'phase': "parsing", 'fail_type': "taking_from_inventory", 'arg': action_dict['arg2']}
+                    return False, f"Things in your inventory are already taken.", fail_dict
             if action_dict['arg2'] not in self.repr_str_to_type_dict:
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg2']}
                 return False, f"I don't know what a '{action_dict['arg2']}' is.", fail_dict
@@ -631,6 +637,7 @@ class BasicIFInterpreter(GameResourceLocator):
             # NOTE: only resolve if all state changes go through
             # print("\ncurrent state change:", state_change)
 
+            # GO ACTION/ROOM TRAVERSAL
             if "HERE" in state_change['pre_state'] or "HERE" in state_change['post_state']:
 
                 # check if arg is a room type:
@@ -653,7 +660,7 @@ class BasicIFInterpreter(GameResourceLocator):
                 if action_dict['arg1'] not in passable_exits:
                     # print(f"There is no exit to {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "no_exit_to", 'arg': action_dict['arg1']}
-                    no_exit_to_str: str = f"There is no exit to a {self.room_types[action_dict['arg1']]['repr_str']} here."
+                    no_exit_to_str: str = f"There is no passage to a {self.room_types[action_dict['arg1']]['repr_str']} here."
                     return False, no_exit_to_str, fail_dict
                 elif len(passable_exits[action_dict['arg1']]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
@@ -734,6 +741,7 @@ class BasicIFInterpreter(GameResourceLocator):
                 state_changed = True
 
             elif "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
+                # ENTITY ACCESSIBILITY
                 # get visible room content:
                 internal_visible_contents = self.get_player_room_contents_visible()
 
@@ -743,46 +751,69 @@ class BasicIFInterpreter(GameResourceLocator):
 
                 # convert to types:
                 # print("internal visible contents:", internal_visible_contents)
-                visible_contents = {self.inst_to_type_dict[instance]: [] for instance in internal_visible_contents}
+                accessible_contents = {self.inst_to_type_dict[instance]: [] for instance in internal_visible_contents}
                 for instance in internal_visible_contents:
-                    visible_contents[self.inst_to_type_dict[instance]].append(instance)
+                    accessible_contents[self.inst_to_type_dict[instance]].append(instance)
                 for inventory_item in inventory_content:
-                    if self.inst_to_type_dict[inventory_item] not in visible_contents:
-                        visible_contents[self.inst_to_type_dict[inventory_item]] = []
-                    visible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
-                # print("visible contents:", visible_contents)
+                    if self.inst_to_type_dict[inventory_item] not in accessible_contents:
+                        accessible_contents[self.inst_to_type_dict[inventory_item]] = []
+                    accessible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
+                # print("player room:", self.get_player_room())
+                # add floor to 'visible' contents to allow taking from floor:
+                accessible_contents["floor"] = [f"{self.get_player_room()}floor"]
+                # print("visible contents:", accessible_contents)
 
-                if action_dict['arg1'] not in visible_contents:
+                # print(action_dict)
+                if action_dict['type'] == "take":
+                    for inventory_item in inventory_content:
+                        # print(inventory_item)
+                        if self.inst_to_type_dict[inventory_item] == action_dict['arg1']:
+                            # print("already in inventory")
+                            fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_already_inventory",
+                                               'arg': action_dict['arg1']}
+                            return False, f"The {self.entity_types[action_dict['arg1']]['repr_str']} is already in your inventory.", fail_dict
+                    if action_dict['arg2'] == "inventory":
+                        print("taking from inventory")
+
+                arg1 = self.repr_str_to_type_dict[action_dict['arg1']]
+                # if action_dict['arg1'] not in accessible_contents:
+                if arg1 not in accessible_contents:
                     # print(f"There is no {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                        'arg': action_dict['arg1']}
                     return False, f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here.", fail_dict
-                elif len(visible_contents[action_dict['arg1']]) > 1:
+                # elif len(accessible_contents[action_dict['arg1']]) > 1:
+                elif len(accessible_contents[arg1]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                        'arg': action_dict['arg1']}
                     # TODO: handle multiple instances of same entity type
                     return False, f"There are multiple {action_dict['arg1']} here.", fail_dict
                 else:
-                    arg1_inst = visible_contents[action_dict['arg1']][0]
+                    # arg1_inst = accessible_contents[action_dict['arg1']][0]
+                    arg1_inst = accessible_contents[arg1][0]
 
                 arg2_inst = None
                 if 'arg2' in action_dict:
-                    if action_dict['arg2'] not in visible_contents:
+                    arg2 = self.repr_str_to_type_dict[action_dict['arg2']]
+                    # if action_dict['arg2'] not in accessible_contents:
+                    if arg2 not in accessible_contents:
                         # print(f"There is no {action_dict['arg2']}!")
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                            'arg': action_dict['arg2']}
                         # TODO: change to sth like "you can't see a X"
-                        thing_not_accessible_str: str = f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here."
+                        thing_not_accessible_str: str = f"There is no {self.entity_types[action_dict['arg2']]['repr_str']} here."
                         return False, thing_not_accessible_str, fail_dict
-                    elif len(visible_contents[action_dict['arg2']]) > 1:
+                    # elif len(accessible_contents[action_dict['arg2']]) > 1:
+                    elif len(accessible_contents[arg2]) > 1:
                         # print(f"There are multiple {action_dict['arg2']}!")
                         # TODO: handle multiple instances of same entity type
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                            'arg': action_dict['arg2']}
                         return False, f"There are multiple {action_dict['arg2']} here.", fail_dict
                     else:
-                        arg2_inst = visible_contents[action_dict['arg2']][0]
+                        # arg2_inst = accessible_contents[action_dict['arg2']][0]
+                        arg2_inst = accessible_contents[arg2][0]
 
                 # replace string placeholders with fact IDs:
                 pre_state: str = state_change['pre_state'].replace("THING", arg1_inst)
@@ -906,8 +937,11 @@ class BasicIFInterpreter(GameResourceLocator):
                         if template_tag == "prep":
                             jinja_args[template_tag] = resolution_result[0]
                         if template_tag == "target":
+                            # print("template tag target found!")
+                            # print("res result item 2:", resolution_result[2])
                             jinja_args[template_tag] = self._get_inst_str(resolution_result[2])
                         if template_tag == "room_desc":
+                            # print("template tag room_desc found!")
                             jinja_args[template_tag] = self.get_full_room_desc()
                 base_result_str = feedback_jinja.render(jinja_args)
 
@@ -968,49 +1002,6 @@ class BasicIFInterpreter(GameResourceLocator):
 
 if __name__ == "__main__":
     PATH = ""
-    """
-    game_instance_exmpl = {
-          "game_id": 0,
-          "variant": "basic",
-          "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the potted plant in the freezer and the apple on the table.\n\n",
-          "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
-                            "at(livingroom1floor,livingroom1)", "at(broomcloset1floor,broomcloset1)",
-                            "at(table1,livingroom1)", "at(counter1,kitchen1)", "at(refrigerator1,pantry1)",
-                            "at(shelf1,pantry1)", "at(freezer1,pantry1)", "at(pottedplant1,livingroom1)",
-                            "at(chair1,livingroom1)", "at(couch1,livingroom1)", "at(broom1,broomcloset1)",
-                            "at(sandwich1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)",
-                            "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)",
-                            "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)", "exit(kitchen1,pantry1)",
-                            "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)", "exit(hallway1,kitchen1)",
-                            "exit(hallway1,livingroom1)", "exit(hallway1,broomcloset1)", "exit(livingroom1,hallway1)",
-                            "exit(broomcloset1,hallway1)", "type(player1,player)", "type(kitchen1floor,floor)",
-                            "type(pantry1floor,floor)", "type(hallway1floor,floor)", "type(livingroom1floor,floor)",
-                            "type(broomcloset1floor,floor)", "type(table1,table)", "type(counter1,counter)",
-                            "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(freezer1,freezer)",
-                            "type(pottedplant1,pottedplant)", "type(chair1,chair)", "type(couch1,couch)",
-                            "type(broom1,broom)", "type(sandwich1,sandwich)", "type(apple1,apple)",
-                            "type(banana1,banana)", "support(kitchen1floor)", "support(pantry1floor)",
-                            "support(hallway1floor)", "support(livingroom1floor)", "support(broomcloset1floor)",
-                            "support(table1)", "support(counter1)", "support(shelf1)", "on(apple1,shelf1)",
-                            "on(sandwich1,shelf1)", "on(broom1,broomcloset1floor)", "on(pottedplant1,livingroom1floor)",
-                            "container(refrigerator1)", "container(freezer1)", "in(banana1,refrigerator1)",
-                            "openable(refrigerator1)", "openable(freezer1)", "closed(refrigerator1)", "closed(freezer1)",
-                            "takeable(pottedplant1)", "takeable(broom1)", "takeable(sandwich1)", "takeable(apple1)",
-                            "takeable(banana1)", "movable(pottedplant1)", "movable(broom1)", "movable(sandwich1)",
-                            "movable(apple1)", "movable(banana1)", "needs_support(pottedplant1)",
-                            "needs_support(broom1)", "needs_support(sandwich1)", "needs_support(apple1)",
-                            "needs_support(banana1)"],
-          "goal_state": ["in(pottedplant1,freezer1)", "on(apple1,table1)"],
-          "max_turns": 50,
-          "optimal_turns": 11,
-          "optimal_solution": ["take apple", "open freezer", "go kitchen", "go hallway", "go living room", "put apple on table", "take potted plant", "go hallway", "go kitchen", "go pantry", "put potted plant in freezer"],
-          "action_definitions": ["basic_actions.json"],
-          "room_definitions": ["home_rooms.json"],
-          "entity_definitions": ["home_entities.json"]
-        }
-    """
-    # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)"], "goal_state": ["on(sandwich,table)"]}
-    # game_instance_exmpl = {"game_id": 0, "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the action you want to take in the game starting with >.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put a sandwich on the table.\n\nYou are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "goal_str": "Put a sandwich on the table.", "first_room_str": "You are in the kitchen. There is a refrigerator, a counter and a table. The refrigerator is closed.", "initial_state": ["room(kitchen)", "at(player,kitchen)", "at(refrigerator,kitchen)", "closed(refrigerator)", "at(table,kitchen)", "at(counter,kitchen)", "at(sandwich,kitchen)", "in(sandwich,refrigerator)", "in(pomegranate,inventory)", "in(yoyo,inventory)"], "goal_state": ["on(sandwich,table)"]}
 
     game_instance_exmpl = {"game_id": 0, "variant": "basic",
      "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the potted plant in the freezer and the apple on the table.\n\n",
@@ -1019,7 +1010,7 @@ if __name__ == "__main__":
                        "at(table1,livingroom1)", "at(counter1,kitchen1)", "at(refrigerator1,pantry1)",
                        "at(shelf1,pantry1)", "at(freezer1,pantry1)", "at(pottedplant1,livingroom1)",
                        "at(chair1,livingroom1)", "at(couch1,livingroom1)", "at(broom1,broomcloset1)",
-                       "at(sandwich1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)",
+                       "at(sandwich1,pantry1)", "at(sidetable1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)",
                        "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)",
                        "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)", "exit(kitchen1,pantry1)",
                        "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)", "exit(hallway1,kitchen1)",
@@ -1027,12 +1018,12 @@ if __name__ == "__main__":
                        "exit(broomcloset1,hallway1)", "type(player1,player)", "type(kitchen1floor,floor)",
                        "type(pantry1floor,floor)", "type(hallway1floor,floor)", "type(livingroom1floor,floor)",
                        "type(broomcloset1floor,floor)", "type(table1,table)", "type(counter1,counter)",
-                       "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(freezer1,freezer)",
+                       "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(sidetable1,sidetable)", "type(freezer1,freezer)",
                        "type(pottedplant1,pottedplant)", "type(chair1,chair)", "type(couch1,couch)",
                        "type(broom1,broom)", "type(sandwich1,sandwich)", "type(apple1,apple)", "type(banana1,banana)",
                        "support(kitchen1floor)", "support(pantry1floor)", "support(hallway1floor)",
                        "support(livingroom1floor)", "support(broomcloset1floor)", "support(table1)",
-                       "support(counter1)", "support(shelf1)", "on(apple1,shelf1)", "on(sandwich1,shelf1)",
+                       "support(counter1)", "support(shelf1)", "on(apple1,pantry1floor)", "on(sandwich1,shelf1)",
                        "on(broom1,broomcloset1floor)", "on(pottedplant1,livingroom1floor)", "container(refrigerator1)",
                        "container(freezer1)", "in(banana1,refrigerator1)", "openable(refrigerator1)",
                        "openable(freezer1)", "closed(refrigerator1)", "closed(freezer1)", "takeable(pottedplant1)",
@@ -1055,31 +1046,35 @@ if __name__ == "__main__":
     test_interpreter = BasicIFInterpreter(game_instance_exmpl)
     # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
-    test_interpreter.execute_optimal_solution()
+    # test_interpreter.execute_optimal_solution()
 
     # print(test_interpreter.action_types)
     # print(test_interpreter.entity_types)
 
-    # print(test_interpreter.get_full_room_desc())
+    print(test_interpreter.get_full_room_desc())
     """
-    # turn_1 = test_interpreter.process_action("go bunk")
-    # turn_1 = test_interpreter.process_action("go apple")
+    turn_1 = test_interpreter.process_action("go kitchen")
+    print(turn_1)
 
-    # turn_1 = test_interpreter.process_action("take onion")
-    # turn_1 = test_interpreter.process_action("take old apple at shelf")
-    # turn_1 = test_interpreter.process_action("take apple at shelf")
-    # turn_1 = test_interpreter.process_action("take potted plant")
-    # turn_1 = test_interpreter.process_action("take sandwich at shelf")
-    # turn_1 = test_interpreter.process_action("take jelly sandwich from dirty shelf")
-    # turn_1 = test_interpreter.process_action("put potted plant on shelf")
-    # turn_1 = test_interpreter.process_action("put wooden potted plant on shelf")
-    # turn_1 = test_interpreter.process_action("put nasty sandwich on shelf")
-    # turn_1 = test_interpreter.process_action("put sandwich on dirty shelf")
-    # turn_1 = test_interpreter.process_action("put sandwich at shelf")
-    # turn_1 = test_interpreter.process_action("put sandwich on wooden shelf")
-    # turn_1 = test_interpreter.process_action("gloop apple")
-    # turn_1 = test_interpreter.process_action("gloop onion")
+    turn_2 = test_interpreter.process_action("go hallway")
+    print(turn_2)
 
+    turn_3 = test_interpreter.process_action("go broom closet")
+    print(turn_3)
+
+    """
+    turn_1 = test_interpreter.process_action("take apple from floor")
+    # print(turn_1[1])
+    print(turn_1)
+    print()
+
+    turn_2 = test_interpreter.process_action("take apple from inventory")
+    # print(turn_1[1])
+    print(turn_2)
+    print()
+
+    """
+    
     # turn_1 = test_interpreter.process_action("open refrigerator door")
     # turn_1 = test_interpreter.process_action("take sandwich")
 

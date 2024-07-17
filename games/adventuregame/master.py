@@ -168,11 +168,12 @@ class AdventureGameMaster(DialogueGameMaster):
             prior_goal_count = len(self.goals_achieved)
             # IF interpreter returns set of achieved goal states in string form:
             goals_achieved, if_response, fail = self.if_interpreter.process_action(if_input)
-            # TODO?: return details about parsing and action processing?
             # TODO?: return concise success info?
 
+            # TODO: make fails log so that they show up in transcript
             if fail:
                 self.log_to_self("action_fail", fail)
+                self.log_message_to_self(f"action_fail: {fail}")
 
             self.goals_achieved = goals_achieved
             # count goals achieved this turn:
@@ -184,6 +185,7 @@ class AdventureGameMaster(DialogueGameMaster):
 
             goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
             self.log_to_self("goal_status", goal_status)
+            self.log_message_to_self(f"goal_status: {goal_status}")
 
             # add IF response to dialog:
             self.add_user_message(self.player, if_response)
