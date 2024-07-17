@@ -428,7 +428,7 @@ class BasicIFInterpreter(GameResourceLocator):
         player_room = self.get_player_room()
         # create room description start:
         room_repr_str = self.room_types[self.room_to_type_dict[player_room]]['repr_str']
-        player_at_str = f"You are in a {room_repr_str}."
+        player_at_str = f"You are in a {room_repr_str} now."
 
         # get visible room content:
         internal_visible_contents = self.get_player_room_contents_visible()
@@ -572,8 +572,11 @@ class BasicIFInterpreter(GameResourceLocator):
         # catch 'unknown' action parses:
         if action_dict['type'] == "unknown":
             if action_dict['arg1'] in self.action_types:
-                print("defined action verb, malformed command!")
+                # print("defined action verb, malformed command!")
                 # TODO: log/score malformed commands properly
+                # print("action_dict:", action_dict)
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "malformed_command", 'arg': str(action_dict)}
+                return False, f"I don't know what you mean.", fail_dict
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
@@ -772,8 +775,10 @@ class BasicIFInterpreter(GameResourceLocator):
                             fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_already_inventory",
                                                'arg': action_dict['arg1']}
                             return False, f"The {self.entity_types[action_dict['arg1']]['repr_str']} is already in your inventory.", fail_dict
-                    if action_dict['arg2'] == "inventory":
-                        print("taking from inventory")
+                    # if action_dict['arg2'] == "inventory":
+                    #    print("taking from inventory")
+
+                # TODO: handle non-space compound things ('pottedplant' instead of 'potted plant')
 
                 arg1 = self.repr_str_to_type_dict[action_dict['arg1']]
                 # if action_dict['arg1'] not in accessible_contents:
@@ -1052,17 +1057,17 @@ if __name__ == "__main__":
     # print(test_interpreter.entity_types)
 
     print(test_interpreter.get_full_room_desc())
-    """
-    turn_1 = test_interpreter.process_action("go kitchen")
-    print(turn_1)
 
+    turn_1 = test_interpreter.process_action("go back to kitchen")
+    print(turn_1)
+    """
     turn_2 = test_interpreter.process_action("go hallway")
     print(turn_2)
 
     turn_3 = test_interpreter.process_action("go broom closet")
     print(turn_3)
 
-    """
+    
     turn_1 = test_interpreter.process_action("take apple from floor")
     # print(turn_1[1])
     print(turn_1)
@@ -1072,7 +1077,7 @@ if __name__ == "__main__":
     # print(turn_1[1])
     print(turn_2)
     print()
-
+    """
     """
     
     # turn_1 = test_interpreter.process_action("open refrigerator door")

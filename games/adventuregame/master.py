@@ -173,7 +173,7 @@ class AdventureGameMaster(DialogueGameMaster):
             # TODO: make fails log so that they show up in transcript
             if fail:
                 self.log_to_self("action_fail", fail)
-                self.log_message_to_self(f"action_fail: {fail}")
+                self.log_message_to_self(f"action_fail: {str(fail)}")
 
             self.goals_achieved = goals_achieved
             # count goals achieved this turn:
@@ -185,7 +185,7 @@ class AdventureGameMaster(DialogueGameMaster):
 
             goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
             self.log_to_self("goal_status", goal_status)
-            self.log_message_to_self(f"goal_status: {goal_status}")
+            self.log_message_to_self(f"goal_status: {str(goal_status)}")
 
             # add IF response to dialog:
             self.add_user_message(self.player, if_response)
@@ -309,6 +309,7 @@ class AdventureGameScorer(GameScorer):
         turn_count: int = len(turn_scores)
 
         # get optimal turns for this episode:
+        # TODO: read from episode key
         optimal_turns: int = adventure_info['optimal_turns']
         # 'on par' score:
         turns_over_par: int = turn_count - optimal_turns
