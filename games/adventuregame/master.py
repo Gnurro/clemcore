@@ -9,7 +9,7 @@ from clemgame import get_logger
 
 import numpy as np
 
-from games.adventuregame.if_wrapper import BasicIFInterpreter
+from games.adventuregame.if_wrapper import AdventureIFInterpreter
 
 import re
 
@@ -42,7 +42,7 @@ class AdventureGameMaster(DialogueGameMaster):
         self.if_variant = self.game_instance['variant']
 
         # initialize IF interpreter:
-        self.if_interpreter = BasicIFInterpreter(self.game_instance)
+        self.if_interpreter = AdventureIFInterpreter(self.game_instance)
 
         # TODO: put all interpreter-relevant data into instances
         # TODO: use clemgame resource loading

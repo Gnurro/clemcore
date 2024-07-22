@@ -7,6 +7,7 @@ import lark
 from lark import Lark, Transformer
 import jinja2
 import os
+from copy import deepcopy
 
 from clemgame.clemgame import GameResourceLocator
 
@@ -17,6 +18,7 @@ PATH = "games/adventuregame/"
 RESOURCES_SUBPATH = "resources/"
 
 GAME_NAME = "adventuregame"
+
 
 class IFTransformer(Transformer):
     def action(self, content):
@@ -67,7 +69,7 @@ class IFTransformer(Transformer):
         return action_dict
 
 
-class BasicIFInterpreter(GameResourceLocator):
+class AdventureIFInterpreter(GameResourceLocator):
     """
     IF interpreter for adventuregame.
     """
@@ -90,6 +92,7 @@ class BasicIFInterpreter(GameResourceLocator):
         # print(self.action_types)
 
         self.world_state: set = set()
+        self.world_state_history: list = list()
         self.goal_state: set = set()
         self.goals_achieved: set = set()
         self.initialize_states_from_strings()
@@ -110,8 +113,6 @@ class BasicIFInterpreter(GameResourceLocator):
         """
         Load and process entity types in this adventure.
         """
-        # TODO: use clemgame resource loading
-
         # load entity type definitions in game instance:
         entity_definitions: list = list()
         for entity_def_source in self.game_instance["entity_definitions"]:
@@ -133,8 +134,6 @@ class BasicIFInterpreter(GameResourceLocator):
         """
         Load and process room types in this adventure.
         """
-        # TODO: use clemgame resource loading
-
         # load room type definitions in game instance:
         room_definitions: list = list()
         for room_def_source in self.game_instance["room_definitions"]:
@@ -156,8 +155,6 @@ class BasicIFInterpreter(GameResourceLocator):
         """
         Load and process action types in this adventure.
         """
-        # TODO: use clemgame resource loading
-
         # load action type definitions in game instance:
         action_definitions: list = list()
         for action_def_source in self.game_instance["action_definitions"]:
@@ -307,8 +304,9 @@ class BasicIFInterpreter(GameResourceLocator):
                     facts_to_add.add(('on', fact[1], f'{fact[2]}floor'))
 
         self.world_state = self.world_state.union(facts_to_add)
-
         # print("augmented initial world:", self.world_state)
+        # add initial world state to world state history:
+        self.world_state_history.append(deepcopy(self.world_state))
 
         for fact_string in self.game_instance['goal_state']:
             self.goal_state.add(fact_str_to_tuple(fact_string))
@@ -904,6 +902,9 @@ class BasicIFInterpreter(GameResourceLocator):
         for add_fact in facts_to_add:
             self.world_state.add(add_fact)
 
+        # add current world state to world state history:
+        self.world_state_history.append(deepcopy(self.world_state))
+
         if state_changed:
             # TODO: make second return item more useful
             return True, facts_to_add[0], {}
@@ -1010,6 +1011,32 @@ class BasicIFInterpreter(GameResourceLocator):
             print("Fail:", fail)
             print()
 
+    def execute_plan_sequence(self, command_sequence: list):
+        """
+        Execute a command sequence plan and return measure of plan success.
+        """
+        result_sequence: list = list()
+        world_state_change_count: int = 0
+        for cmd_idx, command in enumerate(command_sequence):
+            result = self.process_action(command)
+            # result[2] is fail info; if it is truthy, the command failed
+            result_sequence.append(result)
+            # check for command failure:
+            if result[2]:
+                # stop executing commands at the first failure
+                break
+            else:
+                world_state_change_count += 1
+
+        # revert the world state to before plan execution if it changed:
+        if world_state_change_count:
+            self.world_state_history = self.world_state_history[:-world_state_change_count]
+            # pre_plan_world_state = self.world_state_history[-world_state_change_count]
+            self.world_state = self.world_state_history[-1]
+
+        return result_sequence
+
+
 
 if __name__ == "__main__":
     PATH = ""
@@ -1110,7 +1137,7 @@ if __name__ == "__main__":
      "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
 
 
-    test_interpreter = BasicIFInterpreter(game_instance_exmpl)
+    test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
     # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
     # test_interpreter.execute_optimal_solution()
