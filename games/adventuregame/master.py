@@ -117,10 +117,9 @@ class AdventureGameMaster(DialogueGameMaster):
         """
         if self.if_variant == 'plan':
             new_plan = utterance.split("\nNext actions:")[1]
-            self.plan_history.append(new_plan)
-            # print(self.plan_history)
-            # TODO: set up limited plan feedback by removing plans here and feeding them back into messages by args
-            # TODO: log plans
+            plan_sequence = new_plan.split(", ")
+            self.plan_history.append(plan_sequence)
+            self.log_to_self(f"turn_{self.current_turn}_plan", plan_sequence)
 
         return utterance, True
 
@@ -186,6 +185,15 @@ class AdventureGameMaster(DialogueGameMaster):
             goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
             self.log_to_self("goal_status", goal_status)
             self.log_message_to_self(f"goal_status: {str(goal_status)}")
+
+            if self.if_variant == 'plan':
+                cur_plan: list = self.plan_history[-1]
+                cur_plan_command_count: int = len(cur_plan)
+                self.log_to_self("plan_length", cur_plan_command_count)
+                cur_plan_results: list = self.if_interpreter.execute_plan_sequence(cur_plan)
+                self.log_to_self("plan_results", cur_plan_results)
+                cur_plan_success_ratio: float = cur_plan_command_count / len(cur_plan_results)
+                self.log_to_self("plan_command_success_ratio", cur_plan_success_ratio)
 
             # add IF response to dialog:
             self.add_user_message(self.player, if_response)

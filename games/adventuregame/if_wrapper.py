@@ -212,13 +212,15 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         # print(act_grammar_adj_line)
 
-        # TODO: use clemgame resource loading
-
+        grammar_core = self.load_json(f"resources{os.sep}definitions{os.sep}grammar_core")
+        grammar_head = grammar_core['grammar_head']
+        grammar_foot = grammar_core['grammar_foot']
+        """
         with open(f"{PATH}resources/grammar_core.json", 'r', encoding='utf-8') as grammar_core_file:
             grammar_core = json.load(grammar_core_file)
             grammar_head = grammar_core['grammar_head']
             grammar_foot = grammar_core['grammar_foot']
-
+        """
         act_grammar = (f"{grammar_head}{act_grammar_action_line}"
                        f"{act_grammar_larks_str}\n{act_grammar_adj_line}{grammar_foot}")
 
@@ -1013,7 +1015,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
     def execute_plan_sequence(self, command_sequence: list):
         """
-        Execute a command sequence plan and return measure of plan success.
+        Execute a command sequence plan and return results up to first failure.
         """
         result_sequence: list = list()
         world_state_change_count: int = 0
@@ -1037,49 +1039,9 @@ class AdventureIFInterpreter(GameResourceLocator):
         return result_sequence
 
 
-
 if __name__ == "__main__":
     PATH = ""
-    """
-    game_instance_exmpl = {"game_id": 0, "variant": "basic",
-     "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the potted plant in the freezer and the apple on the table.\n\n",
-     "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
-                       "at(livingroom1floor,livingroom1)", "at(broomcloset1floor,broomcloset1)",
-                       "at(table1,livingroom1)", "at(counter1,kitchen1)", "at(refrigerator1,pantry1)",
-                       "at(shelf1,pantry1)", "at(freezer1,pantry1)", "at(pottedplant1,livingroom1)",
-                       "at(chair1,livingroom1)", "at(couch1,livingroom1)", "at(broom1,broomcloset1)",
-                       "at(sandwich1,pantry1)", "at(sidetable1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)", "at(player1,pantry1)",
-                       "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)",
-                       "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)", "exit(kitchen1,pantry1)",
-                       "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)", "exit(hallway1,kitchen1)",
-                       "exit(hallway1,livingroom1)", "exit(hallway1,broomcloset1)", "exit(livingroom1,hallway1)",
-                       "exit(broomcloset1,hallway1)", "type(player1,player)", "type(kitchen1floor,floor)",
-                       "type(pantry1floor,floor)", "type(hallway1floor,floor)", "type(livingroom1floor,floor)",
-                       "type(broomcloset1floor,floor)", "type(table1,table)", "type(counter1,counter)",
-                       "type(refrigerator1,refrigerator)", "type(shelf1,shelf)", "type(sidetable1,sidetable)", "type(freezer1,freezer)",
-                       "type(pottedplant1,pottedplant)", "type(chair1,chair)", "type(couch1,couch)",
-                       "type(broom1,broom)", "type(sandwich1,sandwich)", "type(apple1,apple)", "type(banana1,banana)",
-                       "support(kitchen1floor)", "support(pantry1floor)", "support(hallway1floor)",
-                       "support(livingroom1floor)", "support(broomcloset1floor)", "support(table1)",
-                       "support(counter1)", "support(shelf1)", "on(apple1,pantry1floor)", "on(sandwich1,shelf1)",
-                       "on(broom1,broomcloset1floor)", "on(pottedplant1,livingroom1floor)", "container(refrigerator1)",
-                       "container(freezer1)", "in(banana1,refrigerator1)", "openable(refrigerator1)",
-                       "openable(freezer1)", "closed(refrigerator1)", "closed(freezer1)", "takeable(pottedplant1)",
-                       "takeable(broom1)", "takeable(sandwich1)", "takeable(apple1)", "takeable(banana1)",
-                       "movable(pottedplant1)", "movable(broom1)", "movable(sandwich1)", "movable(apple1)",
-                       "movable(banana1)", "needs_support(pottedplant1)", "needs_support(broom1)",
-                       "needs_support(sandwich1)", "needs_support(apple1)", "needs_support(banana1)"],
-     "goal_state": ["in(pottedplant1,freezer1)", "on(apple1,table1)"], "max_turns": 50, "optimal_turns": 11,
-     "optimal_solution": [["take", "apple1"], ["open", "freezer1"], ["go", "kitchen1"], ["go", "hallway1"],
-                          ["go", "livingroom1"], ["put", "apple1", "table1"], ["take", "pottedplant1"],
-                          ["go", "hallway1"], ["go", "kitchen1"], ["go", "pantry1"],
-                          ["put", "pottedplant1", "freezer1"]],
-     "optimal_commands": ["take apple", "open freezer", "go kitchen", "go hallway", "go living room",
-                          "put apple on table", "take potted plant", "go hallway", "go kitchen", "go pantry",
-                          "put potted plant in freezer"],
-     "action_definitions": ["basic_actions.json"],
-     "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
-    """
+
     game_instance_exmpl = {"game_id": 11, "variant": "basic",
      "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the book on the table, the plate on the table and the mop on the table.\n\n",
      "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
@@ -1136,7 +1098,6 @@ if __name__ == "__main__":
                           "go living room", "put mop on table"], "action_definitions": ["basic_actions.json"],
      "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
 
-
     test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
     # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
 
@@ -1151,6 +1112,20 @@ if __name__ == "__main__":
     print(turn_1)
     print()
 
+    turn_1_world_state = deepcopy(test_interpreter.world_state)
+
+    # turn_1_plan = ["take pillow"]
+    # turn_1_plan = ["take pillow", "go living room"]
+    # turn_1_plan = ["take pillow", "go kitchen"]
+    turn_1_plan = ["take pillow", "go kitchen", "take plate"]
+
+    plan_response = test_interpreter.execute_plan_sequence(turn_1_plan)
+    print(plan_response)
+
+    world_properly_reverted = test_interpreter.world_state == turn_1_world_state
+    print(f"world state properly reverted:", world_properly_reverted)
+
+    """
     turn_2 = test_interpreter.process_action("take pillow")
     print(turn_2)
     print()
@@ -1173,75 +1148,5 @@ if __name__ == "__main__":
 
     turn_7 = test_interpreter.process_action("take plate from kitchen")
     print(turn_7)
-
-    """
-    turn_2 = test_interpreter.process_action("go hallway")
-    print(turn_2)
-
-    turn_3 = test_interpreter.process_action("go broom closet")
-    print(turn_3)
-
-    
-    turn_1 = test_interpreter.process_action("take apple from floor")
-    # print(turn_1[1])
-    print(turn_1)
-    print()
-
-    turn_2 = test_interpreter.process_action("take apple from inventory")
-    # print(turn_1[1])
-    print(turn_2)
-    print()
-    """
-    """
-    
-    # turn_1 = test_interpreter.process_action("open refrigerator door")
-    # turn_1 = test_interpreter.process_action("take sandwich")
-
-    turn_1 = test_interpreter.process_action("open refrigerator")
-    # print(turn_1[1])
-    print(turn_1)
-    print()
-
-    # turn_2 = test_interpreter.process_action("put sandwich on shelf")
-    turn_2 = test_interpreter.process_action("go kitchen")
-    # print(turn_1[1])
-    print(turn_2)
-    print()
     """
 
-    """
-    turn_1 = test_interpreter.process_action("go living room")
-    # print(turn_1[1])
-    print(turn_1)
-    print()
-
-    turn_1 = test_interpreter.process_action("open refrigerator")
-    print(turn_1[1])
-    print()
-    
-    # turn_2 = test_interpreter.process_action("take sandwich")
-    # turn_2 = test_interpreter.process_action("take sandwich from refrigerator")
-    turn_2 = test_interpreter.process_action("take banana from refrigerator")
-    # turn_2 = test_interpreter.process_action("take apple")
-    print(turn_2[1])
-    print()
-    """
-    """
-    # turn_3 = test_interpreter.process_action("put sandwich on table")
-    # turn_3 = test_interpreter.process_action("put sandwich in table")
-    turn_3 = test_interpreter.process_action("place sandwich on table")
-    # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
-    print(turn_3[1])
-    """
-    """
-    turn_3 = test_interpreter.process_action("examine sandwich")
-    # turn_3 = test_interpreter.process_action("put sandwich on wooden table")
-    print(turn_3[1])
-    """
-    """
-    turn_3 = test_interpreter.process_action("go pantry")
-    # turn_1 = test_interpreter.process_action("go to pantry")
-    # print(turn_3[1])
-    print(turn_3)
-    """
-    # print(fact_tuple_to_str(('on', 'sandwich1', 'table1')))
