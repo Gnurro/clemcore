@@ -212,7 +212,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         # print(act_grammar_adj_line)
 
-        grammar_core = self.load_json(f"resources{os.sep}definitions{os.sep}grammar_core")
+        grammar_core = self.load_json(f"resources{os.sep}grammar_core")
         grammar_head = grammar_core['grammar_head']
         grammar_foot = grammar_core['grammar_foot']
         """
@@ -563,7 +563,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         except Exception as exception:
             # print("lark exception:", exception)
             # fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': exception}
-            fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': exception}
+            fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': str(exception)}
             return False, f"I don't know what you mean.", fail_dict
         # print("parsed command:", parsed_command)
         action_dict = self.act_transformer.transform(parsed_command)
@@ -1098,8 +1098,8 @@ if __name__ == "__main__":
                           "go living room", "put mop on table"], "action_definitions": ["basic_actions.json"],
      "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
 
-    test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
-    # test_interpreter = BasicIFInterpreter(game_instance_exmpl, verbose=True)
+    # test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
+    test_interpreter = AdventureIFInterpreter(game_instance_exmpl, verbose=True)
 
     # test_interpreter.execute_optimal_solution()
 

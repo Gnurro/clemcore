@@ -117,9 +117,9 @@ class AdventureGameMaster(DialogueGameMaster):
         """
         if self.if_variant == 'plan':
             new_plan = utterance.split("\nNext actions:")[1]
-            plan_sequence = new_plan.split(", ")
+            plan_sequence = [command.strip() for command in new_plan.split(", ")]
             self.plan_history.append(plan_sequence)
-            self.log_to_self(f"turn_{self.current_turn}_plan", plan_sequence)
+            self.log_to_self(f"turn_plan", plan_sequence)
 
         return utterance, True
 
@@ -189,11 +189,15 @@ class AdventureGameMaster(DialogueGameMaster):
             if self.if_variant == 'plan':
                 cur_plan: list = self.plan_history[-1]
                 cur_plan_command_count: int = len(cur_plan)
-                self.log_to_self("plan_length", cur_plan_command_count)
+                self.log_to_self("plan_length", str(cur_plan_command_count))
                 cur_plan_results: list = self.if_interpreter.execute_plan_sequence(cur_plan)
-                self.log_to_self("plan_results", cur_plan_results)
-                cur_plan_success_ratio: float = cur_plan_command_count / len(cur_plan_results)
-                self.log_to_self("plan_command_success_ratio", cur_plan_success_ratio)
+                self.log_to_self("plan_results", str(cur_plan_results))
+                cur_plan_successes: list = list()
+                for plan_result in cur_plan_results:
+                    if not plan_result[2]:
+                        cur_plan_successes.append(plan_result)
+                cur_plan_success_ratio: float = len(cur_plan_successes) / cur_plan_command_count
+                self.log_to_self("plan_command_success_ratio", str(cur_plan_success_ratio))
 
             # add IF response to dialog:
             self.add_user_message(self.player, if_response)
