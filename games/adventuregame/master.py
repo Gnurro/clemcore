@@ -131,6 +131,7 @@ class AdventureGameMaster(DialogueGameMaster):
         #    return False
 
         if self.invalid_format:
+            # TODO: Check for hallucinated adventure finishes
             self.log_to_self("invalid_format", self.invalid_format)
             return False
 

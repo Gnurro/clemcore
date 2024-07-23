@@ -595,7 +595,17 @@ class AdventureIFInterpreter(GameResourceLocator):
             # TODO: if arg not in repr_str dict, it's already undefined -> refactor
             fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_repr_str", 'arg': action_dict['arg1']}
             return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
-
+        """
+        if 'arg2' in action_dict:
+            if action_dict['arg2'] in self.repr_str_to_type_dict:
+                # convert arg1 from repr to internal type:
+                action_dict['arg2'] = self.repr_str_to_type_dict[action_dict['arg2']]
+                # TODO: check if this conversion might be better elsewhere
+            else:
+                # TODO: if arg not in repr_str dict, it's already undefined -> refactor
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_repr_str", 'arg': action_dict['arg2']}
+                return False, f"I don't know what '{action_dict['arg2']}' means.", fail_dict
+        """
 
         """
         if self.repr_str_to_type_dict[action_dict['arg1']] not in self.entity_types:
@@ -612,20 +622,25 @@ class AdventureIFInterpreter(GameResourceLocator):
                 if action_dict['arg2'] == "inventory":
                     # print("taking from inventory")
                     fail_dict: dict = {'phase': "parsing", 'fail_type': "taking_from_inventory", 'arg': action_dict['arg2']}
+                    # TODO: improve response text
                     return False, f"Things in your inventory are already taken.", fail_dict
-            if action_dict['arg2'] not in self.repr_str_to_type_dict:
-                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg2']}
-                return False, f"I don't know what a '{action_dict['arg2']}' is.", fail_dict
-            else:
-                if self.repr_str_to_type_dict[action_dict['arg2']] in self.room_types:
+            if action_dict['arg2'] in self.repr_str_to_type_dict:
+                # convert arg1 from repr to internal type:
+                action_dict['arg2'] = self.repr_str_to_type_dict[action_dict['arg2']]
+                if action_dict['arg2'] in self.room_types:
                     cur_room_str = self.room_types[self.room_to_type_dict[self.get_player_room()]]['repr_str']
                     if not action_dict['arg2'] == cur_room_str:
                         fail_dict: dict = {'phase': "parsing", 'fail_type': "other_room_argument",
                                            'arg': action_dict['arg2']}
                         return False, f"You are not in a {action_dict['arg2']}.", fail_dict
-                elif self.repr_str_to_type_dict[action_dict['arg2']] not in self.entity_types:
+                """
+                elif action_dict['arg2'] not in self.entity_types:
                     fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg2']}
                     return False, f"I don't know what a '{action_dict['arg2']}' is.", fail_dict
+                """
+            else:
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_repr_str", 'arg': action_dict['arg2']}
+                return False, f"I don't know what '{action_dict['arg2']}' means.", fail_dict
 
         # print("known type checks passed")
 
@@ -785,16 +800,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                     # if action_dict['arg2'] == "inventory":
                     #    print("taking from inventory")
 
-                # TODO: handle non-space compound things ('pottedplant' instead of 'potted plant')
-                """
-                if action_dict['arg1'] not in self.repr_str_to_type_dict:
-                    fail_dict: dict = {'phase': "resolution", 'fail_type': "unknown_surface_form",
-                                       'arg': action_dict['arg1']}
-                    return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
-                """
-
-                arg1 = self.repr_str_to_type_dict[action_dict['arg1']]
-                # TODO: figure out arg1 handling
+                # arg1 = self.repr_str_to_type_dict[action_dict['arg1']]
+                arg1 = action_dict['arg1']
                 # if action_dict['arg1'] not in accessible_contents:
                 if arg1 not in accessible_contents:
                     # print(f"There is no {action_dict['arg1']}!")
@@ -816,7 +823,8 @@ class AdventureIFInterpreter(GameResourceLocator):
 
                 arg2_inst = None
                 if 'arg2' in action_dict:
-                    arg2 = self.repr_str_to_type_dict[action_dict['arg2']]
+                    # arg2 = self.repr_str_to_type_dict[action_dict['arg2']]
+                    arg2 = action_dict['arg2']
                     # if action_dict['arg2'] not in accessible_contents:
                     if arg2 not in accessible_contents:
                         # print(f"There is no {action_dict['arg2']}!")
