@@ -247,6 +247,9 @@ class AdventureGameScorer(GameScorer):
                 if action["type"] == "action_fail":
                     # record IF interaction fail phase:
                     turn_fail[action['content']['phase']] = 1
+                    # check for unlisted fail type:
+                    if action['content']['fail_type'] not in fail_types:
+                        print(f"Unlisted fail type: {action['content']['fail_type']}")
                     # record IF interaction fail type:
                     turn_fail[action['content']['fail_type']] = 1
 

@@ -586,6 +586,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action", 'arg': action_input}
                 return False, f"I don't know what you mean.", fail_dict
 
+        """"""
         if action_dict['arg1'] in self.repr_str_to_type_dict:
             # convert arg1 from repr to internal type:
             action_dict['arg1'] = self.repr_str_to_type_dict[action_dict['arg1']]
@@ -785,21 +786,30 @@ class AdventureIFInterpreter(GameResourceLocator):
                     #    print("taking from inventory")
 
                 # TODO: handle non-space compound things ('pottedplant' instead of 'potted plant')
+                """
+                if action_dict['arg1'] not in self.repr_str_to_type_dict:
+                    fail_dict: dict = {'phase': "resolution", 'fail_type': "unknown_surface_form",
+                                       'arg': action_dict['arg1']}
+                    return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
+                """
 
                 arg1 = self.repr_str_to_type_dict[action_dict['arg1']]
+                # TODO: figure out arg1 handling
                 # if action_dict['arg1'] not in accessible_contents:
                 if arg1 not in accessible_contents:
                     # print(f"There is no {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                        'arg': action_dict['arg1']}
-                    return False, f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here.", fail_dict
+                    # return False, f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here.", fail_dict
+
+                    return False, f"There is no {self.entity_types[arg1]['repr_str']} here.", fail_dict
                 # elif len(accessible_contents[action_dict['arg1']]) > 1:
                 elif len(accessible_contents[arg1]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                        'arg': action_dict['arg1']}
                     # TODO: handle multiple instances of same entity type
-                    return False, f"There are multiple {action_dict['arg1']} here.", fail_dict
+                    return False, f"There are multiple {self.entity_types[arg1]['repr_str']} here.", fail_dict
                 else:
                     # arg1_inst = accessible_contents[action_dict['arg1']][0]
                     arg1_inst = accessible_contents[arg1][0]
@@ -812,8 +822,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                         # print(f"There is no {action_dict['arg2']}!")
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                            'arg': action_dict['arg2']}
-                        # TODO: change to sth like "you can't see a X"
-                        thing_not_accessible_str: str = f"There is no {self.entity_types[action_dict['arg2']]['repr_str']} here."
+                        # thing_not_accessible_str: str = f"There is no {self.entity_types[action_dict['arg2']]['repr_str']} here."
+                        thing_not_accessible_str: str = f"There is no {self.entity_types[arg2]['repr_str']} here."
                         return False, thing_not_accessible_str, fail_dict
                     # elif len(accessible_contents[action_dict['arg2']]) > 1:
                     elif len(accessible_contents[arg2]) > 1:
@@ -821,7 +831,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                         # TODO: handle multiple instances of same entity type
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                            'arg': action_dict['arg2']}
-                        return False, f"There are multiple {action_dict['arg2']} here.", fail_dict
+                        return False, f"There are multiple {self.entity_types[arg2]['repr_str']} here.", fail_dict
                     else:
                         # arg2_inst = accessible_contents[action_dict['arg2']][0]
                         arg2_inst = accessible_contents[arg2][0]
@@ -1041,7 +1051,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
 if __name__ == "__main__":
     PATH = ""
-
+    """
     game_instance_exmpl = {"game_id": 11, "variant": "basic",
      "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the book on the table, the plate on the table and the mop on the table.\n\n",
      "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
@@ -1097,9 +1107,104 @@ if __name__ == "__main__":
                           "put plate on table", "go hallway", "go broom closet", "take mop", "go hallway",
                           "go living room", "put mop on table"], "action_definitions": ["basic_actions.json"],
      "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
+    """
+    game_instance_exmpl = {"game_id": 11, "variant": "basic",
+                           "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the book on the table, the plate on the table and the mop on the table.\n\n",
+                           "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)",
+                                             "at(hallway1floor,hallway1)",
+                                             "at(livingroom1floor,livingroom1)", "at(broomcloset1floor,broomcloset1)",
+                                             "at(bedroom1floor,bedroom1)", "at(table1,livingroom1)",
+                                             "at(sidetable1,livingroom1)",
+                                             "at(counter1,kitchen1)", "at(refrigerator1,pantry1)",
+                                             "at(cupboard1,kitchen1)",
+                                             "at(wardrobe1,bedroom1)", "at(shelf1,livingroom1)", "at(freezer1,pantry1)",
+                                             "at(pottedplant1,hallway1)", "at(chair1,livingroom1)", "at(bed1,bedroom1)",
+                                             "at(couch1,livingroom1)", "at(broom1,broomcloset1)",
+                                             "at(mop1,broomcloset1)",
+                                             "at(sandwich1,pantry1)", "at(apple1,pantry1)", "at(banana1,pantry1)",
+                                             "at(orange1,pantry1)",
+                                             "at(peach1,pantry1)", "at(plate1,kitchen1)", "at(book1,livingroom1)",
+                                             "at(pillow1,bedroom1)",
+                                             "at(player1,hallway1)", "type(kitchen1floor,floor)",
+                                             "type(pantry1floor,floor)",
+                                             "type(hallway1floor,floor)", "type(livingroom1floor,floor)",
+                                             "type(broomcloset1floor,floor)",
+                                             "type(bedroom1floor,floor)", "type(player1,player)", "type(table1,table)",
+                                             "type(sidetable1,sidetable)", "type(counter1,counter)",
+                                             "type(refrigerator1,refrigerator)",
+                                             "type(cupboard1,cupboard)", "type(wardrobe1,wardrobe)",
+                                             "type(shelf1,shelf)",
+                                             "type(freezer1,freezer)", "type(pottedplant1,pottedplant)",
+                                             "type(chair1,chair)",
+                                             "type(bed1,bed)", "type(couch1,couch)", "type(broom1,broom)",
+                                             "type(mop1,mop)",
+                                             "type(sandwich1,sandwich)", "type(apple1,apple)", "type(banana1,banana)",
+                                             "type(orange1,orange)",
+                                             "type(peach1,peach)", "type(plate1,plate)", "type(book1,book)",
+                                             "type(pillow1,pillow)",
+                                             "room(kitchen1,kitchen)", "room(pantry1,pantry)", "room(hallway1,hallway)",
+                                             "room(livingroom1,livingroom)", "room(broomcloset1,broomcloset)",
+                                             "room(bedroom1,bedroom)",
+                                             "support(kitchen1floor)", "support(pantry1floor)",
+                                             "support(hallway1floor)",
+                                             "support(livingroom1floor)", "support(broomcloset1floor)",
+                                             "support(bedroom1floor)",
+                                             "support(table1)", "support(sidetable1)", "support(counter1)",
+                                             "support(shelf1)",
+                                             "support(bed1)", "on(book1,sidetable1)", "on(plate1,kitchen1floor)",
+                                             "on(mop1,broomcloset1floor)", "on(broom1,broomcloset1floor)",
+                                             "on(pottedplant1,hallway1floor)",
+                                             "container(refrigerator1)", "container(cupboard1)", "container(wardrobe1)",
+                                             "container(freezer1)", "in(pillow1,wardrobe1)", "in(peach1,refrigerator1)",
+                                             "in(orange1,refrigerator1)", "in(banana1,refrigerator1)",
+                                             "in(apple1,refrigerator1)",
+                                             "in(sandwich1,refrigerator1)", "exit(kitchen1,pantry1)",
+                                             "exit(kitchen1,livingroom1)",
+                                             "exit(kitchen1,hallway1)", "exit(pantry1,kitchen1)",
+                                             "exit(hallway1,kitchen1)",
+                                             "exit(hallway1,livingroom1)", "exit(hallway1,broomcloset1)",
+                                             "exit(livingroom1,kitchen1)",
+                                             "exit(livingroom1,hallway1)", "exit(broomcloset1,hallway1)",
+                                             "exit(bedroom1,livingroom1)",
+                                             "exit(livingroom1,bedroom1)", "openable(refrigerator1)",
+                                             "openable(cupboard1)",
+                                             "openable(wardrobe1)", "openable(freezer1)", "closed(refrigerator1)",
+                                             "closed(cupboard1)",
+                                             "closed(wardrobe1)", "closed(freezer1)", "takeable(pottedplant1)",
+                                             "takeable(broom1)",
+                                             "takeable(mop1)", "takeable(sandwich1)", "takeable(apple1)",
+                                             "takeable(banana1)",
+                                             "takeable(orange1)", "takeable(peach1)", "takeable(plate1)",
+                                             "takeable(book1)",
+                                             "takeable(pillow1)", "movable(pottedplant1)", "movable(broom1)",
+                                             "movable(mop1)",
+                                             "movable(sandwich1)", "movable(apple1)", "movable(banana1)",
+                                             "movable(orange1)",
+                                             "movable(peach1)", "movable(plate1)", "movable(book1)", "movable(pillow1)",
+                                             "needs_support(pottedplant1)", "needs_support(broom1)",
+                                             "needs_support(mop1)",
+                                             "needs_support(sandwich1)", "needs_support(apple1)",
+                                             "needs_support(banana1)",
+                                             "needs_support(orange1)", "needs_support(peach1)", "needs_support(plate1)",
+                                             "needs_support(book1)", "needs_support(pillow1)"],
+                           "goal_state": ["on(book1,table1)", "on(plate1,table1)", "on(mop1,table1)"], "max_turns": 50,
+                           "optimal_turns": 12,
+                           "optimal_solution": [["go", "livingroom1"], ["put", "book1", "table1"], ["go", "kitchen1"],
+                                                ["take", "plate1"],
+                                                ["go", "livingroom1"], ["put", "plate1", "table1"], ["go", "hallway1"],
+                                                ["go", "broomcloset1"], ["take", "mop1"], ["go", "hallway1"],
+                                                ["go", "livingroom1"],
+                                                ["put", "mop1", "table1"]],
+                           "optimal_commands": ["go living room", "put book on table", "go kitchen", "take plate",
+                                                "go living room",
+                                                "put plate on table", "go hallway", "go broom closet", "take mop",
+                                                "go hallway",
+                                                "go living room", "put mop on table"],
+                           "action_definitions": ["basic_actions.json"],
+                           "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
 
-    # test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
-    test_interpreter = AdventureIFInterpreter(game_instance_exmpl, verbose=True)
+    test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
+    # test_interpreter = AdventureIFInterpreter(game_instance_exmpl, verbose=True)
 
     # test_interpreter.execute_optimal_solution()
 
@@ -1108,10 +1213,11 @@ if __name__ == "__main__":
 
     print(test_interpreter.get_full_room_desc())
 
-    turn_1 = test_interpreter.process_action("open wardrobe")
+    turn_1 = test_interpreter.process_action("take potted plant")
     print(turn_1)
     print()
 
+    """
     turn_1_world_state = deepcopy(test_interpreter.world_state)
 
     # turn_1_plan = ["take pillow"]
@@ -1124,7 +1230,7 @@ if __name__ == "__main__":
 
     world_properly_reverted = test_interpreter.world_state == turn_1_world_state
     print(f"world state properly reverted:", world_properly_reverted)
-
+    """
     """
     turn_2 = test_interpreter.process_action("take pillow")
     print(turn_2)
