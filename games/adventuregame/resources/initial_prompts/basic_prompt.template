@@ -1,6 +1,6 @@
 You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.
 For example:
-> examine cupboard
+> open cupboard
 
 Your goal for this game is: $GOAL$
 

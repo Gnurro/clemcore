@@ -187,19 +187,19 @@ class AdventureGameMaster(DialogueGameMaster):
             if self.if_variant == 'plan':
                 # current plan viability:
                 cur_plan: list = self.plan_history[-1]
-                self.log_message_to_self(f"current_plan: {str(cur_plan)}")
+                # self.log_message_to_self(f"current_plan: {str(cur_plan)}")
                 cur_plan_command_count: int = len(cur_plan)
                 self.log_to_self("plan_length", cur_plan_command_count)
                 cur_plan_results: list = self.if_interpreter.execute_plan_sequence(cur_plan)
                 self.log_to_self("plan_results", cur_plan_results)
-                self.log_message_to_self(f"plan_results: {str(cur_plan_results)}")
+                # self.log_message_to_self(f"plan_results: {str(cur_plan_results)}")
                 cur_plan_successes: list = list()
                 for plan_result in cur_plan_results:
                     if not plan_result[2]:
                         cur_plan_successes.append(plan_result)
                 cur_plan_success_ratio: float = len(cur_plan_successes) / cur_plan_command_count
                 self.log_to_self("plan_command_success_ratio", cur_plan_success_ratio)
-                self.log_message_to_self(f"plan_command_success_ratio: {str(cur_plan_success_ratio)}")
+                # self.log_message_to_self(f"plan_command_success_ratio: {str(cur_plan_success_ratio)}")
                 # plan following:
                 if len(self.plan_history) >= 2:
                     prior_plan: list = self.plan_history[-2]
