@@ -25,7 +25,7 @@
   },
   {
     "type_name": "take",
-    "lark": "take: TAKE PREP* thing (PREP thing)*\nTAKE.1: (\"take\" | \"grab\") WS",
+    "lark": "take: TAKE PREP* thing (PREP thing)*\nTAKE.1: (\"take\" | \"grab\" | \"pick\") WS",
     "object_req_attribute": "takeable",
     "object_pre_state": ["in", "on"],
     "object_post_state": "in(THING,inventory)",
@@ -53,7 +53,7 @@
   },
   {
     "type_name": "go",
-    "lark": "go: GO (\"back\" WS)* (\"to\" WS)* thing\nGO.1: \"go\" WS",
+    "lark": "go: GO (\"back\" WS)* (\"to\" WS)* thing\nGO.1: (\"go\" | \"enter\" ) WS",
     "object_pre_state": ["at"],
     "object_post_state": "at(PLAYER,TARGET)",
     "state_changes": [
