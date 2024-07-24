@@ -1038,7 +1038,10 @@ class AdventureIFInterpreter(GameResourceLocator):
         result_sequence: list = list()
         world_state_change_count: int = 0
         for cmd_idx, command in enumerate(command_sequence):
-            result = self.process_action(command)
+            # get result as list for mutability:
+            result = list(self.process_action(command))
+            # convert result goals achieved to list for JSON dumping:
+            result[0] = list(result[0])
             # result[2] is fail info; if it is truthy, the command failed
             result_sequence.append(result)
             # check for command failure:
