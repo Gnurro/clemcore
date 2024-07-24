@@ -1062,7 +1062,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
 if __name__ == "__main__":
     PATH = ""
-    """
+
     game_instance_exmpl = {"game_id": 11, "variant": "basic",
      "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the book on the table, the plate on the table and the mop on the table.\n\n",
      "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
@@ -1213,7 +1213,7 @@ if __name__ == "__main__":
                                                 "go living room", "put mop on table"],
                            "action_definitions": ["basic_actions.json"],
                            "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
-
+    """
     test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
     # test_interpreter = AdventureIFInterpreter(game_instance_exmpl, verbose=True)
 
@@ -1224,11 +1224,11 @@ if __name__ == "__main__":
 
     print(test_interpreter.get_full_room_desc())
 
-    turn_1 = test_interpreter.process_action("take potted plant")
+    turn_1 = test_interpreter.process_action("open wardrobe")
     print(turn_1)
     print()
 
-    """
+
     turn_1_world_state = deepcopy(test_interpreter.world_state)
 
     # turn_1_plan = ["take pillow"]
@@ -1241,7 +1241,7 @@ if __name__ == "__main__":
 
     world_properly_reverted = test_interpreter.world_state == turn_1_world_state
     print(f"world state properly reverted:", world_properly_reverted)
-    """
+    """"""
     """
     turn_2 = test_interpreter.process_action("take pillow")
     print(turn_2)

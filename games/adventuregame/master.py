@@ -237,7 +237,8 @@ class AdventureGameScorer(GameScorer):
         # IF interpreter interaction fail phases/types; first two must be 'parsing' and 'resolution' phases:
         fail_types = ['parsing', 'resolution', 'lark_exception', 'undefined_action_verb', 'undefined_action',
                       'undefined_repr_str', 'undefined_type', 'not_room_type', 'no_exit_to', 'multiple_exits_to',
-                      'entity_not_accessible', 'multiple_entity_ambiguity', 'pre_state_mismatch']
+                      'entity_not_accessible', 'multiple_entity_ambiguity', 'pre_state_mismatch',
+                      'taking_from_inventory', 'entity_already_inventory', 'malformed_command']
         turn_fails = []
         invalid_format: str = ""
         turn_limit_loss: bool = False
@@ -247,7 +248,7 @@ class AdventureGameScorer(GameScorer):
         plan_types = ["plan_followed", "plan_command_success_ratio", "bad_plan_followed"]
         plan_records = []
         for turn_idx, turn in enumerate(episode_interactions["turns"]):
-            turn_score = {"request_count": 1}  # only one request per turn for now: reprompting pending
+            turn_score = {"request_count": 1, "goal_score": 0}  # only one request per turn for now: reprompting pending
             turn_fail = {fail_type: 0 for fail_type in fail_types}
             plan_record = {plan_type: 0 for plan_type in plan_types}
             for event in turn:
@@ -410,12 +411,20 @@ class AdventureGameScorer(GameScorer):
             self.log_episode_score(metrics.METRIC_LOSE, 1)
 
         # planning episode-level:
+        # plan following:
         plan_followed_count = sum([turn["plan_followed"] for turn in plan_records[1:]])  # start at turn 2
-        plan_followed_ratio = turn_count / plan_followed_count
+        plan_followed_ratio = plan_followed_count / turn_count
         self.log_episode_score('plan_followed_ratio', plan_followed_ratio)
+        # plan viability:
         plan_viability_sum = sum([turn["plan_command_success_ratio"] for turn in plan_records])
         plan_average_viability_ratio = plan_viability_sum / turn_count
         self.log_episode_score('plan_average_viability_ratio', plan_average_viability_ratio)
+        # bad plan following:
+        bad_plan_followed_sum = sum([turn["bad_plan_followed"] for turn in plan_records])
+        bad_plan_followed_ratio = bad_plan_followed_sum / turn_count
+        bad_plan_dismiss_ratio = 1 - bad_plan_followed_ratio
+        self.log_episode_score('bad_plan_dismiss_ratio', bad_plan_dismiss_ratio)
+
 
 
 class AdventureGameBenchmark(GameBenchmark):
