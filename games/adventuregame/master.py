@@ -89,6 +89,11 @@ class AdventureGameMaster(DialogueGameMaster):
             # Check rule: utterance starts with IF >
             if not utterance.startswith(">"):
                 self.success = False
+                hallucinated_finish_strs = ["complete", "finish", "done", "successfully"]
+                for hallucinated_finish_str in hallucinated_finish_strs:
+                    if hallucinated_finish_str in utterance:
+                        self.log_to_self("hallucinated_finish", utterance)
+                        break
                 self.invalid_format = "command_tag_missing"
                 # return True
                 return False
@@ -238,7 +243,7 @@ class AdventureGameScorer(GameScorer):
         fail_types = ['parsing', 'resolution', 'lark_exception', 'undefined_action_verb', 'undefined_action',
                       'undefined_repr_str', 'undefined_type', 'not_room_type', 'no_exit_to', 'multiple_exits_to',
                       'entity_not_accessible', 'multiple_entity_ambiguity', 'pre_state_mismatch',
-                      'taking_from_inventory', 'entity_already_inventory', 'malformed_command']
+                      'taking_from_inventory', 'entity_already_inventory', 'malformed_command', 'hallucinated_finish']
         turn_fails = []
         invalid_format: str = ""
         turn_limit_loss: bool = False
