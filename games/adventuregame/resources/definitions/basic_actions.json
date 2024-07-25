@@ -53,7 +53,7 @@
   },
   {
     "type_name": "go",
-    "lark": "go: GO (\"back\" WS)* (\"to\" WS)* thing\nGO.1: (\"go\" | \"enter\" | \"return\" | \"proceed\") WS",
+    "lark": "go: GO (\"back\" WS)* (\"to\" WS)* thing\nGO.1: (\"go\" | \"enter\" | \"return\" | \"proceed\" | \"move\") WS",
     "object_pre_state": ["at"],
     "object_post_state": "at(PLAYER,TARGET)",
     "state_changes": [
