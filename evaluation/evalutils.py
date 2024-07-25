@@ -110,16 +110,7 @@ def savefig(name: str) -> None:
 
 def parse_directory_name(name: str) -> dict:
     """Extract information from the directory name structure."""
-
-    # print("dir name:", name)
-
     splits = str(name).split('/')
-    # splits = str(name).split('\\')
-
-    # TODO: use proper pathlib method instead of hardcoded string split here to make this OS-independent
-
-    # print("splits:", splits)
-
     model, game, experiment, episode, _ = splits[-5:]
     return {'game': game,
             'model': model,
