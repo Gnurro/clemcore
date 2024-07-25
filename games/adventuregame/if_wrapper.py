@@ -557,6 +557,12 @@ class AdventureIFInterpreter(GameResourceLocator):
         Fail if action/entities are not registered.
         """
         # print("action input:", action_input)
+        # remove final punctuation:
+        if action_input.endswith(".") or action_input.endswith("!"):
+            action_input = action_input[:-1]
+        # lower for proper parsing:
+        action_input = action_input.lower()
+
         try:
             parsed_command = self.act_parser.parse(action_input)
         except Exception as exception:
