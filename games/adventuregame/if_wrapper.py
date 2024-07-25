@@ -579,8 +579,8 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
-                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action_verb", 'arg': action_dict['arg1']}
-                return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "misused_known_verb", 'arg': action_dict['arg1']}
+                return False, f"I don't know how to interpret this '{action_dict['arg1']}' action.", fail_dict
             else:
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action", 'arg': action_input}
                 return False, f"I don't know what you mean.", fail_dict
