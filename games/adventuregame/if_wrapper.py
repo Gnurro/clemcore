@@ -64,7 +64,7 @@ class IFTransformer(Transformer):
                 action_dict[f'arg{arg_idx}'] = child.value
                 break
 
-        # TODO: improve parsing feedback further
+        # TODO?: improve parsing feedback further?
 
         return action_dict
 
@@ -396,8 +396,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                             visible_contents.append(thing)
                             break
                         elif state_pred2[1] == 'inventory' and state_pred2[1] == contained_in:
-                            # TODO?: figure out inventory item reporting; handling in action resolve now
-                            print("inventory?")
+                            # print("inventory?")
                             visible_contents.append(thing)
                             break
             if contained_in:
@@ -485,7 +484,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         else:
             visible_content_state_combined = str()
 
-        # TODO: handle doors (once they exist); if they will exist...
+        # TODO?: handle doors (once they exist); if they will exist...?
 
         room_exits = self.get_player_room_exits()
         # print("room exits:", room_exits)
@@ -571,9 +570,9 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         # catch 'unknown' action parses:
         if action_dict['type'] == "unknown":
+            # TODO?: differentiate kinds of malformed commands: known verb with bad syntax; 'grammar gaps'?
             if action_dict['arg1'] in self.action_types:
                 # print("defined action verb, malformed command!")
-                # TODO: log/score malformed commands properly
                 # print("action_dict:", action_dict)
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "malformed_command", 'arg': str(action_dict)}
                 return False, f"I don't know what you mean.", fail_dict
@@ -590,9 +589,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         if action_dict['arg1'] in self.repr_str_to_type_dict:
             # convert arg1 from repr to internal type:
             action_dict['arg1'] = self.repr_str_to_type_dict[action_dict['arg1']]
-            # TODO: check if this conversion might be better elsewhere
         else:
-            # TODO: if arg not in repr_str dict, it's already undefined -> refactor
             fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_repr_str", 'arg': action_dict['arg1']}
             return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
         """
@@ -677,7 +674,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 # print("HERE found in", state_change)
                 present_exits = self.get_player_room_exits()
                 # print("present exits:", present_exits)
-                # TODO: check exit passability (once doors exist)
+                # TODO?: check exit passability (once doors exist)?
                 passable_exits = {self.room_to_type_dict[instance]: [] for instance in present_exits}
                 for instance in present_exits:
                     passable_exits[self.room_to_type_dict[instance]].append(instance)
@@ -716,7 +713,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                         if player_condition_tuple not in self.world_state:
                             conditions_fulfilled = False
 
-                    # TODO: give conditions feedback
+                    # TODO?: give better conditions feedback?
 
                     if conditions_fulfilled:
                         facts_to_remove.append(pre_state_tuple)
@@ -753,7 +750,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                             if thing_condition_tuple not in self.world_state:
                                 conditions_fulfilled = False
 
-                        # TODO: give conditions feedback
+                        # TODO?: give better conditions feedback?
 
                         if conditions_fulfilled:
                             facts_to_remove.append(pre_state_tuple)
@@ -893,7 +890,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                         # print(thing_condition_tuple, "not in world state")
                         conditions_fulfilled = False
 
-                # TODO: give conditions feedback
+                # TODO?: give better conditions feedback?
 
                 if conditions_fulfilled:
                     # print("conditions fulfilled:", state_change['conditions'])
@@ -917,7 +914,8 @@ class AdventureIFInterpreter(GameResourceLocator):
             if remove_fact in self.world_state:
                 self.world_state.remove(remove_fact)
             else:
-                # TODO: handle commands removing facts that don't hold
+                # TODO?: handle commands removing facts that don't hold?
+                # proper specific feedback would be needed to make this useful
                 pass
         for add_fact in facts_to_add:
             self.world_state.add(add_fact)
@@ -926,7 +924,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         self.world_state_history.append(deepcopy(self.world_state))
 
         if state_changed:
-            # TODO: make second return item more useful
+            # TODO?: make second return item more useful?
             return True, facts_to_add[0], {}
         else:
             # print("Fallback prestate mismatch condition!")
