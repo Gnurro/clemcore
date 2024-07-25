@@ -929,10 +929,19 @@ class AdventureIFInterpreter(GameResourceLocator):
             # TODO: make second return item more useful
             return True, facts_to_add[0], {}
         else:
-            # TODO: make this proper pre_state/conditions feedback
+            # print("Fallback prestate mismatch condition!")
+            # print(f"pre_state:", pre_state)
+            # print(f"pre_state type:", type(pre_state))
+            pre_state_tuple = fact_str_to_tuple(pre_state)
+            # print(f"pre_state_tuple:", pre_state_tuple)
+            # print(f"pre_state_tuple type:", type(pre_state_tuple))
+            if pre_state_tuple[2] == "ANY":
+                pre_state_antecedent = "anything"
+            pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
+            response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_response}."
             fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
                                'arg': [action_dict['arg1'], pre_state]}
-            return False, f"{action_dict['arg1']} is not {pre_state}", fail_dict
+            return False, response_str, fail_dict
 
     def process_action(self, action_input: str):
         """
@@ -1224,11 +1233,11 @@ if __name__ == "__main__":
 
     print(test_interpreter.get_full_room_desc())
 
-    turn_1 = test_interpreter.process_action("open wardrobe")
+    turn_1 = test_interpreter.process_action("take from wardrobe")
     print(turn_1)
     print()
 
-
+    """
     turn_1_world_state = deepcopy(test_interpreter.world_state)
 
     # turn_1_plan = ["take pillow"]
@@ -1241,7 +1250,7 @@ if __name__ == "__main__":
 
     world_properly_reverted = test_interpreter.world_state == turn_1_world_state
     print(f"world state properly reverted:", world_properly_reverted)
-    """"""
+    """
     """
     turn_2 = test_interpreter.process_action("take pillow")
     print(turn_2)
