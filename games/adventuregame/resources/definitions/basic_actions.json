@@ -38,7 +38,7 @@
   },
   {
     "type_name": "put",
-    "lark": "put: PUT thing PREP* thing\nPUT.1: (\"put\" | \"leave\" | \"place\" | \"drop\") WS",
+    "lark": "put: PUT thing (\"back\" WS)* PREP* thing\nPUT.1: (\"put\" | \"leave\" | \"place\" | \"drop\") WS",
     "object_req_attribute": "movable",
     "object_pre_state": ["in", "on"],
     "object_post_state": "PREP(THING,TARGET)",
