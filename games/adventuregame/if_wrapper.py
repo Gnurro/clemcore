@@ -625,8 +625,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 if action_dict['arg2'] == "inventory":
                     # print("taking from inventory")
                     fail_dict: dict = {'phase': "parsing", 'fail_type': "taking_from_inventory", 'arg': action_dict['arg2']}
-                    # TODO: improve response text
-                    return False, f"Things in your inventory are already taken.", fail_dict
+                    return False, f"Things in your inventory are already accessible.", fail_dict
             if action_dict['arg2'] in self.repr_str_to_type_dict:
                 # convert arg1 from repr to internal type:
                 action_dict['arg2'] = self.repr_str_to_type_dict[action_dict['arg2']]

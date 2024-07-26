@@ -44,9 +44,6 @@ class AdventureGameMaster(DialogueGameMaster):
         # initialize IF interpreter:
         self.if_interpreter = AdventureIFInterpreter(self.game_instance)
 
-        # TODO: put all interpreter-relevant data into instances
-        # TODO: use clemgame resource loading
-
         # create player:
         self.player = Player(self.player_models[0])
 
@@ -133,7 +130,6 @@ class AdventureGameMaster(DialogueGameMaster):
         #    return False
 
         if self.invalid_format:
-            # TODO: Check for hallucinated adventure finishes
             self.log_to_self("invalid_format", self.invalid_format)
             return False
 
@@ -172,7 +168,6 @@ class AdventureGameMaster(DialogueGameMaster):
             goals_achieved, if_response, fail = self.if_interpreter.process_action(if_input)
             # TODO?: return concise success info?
 
-            # TODO: make fails log so that they show up in transcript
             if fail:
                 self.log_to_self("action_fail", fail)
                 self.log_message_to_self(f"action_fail: {str(fail)}")
@@ -401,7 +396,6 @@ class AdventureGameScorer(GameScorer):
             self.log_episode_score(metrics.BENCH_SCORE, np.nan)
 
         # invalid format aborted:
-        # TODO: handle different types of format aborts for planning variant
         if invalid_format:
             self.log_episode_score(metrics.METRIC_ABORTED, 1)
         else:
