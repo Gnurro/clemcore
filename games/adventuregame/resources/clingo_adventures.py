@@ -886,4 +886,4 @@ if __name__ == "__main__":
     gen_end_time = time.time()
     print(f"Generated {len(generated_raw_adventures)} raw adventures in {gen_end_time - gen_start_time}s.")
     """
-    adventure_generator.generate_from_initial_goals_file("test_adv_source.json")
+    adventure_generator.generate_from_initial_goals_file("adv_source.json")

@@ -1,3 +1,5 @@
+import json
+
 import graphviz
 
 
@@ -13,32 +15,44 @@ def split_state_string(state_string: str, value_delimiter: str = "(", value_sepa
     else:
         return predicate_type, first_split[1][:-1]
 
-# raw_facts = 'room(kitchen1,kitchen) room(pantry1,pantry) room(hallway1,hallway) exit(kitchen1,pantry1) exit(kitchen1,hallway1) exit(pantry1,kitchen1) exit(hallway1,kitchen1)'
 
-# raw_facts = "room(kitchen1,kitchen) room(pantry1,pantry) room(hallway1,hallway) exit(kitchen1,hallway1) exit(pantry1,hallway1) exit(hallway1,kitchen1) exit(hallway1,pantry1)"
-# raw_facts = "room(kitchen1,kitchen) room(pantry1,pantry) room(hallway1,hallway) room(livingroom1,livingroom) room(broomcloset1,broomcloset) exit(kitchen1,pantry1) exit(kitchen1,livingroom1) exit(pantry1,kitchen1) exit(hallway1,broomcloset1) exit(livingroom1,kitchen1) exit(broomcloset1,hallway1) reachable(pantry1,kitchen1) reachable(livingroom1,kitchen1) reachable(kitchen1,pantry1) reachable(broomcloset1,hallway1) reachable(kitchen1,livingroom1) reachable(hallway1,broomcloset1)"
-raw_facts = "room(kitchen1,kitchen) room(pantry1,pantry) room(hallway1,hallway) room(livingroom1,livingroom) room(broomcloset1,broomcloset) exit(kitchen1,pantry1) exit(kitchen1,livingroom1) exit(kitchen1,hallway1) exit(pantry1,kitchen1) exit(hallway1,kitchen1) exit(hallway1,broomcloset1) exit(livingroom1,kitchen1) exit(broomcloset1,hallway1) reachable(kitchen1,pantry1) reachable(kitchen1,livingroom1) reachable(kitchen1,hallway1) reachable(pantry1,kitchen1) reachable(pantry1,hallway1) reachable(hallway1,kitchen1) reachable(hallway1,pantry1) reachable(hallway1,livingroom1) reachable(hallway1,broomcloset1) reachable(livingroom1,kitchen1) reachable(livingroom1,hallway1) reachable(broomcloset1,hallway1) reachable(kitchen1,broomcloset1) reachable(pantry1,broomcloset1) reachable(livingroom1,broomcloset1) reachable(pantry1,livingroom1) reachable(broomcloset1,livingroom1) reachable(livingroom1,pantry1) reachable(broomcloset1,pantry1) reachable(broomcloset1,kitchen1)"
-
-# adventure_facts = raw_facts.split()
-
-# adventure_facts = ['at(apple1,kitchen1)', 'at(sandwich1,pantry1)', 'at(broom1,broomcloset1)', 'at(couch1,livingroom1)', 'at(chair1,livingroom1)', 'at(pottedplant1,hallway1)', 'at(freezer1,pantry1)', 'at(shelf1,kitchen1)', 'at(refrigerator1,kitchen1)', 'at(counter1,kitchen1)', 'at(table1,livingroom1)', 'at(player1,hallway1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,livingroom1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,kitchen1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)']
-# adventure_facts = ['at(player1,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,pantry1)', 'at(freezer1,pantry1)', 'at(pottedplant1,livingroom1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'container(refrigerator1)', 'container(freezer1)', 'in(refrigerator1,refrigerator1)']
-# adventure_facts = ['at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,pantry1)', 'at(freezer1,pantry1)', 'at(pottedplant1,livingroom1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,hallway1)', 'exit(pantry1,hallway1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,pantry1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'container(refrigerator1)', 'container(freezer1)']
-
-# adventure_facts = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
-
-adventure_facts = ['at(kitchen1floor,kitchen1)', 'at(pantry1floor,pantry1)', 'at(hallway1floor,hallway1)', 'at(livingroom1floor,livingroom1)', 'at(broomcloset1floor,broomcloset1)', 'at(table1,livingroom1)', 'at(counter1,kitchen1)', 'at(refrigerator1,pantry1)', 'at(shelf1,kitchen1)', 'at(freezer1,pantry1)', 'at(pottedplant1,hallway1)', 'at(chair1,livingroom1)', 'at(couch1,livingroom1)', 'at(broom1,broomcloset1)', 'at(sandwich1,pantry1)', 'at(apple1,pantry1)', 'at(banana1,pantry1)', 'at(player1,livingroom1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,kitchen1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,hallway1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)', 'type(kitchen1floor,floor)', 'type(pantry1floor,floor)', 'type(hallway1floor,floor)', 'type(livingroom1floor,floor)', 'type(broomcloset1floor,floor)', 'type(table1,table)', 'type(counter1,counter)', 'type(refrigerator1,refrigerator)', 'type(shelf1,shelf)', 'type(freezer1,freezer)', 'type(pottedplant1,pottedplant)', 'type(chair1,chair)', 'type(couch1,couch)', 'type(broom1,broom)', 'type(sandwich1,sandwich)', 'type(apple1,apple)', 'type(banana1,banana)', 'support(kitchen1floor)', 'support(pantry1floor)', 'support(hallway1floor)', 'support(livingroom1floor)', 'support(broomcloset1floor)', 'support(table1)', 'support(counter1)', 'support(shelf1)', 'on(broom1,broomcloset1floor)', 'on(pottedplant1,hallway1floor)', 'container(refrigerator1)', 'container(freezer1)', 'in(banana1,refrigerator1)', 'in(apple1,refrigerator1)', 'in(sandwich1,refrigerator1)', 'openable(refrigerator1)', 'openable(freezer1)', 'takeable(pottedplant1)', 'takeable(broom1)', 'takeable(sandwich1)', 'takeable(apple1)', 'takeable(banana1)', 'movable(pottedplant1)', 'movable(broom1)', 'movable(sandwich1)', 'movable(apple1)', 'movable(banana1)', 'needs_support(pottedplant1)', 'needs_support(broom1)', 'needs_support(sandwich1)', 'needs_support(apple1)', 'needs_support(banana1)']
-
-# adventure_facts = ['exit(broomcloset1,hallway1)', 'exit(livingroom1,hallway1)', 'exit(livingroom1,kitchen1)', 'exit(hallway1,broomcloset1)', 'exit(hallway1,livingroom1)', 'exit(hallway1,pantry1)', 'exit(hallway1,kitchen1)', 'exit(pantry1,hallway1)', 'exit(pantry1,kitchen1)', 'exit(kitchen1,hallway1)', 'exit(kitchen1,livingroom1)', 'exit(kitchen1,pantry1)', 'room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'type(player1,player)']
-
-# adventure_facts = ['room(kitchen1,kitchen)', 'room(pantry1,pantry)', 'room(hallway1,hallway)', 'room(livingroom1,livingroom)', 'room(broomcloset1,broomcloset)', 'exit(kitchen1,pantry1)', 'exit(kitchen1,livingroom1)', 'exit(pantry1,kitchen1)', 'exit(hallway1,broomcloset1)', 'exit(livingroom1,kitchen1)', 'exit(broomcloset1,hallway1)', 'type(player1,player)']
-
+# adventure source file with initial state and goals:
+source_file_path = "adv_source.json"
+# load initial state facts:
+with open(source_file_path, 'r', encoding='utf-8') as source_file:
+    adventure_source = json.load(source_file)
+adventure_facts = adventure_source['initial_state']
+adventure_goals = adventure_source['goal_state']
+# split facts into tuples:
+split_facts = [split_state_string(fact) for fact in adventure_facts]
+# split goals into tuples:
+split_goals = [split_state_string(goal) for goal in adventure_goals]
+# directed graph:
 dot = graphviz.Digraph('room_layout', format='png')
 
-for fact in adventure_facts:
-    fact = split_state_string(fact)
-    if fact[0] == "room" or fact[0] == "type":
+dot.attr('node', shape='house')
+
+for fact in split_facts:
+    if fact[0] == "room":
         dot.node(fact[1], fact[1])
+
+dot.attr('node', shape='box')
+
+for fact in split_facts:
+    if fact[0] == "type":
+        for fact2 in split_facts:
+            if fact2[1] == fact[1]:
+                if fact2[0] == "container" or fact2[0] == "support":
+                    dot.node(fact[1], fact[1])
+
+dot.attr('node', shape='ellipse')
+
+for fact in split_facts:
+    if fact[0] == "type":
+        for fact2 in split_facts:
+            if fact2[1] == fact[1]:
+                if fact2[0] not in ["container", "support"]:
+                    dot.node(fact[1], fact[1])
     if fact[0] == "exit":
         dot.edge(fact[1], fact[2])
     if fact[0] == "at":
@@ -47,5 +61,13 @@ for fact in adventure_facts:
         dot.edge(fact[1], fact[2], "on")
     if fact[0] == "in":
         dot.edge(fact[1], fact[2], "in")
+
+dot.attr('edge', style='dashed')
+
+for goal in split_goals:
+    if goal[0] == "on":
+        dot.edge(goal[1], goal[2], "on")
+    if goal[0] == "in":
+        dot.edge(goal[1], goal[2], "in")
 
 dot.render()
