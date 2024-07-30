@@ -41,10 +41,10 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             basic_prompt = self.load_template("resources/initial_prompts/basic_prompt")
 
             for adventure_id in tqdm(range(len(adventures[difficulty]))):
-                goal_str = adventures[adventure_id]['goal']
+                goal_str = adventures[difficulty][adventure_id]['goal']
 
-                initial_state = adventures[adventure_id]['initial_state']
-                goal_state = adventures[adventure_id]['goal_state']
+                initial_state = adventures[difficulty][adventure_id]['initial_state']
+                goal_state = adventures[difficulty][adventure_id]['goal_state']
 
                 # Replace the goal in the templated initial prompt
                 instance_prompt = basic_prompt.replace("$GOAL$", goal_str)
@@ -58,13 +58,13 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
                 # game_instance["first_room_str"] = first_room_str  # game parameters
                 game_instance["initial_state"] = initial_state  # game parameters
                 game_instance["goal_state"] = goal_state  # game parameters
-                game_instance["max_turns"] = adventures[adventure_id]['bench_turn_limit']  # game parameters
-                game_instance["optimal_turns"] = adventures[adventure_id]['optimal_turns']  # game parameters
-                game_instance["optimal_solution"] = adventures[adventure_id]['optimal_solution']  # game parameters
-                game_instance["optimal_commands"] = adventures[adventure_id]['optimal_commands']  # game parameters
-                game_instance["action_definitions"] = adventures[adventure_id]['action_definitions']  # game parameters
-                game_instance["room_definitions"] = adventures[adventure_id]['room_definitions']  # game parameters
-                game_instance["entity_definitions"] = adventures[adventure_id]['entity_definitions']  # game parameters
+                game_instance["max_turns"] = adventures[difficulty][adventure_id]['bench_turn_limit']  # game parameters
+                game_instance["optimal_turns"] = adventures[difficulty][adventure_id]['optimal_turns']  # game parameters
+                game_instance["optimal_solution"] = adventures[difficulty][adventure_id]['optimal_solution']  # game parameters
+                game_instance["optimal_commands"] = adventures[difficulty][adventure_id]['optimal_commands']  # game parameters
+                game_instance["action_definitions"] = adventures[difficulty][adventure_id]['action_definitions']  # game parameters
+                game_instance["room_definitions"] = adventures[difficulty][adventure_id]['room_definitions']  # game parameters
+                game_instance["entity_definitions"] = adventures[difficulty][adventure_id]['entity_definitions']  # game parameters
 
             # PLANNING
 
@@ -75,11 +75,11 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
             planning_prompt = self.load_template("resources/initial_prompts/plan_prompt")
 
             for adventure_id in tqdm(range(len(adventures[difficulty]))):
-                goal_str = adventures[adventure_id]['goal']
+                goal_str = adventures[difficulty][adventure_id]['goal']
                 # first_room_str = adventures[adventure_id]['first_room']
 
-                initial_state = adventures[adventure_id]['initial_state']
-                goal_state = adventures[adventure_id]['goal_state']
+                initial_state = adventures[difficulty][adventure_id]['initial_state']
+                goal_state = adventures[difficulty][adventure_id]['goal_state']
 
                 # Replace the goal in the templated initial prompt
                 instance_prompt = planning_prompt.replace("$GOAL$", goal_str)
@@ -93,15 +93,15 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
                 # game_instance["first_room_str"] = first_room_str  # game parameters
                 game_instance["initial_state"] = initial_state  # game parameters
                 game_instance["goal_state"] = goal_state  # game parameters
-                game_instance["max_turns"] = adventures[adventure_id]['bench_turn_limit']  # game parameters
-                game_instance["optimal_turns"] = adventures[adventure_id]['optimal_turns']  # game parameters
-                game_instance["optimal_solution"] = adventures[adventure_id]['optimal_solution']  # game parameters
-                game_instance["optimal_commands"] = adventures[adventure_id]['optimal_commands']  # game parameters
-                game_instance["action_definitions"] = adventures[adventure_id]['action_definitions']  # game parameters
-                game_instance["room_definitions"] = adventures[adventure_id]['room_definitions']  # game parameters
-                game_instance["entity_definitions"] = adventures[adventure_id]['entity_definitions']  # game parameters
+                game_instance["max_turns"] = adventures[difficulty][adventure_id]['bench_turn_limit']  # game parameters
+                game_instance["optimal_turns"] = adventures[difficulty][adventure_id]['optimal_turns']  # game parameters
+                game_instance["optimal_solution"] = adventures[difficulty][adventure_id]['optimal_solution']  # game parameters
+                game_instance["optimal_commands"] = adventures[difficulty][adventure_id]['optimal_commands']  # game parameters
+                game_instance["action_definitions"] = adventures[difficulty][adventure_id]['action_definitions']  # game parameters
+                game_instance["room_definitions"] = adventures[difficulty][adventure_id]['room_definitions']  # game parameters
+                game_instance["entity_definitions"] = adventures[difficulty][adventure_id]['entity_definitions']  # game parameters
 
 
 if __name__ == '__main__':
     # The resulting instances.json is automatically saved to the "in" directory of the game folder
-    AdventureGameInstanceGenerator().generate(raw_adventures_file="generated_home_deliver_three_adventures")
+    AdventureGameInstanceGenerator().generate(raw_adventures_file="curated_home_deliver_three_adventures")
