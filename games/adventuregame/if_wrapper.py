@@ -619,6 +619,13 @@ class AdventureIFInterpreter(GameResourceLocator):
             if action_dict['arg1'] not in self.room_types:
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg1']}
                 return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
+            elif action_dict['type'] == "take" or action_dict['type'] == "put":
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "manipulating_room", 'arg': action_dict['arg1']}
+                if action_dict['type'] == "take":
+                    fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}'."
+                elif action_dict['type'] == "put":
+                    fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}' anywhere."
+                return False, fail_response, fail_dict
 
         if 'arg2' in action_dict:
             if action_dict['type'] == "take":

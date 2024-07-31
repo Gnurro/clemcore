@@ -238,7 +238,8 @@ class AdventureGameScorer(GameScorer):
         fail_types = ['parsing', 'resolution', 'lark_exception', 'undefined_action_verb', 'undefined_action',
                       'undefined_repr_str', 'undefined_type', 'not_room_type', 'no_exit_to', 'multiple_exits_to',
                       'entity_not_accessible', 'multiple_entity_ambiguity', 'pre_state_mismatch',
-                      'taking_from_inventory', 'entity_already_inventory', 'malformed_command', 'hallucinated_finish']
+                      'taking_from_inventory', 'entity_already_inventory', 'malformed_command', 'hallucinated_finish',
+                      'manipulating_room']
         turn_fails = []
         invalid_format: str = ""
         turn_limit_loss: bool = False
