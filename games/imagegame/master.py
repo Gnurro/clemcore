@@ -29,7 +29,7 @@ class ImageGameMaster(GameMaster):
         self.player_1_terminate_pattern = ""
         self.player_2_response_pattern = ""
         # TODO make mode a command line parameter
-        self.mode = "strict"  # "liberal"
+        self.mode = "liberal"  # "strict"
 
         self.turn_request_stats = {}
 
