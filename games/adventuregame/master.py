@@ -168,6 +168,8 @@ class AdventureGameMaster(DialogueGameMaster):
             goals_achieved, if_response, fail = self.if_interpreter.process_action(if_input)
             # TODO?: return concise success info?
 
+            print(f"IF response: {if_response}")
+
             if fail:
                 self.log_to_self("action_fail", fail)
                 self.log_message_to_self(f"action_fail: {str(fail)}")

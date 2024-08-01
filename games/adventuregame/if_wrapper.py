@@ -563,6 +563,8 @@ class AdventureIFInterpreter(GameResourceLocator):
         # lower for proper parsing:
         action_input = action_input.lower()
 
+        print(f"Cleaned action input: {action_input}")
+
         try:
             parsed_command = self.act_parser.parse(action_input)
         except Exception as exception:
@@ -616,10 +618,13 @@ class AdventureIFInterpreter(GameResourceLocator):
                 return False, f"I don't know what a '{action_dict['arg1']}' is."
         """
         if action_dict['arg1'] not in self.entity_types:
+            print(f"arg1 {action_dict['arg1']} is not an entity.")
             if action_dict['arg1'] not in self.room_types:
+                print(f"arg1 {action_dict['arg1']} is not a room either.")
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg1']}
                 return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
             elif action_dict['type'] == "take" or action_dict['type'] == "put":
+                print(f"manipulating room: arg1 {action_dict['arg1']}")
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "manipulating_room", 'arg': action_dict['arg1']}
                 if action_dict['type'] == "take":
                     fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}'."
@@ -813,7 +818,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 arg1 = action_dict['arg1']
                 # if action_dict['arg1'] not in accessible_contents:
                 if arg1 not in accessible_contents:
-                    # print(f"There is no {action_dict['arg1']}!")
+                    print(f"There is no {action_dict['arg1']}!")
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                        'arg': action_dict['arg1']}
                     # return False, f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here.", fail_dict
@@ -937,7 +942,10 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         if state_changed:
             # TODO?: make second return item more useful?
-            return True, facts_to_add[0], {}
+            if facts_to_add:
+                return True, facts_to_add[0], {}
+            else:
+                return True, (), {}
         else:
             # print("Fallback prestate mismatch condition!")
             # print(f"pre_state:", pre_state)
