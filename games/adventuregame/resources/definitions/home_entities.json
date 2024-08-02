@@ -92,6 +92,8 @@
   {
     "type_name": "chair",
     "repr_str": "chair",
+    "support": true,
+    "traits": ["support"],
     "possible_adjs": ["comfy", "wooden", "padded"],
     "standard_locations": ["livingroom"]
   },
@@ -106,6 +108,8 @@
   {
     "type_name": "couch",
     "repr_str": "couch",
+    "support": true,
+    "traits": ["support"],
     "possible_adjs": ["comfy", "wooden", "padded"],
     "standard_locations": ["livingroom"]
   },

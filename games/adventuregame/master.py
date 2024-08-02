@@ -162,13 +162,15 @@ class AdventureGameMaster(DialogueGameMaster):
             if_input: str = last_action[1:].split("\n")[0].strip()
             # print("Stripped IF input:", if_input)
 
+            logger.info(f"Stripped IF input: {if_input}")
+
             # count achieved goals:
             prior_goal_count = len(self.goals_achieved)
             # IF interpreter returns set of achieved goal states in string form:
             goals_achieved, if_response, fail = self.if_interpreter.process_action(if_input)
             # TODO?: return concise success info?
 
-            print(f"IF response: {if_response}")
+            logger.info(f"IF response: {if_response}")
 
             if fail:
                 self.log_to_self("action_fail", fail)

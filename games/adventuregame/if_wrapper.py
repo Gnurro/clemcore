@@ -10,14 +10,15 @@ import os
 from copy import deepcopy
 
 from clemgame.clemgame import GameResourceLocator
+from clemgame import get_logger
 
 from games.adventuregame.adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 PATH = "games/adventuregame/"
-
 RESOURCES_SUBPATH = "resources/"
 
 GAME_NAME = "adventuregame"
+logger = get_logger(__name__)
 
 
 class IFTransformer(Transformer):
@@ -563,7 +564,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         # lower for proper parsing:
         action_input = action_input.lower()
 
-        print(f"Cleaned action input: {action_input}")
+        logger.info(f"Cleaned action input: {action_input}")
 
         try:
             parsed_command = self.act_parser.parse(action_input)
@@ -618,24 +619,30 @@ class AdventureIFInterpreter(GameResourceLocator):
                 return False, f"I don't know what a '{action_dict['arg1']}' is."
         """
         if action_dict['arg1'] not in self.entity_types:
-            print(f"arg1 {action_dict['arg1']} is not an entity.")
-            if action_dict['arg1'] not in self.room_types:
-                print(f"arg1 {action_dict['arg1']} is not a room either.")
+            logger.info(f"Action arg1 '{action_dict['arg1']}' is not an entity")
+            if action_dict['arg1'] in self.room_types:
+                if action_dict['type'] in ["take", "put", "open", "close"]:
+                    logger.info(
+                        f"Action type is '{action_dict['type']}', manipulating room")
+                    fail_dict: dict = {'phase': "parsing", 'fail_type': "manipulating_room", 'arg': action_dict['arg1']}
+                    if action_dict['type'] == "take":
+                        fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}'."
+                    elif action_dict['type'] == "put":
+                        fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}' anywhere."
+                    elif action_dict['type'] == "open":
+                        fail_response = f"You don't need to {action_dict['type']} the '{action_dict['arg1']}'."
+                    elif action_dict['type'] == "close":
+                        fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}'."
+                    return False, fail_response, fail_dict
+            else:
+                logger.info(f"Action arg1 {action_dict['arg1']} is not a room either")
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg1']}
                 return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
-            elif action_dict['type'] == "take" or action_dict['type'] == "put":
-                print(f"manipulating room: arg1 {action_dict['arg1']}")
-                fail_dict: dict = {'phase': "parsing", 'fail_type': "manipulating_room", 'arg': action_dict['arg1']}
-                if action_dict['type'] == "take":
-                    fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}'."
-                elif action_dict['type'] == "put":
-                    fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}' anywhere."
-                return False, fail_response, fail_dict
 
         if 'arg2' in action_dict:
             if action_dict['type'] == "take":
                 if action_dict['arg2'] == "inventory":
-                    # print("taking from inventory")
+                    logger.info("Taking from inventory")
                     fail_dict: dict = {'phase': "parsing", 'fail_type': "taking_from_inventory", 'arg': action_dict['arg2']}
                     return False, f"Things in your inventory are already accessible.", fail_dict
             if action_dict['arg2'] in self.repr_str_to_type_dict:
@@ -818,12 +825,18 @@ class AdventureIFInterpreter(GameResourceLocator):
                 arg1 = action_dict['arg1']
                 # if action_dict['arg1'] not in accessible_contents:
                 if arg1 not in accessible_contents:
-                    print(f"There is no {action_dict['arg1']}!")
-                    fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
-                                       'arg': action_dict['arg1']}
-                    # return False, f"There is no {self.entity_types[action_dict['arg1']]['repr_str']} here.", fail_dict
+                    logger.info(f"THING action argument not accessible: {arg1}")
+                    if arg1 in self.room_types:
+                        logger.info(f"THING action arg1 '{arg1}' is a room type")
+                        logger.info(f"current player room: {self.get_player_room()}")
+                        fail_dict: dict = {'phase': "resolution", 'fail_type': "thing_arg1_room", 'arg': arg1}
+                        thing_arg2_room_str: str = f"You can't do this with a room."
+                        return False, thing_arg2_room_str, fail_dict
+                    else:
+                        fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
+                                           'arg': action_dict['arg1']}
+                        return False, f"There is no {self.entity_types[arg1]['repr_str']} here.", fail_dict
 
-                    return False, f"There is no {self.entity_types[arg1]['repr_str']} here.", fail_dict
                 # elif len(accessible_contents[action_dict['arg1']]) > 1:
                 elif len(accessible_contents[arg1]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
@@ -839,20 +852,30 @@ class AdventureIFInterpreter(GameResourceLocator):
                 if 'arg2' in action_dict:
                     # arg2 = self.repr_str_to_type_dict[action_dict['arg2']]
                     arg2 = action_dict['arg2']
+                    logger.info(f"THING action has arg2: '{arg2}'")
                     # if action_dict['arg2'] not in accessible_contents:
                     if arg2 not in accessible_contents:
-                        # print(f"There is no {action_dict['arg2']}!")
-                        fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
-                                           'arg': action_dict['arg2']}
-                        # thing_not_accessible_str: str = f"There is no {self.entity_types[action_dict['arg2']]['repr_str']} here."
-                        thing_not_accessible_str: str = f"There is no {self.entity_types[arg2]['repr_str']} here."
-                        return False, thing_not_accessible_str, fail_dict
+                        logger.info(f"THING action arg2 '{arg2}' is not accessible")
+                        # check if arg2 is room:
+                        if arg2 in self.room_types:
+                            logger.info(f"THING action arg2 '{arg2}' is a room type")
+                            logger.info(f"current player room: {self.get_player_room()}")
+                            fail_dict: dict = {'phase': "resolution", 'fail_type': "thing_arg2_room", 'arg': arg2}
+                            thing_arg2_room_str: str = f"You need to be more specific."
+                            return False, thing_arg2_room_str, fail_dict
+                        else:
+                            # print(f"There is no {action_dict['arg2']}!")
+                            fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
+                                               'arg': arg2}
+                            thing_not_accessible_str: str = f"There is no {self.entity_types[arg2]['repr_str']} here."
+                            return False, thing_not_accessible_str, fail_dict
+
                     # elif len(accessible_contents[action_dict['arg2']]) > 1:
                     elif len(accessible_contents[arg2]) > 1:
                         # print(f"There are multiple {action_dict['arg2']}!")
                         # TODO: handle multiple instances of same entity type
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
-                                           'arg': action_dict['arg2']}
+                                           'arg': arg2}
                         return False, f"There are multiple {self.entity_types[arg2]['repr_str']} here.", fail_dict
                     else:
                         # arg2_inst = accessible_contents[action_dict['arg2']][0]
@@ -876,7 +899,6 @@ class AdventureIFInterpreter(GameResourceLocator):
                         # print("no matching pred for ANY found")
                         continue
 
-
                 # print("pre state:", pre_state)
                 post_state: str = state_change['post_state'].replace("THING", arg1_inst)
 
@@ -895,7 +917,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 post_state_tuple = fact_str_to_tuple(post_state)
 
                 # check conditions:
-                conditions_fulfilled: bool = True
+                conditions_fulfilled: bool = False
                 for condition in state_change['conditions']:
                     thing_condition = condition.replace("THING", arg1_inst)
                     if arg2_inst:
@@ -903,9 +925,19 @@ class AdventureIFInterpreter(GameResourceLocator):
                     # print("thing condition:", thing_condition)
                     thing_condition_tuple = fact_str_to_tuple(thing_condition)
                     # print("thing condition tuple:", thing_condition_tuple)
-                    if thing_condition_tuple not in self.world_state:
+                    if thing_condition_tuple in self.world_state:
                         # print(thing_condition_tuple, "not in world state")
-                        conditions_fulfilled = False
+                        conditions_fulfilled = True
+                    else:
+                        if arg2_inst:
+                            condition_tuple = fact_str_to_tuple(thing_condition)
+                            condition_pred = condition_tuple[0]
+                            condition_target = condition_tuple[1]
+                            response_str = f"The {self.entity_types[action_dict['arg2']]['repr_str']} is no {condition_pred}."
+                            fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
+                                               'arg': [action_dict['arg2'], pre_state]}
+                            return False, response_str, fail_dict
+
 
                 # TODO?: give better conditions feedback?
 
@@ -913,7 +945,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                     # print("conditions fulfilled:", state_change['conditions'])
                     facts_to_remove.append(pre_state_tuple)
                     facts_to_add.append(post_state_tuple)
-
+                    if facts_to_add or facts_to_remove:
+                        state_changed = True
 
                 # facts_to_remove.append(pre_state_tuple)
                 # facts_to_add.append(post_state_tuple)
@@ -921,8 +954,6 @@ class AdventureIFInterpreter(GameResourceLocator):
                 # remove pre state and add post state:
                 # self.world_state.remove(pre_state_tuple)
                 # self.world_state.add(post_state_tuple)
-
-                state_changed = True
 
         # print("facts to remove:", facts_to_remove)
         # print("facts to add:", facts_to_add)
@@ -942,24 +973,38 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         if state_changed:
             # TODO?: make second return item more useful?
+            logger.info(f"Resolution resulted in changed world state; "
+                        f"added facts: {facts_to_add}; "
+                        f"removed facts: {facts_to_remove}")
             if facts_to_add:
                 return True, facts_to_add[0], {}
-            else:
-                return True, (), {}
+            # else:
+            #    return True, (), {}
         else:
+            logger.info(f"No state change fallback")
             # print("Fallback prestate mismatch condition!")
             # print(f"pre_state:", pre_state)
             # print(f"pre_state type:", type(pre_state))
             pre_state_tuple = fact_str_to_tuple(pre_state)
+            logger.info(f"Pre-state tuple: {pre_state_tuple}")
             # print(f"pre_state_tuple:", pre_state_tuple)
             # print(f"pre_state_tuple type:", type(pre_state_tuple))
-            if pre_state_tuple[2] == "ANY":
+
+            if pre_state_tuple not in self.world_state:
+                logger.info(f"Pre-state {pre_state_tuple} not in world state")
+            else:
+                logger.info(f"Pre-state {pre_state_tuple} in world state")
+
+            if len(pre_state_tuple) >= 3 and pre_state_tuple[2] == "ANY":
                 pre_state_antecedent = "anything"
+            else:
+                pre_state_antecedent = pre_state_tuple[1]
             pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
             response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_response}."
             fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
                                'arg': [action_dict['arg1'], pre_state]}
             return False, response_str, fail_dict
+            """"""
 
     def process_action(self, action_input: str):
         """
@@ -979,7 +1024,7 @@ class AdventureIFInterpreter(GameResourceLocator):
             if not resolved:
                 return self.goals_achieved, resolution_result, fail
             else:
-                # print("resolution result:", resolution_result)
+                logger.info(f"Resolution result: {resolution_result}")
                 # get template:
                 feedback_template = self.action_types[parse_result['type']]['feedback_template']
                 # print("feedback template:", feedback_template)
@@ -1065,6 +1110,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         result_sequence: list = list()
         world_state_change_count: int = 0
         for cmd_idx, command in enumerate(command_sequence):
+            logger.info(f"Resolving plan action {cmd_idx}: {command}")
             # get result as list for mutability:
             result = list(self.process_action(command))
             # convert result goals achieved to list for JSON dumping:
@@ -1074,6 +1120,7 @@ class AdventureIFInterpreter(GameResourceLocator):
             # check for command failure:
             if result[2]:
                 # stop executing commands at the first failure
+                logger.info(f"Plan sequence failed at step {cmd_idx}")
                 break
             else:
                 world_state_change_count += 1

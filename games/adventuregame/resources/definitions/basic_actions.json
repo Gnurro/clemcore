@@ -6,7 +6,7 @@
     "object_pre_state": ["closed"],
     "object_post_state": "open(THING)",
     "state_changes": [
-      {"pre_state": "closed(THING)", "conditions": [], "post_state": "open(THING)"}
+      {"pre_state": "closed(THING)", "conditions": ["closed(THING)"], "post_state": "open(THING)"}
     ],
     "feedback_template": "The {{ thing }} is now open.",
     "asp": "{ action_t(TURN,open,THING):at_t(TURN,THING,ROOM),closed_t(TURN,THING) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nopen_t(TURN+1,THING) :- action_t(TURN,open,THING).\nopen_t(TURN+1,THING) :- turn(TURN), open_t(TURN,THING), not action_t(TURN,close,THING)."
@@ -18,7 +18,7 @@
     "object_pre_state": ["open"],
     "object_post_state": "closed(THING)",
     "state_changes": [
-      {"pre_state": "open(THING)", "conditions": [], "post_state": "closed(THING)"}
+      {"pre_state": "open(THING)", "conditions": ["open(THING)"], "post_state": "closed(THING)"}
     ],
     "feedback_template": "The {{ thing }} is now closed.",
     "asp": "{ action_t(TURN,close,THING):at_t(TURN,THING,ROOM),open_t(TURN,THING) } 1 :- turn(TURN), at_t(TURN,player1,ROOM), not turn_limit(TURN).\nclosed_t(TURN+1,THING) :- action_t(TURN,close,THING).\nclosed_t(TURN+1,THING) :- turn(TURN), closed_t(TURN,THING), not action_t(TURN,open,THING)."
