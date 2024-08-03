@@ -643,8 +643,17 @@ class AdventureIFInterpreter(GameResourceLocator):
             if action_dict['type'] == "take":
                 if action_dict['arg2'] == "inventory":
                     logger.info("Taking from inventory")
+                    # get inventory content:
+                    inventory_content = self.get_inventory_content()
+                    for inventory_item in inventory_content:
+                        # print(inventory_item)
+                        if self.inst_to_type_dict[inventory_item] == action_dict['arg1']:
+                            # print("already in inventory")
+                            fail_dict: dict = {'phase': "resolution", 'fail_type': "taking_from_inventory",
+                                               'arg': action_dict['arg1']}
+                            return False, f"The {self.entity_types[action_dict['arg1']]['repr_str']} is already in your inventory.", fail_dict
                     fail_dict: dict = {'phase': "parsing", 'fail_type': "taking_from_inventory", 'arg': action_dict['arg2']}
-                    return False, f"Things in your inventory are already accessible.", fail_dict
+                    return False, f"You don't need to take things from your inventory.", fail_dict
             if action_dict['arg2'] in self.repr_str_to_type_dict:
                 # convert arg1 from repr to internal type:
                 action_dict['arg2'] = self.repr_str_to_type_dict[action_dict['arg2']]
@@ -680,12 +689,11 @@ class AdventureIFInterpreter(GameResourceLocator):
         facts_to_remove = list()
         facts_to_add = list()
         for state_change in state_changes:
-            # NOTE: only resolve if all state changes go through
             # print("\ncurrent state change:", state_change)
-
+            logger.info(f"Checking state change: {state_change}")
             # GO ACTION/ROOM TRAVERSAL
             if "HERE" in state_change['pre_state'] or "HERE" in state_change['post_state']:
-
+                logger.info(f"State change is location-based")
                 # check if arg is a room type:
                 if action_dict['arg1'] not in self.room_types:
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "not_room_type", 'arg': action_dict['arg1']}
@@ -705,9 +713,17 @@ class AdventureIFInterpreter(GameResourceLocator):
                 # print("passable exits:", passable_exits)
                 if action_dict['arg1'] not in passable_exits:
                     # print(f"There is no exit to {action_dict['arg1']}!")
-                    fail_dict: dict = {'phase': "resolution", 'fail_type': "no_exit_to", 'arg': action_dict['arg1']}
-                    no_exit_to_str: str = f"There is no passage to a {self.room_types[action_dict['arg1']]['repr_str']} here."
-                    return False, no_exit_to_str, fail_dict
+                    if action_dict['arg1'] == self.room_to_type_dict[self.get_player_room()]:
+                        logger.info(f"Traversal to current room type: {self.get_player_room()}")
+                        fail_dict: dict = {'phase': "resolution", 'fail_type': "going_to_current_room", 'arg': action_dict['arg1']}
+                        no_exit_to_str: str = f"You are already in the {self.room_types[action_dict['arg1']]['repr_str']}."
+                        return False, no_exit_to_str, fail_dict
+                    else:
+                        logger.info(f"Traversal to '{action_dict['arg1']}' not possible")
+                        fail_dict: dict = {'phase': "resolution", 'fail_type': "no_exit_to", 'arg': action_dict['arg1']}
+                        no_exit_to_str: str = f"There is no passage to a {self.room_types[action_dict['arg1']]['repr_str']} here."
+                        return False, no_exit_to_str, fail_dict
+
                 elif len(passable_exits[action_dict['arg1']]) > 1:
                     # print(f"There are multiple {action_dict['arg1']}!")
                     # TODO: handle multiple instances of same entity type -> going for adjective solution for now
@@ -787,6 +803,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 state_changed = True
 
             elif "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
+                logger.info(f"State change is entity manipulation")
                 # ENTITY ACCESSIBILITY
                 # get visible room content:
                 internal_visible_contents = self.get_player_room_contents_visible()
@@ -835,7 +852,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                     else:
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                            'arg': action_dict['arg1']}
-                        return False, f"There is no {self.entity_types[arg1]['repr_str']} here.", fail_dict
+                        return False, f"You can't see a {self.entity_types[arg1]['repr_str']} here.", fail_dict
 
                 # elif len(accessible_contents[action_dict['arg1']]) > 1:
                 elif len(accessible_contents[arg1]) > 1:
@@ -867,7 +884,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                             # print(f"There is no {action_dict['arg2']}!")
                             fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                                'arg': arg2}
-                            thing_not_accessible_str: str = f"There is no {self.entity_types[arg2]['repr_str']} here."
+                            thing_not_accessible_str: str = f"You can't see a {self.entity_types[arg2]['repr_str']} here."
                             return False, thing_not_accessible_str, fail_dict
 
                     # elif len(accessible_contents[action_dict['arg2']]) > 1:
@@ -917,18 +934,24 @@ class AdventureIFInterpreter(GameResourceLocator):
                 post_state_tuple = fact_str_to_tuple(post_state)
 
                 # check conditions:
-                conditions_fulfilled: bool = False
+                conditions_fulfilled: bool = True
                 for condition in state_change['conditions']:
                     thing_condition = condition.replace("THING", arg1_inst)
+
                     if arg2_inst:
                         thing_condition = thing_condition.replace("TARGET", arg2_inst)
+                    logger.info(f"Checking state change condition: {thing_condition}")
                     # print("thing condition:", thing_condition)
                     thing_condition_tuple = fact_str_to_tuple(thing_condition)
                     # print("thing condition tuple:", thing_condition_tuple)
-                    if thing_condition_tuple in self.world_state:
+                    if thing_condition_tuple not in self.world_state:
                         # print(thing_condition_tuple, "not in world state")
-                        conditions_fulfilled = True
+                        logger.info(f"State change condition {thing_condition} is not in world state")
+                        conditions_fulfilled = False
+
                     else:
+                        logger.info(f"State change condition {thing_condition} is in world state")
+                        """
                         if arg2_inst:
                             condition_tuple = fact_str_to_tuple(thing_condition)
                             condition_pred = condition_tuple[0]
@@ -937,7 +960,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                             fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
                                                'arg': [action_dict['arg2'], pre_state]}
                             return False, response_str, fail_dict
-
+                        """
 
                 # TODO?: give better conditions feedback?
 
@@ -999,8 +1022,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                 pre_state_antecedent = "anything"
             else:
                 pre_state_antecedent = pre_state_tuple[1]
-            pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
-            response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_response}."
+            # pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
+            response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_tuple[0]}."
             fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
                                'arg': [action_dict['arg1'], pre_state]}
             return False, response_str, fail_dict

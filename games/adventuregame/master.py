@@ -174,7 +174,7 @@ class AdventureGameMaster(DialogueGameMaster):
 
             if fail:
                 self.log_to_self("action_fail", fail)
-                self.log_message_to_self(f"action_fail: {str(fail)}")
+                # self.log_message_to_self(f"action_fail: {str(fail)}")
 
             self.goals_achieved = goals_achieved
             # count goals achieved this turn:
@@ -186,7 +186,7 @@ class AdventureGameMaster(DialogueGameMaster):
 
             goal_status = {"goal_states_achieved": list(self.goals_achieved), "turn_goal_score": turn_score}
             self.log_to_self("goal_status", goal_status)
-            self.log_message_to_self(f"goal_status: {str(goal_status)}")
+            # self.log_message_to_self(f"goal_status: {str(goal_status)}")
 
             if self.if_variant == 'plan':
                 # current plan viability:
@@ -214,7 +214,7 @@ class AdventureGameMaster(DialogueGameMaster):
                     else:
                         plan_followed = 0
                     self.log_to_self("plan_followed", plan_followed)
-                    self.log_message_to_self(f"plan_followed: {str(plan_followed)}")
+                    # self.log_message_to_self(f"plan_followed: {str(plan_followed)}")
 
             # add IF response to dialog:
             self.add_user_message(self.player, if_response)
@@ -243,7 +243,7 @@ class AdventureGameScorer(GameScorer):
                       'undefined_repr_str', 'undefined_type', 'not_room_type', 'no_exit_to', 'multiple_exits_to',
                       'entity_not_accessible', 'multiple_entity_ambiguity', 'pre_state_mismatch',
                       'taking_from_inventory', 'entity_already_inventory', 'malformed_command', 'hallucinated_finish',
-                      'manipulating_room']
+                      'manipulating_room', 'going_to_current_room']
         turn_fails = []
         invalid_format: str = ""
         turn_limit_loss: bool = False
