@@ -762,6 +762,9 @@ class AdventureIFInterpreter(GameResourceLocator):
                     if conditions_fulfilled:
                         facts_to_remove.append(pre_state_tuple)
                         facts_to_add.append(post_state_tuple)
+                        if facts_to_add or facts_to_remove:
+                            if not facts_to_add == facts_to_remove:
+                                state_changed = True
 
                     # facts_to_remove.append(pre_state_tuple)
 
@@ -799,12 +802,15 @@ class AdventureIFInterpreter(GameResourceLocator):
                         if conditions_fulfilled:
                             facts_to_remove.append(pre_state_tuple)
                             facts_to_add.append(post_state_tuple)
+                            if facts_to_add or facts_to_remove:
+                                if not facts_to_add == facts_to_remove:
+                                    state_changed = True
                         # print()
 
                 # print("facts to remove after HERE block:", facts_to_remove)
                 # print("facts to add after HERE block:", facts_to_add)
 
-                state_changed = True
+                # state_changed = True
 
             elif "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
                 logger.info(f"State change is entity manipulation")
@@ -973,7 +979,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                     facts_to_remove.append(pre_state_tuple)
                     facts_to_add.append(post_state_tuple)
                     if facts_to_add or facts_to_remove:
-                        state_changed = True
+                        if not facts_to_add == facts_to_remove:
+                            state_changed = True
 
                 # facts_to_remove.append(pre_state_tuple)
                 # facts_to_add.append(post_state_tuple)
@@ -985,17 +992,17 @@ class AdventureIFInterpreter(GameResourceLocator):
         # print("facts to remove:", facts_to_remove)
         # print("facts to add:", facts_to_add)
 
-        for remove_fact in facts_to_remove:
-            if remove_fact in self.world_state:
-                self.world_state.remove(remove_fact)
-            else:
-                # TODO?: handle commands removing facts that don't hold?
-                # proper specific feedback would be needed to make this useful
-                pass
-        for add_fact in facts_to_add:
-            self.world_state.add(add_fact)
-
         if state_changed:
+            for remove_fact in facts_to_remove:
+                if remove_fact in self.world_state:
+                    self.world_state.remove(remove_fact)
+                else:
+                    # TODO?: handle commands removing facts that don't hold?
+                    # proper specific feedback would be needed to make this useful
+                    pass
+            for add_fact in facts_to_add:
+                self.world_state.add(add_fact)
+
             # add current world state to world state history:
             self.world_state_history.append(deepcopy(self.world_state))
 
@@ -1010,8 +1017,8 @@ class AdventureIFInterpreter(GameResourceLocator):
 
             # TODO?: make second return item more useful?
             logger.info(f"Resolution resulted in changed world state; "
-                        f"added facts: {facts_to_add}; "
-                        f"removed facts: {facts_to_remove}")
+                        f"removed facts: {facts_to_remove}; "
+                        f"added facts: {facts_to_add}")
             if facts_to_add:
                 return True, facts_to_add[0], {}
             # else:
@@ -1193,7 +1200,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                 logger.info(f"Last world state history item does not match post-plan world state")
 
             # pre_plan_world_state = self.world_state_history[-world_state_change_count]
-            self.world_state = self.world_state_history[-1]
+            # self.world_state = self.world_state_history[-1]
+            self.world_state = deepcopy(self.world_state_history[-1])
             # logger.info(f"Post plan world state type after reverting: {type(self.world_state)}")
 
             if self.world_state == pre_plan_world_state:

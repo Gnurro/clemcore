@@ -206,6 +206,7 @@ class AdventureGameMaster(DialogueGameMaster):
                 # self.log_message_to_self(f"plan_command_success_ratio: {str(cur_plan_success_ratio)}")
                 # plan following:
                 if len(self.plan_history) >= 2:
+                    # plan following:
                     prior_plan: list = self.plan_history[-2]
                     first_prior_plan_command: str = prior_plan[0]
                     plan_followed: int = 0
