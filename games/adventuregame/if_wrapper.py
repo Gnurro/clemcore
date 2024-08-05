@@ -570,6 +570,7 @@ class AdventureIFInterpreter(GameResourceLocator):
             parsed_command = self.act_parser.parse(action_input)
         except Exception as exception:
             # print("lark exception:", exception)
+            logger.info(f"Parsing lark exception")
             # fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': exception}
             fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': str(exception)}
             return False, f"I don't know what you mean.", fail_dict
@@ -582,15 +583,18 @@ class AdventureIFInterpreter(GameResourceLocator):
             # TODO?: differentiate kinds of malformed commands: known verb with bad syntax; 'grammar gaps'?
             if action_dict['arg1'] in self.action_types:
                 # print("defined action verb, malformed command!")
+                logger.info(f"Parsing unknown action with defined verb")
                 # print("action_dict:", action_dict)
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "malformed_command", 'arg': str(action_dict)}
                 return False, f"I don't know what you mean.", fail_dict
 
         if action_dict['type'] not in self.action_types:
             if 'arg1' in action_dict:
+                logger.info(f"Parsing undefined action with undefined verb")
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action_verb", 'arg': action_dict['arg1']}
                 return False, f"I don't know how to interpret this '{action_dict['arg1']}' action.", fail_dict
             else:
+                logger.info(f"Parsing undefined action without verb")
                 fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_action", 'arg': action_input}
                 return False, f"I don't know what you mean.", fail_dict
 
@@ -681,7 +685,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         Check action viability and change world state.
         """
         # print("action dict:", action_dict)
-
+        prior_world_state = deepcopy(self.world_state)
         # get state changes for current action:
         state_changes = self.action_types[action_dict['type']]['state_changes']
         # print("current action state changes:", state_changes)
@@ -946,11 +950,11 @@ class AdventureIFInterpreter(GameResourceLocator):
                     # print("thing condition tuple:", thing_condition_tuple)
                     if thing_condition_tuple not in self.world_state:
                         # print(thing_condition_tuple, "not in world state")
-                        logger.info(f"State change condition {thing_condition} is not in world state")
+                        logger.info(f"State change condition '{thing_condition}' is not in world state")
                         conditions_fulfilled = False
 
                     else:
-                        logger.info(f"State change condition {thing_condition} is in world state")
+                        logger.info(f"State change condition '{thing_condition}' is in world state")
                         """
                         if arg2_inst:
                             condition_tuple = fact_str_to_tuple(thing_condition)
@@ -991,10 +995,19 @@ class AdventureIFInterpreter(GameResourceLocator):
         for add_fact in facts_to_add:
             self.world_state.add(add_fact)
 
-        # add current world state to world state history:
-        self.world_state_history.append(deepcopy(self.world_state))
-
         if state_changed:
+            # add current world state to world state history:
+            self.world_state_history.append(deepcopy(self.world_state))
+
+            post_world_state = deepcopy(self.world_state)
+            # logger.info(f"Post resolution world state: {post_world_state}")
+            # logger.info(f"Prior world state: {prior_world_state}")
+            # post_resolution_changes = post_world_state.difference(self.world_state_history[-1])
+            post_resolution_changes = post_world_state.difference(prior_world_state)
+            if prior_world_state == self.world_state_history[-2]:
+                logger.info(f"Prior world state matches second to last world state in history")
+            logger.info(f"Resolution world state changes: {post_resolution_changes}")
+
             # TODO?: make second return item more useful?
             logger.info(f"Resolution resulted in changed world state; "
                         f"added facts: {facts_to_add}; "
@@ -1130,6 +1143,10 @@ class AdventureIFInterpreter(GameResourceLocator):
         """
         Execute a command sequence plan and return results up to first failure.
         """
+        logger.info(f"Plan command sequence: {command_sequence}")
+
+        pre_plan_world_state = deepcopy(self.world_state)
+
         result_sequence: list = list()
         world_state_change_count: int = 0
         for cmd_idx, command in enumerate(command_sequence):
@@ -1144,15 +1161,53 @@ class AdventureIFInterpreter(GameResourceLocator):
             if result[2]:
                 # stop executing commands at the first failure
                 logger.info(f"Plan sequence failed at step {cmd_idx}")
+                logger.info(f"Plan sequence fail dict: {result[2]}")
+                logger.info(f"Plan world state change count at failure: {world_state_change_count}")
                 break
             else:
                 world_state_change_count += 1
+                logger.info(f"New plan world state change count: {world_state_change_count}")
 
         # revert the world state to before plan execution if it changed:
         if world_state_change_count:
+            logger.info(f"Plan world state change count: {world_state_change_count}; reverting changes")
+            post_plan_world_state = deepcopy(self.world_state)
+            # logger.info(f"Post plan world state: {self.world_state}")
+            # logger.info(f"Post plan world state type before reverting: {type(self.world_state)}")
+            # logger.info(f"Prior world state: {self.world_state_history[-world_state_change_count+1]}")
+            # post_plan_changes = post_plan_world_state.difference(self.world_state_history[-world_state_change_count+1])
+            logger.info(f"World state history before reverting: {self.world_state_history}")
+            logger.info(f"World state history length before reverting: {len(self.world_state_history)}")
             self.world_state_history = self.world_state_history[:-world_state_change_count]
+            logger.info(f"World state history after reverting: {self.world_state_history}")
+            logger.info(f"World state history length after reverting: {len(self.world_state_history)}")
+
+            if self.world_state_history[-1] == pre_plan_world_state:
+                logger.info(f"Last world state history item matches pre-plan world state")
+            else:
+                logger.info(f"Last world state history item DOES NOT match pre-plan world state")
+
+            if self.world_state_history[-1] == post_plan_world_state:
+                logger.info(f"Last world state history item DOES match post-plan world state")
+            else:
+                logger.info(f"Last world state history item does not match post-plan world state")
+
             # pre_plan_world_state = self.world_state_history[-world_state_change_count]
             self.world_state = self.world_state_history[-1]
+            # logger.info(f"Post plan world state type after reverting: {type(self.world_state)}")
+
+            if self.world_state == pre_plan_world_state:
+                logger.info(f"Pre-plan world state matches reverted post-plan world state")
+            else:
+                logger.info(f"Pre-plan world state does not match reverted post-plan world state")
+
+            post_plan_changes = post_plan_world_state.difference(self.world_state)
+            # logger.info(f"Plan world state changes: {post_plan_changes}")
+            logger.info(f"Reverted plan world state changes: {post_plan_changes}")
+        else:
+            logger.info(f"Plan world state change count: {world_state_change_count}; no changes to revert")
+
+        logger.info(f"Plan result sequence: {result_sequence}")
 
         return result_sequence
 
