@@ -1,0 +1,1137 @@
+2024-08-06 10:34:59,187 - clemgame.benchmark - INFO - Only running experiment: random_grids
+2024-08-06 10:35:03,157 - backends.huggingface_local_api - INFO - Loading huggingface model config and tokenizer: Qwen1.5-72B-Chat
+2024-08-06 10:35:03,157 - backends.huggingface_local_api - INFO - Loading huggingface model config and tokenizer: Qwen1.5-72B-Chat
+2024-08-06 10:35:04,003 - backends.huggingface_local_api - INFO - Start loading huggingface model weights: Qwen1.5-72B-Chat
+2024-08-06 10:35:04,003 - backends.huggingface_local_api - INFO - Start loading huggingface model weights: Qwen1.5-72B-Chat
+2024-08-06 10:36:07,540 - backends.huggingface_local_api - INFO - Finished loading huggingface model: Qwen1.5-72B-Chat
+2024-08-06 10:36:07,540 - backends.huggingface_local_api - INFO - Finished loading huggingface model: Qwen1.5-72B-Chat
+2024-08-06 10:36:07,540 - backends.huggingface_local_api - INFO - Model device map: {'model.embed_tokens': 0, 'model.layers.0': 0, 'model.layers.1': 0, 'model.layers.2': 0, 'model.layers.3': 0, 'model.layers.4': 0, 'model.layers.5': 0, 'model.layers.6': 0, 'model.layers.7': 0, 'model.layers.8': 0, 'model.layers.9': 0, 'model.layers.10': 0, 'model.layers.11': 0, 'model.layers.12': 0, 'model.layers.13': 0, 'model.layers.14': 0, 'model.layers.15': 0, 'model.layers.16': 0, 'model.layers.17': 0, 'model.layers.18': 0, 'model.layers.19': 0, 'model.layers.20': 0, 'model.layers.21': 0, 'model.layers.22': 0, 'model.layers.23': 0, 'model.layers.24': 0, 'model.layers.25': 0, 'model.layers.26': 1, 'model.layers.27': 1, 'model.layers.28': 1, 'model.layers.29': 1, 'model.layers.30': 1, 'model.layers.31': 1, 'model.layers.32': 1, 'model.layers.33': 1, 'model.layers.34': 1, 'model.layers.35': 1, 'model.layers.36': 1, 'model.layers.37': 1, 'model.layers.38': 1, 'model.layers.39': 1, 'model.layers.40': 1, 'model.layers.41': 1, 'model.layers.42': 1, 'model.layers.43': 1, 'model.layers.44': 1, 'model.layers.45': 1, 'model.layers.46': 1, 'model.layers.47': 1, 'model.layers.48': 1, 'model.layers.49': 1, 'model.layers.50': 1, 'model.layers.51': 1, 'model.layers.52': 1, 'model.layers.53': 1, 'model.layers.54': 2, 'model.layers.55': 2, 'model.layers.56': 2, 'model.layers.57': 2, 'model.layers.58': 2, 'model.layers.59': 2, 'model.layers.60': 2, 'model.layers.61': 2, 'model.layers.62': 2, 'model.layers.63': 2, 'model.layers.64': 2, 'model.layers.65': 2, 'model.layers.66': 2, 'model.layers.67': 2, 'model.layers.68': 2, 'model.layers.69': 2, 'model.layers.70': 2, 'model.layers.71': 2, 'model.layers.72': 2, 'model.layers.73': 2, 'model.layers.74': 2, 'model.layers.75': 2, 'model.layers.76': 2, 'model.layers.77': 2, 'model.layers.78': 2, 'model.layers.79': 2, 'model.norm': 2, 'lm_head': 2}
+2024-08-06 10:36:07,540 - backends.huggingface_local_api - INFO - Model device map: {'model.embed_tokens': 0, 'model.layers.0': 0, 'model.layers.1': 0, 'model.layers.2': 0, 'model.layers.3': 0, 'model.layers.4': 0, 'model.layers.5': 0, 'model.layers.6': 0, 'model.layers.7': 0, 'model.layers.8': 0, 'model.layers.9': 0, 'model.layers.10': 0, 'model.layers.11': 0, 'model.layers.12': 0, 'model.layers.13': 0, 'model.layers.14': 0, 'model.layers.15': 0, 'model.layers.16': 0, 'model.layers.17': 0, 'model.layers.18': 0, 'model.layers.19': 0, 'model.layers.20': 0, 'model.layers.21': 0, 'model.layers.22': 0, 'model.layers.23': 0, 'model.layers.24': 0, 'model.layers.25': 0, 'model.layers.26': 1, 'model.layers.27': 1, 'model.layers.28': 1, 'model.layers.29': 1, 'model.layers.30': 1, 'model.layers.31': 1, 'model.layers.32': 1, 'model.layers.33': 1, 'model.layers.34': 1, 'model.layers.35': 1, 'model.layers.36': 1, 'model.layers.37': 1, 'model.layers.38': 1, 'model.layers.39': 1, 'model.layers.40': 1, 'model.layers.41': 1, 'model.layers.42': 1, 'model.layers.43': 1, 'model.layers.44': 1, 'model.layers.45': 1, 'model.layers.46': 1, 'model.layers.47': 1, 'model.layers.48': 1, 'model.layers.49': 1, 'model.layers.50': 1, 'model.layers.51': 1, 'model.layers.52': 1, 'model.layers.53': 1, 'model.layers.54': 2, 'model.layers.55': 2, 'model.layers.56': 2, 'model.layers.57': 2, 'model.layers.58': 2, 'model.layers.59': 2, 'model.layers.60': 2, 'model.layers.61': 2, 'model.layers.62': 2, 'model.layers.63': 2, 'model.layers.64': 2, 'model.layers.65': 2, 'model.layers.66': 2, 'model.layers.67': 2, 'model.layers.68': 2, 'model.layers.69': 2, 'model.layers.70': 2, 'model.layers.71': 2, 'model.layers.72': 2, 'model.layers.73': 2, 'model.layers.74': 2, 'model.layers.75': 2, 'model.layers.76': 2, 'model.layers.77': 2, 'model.layers.78': 2, 'model.layers.79': 2, 'model.norm': 2, 'lm_head': 2}
+2024-08-06 10:36:07,543 - clemgame.benchmark - INFO - Running benchmark for 'imagegame' (models=[Qwen1.5-72B-Chat])
+2024-08-06 10:36:07,543 - benchmark.run - INFO - Skip experiment 1 of 2: compact_grids
+2024-08-06 10:36:07,543 - benchmark.run - INFO - Run experiment 2 of 2: random_grids
+2024-08-06 10:36:07,543 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Partners: Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0 Episode: 0
+2024-08-06 10:36:07,578 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/experiment_random_grids.json
+2024-08-06 10:36:07,579 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 0 Game: 0
+2024-08-06 10:36:07,587 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_0/instance.json
+2024-08-06 10:36:07,587 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:36:07,587 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:36:07,587 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:36:07,587 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:36:07,588 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:36:17,795 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:36:17,796 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:36:17.795844
+2024-08-06 10:36:17,796 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:36:17,796 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:36:30,037 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:36:30,037 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:36:30.037095
+2024-08-06 10:36:30,038 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:36:30,038 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:36:30,038 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:36:39,347 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:36:39,348 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:36:39.347738
+2024-08-06 10:36:39,348 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:36:39,348 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:36:51,620 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:36:51,620 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:36:51.620696
+2024-08-06 10:36:51,621 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:36:51,621 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:36:51,621 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:37:01,836 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:37:01,836 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:37:01.836488
+2024-08-06 10:37:01,836 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:37:01,836 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:37:14,670 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:37:14,670 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:37:14.670576
+2024-08-06 10:37:14,670 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:37:14,671 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:37:14,671 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:37:25,140 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:37:25,141 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:37:25.140957
+2024-08-06 10:37:25,141 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:37:25,141 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:37:38,330 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:37:38,330 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:37:38.330251
+2024-08-06 10:37:38,330 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:37:38,330 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 10:37:38,330 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:37:51,003 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:37:51,003 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:37:51.003796
+2024-08-06 10:37:51,004 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:37:51,004 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:38:04,417 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:38:04,417 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:38:04.417403
+2024-08-06 10:38:04,417 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:38:04,417 - games.imagegame.master - INFO - Game turn: 5
+2024-08-06 10:38:04,417 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:38:18,697 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:38:18,697 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:38:18.697747
+2024-08-06 10:38:18,698 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 10:38:18,698 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:38:18,698 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:38:18,733 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_0/interactions.json
+2024-08-06 10:38:18,739 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_0/requests.json
+2024-08-06 10:38:18,740 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 1 Game: 1
+2024-08-06 10:38:18,755 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_1/instance.json
+2024-08-06 10:38:18,755 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:38:18,755 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:38:18,755 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:38:18,755 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:38:18,755 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:38:28,144 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:38:28,145 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:38:28.144882
+2024-08-06 10:38:28,145 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:38:28,145 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:38:40,376 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:38:40,376 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:38:40.376200
+2024-08-06 10:38:40,376 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:38:40,376 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:38:40,376 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:38:49,680 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:38:49,680 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:38:49.680600
+2024-08-06 10:38:49,680 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:38:49,680 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:39:01,954 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:39:01,954 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:01.953928
+2024-08-06 10:39:01,954 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:39:01,954 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:39:01,954 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:39:11,542 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:39:11,542 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:11.542292
+2024-08-06 10:39:11,542 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:39:11,542 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:39:24,130 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:39:24,131 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:24.130882
+2024-08-06 10:39:24,131 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:39:24,131 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:39:24,131 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:39:28,799 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:39:28,799 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:28.799039
+2024-08-06 10:39:28,799 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:39:28,799 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:39:28,806 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_1/interactions.json
+2024-08-06 10:39:28,823 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_1/requests.json
+2024-08-06 10:39:28,824 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 2 Game: 2
+2024-08-06 10:39:28,846 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_2/instance.json
+2024-08-06 10:39:28,846 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:39:28,846 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:39:28,846 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:39:28,846 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:39:28,846 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:39:38,233 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:39:38,233 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:38.233282
+2024-08-06 10:39:38,233 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:39:38,233 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:39:50,465 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:39:50,466 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:50.465691
+2024-08-06 10:39:50,466 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:39:50,466 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:39:50,466 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:39:59,774 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:39:59,775 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:39:59.774946
+2024-08-06 10:39:59,775 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:39:59,775 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:40:10,504 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:40:10,504 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:40:10.504788
+2024-08-06 10:40:10,505 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:40:10,505 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:40:10,505 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:40:20,219 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:40:20,219 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:40:20.219060
+2024-08-06 10:40:20,219 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:40:20,219 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:40:33,038 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:40:33,038 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:40:33.038285
+2024-08-06 10:40:33,038 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:40:33,038 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:40:33,038 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:40:37,708 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:40:37,708 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:40:37.708816
+2024-08-06 10:40:37,709 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:40:37,709 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:40:37,725 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_2/interactions.json
+2024-08-06 10:40:37,743 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_2/requests.json
+2024-08-06 10:40:37,743 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 3 Game: 3
+2024-08-06 10:40:37,752 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_3/instance.json
+2024-08-06 10:40:37,752 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:40:37,752 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:40:37,752 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:40:37,752 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:40:37,752 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:40:47,137 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:40:47,137 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:40:47.137321
+2024-08-06 10:40:47,137 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:40:47,137 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:40:59,372 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:40:59,372 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:40:59.372125
+2024-08-06 10:40:59,372 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:40:59,372 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:40:59,372 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:41:06,333 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:41:06,333 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:41:06.333512
+2024-08-06 10:41:06,333 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:41:06,333 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:41:12,897 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:41:12,897 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:41:12.897351
+2024-08-06 10:41:12,897 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:41:12,897 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:41:12,897 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:41:17,366 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:41:17,366 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:41:17.366815
+2024-08-06 10:41:17,367 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:41:17,367 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:41:17,414 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_3/interactions.json
+2024-08-06 10:41:17,434 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_3/requests.json
+2024-08-06 10:41:17,434 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 4 Game: 4
+2024-08-06 10:41:17,441 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_4/instance.json
+2024-08-06 10:41:17,441 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:41:17,441 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:41:17,441 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:41:17,441 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:41:17,441 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:41:26,834 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:41:26,835 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:41:26.834918
+2024-08-06 10:41:26,835 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:41:26,835 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:41:39,068 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:41:39,068 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:41:39.068315
+2024-08-06 10:41:39,068 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:41:39,068 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:41:39,068 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:41:48,375 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:41:48,375 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:41:48.375797
+2024-08-06 10:41:48,376 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:41:48,376 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:42:00,649 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:42:00,649 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:42:00.649098
+2024-08-06 10:42:00,649 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:42:00,649 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:42:00,649 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:42:10,862 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:42:10,862 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:42:10.862618
+2024-08-06 10:42:10,862 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:42:10,862 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:42:23,700 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:42:23,700 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:42:23.700360
+2024-08-06 10:42:23,700 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:42:23,700 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:42:23,700 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:42:37,577 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:42:37,577 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:42:37.577492
+2024-08-06 10:42:37,577 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:42:37,577 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:42:50,768 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:42:50,768 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:42:50.768269
+2024-08-06 10:42:50,768 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 10:42:50,768 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:42:50,768 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:42:50,785 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_4/interactions.json
+2024-08-06 10:42:50,806 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_4/requests.json
+2024-08-06 10:42:50,806 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 5 Game: 5
+2024-08-06 10:42:50,821 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_5/instance.json
+2024-08-06 10:42:50,821 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:42:50,821 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:42:50,821 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:42:50,821 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:42:50,822 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:43:00,211 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:43:00,211 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:00.210945
+2024-08-06 10:43:00,211 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:43:00,211 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:43:12,444 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:43:12,444 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:12.444009
+2024-08-06 10:43:12,444 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:43:12,444 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:43:12,444 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:43:21,633 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:43:21,633 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:21.633554
+2024-08-06 10:43:21,633 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:43:21,633 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:43:32,248 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:43:32,249 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:32.248887
+2024-08-06 10:43:32,249 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:43:32,249 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:43:32,249 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:43:41,961 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:43:41,961 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:41.961338
+2024-08-06 10:43:41,961 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:43:41,961 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:43:54,647 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:43:54,647 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:54.647200
+2024-08-06 10:43:54,647 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:43:54,647 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:43:54,647 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:43:59,319 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:43:59,319 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:43:59.319426
+2024-08-06 10:43:59,319 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:43:59,319 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:43:59,344 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_5/interactions.json
+2024-08-06 10:43:59,408 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_5/requests.json
+2024-08-06 10:43:59,408 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 6 Game: 6
+2024-08-06 10:43:59,424 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_6/instance.json
+2024-08-06 10:43:59,425 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:43:59,425 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:43:59,425 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:43:59,425 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:43:59,425 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:44:08,812 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:44:08,812 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:44:08.812678
+2024-08-06 10:44:08,812 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:44:08,812 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:44:21,047 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:44:21,047 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:44:21.047390
+2024-08-06 10:44:21,047 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:44:21,047 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:44:21,047 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:44:30,484 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:44:30,484 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:44:30.484154
+2024-08-06 10:44:30,484 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:44:30,484 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:44:41,453 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:44:41,453 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:44:41.453562
+2024-08-06 10:44:41,453 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:44:41,453 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:44:41,453 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:44:45,936 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:44:45,937 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:44:45.936811
+2024-08-06 10:44:45,937 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:44:45,937 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:44:45,946 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_6/interactions.json
+2024-08-06 10:44:45,979 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_6/requests.json
+2024-08-06 10:44:45,979 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 7 Game: 7
+2024-08-06 10:44:46,013 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_7/instance.json
+2024-08-06 10:44:46,013 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:44:46,013 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:44:46,013 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:44:46,013 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:44:46,013 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:44:55,159 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:44:55,159 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:44:55.159281
+2024-08-06 10:44:55,159 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:44:55,159 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:45:07,388 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:45:07,388 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:07.388596
+2024-08-06 10:45:07,388 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:45:07,388 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:45:07,388 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:45:14,349 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:45:14,349 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:14.348953
+2024-08-06 10:45:14,349 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:45:14,349 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:45:20,675 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:45:20,675 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:20.675509
+2024-08-06 10:45:20,675 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:45:20,675 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:45:20,675 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:45:25,150 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:45:25,150 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:25.150636
+2024-08-06 10:45:25,150 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:45:25,150 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:45:25,160 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_7/interactions.json
+2024-08-06 10:45:25,165 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_7/requests.json
+2024-08-06 10:45:25,166 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 8 Game: 8
+2024-08-06 10:45:25,172 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_8/instance.json
+2024-08-06 10:45:25,172 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:45:25,172 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:45:25,172 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:45:25,172 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:45:25,172 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:45:34,557 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:45:34,557 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:34.557130
+2024-08-06 10:45:34,557 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:45:34,557 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:45:46,789 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:45:46,789 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:46.789192
+2024-08-06 10:45:46,789 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:45:46,789 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:45:46,789 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:45:56,099 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:45:56,099 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:45:56.099624
+2024-08-06 10:45:56,099 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:45:56,099 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:46:08,374 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:46:08,374 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:46:08.374709
+2024-08-06 10:46:08,375 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:46:08,375 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:46:08,375 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:46:18,586 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:46:18,586 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:46:18.586423
+2024-08-06 10:46:18,586 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:46:18,586 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:46:31,425 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:46:31,426 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:46:31.425894
+2024-08-06 10:46:31,426 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:46:31,426 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:46:31,426 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:46:41,889 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:46:41,890 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:46:41.889757
+2024-08-06 10:46:41,890 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:46:41,890 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:46:55,079 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:46:55,079 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:46:55.079499
+2024-08-06 10:46:55,079 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:46:55,079 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 10:46:55,079 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:47:07,751 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:47:07,751 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:47:07.751273
+2024-08-06 10:47:07,751 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:47:07,751 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:47:21,291 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:47:21,291 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:47:21.291705
+2024-08-06 10:47:21,291 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:47:21,291 - games.imagegame.master - INFO - Game turn: 5
+2024-08-06 10:47:21,291 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:47:35,578 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:47:35,579 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:47:35.578748
+2024-08-06 10:47:35,579 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 10:47:35,579 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:47:35,579 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:47:35,602 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_8/interactions.json
+2024-08-06 10:47:35,625 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_8/requests.json
+2024-08-06 10:47:35,626 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 9 Game: 9
+2024-08-06 10:47:35,643 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_9/instance.json
+2024-08-06 10:47:35,643 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:47:35,643 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:47:35,643 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:47:35,643 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:47:35,643 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:47:45,028 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:47:45,028 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:47:45.028132
+2024-08-06 10:47:45,028 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:47:45,028 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:47:57,259 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:47:57,260 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:47:57.259890
+2024-08-06 10:47:57,260 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:47:57,260 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:47:57,260 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:48:06,564 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:48:06,565 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:48:06.564909
+2024-08-06 10:48:06,565 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:48:06,565 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:48:18,838 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:48:18,838 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:48:18.838541
+2024-08-06 10:48:18,838 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:48:18,838 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:48:18,839 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:48:28,432 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:48:28,433 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:48:28.432951
+2024-08-06 10:48:28,433 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:48:28,433 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:48:41,017 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:48:41,018 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:48:41.017882
+2024-08-06 10:48:41,018 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:48:41,018 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:48:41,018 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:48:51,099 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:48:51,099 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:48:51.099535
+2024-08-06 10:48:51,099 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:48:51,099 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:49:04,275 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:49:04,275 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:49:04.275354
+2024-08-06 10:49:04,275 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:49:04,275 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 10:49:04,275 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:49:14,771 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:49:14,771 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:49:14.770940
+2024-08-06 10:49:14,771 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:49:14,771 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:49:28,299 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:49:28,299 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:49:28.299325
+2024-08-06 10:49:28,299 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:49:28,299 - games.imagegame.master - INFO - Game turn: 5
+2024-08-06 10:49:28,299 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:49:39,840 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:49:39,840 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:49:39.840215
+2024-08-06 10:49:39,840 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:49:39,840 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:49:53,747 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:49:53,747 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:49:53.747374
+2024-08-06 10:49:53,747 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:49:53,747 - games.imagegame.master - INFO - Game turn: 6
+2024-08-06 10:49:53,747 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:50:05,842 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:50:05,842 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:50:05.842568
+2024-08-06 10:50:05,842 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:50:05,843 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:50:20,056 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:50:20,056 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:50:20.056352
+2024-08-06 10:50:20,056 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:50:20,056 - games.imagegame.master - INFO - Game turn: 7
+2024-08-06 10:50:20,056 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:50:32,692 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:50:32,692 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:50:32.691982
+2024-08-06 10:50:32,692 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:50:32,692 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:50:47,333 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:50:47,333 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:50:47.333608
+2024-08-06 10:50:47,333 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:50:47,333 - games.imagegame.master - INFO - Game turn: 8
+2024-08-06 10:50:47,333 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:50:52,555 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:50:52,555 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:50:52.555282
+2024-08-06 10:50:52,555 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:50:52,555 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:50:52,591 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_9/interactions.json
+2024-08-06 10:50:52,611 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_9/requests.json
+2024-08-06 10:50:52,612 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 10 Game: 10
+2024-08-06 10:50:52,644 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_10/instance.json
+2024-08-06 10:50:52,644 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:50:52,644 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:50:52,644 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:50:52,644 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:50:52,644 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:51:02,027 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:51:02,027 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:51:02.026972
+2024-08-06 10:51:02,027 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:51:02,027 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:51:14,260 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:51:14,260 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:51:14.260270
+2024-08-06 10:51:14,260 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:51:14,260 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:51:14,260 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:51:23,564 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:51:23,564 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:51:23.564363
+2024-08-06 10:51:23,564 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:51:23,564 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:51:36,075 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:51:36,075 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:51:36.075110
+2024-08-06 10:51:36,075 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:51:36,075 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:51:36,075 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:51:45,660 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:51:45,660 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:51:45.659990
+2024-08-06 10:51:45,660 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:51:45,660 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:51:58,492 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:51:58,492 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:51:58.492154
+2024-08-06 10:51:58,492 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:51:58,492 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:51:58,492 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:52:08,571 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:52:08,571 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:52:08.571063
+2024-08-06 10:52:08,571 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:52:08,571 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:52:21,755 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:52:21,755 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:52:21.755641
+2024-08-06 10:52:21,755 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:52:21,755 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 10:52:21,755 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:52:26,529 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:52:26,529 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:52:26.529129
+2024-08-06 10:52:26,529 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:52:26,529 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:52:26,539 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_10/interactions.json
+2024-08-06 10:52:26,560 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_10/requests.json
+2024-08-06 10:52:26,560 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 11 Game: 11
+2024-08-06 10:52:26,567 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_11/instance.json
+2024-08-06 10:52:26,567 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:52:26,567 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:52:26,567 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:52:26,567 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:52:26,567 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:52:35,954 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:52:35,954 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:52:35.954650
+2024-08-06 10:52:35,955 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:52:35,955 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:52:48,187 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:52:48,187 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:52:48.187028
+2024-08-06 10:52:48,187 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:52:48,187 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:52:48,187 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:52:57,494 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:52:57,495 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:52:57.494723
+2024-08-06 10:52:57,495 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:52:57,495 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:53:09,885 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:53:09,885 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:53:09.885323
+2024-08-06 10:53:09,885 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:53:09,885 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:53:09,885 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:53:19,473 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:53:19,474 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:53:19.473718
+2024-08-06 10:53:19,474 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:53:19,474 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:53:32,306 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:53:32,306 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:53:32.306792
+2024-08-06 10:53:32,307 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:53:32,307 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:53:32,307 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:53:36,977 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:53:36,978 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:53:36.977846
+2024-08-06 10:53:36,978 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:53:36,978 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:53:36,987 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_11/interactions.json
+2024-08-06 10:53:37,017 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_11/requests.json
+2024-08-06 10:53:37,017 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 12 Game: 12
+2024-08-06 10:53:37,038 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_12/instance.json
+2024-08-06 10:53:37,038 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:53:37,038 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:53:37,039 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:53:37,039 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:53:37,039 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:53:46,549 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:53:46,549 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:53:46.549142
+2024-08-06 10:53:46,549 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:53:46,549 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:53:58,784 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:53:58,784 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:53:58.784162
+2024-08-06 10:53:58,784 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:53:58,784 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:53:58,784 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:54:05,747 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:54:05,748 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:54:05.747922
+2024-08-06 10:54:05,748 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:54:05,748 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:54:12,316 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:54:12,316 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:54:12.315969
+2024-08-06 10:54:12,316 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:54:12,316 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:54:12,316 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:54:16,791 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:54:16,791 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:54:16.791255
+2024-08-06 10:54:16,791 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:54:16,791 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 10:54:16,815 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_12/interactions.json
+2024-08-06 10:54:16,854 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_12/requests.json
+2024-08-06 10:54:16,854 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 13 Game: 13
+2024-08-06 10:54:16,869 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_13/instance.json
+2024-08-06 10:54:16,869 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 10:54:16,869 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 10:54:16,869 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 10:54:16,869 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 10:54:16,869 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:54:26,262 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:54:26,262 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:54:26.262531
+2024-08-06 10:54:26,262 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:54:26,262 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:54:38,495 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:54:38,495 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:54:38.495270
+2024-08-06 10:54:38,495 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:54:38,495 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 10:54:38,495 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:54:47,806 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:54:47,806 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:54:47.806745
+2024-08-06 10:54:47,806 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:54:47,807 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:55:00,078 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:55:00,078 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:55:00.078474
+2024-08-06 10:55:00,078 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:55:00,078 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 10:55:00,078 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:55:09,665 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:55:09,665 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:55:09.665523
+2024-08-06 10:55:09,665 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:55:09,665 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:55:22,252 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:55:22,252 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:55:22.252200
+2024-08-06 10:55:22,252 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:55:22,252 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 10:55:22,252 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:55:31,960 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:55:31,960 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:55:31.960415
+2024-08-06 10:55:31,960 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:55:31,960 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:55:44,643 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:55:44,643 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:55:44.643073
+2024-08-06 10:55:44,643 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:55:44,643 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 10:55:44,643 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:55:54,244 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:55:54,245 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:55:54.244888
+2024-08-06 10:55:54,245 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:55:54,245 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:56:06,958 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:56:06,958 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:56:06.958648
+2024-08-06 10:56:06,958 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:56:06,958 - games.imagegame.master - INFO - Game turn: 5
+2024-08-06 10:56:06,958 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:56:16,672 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:56:16,672 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:56:16.672082
+2024-08-06 10:56:16,672 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:56:16,672 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:56:29,777 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:56:29,777 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:56:29.777552
+2024-08-06 10:56:29,777 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:56:29,777 - games.imagegame.master - INFO - Game turn: 6
+2024-08-06 10:56:29,777 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:56:40,528 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:56:40,528 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:56:40.528542
+2024-08-06 10:56:40,528 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:56:40,528 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:56:54,671 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:56:54,671 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:56:54.671149
+2024-08-06 10:56:54,671 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:56:54,671 - games.imagegame.master - INFO - Game turn: 7
+2024-08-06 10:56:54,671 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:57:06,195 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:57:06,195 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:57:06.195287
+2024-08-06 10:57:06,195 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:57:06,195 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:57:20,764 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:57:20,764 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:57:20.764439
+2024-08-06 10:57:20,764 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:57:20,764 - games.imagegame.master - INFO - Game turn: 8
+2024-08-06 10:57:20,764 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:57:32,447 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:57:32,448 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:57:32.447756
+2024-08-06 10:57:32,448 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:57:32,448 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:57:47,279 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:57:47,279 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:57:47.279171
+2024-08-06 10:57:47,279 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:57:47,279 - games.imagegame.master - INFO - Game turn: 9
+2024-08-06 10:57:47,279 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:57:58,869 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:57:58,869 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:57:58.869564
+2024-08-06 10:57:58,869 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:57:58,870 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:58:14,005 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:58:14,005 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:58:14.005063
+2024-08-06 10:58:14,005 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:58:14,005 - games.imagegame.master - INFO - Game turn: 10
+2024-08-06 10:58:14,005 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:58:25,768 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:58:25,768 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:58:25.768144
+2024-08-06 10:58:25,768 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:58:25,768 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:58:41,331 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:58:41,331 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:58:41.331360
+2024-08-06 10:58:41,331 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:58:41,331 - games.imagegame.master - INFO - Game turn: 11
+2024-08-06 10:58:41,331 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:58:53,081 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:58:53,082 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:58:53.081801
+2024-08-06 10:58:53,082 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:58:53,082 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:59:08,812 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:59:08,812 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:59:08.812394
+2024-08-06 10:59:08,812 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:59:08,812 - games.imagegame.master - INFO - Game turn: 12
+2024-08-06 10:59:08,812 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:59:21,697 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:59:21,697 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:59:21.697323
+2024-08-06 10:59:21,697 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:59:21,697 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 10:59:37,975 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 10:59:37,975 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:59:37.975606
+2024-08-06 10:59:37,975 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:59:37,975 - games.imagegame.master - INFO - Game turn: 13
+2024-08-06 10:59:37,975 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 10:59:51,599 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 10:59:51,600 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T10:59:51.599809
+2024-08-06 10:59:51,600 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 10:59:51,600 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:00:08,211 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:00:08,211 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:00:08.211171
+2024-08-06 11:00:08,211 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:00:08,211 - games.imagegame.master - INFO - Game turn: 14
+2024-08-06 11:00:08,211 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:00:22,108 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:00:22,108 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:00:22.108420
+2024-08-06 11:00:22,108 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:00:22,108 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:00:39,054 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:00:39,055 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:00:39.054684
+2024-08-06 11:00:39,055 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:00:39,055 - games.imagegame.master - INFO - Game turn: 15
+2024-08-06 11:00:39,055 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:00:52,870 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:00:52,870 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:00:52.870533
+2024-08-06 11:00:52,870 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:00:52,870 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:01:10,221 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:01:10,221 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:01:10.220993
+2024-08-06 11:01:10,221 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:01:10,221 - games.imagegame.master - INFO - Game turn: 16
+2024-08-06 11:01:10,221 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:01:24,236 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:01:24,237 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:01:24.236924
+2024-08-06 11:01:24,237 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:01:24,237 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:01:41,952 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:01:41,952 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:01:41.952295
+2024-08-06 11:01:41,952 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:01:41,952 - games.imagegame.master - INFO - Game turn: 17
+2024-08-06 11:01:41,952 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:01:55,845 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:01:55,845 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:01:55.845446
+2024-08-06 11:01:55,845 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:01:55,845 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:02:13,809 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:02:13,810 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:02:13.809884
+2024-08-06 11:02:13,810 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:02:13,810 - games.imagegame.master - INFO - Game turn: 18
+2024-08-06 11:02:13,810 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:02:29,009 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:02:29,009 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:02:29.009755
+2024-08-06 11:02:29,010 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:02:29,010 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:02:47,600 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:02:47,600 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:02:47.600583
+2024-08-06 11:02:47,600 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:02:47,600 - games.imagegame.master - INFO - Game turn: 19
+2024-08-06 11:02:47,601 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:03:03,607 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:03:03,607 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:03:03.607196
+2024-08-06 11:03:03,607 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:03:03,607 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:03:22,598 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:03:22,598 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:03:22.598096
+2024-08-06 11:03:22,598 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:03:22,598 - games.imagegame.master - INFO - Game turn: 20
+2024-08-06 11:03:22,598 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:03:38,825 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:03:38,825 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:03:38.825468
+2024-08-06 11:03:38,825 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:03:38,825 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:03:58,066 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:03:58,066 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:03:58.066520
+2024-08-06 11:03:58,066 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:03:58,066 - games.imagegame.master - INFO - Game turn: 21
+2024-08-06 11:03:58,067 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:04:14,287 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:04:14,288 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:04:14.287886
+2024-08-06 11:04:14,288 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:04:14,288 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:04:33,886 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:04:33,886 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:04:33.886196
+2024-08-06 11:04:33,886 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:04:33,886 - games.imagegame.master - INFO - Game turn: 22
+2024-08-06 11:04:33,886 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:04:50,298 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:04:50,298 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:04:50.298121
+2024-08-06 11:04:50,298 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:04:50,298 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:05:10,334 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:05:10,335 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:05:10.334900
+2024-08-06 11:05:10,335 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:05:10,335 - games.imagegame.master - INFO - Game turn: 23
+2024-08-06 11:05:10,335 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:05:26,674 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:05:26,674 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:05:26.674226
+2024-08-06 11:05:26,674 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:05:26,674 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:05:47,032 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:05:47,032 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:05:47.032717
+2024-08-06 11:05:47,033 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:05:47,033 - games.imagegame.master - INFO - Game turn: 24
+2024-08-06 11:05:47,033 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:06:04,743 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:06:04,744 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:06:04.743774
+2024-08-06 11:06:04,744 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:06:04,744 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:06:25,578 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:06:25,578 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:06:25.578601
+2024-08-06 11:06:25,579 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:06:25,579 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:06:25,579 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:06:25,621 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_13/interactions.json
+2024-08-06 11:06:25,690 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_13/requests.json
+2024-08-06 11:06:25,690 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 14 Game: 14
+2024-08-06 11:06:25,707 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_14/instance.json
+2024-08-06 11:06:25,708 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 11:06:25,708 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 11:06:25,708 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 11:06:25,708 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 11:06:25,708 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:06:35,093 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:06:35,093 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:06:35.093454
+2024-08-06 11:06:35,093 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:06:35,093 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:06:47,326 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:06:47,326 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:06:47.326135
+2024-08-06 11:06:47,326 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:06:47,326 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 11:06:47,326 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:06:56,629 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:06:56,629 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:06:56.629523
+2024-08-06 11:06:56,629 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:06:56,629 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:07:07,361 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:07:07,361 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:07:07.361115
+2024-08-06 11:07:07,361 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:07:07,361 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 11:07:07,361 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:07:17,571 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:07:17,571 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:07:17.571768
+2024-08-06 11:07:17,572 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:07:17,572 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:07:28,106 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:07:28,107 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:07:28.106940
+2024-08-06 11:07:28,107 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:07:28,107 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 11:07:28,107 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:07:38,568 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:07:38,568 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:07:38.568072
+2024-08-06 11:07:38,568 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:07:38,568 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:07:49,384 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:07:49,384 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:07:49.384111
+2024-08-06 11:07:49,384 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:07:49,384 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 11:07:49,384 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:08:02,053 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:08:02,053 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:08:02.053222
+2024-08-06 11:08:02,053 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:08:02,053 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:08:12,868 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:08:12,868 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:08:12.868313
+2024-08-06 11:08:12,868 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:08:12,868 - games.imagegame.master - INFO - Game turn: 5
+2024-08-06 11:08:12,868 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:08:27,150 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:08:27,150 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:08:27.150402
+2024-08-06 11:08:27,150 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 11:08:27,150 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:08:27,150 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:08:27,175 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_14/interactions.json
+2024-08-06 11:08:27,203 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_14/requests.json
+2024-08-06 11:08:27,203 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 15 Game: 15
+2024-08-06 11:08:27,211 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_15/instance.json
+2024-08-06 11:08:27,211 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 11:08:27,211 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 11:08:27,211 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 11:08:27,211 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 11:08:27,211 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:08:36,599 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:08:36,599 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:08:36.599803
+2024-08-06 11:08:36,600 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:08:36,600 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:08:48,830 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:08:48,830 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:08:48.830427
+2024-08-06 11:08:48,830 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:08:48,830 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 11:08:48,830 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:08:58,140 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:08:58,140 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:08:58.140161
+2024-08-06 11:08:58,140 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:08:58,140 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:09:10,412 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:09:10,412 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:09:10.411948
+2024-08-06 11:09:10,412 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:09:10,412 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 11:09:10,412 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:09:20,003 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:09:20,003 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:09:20.003710
+2024-08-06 11:09:20,003 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:09:20,004 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:09:32,715 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:09:32,716 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:09:32.715946
+2024-08-06 11:09:32,716 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:09:32,716 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 11:09:32,716 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:09:42,420 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:09:42,420 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:09:42.420168
+2024-08-06 11:09:42,420 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:09:42,420 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:09:55,591 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:09:55,591 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:09:55.591378
+2024-08-06 11:09:55,591 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 11:09:55,591 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:09:55,591 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:09:55,600 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_15/interactions.json
+2024-08-06 11:09:55,624 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_15/requests.json
+2024-08-06 11:09:55,624 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 16 Game: 16
+2024-08-06 11:09:55,647 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_16/instance.json
+2024-08-06 11:09:55,647 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 11:09:55,647 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 11:09:55,647 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 11:09:55,647 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 11:09:55,647 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:10:05,032 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:10:05,033 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:05.032729
+2024-08-06 11:10:05,033 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:10:05,033 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:10:17,265 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:10:17,265 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:17.265307
+2024-08-06 11:10:17,265 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:10:17,265 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 11:10:17,265 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:10:26,449 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:10:26,449 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:26.449668
+2024-08-06 11:10:26,450 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:10:26,450 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:10:37,060 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:10:37,060 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:37.060640
+2024-08-06 11:10:37,060 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:10:37,060 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 11:10:37,060 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:10:44,153 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:10:44,153 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:44.153120
+2024-08-06 11:10:44,153 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:10:44,153 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:10:50,663 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:10:50,663 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:50.663192
+2024-08-06 11:10:50,663 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:10:50,663 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 11:10:50,663 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:10:55,304 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:10:55,304 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:10:55.304078
+2024-08-06 11:10:55,304 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:10:55,304 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:10:55,329 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_16/interactions.json
+2024-08-06 11:10:55,343 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_16/requests.json
+2024-08-06 11:10:55,343 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 17 Game: 17
+2024-08-06 11:10:55,381 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_17/instance.json
+2024-08-06 11:10:55,381 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 11:10:55,381 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 11:10:55,381 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 11:10:55,381 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 11:10:55,381 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:11:04,763 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:11:04,764 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:11:04.763912
+2024-08-06 11:11:04,764 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:11:04,764 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:11:16,995 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:11:16,995 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:11:16.995534
+2024-08-06 11:11:16,995 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:11:16,995 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 11:11:16,996 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:11:26,302 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:11:26,303 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:11:26.302936
+2024-08-06 11:11:26,303 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:11:26,303 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:11:37,033 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:11:37,034 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:11:37.033871
+2024-08-06 11:11:37,034 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:11:37,034 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 11:11:37,034 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:11:46,620 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:11:46,620 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:11:46.620305
+2024-08-06 11:11:46,620 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:11:46,620 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:11:57,028 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:11:57,028 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:11:57.027993
+2024-08-06 11:11:57,028 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:11:57,028 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 11:11:57,028 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:12:07,106 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:12:07,106 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:12:07.106668
+2024-08-06 11:12:07,107 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:12:07,107 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:12:18,523 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:12:18,523 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:12:18.523434
+2024-08-06 11:12:18,523 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:12:18,523 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 11:12:18,523 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:12:31,319 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:12:31,319 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:12:31.319248
+2024-08-06 11:12:31,319 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:12:31,319 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:12:44,487 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:12:44,487 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:12:44.487482
+2024-08-06 11:12:44,487 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 11:12:44,487 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:12:44,487 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:12:44,514 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_17/interactions.json
+2024-08-06 11:12:44,529 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_17/requests.json
+2024-08-06 11:12:44,529 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 18 Game: 18
+2024-08-06 11:12:44,569 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_18/instance.json
+2024-08-06 11:12:44,569 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 11:12:44,569 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 11:12:44,569 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 11:12:44,569 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 11:12:44,570 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:12:53,957 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:12:53,957 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:12:53.957649
+2024-08-06 11:12:53,958 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:12:53,958 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:13:06,190 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:13:06,190 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:13:06.190638
+2024-08-06 11:13:06,190 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:13:06,190 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 11:13:06,190 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:13:15,501 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:13:15,501 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:13:15.501780
+2024-08-06 11:13:15,502 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:13:15,502 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:13:27,781 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:13:27,781 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:13:27.781383
+2024-08-06 11:13:27,781 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:13:27,781 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 11:13:27,781 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:13:37,996 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:13:37,996 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:13:37.996562
+2024-08-06 11:13:37,996 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:13:37,996 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:13:50,831 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:13:50,831 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:13:50.831713
+2024-08-06 11:13:50,832 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:13:50,832 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 11:13:50,832 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:14:01,295 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:14:01,295 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:14:01.295820
+2024-08-06 11:14:01,296 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:14:01,296 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:14:14,483 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:14:14,484 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:14:14.483726
+2024-08-06 11:14:14,484 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:14:14,484 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 11:14:14,484 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:14:27,163 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:14:27,163 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:14:27.163438
+2024-08-06 11:14:27,163 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:14:27,163 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:14:40,577 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:14:40,577 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:14:40.577395
+2024-08-06 11:14:40,577 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:14:40,577 - games.imagegame.master - INFO - Game turn: 5
+2024-08-06 11:14:40,577 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:14:54,859 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:14:54,859 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:14:54.859015
+2024-08-06 11:14:54,859 - games.imagegame.master - INFO - imagegame: Logged invalid format action (GM->GM).
+2024-08-06 11:14:54,859 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:14:54,859 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:14:54,892 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_18/interactions.json
+2024-08-06 11:14:54,915 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_18/requests.json
+2024-08-06 11:14:54,916 - games.imagegame.master - INFO - Activity: imagegame Experiment: random_grids Episode: 19 Game: 19
+2024-08-06 11:14:54,922 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_19/instance.json
+2024-08-06 11:14:54,922 - clemgame.clemgame - INFO - Player InstructionFollower, Qwen1.5-72B-Chat
+2024-08-06 11:14:54,922 - clemgame.clemgame - INFO - Player InstructionGiver, Qwen1.5-72B-Chat
+2024-08-06 11:14:54,923 - games.imagegame.master - INFO - imagegame: Logged players metadata.
+2024-08-06 11:14:54,923 - games.imagegame.master - INFO - Game turn: 0
+2024-08-06 11:14:54,923 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:15:04,309 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:15:04,310 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:15:04.309849
+2024-08-06 11:15:04,310 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:15:04,310 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:15:16,543 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:15:16,543 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:15:16.543580
+2024-08-06 11:15:16,543 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:15:16,543 - games.imagegame.master - INFO - Game turn: 1
+2024-08-06 11:15:16,543 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:15:25,855 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:15:25,855 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:15:25.855507
+2024-08-06 11:15:25,855 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:15:25,855 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:15:38,129 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:15:38,129 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:15:38.129843
+2024-08-06 11:15:38,130 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:15:38,130 - games.imagegame.master - INFO - Game turn: 2
+2024-08-06 11:15:38,130 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:15:47,723 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:15:47,723 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:15:47.723219
+2024-08-06 11:15:47,723 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:15:47,723 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:16:00,311 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:16:00,311 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:16:00.311373
+2024-08-06 11:16:00,311 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:16:00,311 - games.imagegame.master - INFO - Game turn: 3
+2024-08-06 11:16:00,311 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:16:10,017 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:16:10,017 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:16:10.017612
+2024-08-06 11:16:10,017 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:16:10,018 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 2).
+2024-08-06 11:16:22,697 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 2->GM).
+2024-08-06 11:16:22,697 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:16:22.697083
+2024-08-06 11:16:22,697 - games.imagegame.master - INFO - imagegame: Logged parse action (GM->GM).
+2024-08-06 11:16:22,697 - games.imagegame.master - INFO - Game turn: 4
+2024-08-06 11:16:22,697 - games.imagegame.master - INFO - imagegame: Logged send message action (GM->Player 1).
+2024-08-06 11:16:27,468 - games.imagegame.master - INFO - imagegame: Logged get message action (Player 1->GM).
+2024-08-06 11:16:27,468 - games.imagegame.master - INFO - imagegame: Logged a call with timestamp 2024-08-06T11:16:27.468031
+2024-08-06 11:16:27,468 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:16:27,468 - games.imagegame.master - WARNING - Invalid player identifiers, html builder won't work.
+2024-08-06 11:16:27,474 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_19/interactions.json
+2024-08-06 11:16:27,506 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/episode_19/requests.json
+2024-08-06 11:16:27,524 - games.imagegame.master - INFO - Results file stored to /project/jjordan/clembench-multilingual/results/v1.5_multiling_liberal/te_google/Qwen1.5-72B-Chat-t0.0--Qwen1.5-72B-Chat-t0.0/imagegame/1_random_grids/experiment_random_grids.json
+2024-08-06 11:16:27,524 - clemgame.benchmark - INFO - Run imagegame took 0:40:19.981631
