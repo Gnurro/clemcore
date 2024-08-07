@@ -54,6 +54,7 @@ class AdventureGameMaster(DialogueGameMaster):
         # keep history of plans:
         if self.if_variant == 'plan':
             self.plan_history: list = list()
+            self.plan_success_ratio_history: list = list()
 
         self.goals_required = set(self.game_instance['goal_state'])
         self.goals_required_cnt = len(self.goals_required)
@@ -80,8 +81,6 @@ class AdventureGameMaster(DialogueGameMaster):
 
     def _validate_player_response(self, player: Player, utterance: str) -> bool:
         # Check responses for specific players
-        # TODO?: reprompting? -> different from IF action processing responses?
-        # TODO: check if invalid responses are recorded for inspection if this returns False
         if player == self.player:
             # Check rule: utterance starts with IF >
             if not utterance.startswith(">"):
@@ -116,15 +115,23 @@ class AdventureGameMaster(DialogueGameMaster):
         """
         if self.if_variant == 'plan':
             new_plan = utterance.split("\nNext actions:")[1]
-            plan_sequence = [command.strip() for command in new_plan.split(", ")]
+            plan_sequence = [command.strip() for command in new_plan.split(",")]
             self.plan_history.append(plan_sequence)
             self.log_to_self(f"turn_plan", plan_sequence)
 
         return utterance, True
 
+    def _on_before_turn(self, turn_idx: int):
+        """
+        After turn increment, before prompting.
+        Logs current turn index for convenient comparison of runtime logs and transcripts.
+        """
+        self.log_message_to_self(f"Turn {turn_idx}")
+
     def _does_game_proceed(self) -> bool:
         """
-        Template method: must be implemented
+        Checks if game proceeds.
+        Game does NOT proceed due to: Invalid output format, achieving all adventure goals or reaching the turn limit.
         """
         # if self.success == False:
         #    return False
@@ -191,19 +198,18 @@ class AdventureGameMaster(DialogueGameMaster):
             if self.if_variant == 'plan':
                 # current plan viability:
                 cur_plan: list = self.plan_history[-1]
-                # self.log_message_to_self(f"current_plan: {str(cur_plan)}")
+                self.log_to_self("current_plan", f"{str(cur_plan)}")
                 cur_plan_command_count: int = len(cur_plan)
                 self.log_to_self("plan_length", cur_plan_command_count)
                 cur_plan_results: list = self.if_interpreter.execute_plan_sequence(cur_plan)
                 self.log_to_self("plan_results", cur_plan_results)
-                # self.log_message_to_self(f"plan_results: {str(cur_plan_results)}")
                 cur_plan_successes: list = list()
                 for plan_result in cur_plan_results:
                     if not plan_result[2]:
                         cur_plan_successes.append(plan_result)
                 cur_plan_success_ratio: float = len(cur_plan_successes) / cur_plan_command_count
                 self.log_to_self("plan_command_success_ratio", cur_plan_success_ratio)
-                # self.log_message_to_self(f"plan_command_success_ratio: {str(cur_plan_success_ratio)}")
+                self.plan_success_ratio_history.append(cur_plan_success_ratio)
                 # plan following:
                 if len(self.plan_history) >= 2:
                     # plan following:
@@ -215,7 +221,6 @@ class AdventureGameMaster(DialogueGameMaster):
                     else:
                         plan_followed = 0
                     self.log_to_self("plan_followed", plan_followed)
-                    # self.log_message_to_self(f"plan_followed: {str(plan_followed)}")
 
             # add IF response to dialog:
             self.add_user_message(self.player, if_response)
@@ -240,12 +245,13 @@ class AdventureGameScorer(GameScorer):
         adventure_info: dict = episode_interactions['adventure_info']
         turn_scores = []
         # IF interpreter interaction fail phases/types; first two must be 'parsing' and 'resolution' phases:
-        fail_types = ['parsing', 'resolution', 'lark_exception', 'undefined_action_verb', 'undefined_action',
-                      'undefined_repr_str', 'undefined_type', 'not_room_type', 'no_exit_to', 'multiple_exits_to',
-                      'entity_not_accessible', 'multiple_entity_ambiguity', 'pre_state_mismatch',
-                      'taking_from_inventory', 'entity_already_inventory', 'malformed_command', 'hallucinated_finish',
-                      'manipulating_room', 'going_to_current_room']
+        fail_types = ['parsing', 'resolution', 'lark_exception', 'malformed_command', 'undefined_action_verb',
+                      'undefined_action', 'undefined_repr_str', 'manipulating_room', 'undefined_argument_type',
+                      'taking_from_inventory', 'other_room_argument', 'not_room_type', 'going_to_current_room',
+                      'no_exit_to', 'multiple_exits_to', 'entity_already_inventory', 'thing_arg1_room',
+                      'entity_not_accessible', 'multiple_entity_ambiguity', 'thing_arg2_room', 'pre_state_mismatch']
         turn_fails = []
+        turn_hallucinations = []
         invalid_format: str = ""
         turn_limit_loss: bool = False
         successfully_finished = False
@@ -257,16 +263,20 @@ class AdventureGameScorer(GameScorer):
             turn_score = {"request_count": 1, "goal_score": 0}  # only one request per turn for now: reprompting pending
             turn_fail = {fail_type: 0 for fail_type in fail_types}
             plan_record = {plan_type: 0 for plan_type in plan_types}
+            hallucination = 0
             for event in turn:
                 action = event["action"]
 
                 if action["type"] == "invalid_format":
                     invalid_format = action['content']
 
+                if action["type"] == "hallucinated_finish":
+                    hallucination = 1
+
                 if action["type"] == "action_fail":
                     # check for unlisted fail type:
                     if action['content']['fail_type'] not in fail_types:
-                        print(f"Unlisted fail type: {action['content']['fail_type']}")
+                        logger.info(f"Unlisted fail type: {action['content']['fail_type']}")
                     # record IF interaction fail phase:
                     turn_fail[action['content']['phase']] = 1
                     # record IF interaction fail type:
@@ -305,6 +315,7 @@ class AdventureGameScorer(GameScorer):
             else:
                 self.log_turn_score(turn_idx, 'command_tag_missing', 0)
                 self.log_turn_score(turn_idx, 'next_actions_missing', 0)
+            self.log_turn_score(turn_idx, 'hallucination', hallucination)
             # IF interaction fails:
             self.log_turn_score(turn_idx, 'action_parsing_fail', turn_fail["parsing"])
             self.log_turn_score(turn_idx, 'action_resolution_fail', turn_fail["resolution"])
@@ -315,6 +326,7 @@ class AdventureGameScorer(GameScorer):
 
             turn_scores.append(turn_score)
             turn_fails.append(turn_fail)
+            turn_hallucinations.append(hallucination)
 
             # planning records:
             for plan_type in plan_types:
@@ -339,6 +351,9 @@ class AdventureGameScorer(GameScorer):
         self.log_episode_score(metrics.METRIC_REQUEST_SUCCESS, parsed_request_count / request_count)
 
         # episode-level action fail scores:
+        hallucination_count = sum(turn_hallucinations)
+        self.log_episode_score('hallucination_count', hallucination_count)
+
         action_parsing_fail_count = sum([turn["parsing"] for turn in turn_fails])
         self.log_episode_score('action_parsing_fail', action_parsing_fail_count)
 
@@ -429,7 +444,6 @@ class AdventureGameScorer(GameScorer):
         bad_plan_followed_ratio = bad_plan_followed_sum / turn_count
         bad_plan_dismiss_ratio = 1 - bad_plan_followed_ratio
         self.log_episode_score('bad_plan_dismiss_ratio', bad_plan_dismiss_ratio)
-
 
 
 class AdventureGameBenchmark(GameBenchmark):

@@ -571,7 +571,6 @@ class AdventureIFInterpreter(GameResourceLocator):
         except Exception as exception:
             # print("lark exception:", exception)
             logger.info(f"Parsing lark exception")
-            # fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': exception}
             fail_dict: dict = {'phase': "parsing", 'fail_type': "lark_exception", 'arg': str(exception)}
             return False, f"I don't know what you mean.", fail_dict
         # print("parsed command:", parsed_command)
@@ -640,7 +639,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                     return False, fail_response, fail_dict
             else:
                 logger.info(f"Action arg1 {action_dict['arg1']} is not a room either")
-                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_type", 'arg': action_dict['arg1']}
+                fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_argument_type", 'arg': action_dict['arg1']}
                 return False, f"I don't know what a '{action_dict['arg1']}' is.", fail_dict
 
         if 'arg2' in action_dict:
@@ -1038,12 +1037,17 @@ class AdventureIFInterpreter(GameResourceLocator):
             else:
                 logger.info(f"Pre-state {pre_state_tuple} in world state")
 
-            if len(pre_state_tuple) >= 3 and pre_state_tuple[2] == "ANY":
-                pre_state_antecedent = "anything"
+            if len(pre_state_tuple) >= 3:
+                if pre_state_tuple[2] == "ANY":
+                    pre_state_antecedent = "anything"
+                else:
+                    pre_state_antecedent = pre_state_tuple[1]
+                pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
+                response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_response}."
+            elif action_dict['type'] in ["open", "close"]:
+                response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_tuple[0]}."
             else:
-                pre_state_antecedent = pre_state_tuple[1]
-            # pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
-            response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_tuple[0]}."
+                response_str = f"You can't do that with the {self.entity_types[action_dict['arg1']]['repr_str']} right now."
             fail_dict: dict = {'phase': "resolution", 'fail_type': "pre_state_mismatch",
                                'arg': [action_dict['arg1'], pre_state]}
             return False, response_str, fail_dict
@@ -1112,7 +1116,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 # changed_visibles = prior_visibles.difference(post_visibles)
                 changed_visibles = post_visibles.difference(prior_visibles)
                 # print("Changed visibles:", changed_visibles)
-                if changed_visibles:
+                if changed_visibles and not parse_result['type'] == "go":
                     # print("visibles changed!")
                     visible_content_state_strs = list()
                     for thing in changed_visibles:
@@ -1384,10 +1388,19 @@ if __name__ == "__main__":
 
     print(test_interpreter.get_full_room_desc())
 
-    turn_1 = test_interpreter.process_action("take from wardrobe")
+    turn_1 = test_interpreter.process_action("open wardrobe")
     print(turn_1)
     print()
 
+    print(test_interpreter.get_full_room_desc())
+    print(test_interpreter.get_full_room_desc())
+    print(test_interpreter.get_full_room_desc())
+
+    """
+    turn_1 = test_interpreter.process_action("take from wardrobe")
+    print(turn_1)
+    print()
+    """
     """
     turn_1_world_state = deepcopy(test_interpreter.world_state)
 
