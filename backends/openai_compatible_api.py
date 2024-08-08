@@ -42,7 +42,7 @@ class GenericOpenAIModel(backends.Model):
         super().__init__(model_spec)
         self.client = client
 
-    @retry(tries=3, delay=0, logger=logger)
+    @retry(tries=5, delay=90, logger=logger)
     @ensure_messages_format
     def generate_response(self, messages: List[Dict]) -> Tuple[str, Any, str]:
         """

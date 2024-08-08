@@ -407,7 +407,8 @@ class AdventureGameScorer(GameScorer):
         # self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
 
         # combine goals/turns into overall rating:
-        full_rating = achieved_ratio * turn_ratio
+        # full_rating = achieved_ratio * turn_ratio
+        full_rating = achieved_ratio * (1 - turn_ratio)
 
         # log full rating as main score:
         # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
