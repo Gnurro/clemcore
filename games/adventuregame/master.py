@@ -415,8 +415,8 @@ class AdventureGameScorer(GameScorer):
         if successfully_finished:
             self.log_episode_score(metrics.BENCH_SCORE, full_rating)
         else:
-            # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
-            self.log_episode_score(metrics.BENCH_SCORE, 0.0)
+            self.log_episode_score(metrics.BENCH_SCORE, np.nan)
+            # self.log_episode_score(metrics.BENCH_SCORE, 0.0)
 
         # invalid format aborted:
         if invalid_format:
