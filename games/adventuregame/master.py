@@ -391,6 +391,13 @@ class AdventureGameScorer(GameScorer):
         else:
             self.log_episode_score("turn_ratio", np.nan)
 
+        # finishing speed rating:
+        finish_speed_rating = 1 - turn_ratio
+        if successfully_finished:
+            self.log_episode_score("finish_speed", finish_speed_rating)
+        else:
+            self.log_episode_score("finish_speed", np.nan)
+
         # get final score:
         # final_goal_score = turn_scores[-1]["goal_score"]
         final_goal_score = len(final_goals_achieved)
@@ -399,25 +406,11 @@ class AdventureGameScorer(GameScorer):
         achieved_ratio = final_goal_score / goal_count
         self.log_episode_score("achieved_goal_ratio", achieved_ratio)
 
-        # get goal achievement rating:
-        goal_rating = final_goal_score / len(turn_scores)
-
-        # log goal rating as main score:
-        # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
-        # self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
-
         # combine goals/turns into overall rating:
-        # full_rating = achieved_ratio * turn_ratio
         full_rating = achieved_ratio * (1 - turn_ratio)
 
         # log full rating as main score:
-        # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
-        if successfully_finished:
-            self.log_episode_score(metrics.BENCH_SCORE, full_rating)
-        else:
-            # self.log_episode_score(metrics.BENCH_SCORE, np.nan)
-            self.log_episode_score(metrics.BENCH_SCORE, goal_rating)
-            # self.log_episode_score(metrics.BENCH_SCORE, 0.0)
+        self.log_episode_score(metrics.BENCH_SCORE, full_rating)
 
         # invalid format aborted:
         if invalid_format:
@@ -445,6 +438,7 @@ class AdventureGameScorer(GameScorer):
         # bad plan following:
         bad_plan_followed_sum = sum([turn["bad_plan_followed"] for turn in plan_records])
         bad_plan_followed_ratio = bad_plan_followed_sum / turn_count
+        self.log_episode_score('bad_plan_follow_ratio', bad_plan_followed_ratio)
         bad_plan_dismiss_ratio = 1 - bad_plan_followed_ratio
         self.log_episode_score('bad_plan_dismiss_ratio', bad_plan_dismiss_ratio)
 
