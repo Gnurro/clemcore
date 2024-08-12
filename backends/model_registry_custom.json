@@ -35,6 +35,11 @@
     "backend": "openai_compatible"
   },
   {
+    "model_name": "Meta-Llama-3.1-405B-Instruct-Turbo-TogetherAI",
+    "model_id": "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+    "backend": "openai_compatible"
+  },
+  {
     "model_name": "gemma-2-9b-it-GGUF-q5",
     "backend": "llamacpp",
     "huggingface_id": "bartowski/gemma-2-9b-it-GGUF",
