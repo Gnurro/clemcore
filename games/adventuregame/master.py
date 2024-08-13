@@ -364,6 +364,10 @@ class AdventureGameScorer(GameScorer):
             type_fail_count = sum([turn[fail_type] for turn in turn_fails])
             self.log_episode_score(fail_type, type_fail_count)
 
+        fail_sum = action_resolution_fail_count + action_resolution_fail_count
+        sucessful_actions = parsed_request_count - fail_sum
+        self.log_episode_score('successful_actions', sucessful_actions)
+
         # record turn limit exceeding loss:
         if turn_limit_loss:
             self.log_episode_score("turn_limit_loss", 1)
@@ -407,10 +411,12 @@ class AdventureGameScorer(GameScorer):
         self.log_episode_score("achieved_goal_ratio", achieved_ratio)
 
         # combine goals/turns into overall rating:
-        full_rating = achieved_ratio * (1 - turn_ratio)
+        partial_success_rating = achieved_ratio * (1 - turn_ratio)
+        # scale full rating to 0-100:
+        partial_success_rating = partial_success_rating * 100
 
         # log full rating as main score:
-        self.log_episode_score(metrics.BENCH_SCORE, full_rating)
+        self.log_episode_score(metrics.BENCH_SCORE, partial_success_rating)
 
         # invalid format aborted:
         if invalid_format:
