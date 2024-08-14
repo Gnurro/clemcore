@@ -1028,6 +1028,19 @@
     "parameters": "123B"
   },
   {
+    "model_name": "Meta-Llama-3.1-70B-Instruct-GGUF-q4",
+    "backend": "llamacpp",
+    "huggingface_id": "lmstudio-community/Meta-Llama-3.1-70B-Instruct-GGUF",
+    "filename": "*Q4_K_M.gguf",
+    "premade_chat_template": true,
+    "bos_string": "<|begin_of_text|>",
+    "eos_string": "<|eot_id|>",
+    "eos_to_cull": "<|eot_id|>",
+    "release_date": "29-07-24",
+    "open_weight": true,
+    "parameters": "70B"
+  },
+  {
     "model_name": "Qwen1.5-0.5B-Chat-GGUF-q8",
     "backend": "llamacpp",
     "huggingface_id": "Qwen/Qwen1.5-0.5B-Chat-GGUF",
