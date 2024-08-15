@@ -364,7 +364,7 @@ class AdventureGameScorer(GameScorer):
             type_fail_count = sum([turn[fail_type] for turn in turn_fails])
             self.log_episode_score(fail_type, type_fail_count)
 
-        fail_sum = action_resolution_fail_count + action_resolution_fail_count
+        fail_sum = action_parsing_fail_count + action_resolution_fail_count
         sucessful_actions = parsed_request_count - fail_sum
         self.log_episode_score('successful_actions', sucessful_actions)
 
@@ -389,7 +389,7 @@ class AdventureGameScorer(GameScorer):
         # range of possible number of turns:
         turn_range = adventure_info['max_turns'] - adventure_info['optimal_turns']
         # ratio of turns taken / possible turn range:
-        turn_ratio = 1 - turns_over_par / turn_range
+        turn_ratio = 1 - (turns_over_par / turn_range)
         if successfully_finished:
             self.log_episode_score("turn_ratio", turn_ratio)
         else:
@@ -411,26 +411,38 @@ class AdventureGameScorer(GameScorer):
         self.log_episode_score("achieved_goal_ratio", achieved_ratio)
 
         # combine goals/turns into overall rating:
-        partial_success_rating = achieved_ratio * (1 - turn_ratio)
+        """
+        total_turn_ratio = turn_count / adventure_info['max_turns']
+        turn_factor = 1 - total_turn_ratio
+        partial_success_rating = achieved_ratio * turn_factor
+        """
+        partial_success_rating = achieved_ratio
         # scale full rating to 0-100:
         partial_success_rating = partial_success_rating * 100
 
         # log full rating as main score:
         self.log_episode_score(metrics.BENCH_SCORE, partial_success_rating)
+        """
+        if not invalid_format:
+            self.log_episode_score(metrics.BENCH_SCORE, partial_success_rating)
+        else:
+            self.log_episode_score(metrics.BENCH_SCORE, np.nan)
+        """
 
         # invalid format aborted:
         if invalid_format:
             self.log_episode_score(metrics.METRIC_ABORTED, 1)
-        else:
-            self.log_episode_score(metrics.METRIC_ABORTED, 0)
-
-        # log successful/failed play:
-        if successfully_finished:
-            self.log_episode_score(metrics.METRIC_SUCCESS, 1)
+            self.log_episode_score(metrics.METRIC_SUCCESS, 0)
             self.log_episode_score(metrics.METRIC_LOSE, 0)
         else:
-            self.log_episode_score(metrics.METRIC_SUCCESS, 0)
-            self.log_episode_score(metrics.METRIC_LOSE, 1)
+            self.log_episode_score(metrics.METRIC_ABORTED, 0)
+            # log successful/failed play:
+            if successfully_finished:
+                self.log_episode_score(metrics.METRIC_SUCCESS, 1)
+                self.log_episode_score(metrics.METRIC_LOSE, 0)
+            else:
+                self.log_episode_score(metrics.METRIC_SUCCESS, 0)
+                self.log_episode_score(metrics.METRIC_LOSE, 1)
 
         # planning episode-level:
         # plan following:
