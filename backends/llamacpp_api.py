@@ -42,6 +42,10 @@ def load_model(model_spec: backends.ModelSpec) -> Any:
     if hasattr(model_spec, 'additional_files'):
         additional_files = model_spec.additional_files
 
+    context_limit = 0  # default to 0, as this leads to using the maximum as defined by model metadata
+    if hasattr(model_spec, 'context_limit'):
+        context_limit = model_spec.context_limit
+
     if 'requires_api_key' in model_spec and model_spec['requires_api_key']:
         # load HF API key:
         creds = backends.load_credentials("huggingface")
@@ -49,17 +53,17 @@ def load_model(model_spec: backends.ModelSpec) -> Any:
 
         if additional_files:
             model = Llama.from_pretrained(hf_repo_id, hf_model_file, additional_files=additional_files, token=api_key,
-                                          verbose=False, n_gpu_layers=gpu_layers_offloaded, n_ctx=0)
+                                          verbose=False, n_gpu_layers=gpu_layers_offloaded, n_ctx=context_limit)
         else:
             model = Llama.from_pretrained(hf_repo_id, hf_model_file, token=api_key, verbose=False,
-                                          n_gpu_layers=gpu_layers_offloaded, n_ctx=0)
+                                          n_gpu_layers=gpu_layers_offloaded, n_ctx=context_limit)
     else:
         if additional_files:
             model = Llama.from_pretrained(hf_repo_id, hf_model_file, additional_files=additional_files, verbose=False,
-                                          n_gpu_layers=gpu_layers_offloaded, n_ctx=0)
+                                          n_gpu_layers=gpu_layers_offloaded, n_ctx=context_limit)
         else:
             model = Llama.from_pretrained(hf_repo_id, hf_model_file, verbose=False, n_gpu_layers=gpu_layers_offloaded,
-                                          n_ctx=0)
+                                          n_ctx=context_limit)
 
     logger.info(f"Finished loading llama.cpp model: {model_spec.model_name}")
 
