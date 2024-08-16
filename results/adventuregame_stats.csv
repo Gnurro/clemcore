@@ -1,45 +1,4 @@
 game,model,metric,mean,std,var,median,max,min,skew
-adventuregame,LLaMA2-13B-Tiefighter,Aborted,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Lose,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Main Score,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Parsed Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Played,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Request Success Ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,Violated Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,achieved_goal_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,action_parsing_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,action_resolution_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,entity_not_accessible,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,finish_speed,,,,,,,
-adventuregame,LLaMA2-13B-Tiefighter,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,no_exit_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,successful_actions,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,turn_limit_loss,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,turn_ratio,,,,,,,
-adventuregame,LLaMA2-13B-Tiefighter,turns_over_par,,,,,,,
-adventuregame,LLaMA2-13B-Tiefighter,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,undefined_action_verb,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,LLaMA2-13B-Tiefighter,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,Llama-3-70B-Instruct,Aborted,0.640625,0.4836103475464191,0.23387896825396823,1.0,1.0,0.0,-0.600323343199961
 adventuregame,Llama-3-70B-Instruct,Lose,0.015625,0.125,0.015625,0.0,1.0,0.0,8.000000000000002
 adventuregame,Llama-3-70B-Instruct,Main Score,47.916666666666664,43.9957509572546,1935.6261022927688,33.33333333333333,100.0,0.0,0.07549209638555918
@@ -286,88 +245,6 @@ adventuregame,Mistral-Large-Instruct-2407,undefined_action,0.0,0.0,0.0,0.0,0.0,0
 adventuregame,Mistral-Large-Instruct-2407,undefined_action_verb,2.21875,2.4460447503336726,5.983134920634918,2.0,10.0,0.0,0.7455999047788558
 adventuregame,Mistral-Large-Instruct-2407,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,Mistral-Large-Instruct-2407,undefined_repr_str,0.046875,0.21304202581158665,0.04538690476190476,0.0,1.0,0.0,4.391076677965311
-adventuregame,Qwen1.5-72B-Chat,Aborted,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Lose,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Main Score,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Parsed Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Played,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Request Success Ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,Violated Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen1.5-72B-Chat,achieved_goal_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,action_parsing_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,action_resolution_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen1.5-72B-Chat,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,entity_not_accessible,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,finish_speed,,,,,,,
-adventuregame,Qwen1.5-72B-Chat,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,no_exit_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,successful_actions,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,turn_limit_loss,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,turn_ratio,,,,,,,
-adventuregame,Qwen1.5-72B-Chat,turns_over_par,,,,,,,
-adventuregame,Qwen1.5-72B-Chat,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,undefined_action_verb,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen1.5-72B-Chat,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Aborted,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen2-72B-Instruct,Lose,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Main Score,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Parsed Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Played,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen2-72B-Instruct,Request Success Ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,Violated Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen2-72B-Instruct,achieved_goal_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,action_parsing_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,action_resolution_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,Qwen2-72B-Instruct,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,entity_not_accessible,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,finish_speed,,,,,,,
-adventuregame,Qwen2-72B-Instruct,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,hallucination_count,0.015625,0.125,0.015625000000000003,0.0,1.0,0.0,8.000000000000002
-adventuregame,Qwen2-72B-Instruct,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,no_exit_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,successful_actions,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,turn_limit_loss,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,turn_ratio,,,,,,,
-adventuregame,Qwen2-72B-Instruct,turns_over_par,,,,,,,
-adventuregame,Qwen2-72B-Instruct,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,undefined_action_verb,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,Qwen2-72B-Instruct,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,gemma-2-9b-it-q5,Aborted,0.421875,0.49776285231308404,0.24776785714285712,0.0,1.0,0.0,0.3240304531186598
 adventuregame,gemma-2-9b-it-q5,Lose,0.5,0.5039526306789696,0.2539682539682539,0.5,1.0,0.0,0.0
 adventuregame,gemma-2-9b-it-q5,Main Score,21.874999999999996,33.184190154205595,1101.1904761904757,0.0,100.0,0.0,1.2453278495533362
@@ -491,47 +368,6 @@ adventuregame,gemma2-9b-it,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,gemma2-9b-it,undefined_action_verb,7.40625,8.551837730653485,73.13392857142854,5.5,30.0,0.0,0.9902451726022645
 adventuregame,gemma2-9b-it,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,gemma2-9b-it,undefined_repr_str,0.0625,0.24397501823713325,0.0595238095238095,0.0,1.0,0.0,3.7021241477015328
-adventuregame,openchat3.5,Aborted,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,openchat3.5,Lose,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,Main Score,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,Parsed Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,Played,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,openchat3.5,Request Success Ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,Violated Request Count,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,openchat3.5,achieved_goal_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,action_parsing_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,action_resolution_fail,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
-adventuregame,openchat3.5,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,entity_not_accessible,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,finish_speed,,,,,,,
-adventuregame,openchat3.5,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,no_exit_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,successful_actions,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,turn_limit_loss,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,turn_ratio,,,,,,,
-adventuregame,openchat3.5,turns_over_par,,,,,,,
-adventuregame,openchat3.5,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,undefined_action_verb,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-adventuregame,openchat3.5,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,openchat3.5-GGUF-q5,Aborted,0.328125,0.4732423621500228,0.22395833333333331,0.0,1.0,0.0,0.7498033524837572
 adventuregame,openchat3.5-GGUF-q5,Lose,0.640625,0.4836103475464192,0.23387896825396834,1.0,1.0,0.0,-0.600323343199961
 adventuregame,openchat3.5-GGUF-q5,Main Score,10.937499999999998,23.04407822947596,531.029541446208,0.0,100.0,0.0,2.434940224205831
