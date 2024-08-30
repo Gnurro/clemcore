@@ -1,5 +1,35 @@
 [
   {
+    "model_name": "Qwen2-72B-Instruct",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/Qwen2-72B-Instruct",
+    "premade_chat_template": true,
+    "eos_to_cull": "<\\|im_end\\|>",
+    "release_date": "28-05-24",
+    "open_weight": true,
+    "parameters": "72B"
+  },
+  {
+    "model_name": "Qwen1.5-72B-Chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/Qwen1.5-72B-Chat",
+    "premade_chat_template": true,
+    "eos_to_cull": "<\\|im_end\\|>",
+    "release_date": "30-01-24",
+    "open_weight": true,
+    "parameters": "72B"
+  },
+  {
+    "model_name": "openchat_3.5",
+    "backend": "huggingface_local",
+    "huggingface_id": "openchat/openchat_3.5",
+    "premade_chat_template": true,
+    "eos_to_cull": "<\\|end_of_turn\\|>",
+    "release_date": "30-10-23",
+    "open_weight": true,
+    "parameters": "7B"
+  },
+  {
     "model_name": "Llama-3-8B-Instruct-Groq",
     "model_id": "llama3-8b-8192",
     "backend": "openai_compatible"
