@@ -137,19 +137,2195 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the pillow in the freezer, the broom on the bed and the plate on the table.<br/><br/>You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a broom closet, a living room and a kitchen here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the pillow in the freezer, the broom on the bed and the plate on the table.<br/><br/>You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a kitchen, a broom closet and a living room here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> enter broom closet<br/>Next actions: take broom, exit broom closet, enter bedroom, put broom on bed, exit bedroom, enter kitchen, open freezer, put pillow in freezer, exit kitchen, enter living room, take plate, exit living room, enter kitchen, put plate on table.||</p>
+        <p>&gt; enter kitchen<br/>Next actions: check if freezer is in kitchen, go to freezer, get pillow from living room, put pillow in freezer, go to broom closet, get broom, go to bedroom, put broom on bed, go to dining room, get plate, go to kitchen, put plate on table.</p>
     </div>
 
-    <div speaker="Game Master: invalid_format" class="msg gm-gm">
-        <p>command_tag_missing</p>
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;check if freezer is in kitchen&#x27;, &#x27;go to freezer&#x27;, &#x27;get pillow from living room&#x27;, &#x27;put pillow in freezer&#x27;, &#x27;go to broom closet&#x27;, &#x27;get broom&#x27;, &#x27;go to bedroom&#x27;, &#x27;put broom on bed&#x27;, &#x27;go to dining room&#x27;, &#x27;get plate&#x27;, &#x27;go to kitchen&#x27;, &#x27;put plate on table.&#x27;]</p>
     </div>
 
-    <div speaker="Game Master: invalid_format" class="msg gm-gm">
-        <p>command_tag_missing</p>
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;check if freezer is in kitchen&#x27;, &#x27;go to freezer&#x27;, &#x27;get pillow from living room&#x27;, &#x27;put pillow in freezer&#x27;, &#x27;go to broom closet&#x27;, &#x27;get broom&#x27;, &#x27;go to bedroom&#x27;, &#x27;put broom on bed&#x27;, &#x27;go to dining room&#x27;, &#x27;get plate&#x27;, &#x27;go to kitchen&#x27;, &#x27;put plate on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;check&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a hallway and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for freezer<br/>Next actions: If freezer is found, open it and check if it&#x27;s empty or not. If it&#x27;s empty, proceed to get the pillow from the living room. If it&#x27;s not empty, find another place to put the pillow or wait until the items inside are removed. After placing the pillow, go to the broom closet to get the broom. Then head to the bedroom to put the broom on the bed. Lastly, go to the dining room to</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If freezer is found&#x27;, &quot;open it and check if it&#x27;s empty or not. If it&#x27;s empty&quot;, &quot;proceed to get the pillow from the living room. If it&#x27;s not empty&quot;, &#x27;find another place to put the pillow or wait until the items inside are removed. After placing the pillow&#x27;, &#x27;go to the broom closet to get the broom. Then head to the bedroom to put the broom on the bed. Lastly&#x27;, &#x27;go to the dining room to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If freezer is found&#x27;, &quot;open it and check if it&#x27;s empty or not. If it&#x27;s empty&quot;, &quot;proceed to get the pillow from the living room. If it&#x27;s not empty&quot;, &#x27;find another place to put the pillow or wait until the items inside are removed. After placing the pillow&#x27;, &#x27;go to the broom closet to get the broom. Then head to the bedroom to put the broom on the bed. Lastly&#x27;, &#x27;go to the dining room to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search for freezer<br/>Next actions: If the freezer is found, check if it&#x27;s empty or not. If it&#x27;s empty, proceed to get the pillow from the living room. If it&#x27;s not empty, find another place to put the pillow or wait until the items inside are removed. After placing the pillow, go to the broom closet to get the broom. Then head to the bedroom to put the broom on the bed. Lastly, go to the dining room to get the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the freezer is found&#x27;, &quot;check if it&#x27;s empty or not. If it&#x27;s empty&quot;, &quot;proceed to get the pillow from the living room. If it&#x27;s not empty&quot;, &#x27;find another place to put the pillow or wait until the items inside are removed. After placing the pillow&#x27;, &#x27;go to the broom closet to get the broom. Then head to the bedroom to put the broom on the bed. Lastly&#x27;, &#x27;go to the dining room to get the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the freezer is found&#x27;, &quot;check if it&#x27;s empty or not. If it&#x27;s empty&quot;, &quot;proceed to get the pillow from the living room. If it&#x27;s not empty&quot;, &#x27;find another place to put the pillow or wait until the items inside are removed. After placing the pillow&#x27;, &#x27;go to the broom closet to get the broom. Then head to the bedroom to put the broom on the bed. Lastly&#x27;, &#x27;go to the dining room to get the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine room for freezer<br/>Next actions: Once the freezer is located, check its contents. If it&#x27;s empty, retrieve the pillow from the living room and place it in the freezer. If the freezer isn&#x27;t empty, consider alternative locations for the pillow or wait for the items inside to be removed. After securing the pillow, head to the broom closet to obtain the broom. Next, go to the bedroom and place the broom on the bed. Finally, visit the dining room to</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Once the freezer is located&#x27;, &quot;check its contents. If it&#x27;s empty&quot;, &quot;retrieve the pillow from the living room and place it in the freezer. If the freezer isn&#x27;t empty&quot;, &#x27;consider alternative locations for the pillow or wait for the items inside to be removed. After securing the pillow&#x27;, &#x27;head to the broom closet to obtain the broom. Next&#x27;, &#x27;go to the bedroom and place the broom on the bed. Finally&#x27;, &#x27;visit the dining room to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Once the freezer is located&#x27;, &quot;check its contents. If it&#x27;s empty&quot;, &quot;retrieve the pillow from the living room and place it in the freezer. If the freezer isn&#x27;t empty&quot;, &#x27;consider alternative locations for the pillow or wait for the items inside to be removed. After securing the pillow&#x27;, &#x27;head to the broom closet to obtain the broom. Next&#x27;, &#x27;go to the bedroom and place the broom on the bed. Finally&#x27;, &#x27;visit the dining room to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check room for freezer<br/>Next actions: Upon finding the freezer, inspect its contents. If it&#x27;s empty, go to the living room to fetch the pillow and place it inside the freezer. If the freezer has items in it, think of an alternative spot for the pillow or wait until the items are removed. After dealing with the pillow, head to the broom closet to collect the broom. Then, make your way to the bedroom and put the broom on the bed. Lastly,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;inspect its contents. If it&#x27;s empty&quot;, &#x27;go to the living room to fetch the pillow and place it inside the freezer. If the freezer has items in it&#x27;, &#x27;think of an alternative spot for the pillow or wait until the items are removed. After dealing with the pillow&#x27;, &#x27;head to the broom closet to collect the broom. Then&#x27;, &#x27;make your way to the bedroom and put the broom on the bed. Lastly&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;inspect its contents. If it&#x27;s empty&quot;, &#x27;go to the living room to fetch the pillow and place it inside the freezer. If the freezer has items in it&#x27;, &#x27;think of an alternative spot for the pillow or wait until the items are removed. After dealing with the pillow&#x27;, &#x27;head to the broom closet to collect the broom. Then&#x27;, &#x27;make your way to the bedroom and put the broom on the bed. Lastly&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inspect kitchen for freezer<br/>Next actions: After identifying the freezer, assess whether it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it in the freezer. Should the freezer already contain items, consider other locations for the pillow or wait for the current contents to be removed. Following the pillow placement, move to the broom closet to acquire the broom. Next, go to the bedroom and position the broom on the bed. Lastly,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After identifying the freezer&#x27;, &quot;assess whether it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it in the freezer. Should the freezer already contain items&#x27;, &#x27;consider other locations for the pillow or wait for the current contents to be removed. Following the pillow placement&#x27;, &#x27;move to the broom closet to acquire the broom. Next&#x27;, &#x27;go to the bedroom and position the broom on the bed. Lastly&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inspect&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After identifying the freezer&#x27;, &quot;assess whether it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it in the freezer. Should the freezer already contain items&#x27;, &#x27;consider other locations for the pillow or wait for the current contents to be removed. Following the pillow placement&#x27;, &#x27;move to the broom closet to acquire the broom. Next&#x27;, &#x27;go to the bedroom and position the broom on the bed. Lastly&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inspect&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look around kitchen for freezer<br/>Next actions: Upon locating the freezer, determine if it&#x27;s empty. If it&#x27;s vacant, go to the living room to get the pillow and place it inside the freezer. If the freezer is occupied, think of an alternative location for the pillow or wait until the items inside are removed. After handling the pillow, head to the broom closet to pick up the broom. Then, go to the bedroom and lay the broom on the bed. Finally,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;determine if it&#x27;s empty. If it&#x27;s vacant&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is occupied&#x27;, &#x27;think of an alternative location for the pillow or wait until the items inside are removed. After handling the pillow&#x27;, &#x27;head to the broom closet to pick up the broom. Then&#x27;, &#x27;go to the bedroom and lay the broom on the bed. Finally&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;determine if it&#x27;s empty. If it&#x27;s vacant&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is occupied&#x27;, &#x27;think of an alternative location for the pillow or wait until the items inside are removed. After handling the pillow&#x27;, &#x27;head to the broom closet to pick up the broom. Then&#x27;, &#x27;go to the bedroom and lay the broom on the bed. Finally&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scan kitchen for freezer<br/>Next actions: After spotting the freezer, evaluate if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to fetch the pillow and insert it into the freezer. If the freezer is already filled, contemplate an alternate spot for the pillow or wait until the existing items are taken out. Following the pillow&#x27;s placement, venture to the broom closet to seize the broom. Then, advance to the bedroom and situate the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After spotting the freezer&#x27;, &quot;evaluate if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to fetch the pillow and insert it into the freezer. If the freezer is already filled&#x27;, &quot;contemplate an alternate spot for the pillow or wait until the existing items are taken out. Following the pillow&#x27;s placement&quot;, &#x27;venture to the broom closet to seize the broom. Then&#x27;, &#x27;advance to the bedroom and situate the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scan&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After spotting the freezer&#x27;, &quot;evaluate if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to fetch the pillow and insert it into the freezer. If the freezer is already filled&#x27;, &quot;contemplate an alternate spot for the pillow or wait until the existing items are taken out. Following the pillow&#x27;s placement&quot;, &#x27;venture to the broom closet to seize the broom. Then&#x27;, &#x27;advance to the bedroom and situate the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scan&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; investigate kitchen for freezer<br/>Next actions: Once the freezer is identified, ascertain if it&#x27;s empty. If it&#x27;s vacant, head to the living room to collect the pillow and deposit it in the freezer. If the freezer is already in use, deliberate on a different location for the pillow or wait until the current contents are cleared. After managing the pillow, journey to the broom closet to seize the broom. Subsequently, make your way to the bedroom and place the broom on the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Once the freezer is identified&#x27;, &quot;ascertain if it&#x27;s empty. If it&#x27;s vacant&quot;, &#x27;head to the living room to collect the pillow and deposit it in the freezer. If the freezer is already in use&#x27;, &#x27;deliberate on a different location for the pillow or wait until the current contents are cleared. After managing the pillow&#x27;, &#x27;journey to the broom closet to seize the broom. Subsequently&#x27;, &#x27;make your way to the bedroom and place the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;investigate&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Once the freezer is identified&#x27;, &quot;ascertain if it&#x27;s empty. If it&#x27;s vacant&quot;, &#x27;head to the living room to collect the pillow and deposit it in the freezer. If the freezer is already in use&#x27;, &#x27;deliberate on a different location for the pillow or wait until the current contents are cleared. After managing the pillow&#x27;, &#x27;journey to the broom closet to seize the broom. Subsequently&#x27;, &#x27;make your way to the bedroom and place the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;investigate&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; find freezer in kitchen<br/>Next actions: Upon discovering the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to gather the pillow and store it in the freezer. If the freezer is already utilized, ponder over an alternative spot for the pillow or wait until the existing items are removed. After dealing with the pillow, travel to the broom closet to grab the broom. Then, head to the bedroom and position the broom on the bed. Finally</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon discovering the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to gather the pillow and store it in the freezer. If the freezer is already utilized&#x27;, &#x27;ponder over an alternative spot for the pillow or wait until the existing items are removed. After dealing with the pillow&#x27;, &#x27;travel to the broom closet to grab the broom. Then&#x27;, &#x27;head to the bedroom and position the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon discovering the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to gather the pillow and store it in the freezer. If the freezer is already utilized&#x27;, &#x27;ponder over an alternative spot for the pillow or wait until the existing items are removed. After dealing with the pillow&#x27;, &#x27;travel to the broom closet to grab the broom. Then&#x27;, &#x27;head to the bedroom and position the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;find&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; locate freezer<br/>Next actions: After successfully locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, proceed to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Lastly,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After successfully locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;proceed to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Lastly&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;locate&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After successfully locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;proceed to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Lastly&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;locate&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; try to find the freezer<br/>Next actions: Upon finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;try&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;try&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; attempt to find the freezer<br/>Next actions: After identifying the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After identifying the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;attempt&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After identifying the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;attempt&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; seek freezer<br/>Next actions: Upon locating the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to fetch the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, proceed to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Finally,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to fetch the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;proceed to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;seek&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to fetch the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;proceed to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;seek&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for the freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Lastly</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Lastly&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Lastly&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search kitchen for freezer<br/>Next actions: Upon locating the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; explore kitchen for freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Finally</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;explore&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;explore&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check kitchen for freezer<br/>Next actions: Upon locating the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; survey kitchen for freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Finally</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;survey&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 19</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;survey&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scout kitchen for freezer<br/>Next actions: Upon locating the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scout&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 20</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scout&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; find freezer in kitchen<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Finally</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 21</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;find&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for freezer in kitchen<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 22</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scan kitchen for freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Finally</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scan&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 23</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scan&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check kitchen area for freezer<br/>Next actions: Upon locating the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use, think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;proceed to the living room to retrieve the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;think of an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 24</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine kitchen for freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed. Finally</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed. Finally&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 25</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search kitchen thoroughly for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 26</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; systematically look for freezer in kitchen<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;systematically&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 27</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;systematically&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; methodically inspect kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;methodically&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 28</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;methodically&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; carefully look for freezer in kitchen<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;carefully&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 29</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;carefully&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check every corner of the kitchen for freezer<br/>Next actions: Upon locating the freezer, verify if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;verify if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 30</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inspect every part of the kitchen for freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inspect&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 31</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inspect&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; thoroughly examine kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;thoroughly&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 32</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;thoroughly&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; meticulously look for freezer in kitchen<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;meticulously&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 33</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;meticulously&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; carefully and exhaustively search kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;carefully&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 34</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;carefully&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; diligently search kitchen for freezer<br/>Next actions: After finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;diligently&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 35</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;diligently&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search kitchen for freezer with great care<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 36</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look around kitchen for freezer<br/>Next actions: Upon spotting the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon spotting the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon spotting the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 37</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scan kitchen for freezer<br/>Next actions: After identifying the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;After identifying the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scan&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;After identifying the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 38</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scan&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; visually inspect kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;visually&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 39</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;visually&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check kitchen visually for freezer<br/>Next actions: Upon spotting the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon spotting the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon spotting the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 40</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look throughout kitchen for freezer<br/>Next actions: Upon finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 41</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; survey kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;survey&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 42</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;survey&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scan the kitchen for freezer<br/>Next actions: Upon finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scan&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 43</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scan&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine the kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 44</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inspect the kitchen for freezer<br/>Next actions: Upon finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the bed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inspect&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the bed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 45</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inspect&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; thoroughly look through the kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;thoroughly&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 46</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;thoroughly&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; carefully look through the kitchen for freezer<br/>Next actions: Upon finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;carefully&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 47</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;carefully&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; methodically search the kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;methodically&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 48</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;methodically&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; systematically look through the kitchen for freezer<br/>Next actions: Upon finding the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;systematically&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon finding the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 49</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;systematically&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check each area of the kitchen for freezer<br/>Next actions: Upon locating the freezer, check if it&#x27;s empty. If it&#x27;s unoccupied, go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use, consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed, go to the broom closet to collect the broom. Then, head to the bedroom and put the broom on</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon locating the freezer&#x27;, &quot;check if it&#x27;s empty. If it&#x27;s unoccupied&quot;, &#x27;go to the living room to get the pillow and place it inside the freezer. If the freezer is already in use&#x27;, &#x27;consider an alternative location for the pillow or wait until the current contents are removed. Once the pillow is placed&#x27;, &#x27;go to the broom closet to collect the broom. Then&#x27;, &#x27;head to the bedroom and put the broom on&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: turn_limit_reached" class="msg gm-gm">
+        <p>50</p>
     </div>
 
     <div speaker="Game Master: game_result" class="msg gm-gm">

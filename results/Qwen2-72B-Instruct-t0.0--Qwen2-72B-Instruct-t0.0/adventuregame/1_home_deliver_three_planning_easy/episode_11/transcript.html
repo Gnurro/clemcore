@@ -137,11 +137,951 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the book on the table, the plate on the table and the mop on the table.<br/><br/>You are in a living room now. There are a book, a chair, a side table, a shelf and a couch. The book is on the side table. There are passages to a kitchen, a bedroom and a hallway here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the book on the table, the plate on the table and the mop on the table.<br/><br/>You are in a living room now. There are a couch, a chair, a book, a shelf and a side table. The book is on the side table. There are passages to a hallway, a bedroom and a kitchen here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> take book from side table<br/>Next actions: go to kitchen, take plate from kitchen, go back to living room, put book on table, put plate on table, go to hallway, take mop from hallway, go back to living room, put mop on table||</p>
+        <p>&gt; take book from side table<br/>Next actions: go to the kitchen, take plate from kitchen, go to bedroom, take mop from bedroom, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to the kitchen&#x27;, &#x27;take plate from kitchen&#x27;, &#x27;go to bedroom&#x27;, &#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to the kitchen&#x27;, &#x27;take plate from kitchen&#x27;, &#x27;go to bedroom&#x27;, &#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;You are in a kitchen now. There are a counter, a plate, a cupboard and a table. The plate is on the counter. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.&#x27;, {}], [[], &#x27;You need to be more specific.&#x27;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;thing_arg2_room&#x27;, &#x27;arg&#x27;: &#x27;kitchen&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.125</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the book. In your inventory you have a book.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: take plate from kitchen, go to bedroom, take mop from bedroom, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take plate from kitchen&#x27;, &#x27;go to bedroom&#x27;, &#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take plate from kitchen&#x27;, &#x27;go to bedroom&#x27;, &#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;You need to be more specific.&#x27;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;thing_arg2_room&#x27;, &#x27;arg&#x27;: &#x27;kitchen&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter, a plate, a cupboard and a table. The plate is on the counter. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take plate from counter<br/>Next actions: go to bedroom, take mop from bedroom, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to bedroom&#x27;, &#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to bedroom&#x27;, &#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;There is no passage to a bedroom here.&#x27;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;bedroom&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the plate. In your inventory you have a plate and a book.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to bedroom<br/>Next actions: take mop from bedroom, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;bedroom&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take mop from bedroom&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;You are not in a bedroom.&#x27;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;other_room_argument&#x27;, &#x27;arg&#x27;: &#x27;bedroom&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: check if there&#x27;s a mop in the living room, if not, go to hallway and check there, then put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;check if there&#x27;s a mop in the living room&quot;, &#x27;if not&#x27;, &#x27;go to hallway and check there&#x27;, &#x27;then put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;check if there&#x27;s a mop in the living room&quot;, &#x27;if not&#x27;, &#x27;go to hallway and check there&#x27;, &#x27;then put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 15\n\ncheck if there&#x27;s a mop in the living room\n              ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a shelf and a side table. There are passages to a hallway, a bedroom and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look around for mop<br/>Next actions: if the mop is not found in the living room, go to the bedroom, then the hallway, until the mop is found, then go back to the living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the living room&#x27;, &#x27;go to the bedroom&#x27;, &#x27;then the hallway&#x27;, &#x27;until the mop is found&#x27;, &#x27;then go back to the living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the living room&#x27;, &#x27;go to the bedroom&#x27;, &#x27;then the hallway&#x27;, &#x27;until the mop is found&#x27;, &#x27;then go back to the living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine room for mop<br/>Next actions: if the mop is not found in the living room, go to the bedroom, then the hallway, until the mop is found, then go back to the living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the living room&#x27;, &#x27;go to the bedroom&#x27;, &#x27;then the hallway&#x27;, &#x27;until the mop is found&#x27;, &#x27;then go back to the living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the living room&#x27;, &#x27;go to the bedroom&#x27;, &#x27;then the hallway&#x27;, &#x27;until the mop is found&#x27;, &#x27;then go back to the living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search for mop<br/>Next actions: if the mop is not found in the living room, go to the bedroom, then the hallway, until the mop is found, then go back to the living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the living room&#x27;, &#x27;go to the bedroom&#x27;, &#x27;then the hallway&#x27;, &#x27;until the mop is found&#x27;, &#x27;then go back to the living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the living room&#x27;, &#x27;go to the bedroom&#x27;, &#x27;then the hallway&#x27;, &#x27;until the mop is found&#x27;, &#x27;then go back to the living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to bedroom<br/>Next actions: look for mop in bedroom, if not found, go to hallway and look for mop there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;look for mop in bedroom&#x27;, &#x27;if not found&#x27;, &#x27;go to hallway and look for mop there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;look for mop in bedroom&#x27;, &#x27;if not found&#x27;, &#x27;go to hallway and look for mop there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;look&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a bedroom now. There are a wardrobe and a bed. The wardrobe is closed. There is a passage to a living room here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for mop in bedroom<br/>Next actions: if the mop is not found in the bedroom, go to the hallway and look for mop there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the bedroom&#x27;, &#x27;go to the hallway and look for mop there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the bedroom&#x27;, &#x27;go to the hallway and look for mop there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search bedroom for mop<br/>Next actions: if the mop is not found in the bedroom, go to the hallway and search there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the bedroom&#x27;, &#x27;go to the hallway and search there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not found in the bedroom&#x27;, &#x27;go to the hallway and search there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check under bed for mop<br/>Next actions: if the mop is not under the bed, check the wardrobe, if it&#x27;s still not found, go to the hallway and check there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not under the bed&#x27;, &#x27;check the wardrobe&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the hallway and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not under the bed&#x27;, &#x27;check the wardrobe&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the hallway and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to hallway<br/>Next actions: look for mop in the hallway, if not found, go back to the living room and check again, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;look for mop in the hallway&#x27;, &#x27;if not found&#x27;, &#x27;go back to the living room and check again&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;hallway&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;look for mop in the hallway&#x27;, &#x27;if not found&#x27;, &#x27;go back to the living room and check again&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;look&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: check the living room thoroughly for the mop, if not found, go to the kitchen and check there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;check the living room thoroughly for the mop&#x27;, &#x27;if not found&#x27;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;check the living room thoroughly for the mop&#x27;, &#x27;if not found&#x27;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;check&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a shelf and a side table. There are passages to a hallway, a bedroom and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check behind couch for mop<br/>Next actions: if the mop is not behind the couch, check behind the chair, if it&#x27;s still not found, go to the kitchen and check there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;check behind the chair&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;check behind the chair&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look behind couch for mop<br/>Next actions: if the mop is not behind the couch, look behind the chair, if it&#x27;s still not found, go to the kitchen and look there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;look behind the chair&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and look there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;look behind the chair&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and look there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; investigate behind couch for mop<br/>Next actions: if the mop is not behind the couch, investigate behind the chair, if it&#x27;s still not found, go to the kitchen and investigate there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;investigate behind the chair&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and investigate there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;investigate&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;investigate behind the chair&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and investigate there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;investigate&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; move to the area behind the couch and see if the mop is there<br/>Next actions: if the mop is not behind the couch, move to the area behind the chair and see if the mop is there, if it&#x27;s still not found, go to the kitchen and check there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;move to the area behind the chair and see if the mop is there&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;move&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the mop is not behind the couch&#x27;, &#x27;move to the area behind the chair and see if the mop is there&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;move&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go behind couch<br/>Next actions: check if the mop is behind the couch, if not, go behind the chair and check there, if it&#x27;s still not found, go to the kitchen and check there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;check if the mop is behind the couch&#x27;, &#x27;if not&#x27;, &#x27;go behind the chair and check there&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_repr_str&#x27;, &#x27;arg&#x27;: &#x27;behind couch&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;check if the mop is behind the couch&#x27;, &#x27;if not&#x27;, &#x27;go behind the chair and check there&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>10</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;check&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 19</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know what &#x27;behind couch&#x27; means.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to the location of the couch<br/>Next actions: once at the couch, check the space behind it for the mop, if not found, go to the location of the chair and check behind it, if it&#x27;s still not found, go to the kitchen and check there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once at the couch&#x27;, &#x27;check the space behind it for the mop&#x27;, &#x27;if not found&#x27;, &#x27;go to the location of the chair and check behind it&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;malformed_command&#x27;, &#x27;arg&#x27;: &quot;{&#x27;type&#x27;: &#x27;unknown&#x27;, &#x27;arg1&#x27;: &#x27;go&#x27;}&quot;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once at the couch&#x27;, &#x27;check the space behind it for the mop&#x27;, &#x27;if not found&#x27;, &#x27;go to the location of the chair and check behind it&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and check there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 20</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know what you mean.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; approach the couch<br/>Next actions: once close to the couch, inspect the area behind it for the mop, if not found, approach the chair and inspect the area behind it, if it&#x27;s still not found, go to the kitchen and inspect there, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once close to the couch&#x27;, &#x27;inspect the area behind it for the mop&#x27;, &#x27;if not found&#x27;, &#x27;approach the chair and inspect the area behind it&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and inspect there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;approach&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once close to the couch&#x27;, &#x27;inspect the area behind it for the mop&#x27;, &#x27;if not found&#x27;, &#x27;approach the chair and inspect the area behind it&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and inspect there&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 21</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;approach&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; walk towards the couch<br/>Next actions: once near the couch, look down and see if the mop is visible behind it, if not found, walk towards the chair and look down behind it, if it&#x27;s still not found, go to the kitchen and look around, once mop is found, go back to living room, put book on table, put plate on table, put mop on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once near the couch&#x27;, &#x27;look down and see if the mop is visible behind it&#x27;, &#x27;if not found&#x27;, &#x27;walk towards the chair and look down behind it&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and look around&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;walk&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once near the couch&#x27;, &#x27;look down and see if the mop is visible behind it&#x27;, &#x27;if not found&#x27;, &#x27;walk towards the chair and look down behind it&#x27;, &quot;if it&#x27;s still not found&quot;, &#x27;go to the kitchen and look around&#x27;, &#x27;once mop is found&#x27;, &#x27;go back to living room&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;put mop on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 22</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;walk&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>It seems like the game doesn&#x27;t recognize movement commands. Let me try a different approach.<br/><br/>&gt; inventory<br/>Next actions: Since direct movement commands aren&#x27;t working, I&#x27;ll try to use other commands to find the mop. I&#x27;ll check my inventory first to see if I already have the mop without realizing it. If not, I&#x27;ll try to interact with objects in the room to see if I can find clues about the mop&#x27;s location.</p>
     </div>
 
     <div speaker="Game Master: invalid_format" class="msg gm-gm">

@@ -137,11 +137,771 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the book on the shelf, the sandwich on the table and the broom on the counter.<br/><br/>You are in a living room now. There are a couch, a shelf, a chair and a side table. There are passages to a kitchen, a bedroom and a hallway here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the book on the shelf, the sandwich on the table and the broom on the counter.<br/><br/>You are in a living room now. There are a couch, a side table, a chair and a shelf. There are passages to a bedroom, a kitchen and a hallway here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> go to kitchen<br/>Next actions: find sandwich, put sandwich on table||</p>
+        <p>&gt; go to kitchen<br/>Next actions: find sandwich, take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a table, a cupboard and a counter. The cupboard is closed. There are passages to a pantry, a living room and a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: find book, take book</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find book&#x27;, &#x27;take book&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find book&#x27;, &#x27;take book&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now open. There is a plate in the cupboard.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; close cupboard<br/>Next actions: go to shelf, put book on shelf</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to shelf&#x27;, &#x27;put book on shelf&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to shelf&#x27;, &#x27;put book on shelf&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what room &#x27;shelf&#x27; is.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;not_room_type&#x27;, &#x27;arg&#x27;: &#x27;shelf&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now closed.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to shelf<br/>Next actions: put book on shelf</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;put book on shelf&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;not_room_type&#x27;, &#x27;arg&#x27;: &#x27;shelf&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;put book on shelf&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;You can&#x27;t see a book here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know what room &#x27;shelf&#x27; is.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: put book on shelf</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;put book on shelf&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;put book on shelf&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;You can&#x27;t see a book here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a side table, a chair and a shelf. There are passages to a bedroom, a kitchen and a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put book on shelf<br/>Next actions: go to kitchen, find sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to kitchen&#x27;, &#x27;find sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to kitchen&#x27;, &#x27;find sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;You are in a kitchen now. There are a table, a cupboard and a counter. The cupboard is closed. There are passages to a pantry, a living room and a hallway here.&#x27;, {}], [[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.5</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You can&#x27;t see a book here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: find sandwich, take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a table, a cupboard and a counter. The cupboard is closed. There are passages to a pantry, a living room and a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: find sandwich, take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now open. There is a plate in the cupboard.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; close cupboard<br/>Next actions: go to table, find sandwich, take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to table&#x27;, &#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to table&#x27;, &#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>3</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what room &#x27;table&#x27; is.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;not_room_type&#x27;, &#x27;arg&#x27;: &#x27;table&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now closed.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to table<br/>Next actions: find sandwich, take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;not_room_type&#x27;, &#x27;arg&#x27;: &#x27;table&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know what room &#x27;table&#x27; is.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: find sandwich, take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;going_to_current_room&#x27;, &#x27;arg&#x27;: &#x27;kitchen&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find sandwich&#x27;, &#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are already in the kitchen.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; find sandwich<br/>Next actions: take sandwich</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;You can&#x27;t see a sandwich here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;sandwich&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;find&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for sandwich<br/>Next actions: take sandwich if found</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich if found&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich if found&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;malformed_command&#x27;, &#x27;arg&#x27;: &quot;{&#x27;type&#x27;: &#x27;unknown&#x27;, &#x27;arg1&#x27;: &#x27;take&#x27;}&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine table<br/>Next actions: take sandwich if seen</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich if seen&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich if seen&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;malformed_command&#x27;, &#x27;arg&#x27;: &quot;{&#x27;type&#x27;: &#x27;unknown&#x27;, &#x27;arg1&#x27;: &#x27;take&#x27;}&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check table<br/>Next actions: take sandwich if present</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich if present&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take sandwich if present&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;malformed_command&#x27;, &#x27;arg&#x27;: &quot;{&#x27;type&#x27;: &#x27;unknown&#x27;, &#x27;arg1&#x27;: &#x27;take&#x27;}&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look at table<br/>Next actions: pick up sandwich if visible</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;pick up sandwich if visible&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;pick up sandwich if visible&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;pick&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;pick&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inventory<br/>Next actions: If sandwich is not in inventory, go to other rooms (living room, hallway, bedroom, pantry) to find it.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If sandwich is not in inventory&#x27;, &#x27;go to other rooms (living room&#x27;, &#x27;hallway&#x27;, &#x27;bedroom&#x27;, &#x27;pantry) to find it.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inventory&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If sandwich is not in inventory&#x27;, &#x27;go to other rooms (living room&#x27;, &#x27;hallway&#x27;, &#x27;bedroom&#x27;, &#x27;pantry) to find it.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inventory&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look<br/>Next actions: If sandwich is not mentioned in the description, go to other rooms (living room, hallway, bedroom, pantry) to find it.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If sandwich is not mentioned in the description&#x27;, &#x27;go to other rooms (living room&#x27;, &#x27;hallway&#x27;, &#x27;bedroom&#x27;, &#x27;pantry) to find it.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If sandwich is not mentioned in the description&#x27;, &#x27;go to other rooms (living room&#x27;, &#x27;hallway&#x27;, &#x27;bedroom&#x27;, &#x27;pantry) to find it.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>Apologies for the confusion. It seems there&#x27;s an issue with the game&#x27;s response system. Let&#x27;s try a different approach:<br/><br/>&gt; go to living room<br/>Next actions: search for sandwich</p>
     </div>
 
     <div speaker="Game Master: invalid_format" class="msg gm-gm">

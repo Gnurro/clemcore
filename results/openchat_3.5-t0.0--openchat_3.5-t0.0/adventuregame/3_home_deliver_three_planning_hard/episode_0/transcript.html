@@ -141,7 +141,47 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> take mop, take broom<br/>Next actions: go to hallway, put pillow on counter, book on shelf, plate on table||</p>
+        <p>&gt; take mop, take broom<br/>Next actions: go to hallway, put pillow on counter, book on shelf, plate on table</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to hallway&#x27;, &#x27;put pillow on counter&#x27;, &#x27;book on shelf&#x27;, &#x27;plate on table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;,&#x27; in the current parser context, at line 1 col 9\n\ntake mop, take broom\n        ^\nExpected one of: \n\t* PREP\n\t* WS\n\t* WORD\n&quot;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to hallway&#x27;, &#x27;put pillow on counter&#x27;, &#x27;book on shelf&#x27;, &#x27;plate on table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a bedroom, a broom closet and a kitchen here.&#x27;, {}], [[], &quot;You can&#x27;t see a pillow here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;pillow&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.25</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know what you mean.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>I apologize for the confusion. Let me explain in more detail.<br/><br/>You are currently in a broom closet with a mop and a broom. To achieve your goal, you need to move the items from the closet to their respective locations. Here&#x27;s a step-by-step plan:<br/><br/>1. Take the mop and the broom from the closet.<br/>2. Go to the hallway.<br/>3. Put the pillow on the counter.<br/>4.</p>
     </div>
 
     <div speaker="Game Master: invalid_format" class="msg gm-gm">

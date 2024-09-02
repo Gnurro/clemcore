@@ -137,11 +137,775 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the pillow on the table, the book on the table and the plate on the table.<br/><br/>You are in a pantry now. There are a freezer and a refrigerator. The freezer is closed. The refrigerator is closed. There is a passage to a kitchen here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the pillow on the table, the book on the table and the plate on the table.<br/><br/>You are in a pantry now. There are a refrigerator and a freezer. The refrigerator is closed. The freezer is closed. There is a passage to a kitchen here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> go to kitchen<br/>Next actions: find pillow, find book, find plate, return to kitchen, put pillow on table, put book on table, put plate on table||</p>
+        <p>&gt; go to kitchen<br/>Next actions: find pillow, find book, find plate, return to kitchen, put pillow on table, put book on table, put plate on table</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find pillow&#x27;, &#x27;find book&#x27;, &#x27;find plate&#x27;, &#x27;return to kitchen&#x27;, &#x27;put pillow on table&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find pillow&#x27;, &#x27;find book&#x27;, &#x27;find plate&#x27;, &#x27;return to kitchen&#x27;, &#x27;put pillow on table&#x27;, &#x27;put book on table&#x27;, &#x27;put plate on table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter, a plate and a cupboard. The plate is on the counter. The cupboard is closed. There are passages to a living room and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take plate from counter<br/>Next actions: open cupboard, check if there&#x27;s a pillow or a book inside, go to living room if not found, look for pillow and book, return to kitchen after finding them, put plate on table, then put pillow and book on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;open cupboard&#x27;, &quot;check if there&#x27;s a pillow or a book inside&quot;, &#x27;go to living room if not found&#x27;, &#x27;look for pillow and book&#x27;, &#x27;return to kitchen after finding them&#x27;, &#x27;put plate on table&#x27;, &#x27;then put pillow and book on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;open cupboard&#x27;, &quot;check if there&#x27;s a pillow or a book inside&quot;, &#x27;go to living room if not found&#x27;, &#x27;look for pillow and book&#x27;, &#x27;return to kitchen after finding them&#x27;, &#x27;put plate on table&#x27;, &#x27;then put pillow and book on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;The cupboard is now open.&#x27;, {}], [[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 15\n\ncheck if there&#x27;s a pillow or a book inside\n              ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.14285714285714285</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the plate. In your inventory you have a plate.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: search for the pillow and the book, once found, return to the kitchen, place the plate on the table, then place the pillow and the book on the table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;search for the pillow and the book&#x27;, &#x27;once found&#x27;, &#x27;return to the kitchen&#x27;, &#x27;place the plate on the table&#x27;, &#x27;then place the pillow and the book on the table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;search for the pillow and the book&#x27;, &#x27;once found&#x27;, &#x27;return to the kitchen&#x27;, &#x27;place the plate on the table&#x27;, &#x27;then place the pillow and the book on the table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;search&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a book, a shelf, a table and a side table. The book is on the side table. There are passages to a hallway and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take book from side table<br/>Next actions: go back to kitchen, check if there&#x27;s a pillow in the kitchen or pantry, if not found, search the living room again, once pillow is found, return to kitchen, put book on table, then put plate on table, and finally put pillow on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go back to kitchen&#x27;, &quot;check if there&#x27;s a pillow in the kitchen or pantry&quot;, &#x27;if not found&#x27;, &#x27;search the living room again&#x27;, &#x27;once pillow is found&#x27;, &#x27;return to kitchen&#x27;, &#x27;put book on table&#x27;, &#x27;then put plate on table&#x27;, &#x27;and finally put pillow on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go back to kitchen&#x27;, &quot;check if there&#x27;s a pillow in the kitchen or pantry&quot;, &#x27;if not found&#x27;, &#x27;search the living room again&#x27;, &#x27;once pillow is found&#x27;, &#x27;return to kitchen&#x27;, &#x27;put book on table&#x27;, &#x27;then put plate on table&#x27;, &#x27;and finally put pillow on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room and a pantry here.&#x27;, {}], [[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 15\n\ncheck if there&#x27;s a pillow in the kitchen or pantry\n              ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.1111111111111111</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the book. In your inventory you have a plate and a book.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: put book on table, put plate on table, search for the pillow in the kitchen, if not found, check the pantry and then the living room, once found, return to kitchen and put pillow on table.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;search for the pillow in the kitchen&#x27;, &#x27;if not found&#x27;, &#x27;check the pantry and then the living room&#x27;, &#x27;once found&#x27;, &#x27;return to kitchen and put pillow on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;put book on table&#x27;, &#x27;put plate on table&#x27;, &#x27;search for the pillow in the kitchen&#x27;, &#x27;if not found&#x27;, &#x27;check the pantry and then the living room&#x27;, &#x27;once found&#x27;, &#x27;return to kitchen and put pillow on table.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;You can&#x27;t see a table here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;table&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: check if there&#x27;s a pillow inside, if not, go to pantry and search for it, if still not found, return to living room and search for the pillow, once found, bring it back to the kitchen and put it on the table along with the book and the plate.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;check if there&#x27;s a pillow inside&quot;, &#x27;if not&#x27;, &#x27;go to pantry and search for it&#x27;, &#x27;if still not found&#x27;, &#x27;return to living room and search for the pillow&#x27;, &#x27;once found&#x27;, &#x27;bring it back to the kitchen and put it on the table along with the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;check if there&#x27;s a pillow inside&quot;, &#x27;if not&#x27;, &#x27;go to pantry and search for it&#x27;, &#x27;if still not found&#x27;, &#x27;return to living room and search for the pillow&#x27;, &#x27;once found&#x27;, &#x27;bring it back to the kitchen and put it on the table along with the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 15\n\ncheck if there&#x27;s a pillow inside\n              ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now open.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search cupboard for pillow<br/>Next actions: if the pillow is not in the cupboard, check the pantry and then the living room, once the pillow is found, return to the kitchen, put the pillow on the table along with the book and the plate.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the pillow is not in the cupboard&#x27;, &#x27;check the pantry and then the living room&#x27;, &#x27;once the pillow is found&#x27;, &#x27;return to the kitchen&#x27;, &#x27;put the pillow on the table along with the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the pillow is not in the cupboard&#x27;, &#x27;check the pantry and then the living room&#x27;, &#x27;once the pillow is found&#x27;, &#x27;return to the kitchen&#x27;, &#x27;put the pillow on the table along with the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look in cupboard<br/>Next actions: if the pillow is not found in the cupboard, proceed to check the pantry and then the living room, once the pillow is located, return to the kitchen, place the pillow on the table alongside the book and the plate.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the pillow is not found in the cupboard&#x27;, &#x27;proceed to check the pantry and then the living room&#x27;, &#x27;once the pillow is located&#x27;, &#x27;return to the kitchen&#x27;, &#x27;place the pillow on the table alongside the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the pillow is not found in the cupboard&#x27;, &#x27;proceed to check the pantry and then the living room&#x27;, &#x27;once the pillow is located&#x27;, &#x27;return to the kitchen&#x27;, &#x27;place the pillow on the table alongside the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine cupboard<br/>Next actions: If the pillow isn&#x27;t in the cupboard, move on to checking the pantry and then the living room. Once the pillow has been found, return to the kitchen, place the pillow on the table, followed by the book and the plate.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &#x27;move on to checking the pantry and then the living room. Once the pillow has been found&#x27;, &#x27;return to the kitchen&#x27;, &#x27;place the pillow on the table&#x27;, &#x27;followed by the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &#x27;move on to checking the pantry and then the living room. Once the pillow has been found&#x27;, &#x27;return to the kitchen&#x27;, &#x27;place the pillow on the table&#x27;, &#x27;followed by the book and the plate.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 18\n\nif the pillow isn&#x27;t in the cupboard\n                 ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check cupboard for pillow<br/>Next actions: If the pillow is not in the cupboard, I will check the pantry and then the living room for it. Once the pillow is found, I will return to the kitchen and place it on the table, along with the book and the plate that I already have in my inventory.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will check the pantry and then the living room for it. Once the pillow is found&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &#x27;along with the book and the plate that I already have in my inventory.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will check the pantry and then the living room for it. Once the pillow is found&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &#x27;along with the book and the plate that I already have in my inventory.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inspect cupboard for pillow<br/>Next actions: If the pillow isn&#x27;t in the cupboard, I&#x27;ll move on to inspecting the pantry and then the living room. Once I locate the pillow, I&#x27;ll head back to the kitchen and put it on the table, as well as the book and plate that I currently have in my inventory. It seems the game does not recognize actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, or &#x27;check&#x27;. I will try to use more specific actions going</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &quot;I&#x27;ll move on to inspecting the pantry and then the living room. Once I locate the pillow&quot;, &quot;I&#x27;ll head back to the kitchen and put it on the table&quot;, &quot;as well as the book and plate that I currently have in my inventory. It seems the game does not recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;or &#x27;check&#x27;. I will try to use more specific actions going&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inspect&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &quot;I&#x27;ll move on to inspecting the pantry and then the living room. Once I locate the pillow&quot;, &quot;I&#x27;ll head back to the kitchen and put it on the table&quot;, &quot;as well as the book and plate that I currently have in my inventory. It seems the game does not recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;or &#x27;check&#x27;. I will try to use more specific actions going&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 18\n\nif the pillow isn&#x27;t in the cupboard\n                 ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inspect&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; investigate cupboard for pillow<br/>Next actions: If the pillow is not found in the cupboard, I will investigate the pantry and then the living room. Once the pillow is located, I will return to the kitchen and place it on the table, along with the book and plate that I have in my inventory. However, since the game doesn&#x27;t seem to recognize actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, or &#x27;inspect&#x27;, I will try using more specific actions moving forward</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not found in the cupboard&#x27;, &#x27;I will investigate the pantry and then the living room. Once the pillow is located&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &#x27;along with the book and plate that I have in my inventory. However&#x27;, &quot;since the game doesn&#x27;t seem to recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;or &#x27;inspect&#x27;&quot;, &#x27;I will try using more specific actions moving forward&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;investigate&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not found in the cupboard&#x27;, &#x27;I will investigate the pantry and then the living room. Once the pillow is located&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &#x27;along with the book and plate that I have in my inventory. However&#x27;, &quot;since the game doesn&#x27;t seem to recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;or &#x27;inspect&#x27;&quot;, &#x27;I will try using more specific actions moving forward&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>10</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;investigate&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; peek inside cupboard for pillow<br/>Next actions: If the pillow isn&#x27;t in the cupboard, I will peek inside the pantry and then the living room. Once I find the pillow, I will come back to the kitchen and place it on the table, together with the book and plate that I already have. Given that the game doesn&#x27;t seem to understand actions such as &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, &#x27;inspect&#x27;, or &#x27;investigate&#x27;, I will attempt to use</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &#x27;I will peek inside the pantry and then the living room. Once I find the pillow&#x27;, &#x27;I will come back to the kitchen and place it on the table&#x27;, &quot;together with the book and plate that I already have. Given that the game doesn&#x27;t seem to understand actions such as &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;or &#x27;investigate&#x27;&quot;, &#x27;I will attempt to use&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;peek&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &#x27;I will peek inside the pantry and then the living room. Once I find the pillow&#x27;, &#x27;I will come back to the kitchen and place it on the table&#x27;, &quot;together with the book and plate that I already have. Given that the game doesn&#x27;t seem to understand actions such as &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;or &#x27;investigate&#x27;&quot;, &#x27;I will attempt to use&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>10</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 18\n\nif the pillow isn&#x27;t in the cupboard\n                 ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;peek&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; reach into cupboard to find pillow<br/>Next actions: If the pillow is not in the cupboard, I will manually search the pantry and then the living room. Upon locating the pillow, I will return to the kitchen and place it on the table, along with the book and plate that I have in my possession. Since the game appears to not recognize actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, &#x27;inspect&#x27;, &#x27;investigate&#x27;, or &#x27;peek&#x27;, I will try to</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will manually search the pantry and then the living room. Upon locating the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have in my possession. Since the game appears to not recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;or &#x27;peek&#x27;&quot;, &#x27;I will try to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;reach&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will manually search the pantry and then the living room. Upon locating the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have in my possession. Since the game appears to not recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;or &#x27;peek&#x27;&quot;, &#x27;I will try to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;reach&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; move items in cupboard to find pillow<br/>Next actions: If the pillow isn&#x27;t in the cupboard, I will physically move items in the pantry and then the living room to locate it. Once I find the pillow, I will return to the kitchen and place it on the table, along with the book and plate that I have. As the game doesn&#x27;t seem to understand actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, &#x27;inspect&#x27;, &#x27;investigate&#x27;, &#x27;peek&#x27;,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &#x27;I will physically move items in the pantry and then the living room to locate it. Once I find the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. As the game doesn&#x27;t seem to understand actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;peek&#x27;&quot;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;move&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the pillow isn&#x27;t in the cupboard&quot;, &#x27;I will physically move items in the pantry and then the living room to locate it. Once I find the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. As the game doesn&#x27;t seem to understand actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;peek&#x27;&quot;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 18\n\nif the pillow isn&#x27;t in the cupboard\n                 ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;move&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; attempt to locate pillow in cupboard<br/>Next actions: If the pillow is not in the cupboard, I will attempt to locate it in the pantry and then the living room by thoroughly checking each area. Once I find the pillow, I will return to the kitchen and place it on the table, along with the book and plate that I have. Since the game does not seem to recognize actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, &#x27;inspect&#x27;, &#x27;investigate&#x27;, &#x27;</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will attempt to locate it in the pantry and then the living room by thoroughly checking each area. Once I find the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. Since the game does not seem to recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;attempt&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will attempt to locate it in the pantry and then the living room by thoroughly checking each area. Once I find the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. Since the game does not seem to recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>10</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;attempt&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; feel around in cupboard for pillow<br/>Next actions: If the pillow is not in the cupboard, I will feel around in the pantry and then the living room to find it. Once I locate the pillow, I will return to the kitchen and place it on the table, along with the book and plate that I have. Given that the game does not seem to understand actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, &#x27;inspect&#x27;, &#x27;investigate&#x27;, &#x27;peek&#x27;, &#x27;</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will feel around in the pantry and then the living room to find it. Once I locate the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. Given that the game does not seem to understand actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;peek&#x27;&quot;, &quot;&#x27;&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;feel&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will feel around in the pantry and then the living room to find it. Once I locate the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. Given that the game does not seem to understand actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;peek&#x27;&quot;, &quot;&#x27;&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;feel&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; manually search cupboard for pillow<br/>Next actions: If the pillow is not in the cupboard, I will manually search the pantry and then the living room. Once I find the pillow, I will return to the kitchen and place it on the table, along with the book and plate that I have. It seems the game does not recognize actions like &#x27;search&#x27;, &#x27;look&#x27;, &#x27;examine&#x27;, &#x27;check&#x27;, &#x27;inspect&#x27;, &#x27;investigate&#x27;, &#x27;peek&#x27;, &#x27;reach&#x27;, &#x27;move&#x27;, &#x27;attempt</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will manually search the pantry and then the living room. Once I find the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. It seems the game does not recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;peek&#x27;&quot;, &quot;&#x27;reach&#x27;&quot;, &quot;&#x27;move&#x27;&quot;, &quot;&#x27;attempt&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;manually&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the pillow is not in the cupboard&#x27;, &#x27;I will manually search the pantry and then the living room. Once I find the pillow&#x27;, &#x27;I will return to the kitchen and place it on the table&#x27;, &quot;along with the book and plate that I have. It seems the game does not recognize actions like &#x27;search&#x27;&quot;, &quot;&#x27;look&#x27;&quot;, &quot;&#x27;examine&#x27;&quot;, &quot;&#x27;check&#x27;&quot;, &quot;&#x27;inspect&#x27;&quot;, &quot;&#x27;investigate&#x27;&quot;, &quot;&#x27;peek&#x27;&quot;, &quot;&#x27;reach&#x27;&quot;, &quot;&#x27;move&#x27;&quot;, &quot;&#x27;attempt&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>13</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;manually&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>It seems the game does not recognize descriptive actions. Let me try a simpler command:<br/><br/>&gt; go to pantry<br/>Next actions: Look for the pillow in the pantry by checking every item one by one if needed. Once the pillow is found, go back to the kitchen, put the pillow on the table, then place the book and plate which are already in my inventory on the table as well. I will avoid using descriptive words like &#x27;manually&#x27; and stick to basic commands.</p>
     </div>
 
     <div speaker="Game Master: invalid_format" class="msg gm-gm">

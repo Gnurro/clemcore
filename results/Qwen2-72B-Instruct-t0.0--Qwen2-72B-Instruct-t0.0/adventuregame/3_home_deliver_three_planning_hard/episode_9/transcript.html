@@ -137,23 +137,1323 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the apple in the cupboard, the book in the wardrobe and the broom in the freezer.<br/><br/>You are in a pantry now. There are a freezer and a refrigerator. The freezer is closed. The refrigerator is closed. There is a passage to a kitchen here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the apple in the cupboard, the book in the wardrobe and the broom in the freezer.<br/><br/>You are in a pantry now. There are a refrigerator and a freezer. The refrigerator is closed. The freezer is closed. There is a passage to a kitchen here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> go to kitchen<br/>Next actions: find apple, pick up apple, go back to pantry, open cupboard, put apple in cupboard, find book, pick up book, go to wardrobe, put book in wardrobe, find broom, pick up broom, go to freezer, open freezer, put broom in freezer.||</p>
+        <p>&gt; go to kitchen<br/>Next actions: find apple, pick up apple, go back to pantry, open cupboard, put apple in cupboard, find book, pick up book, go to bedroom, open wardrobe, put book in wardrobe, find broom, pick up broom, go back to pantry, open freezer, put broom in freezer.</p>
     </div>
 
-    <div speaker="Game Master: invalid_format" class="msg gm-gm">
-        <p>command_tag_missing</p>
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;find apple&#x27;, &#x27;pick up apple&#x27;, &#x27;go back to pantry&#x27;, &#x27;open cupboard&#x27;, &#x27;put apple in cupboard&#x27;, &#x27;find book&#x27;, &#x27;pick up book&#x27;, &#x27;go to bedroom&#x27;, &#x27;open wardrobe&#x27;, &#x27;put book in wardrobe&#x27;, &#x27;find broom&#x27;, &#x27;pick up broom&#x27;, &#x27;go back to pantry&#x27;, &#x27;open freezer&#x27;, &#x27;put broom in freezer.&#x27;]</p>
     </div>
 
-    <div speaker="Game Master: invalid_format" class="msg gm-gm">
-        <p>command_tag_missing</p>
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;find apple&#x27;, &#x27;pick up apple&#x27;, &#x27;go back to pantry&#x27;, &#x27;open cupboard&#x27;, &#x27;put apple in cupboard&#x27;, &#x27;find book&#x27;, &#x27;pick up book&#x27;, &#x27;go to bedroom&#x27;, &#x27;open wardrobe&#x27;, &#x27;put book in wardrobe&#x27;, &#x27;find broom&#x27;, &#x27;pick up broom&#x27;, &#x27;go back to pantry&#x27;, &#x27;open freezer&#x27;, &#x27;put broom in freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>15</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;find&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: look for apple in the cupboard, if not found, check the counter, then search the living room. Once the apple is found, pick it up, go back to the pantry, open the cupboard there, put the apple in the cupboard. Then proceed to find the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;look for apple in the cupboard&#x27;, &#x27;if not found&#x27;, &#x27;check the counter&#x27;, &#x27;then search the living room. Once the apple is found&#x27;, &#x27;pick it up&#x27;, &#x27;go back to the pantry&#x27;, &#x27;open the cupboard there&#x27;, &#x27;put the apple in the cupboard. Then proceed to find the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;look for apple in the cupboard&#x27;, &#x27;if not found&#x27;, &#x27;check the counter&#x27;, &#x27;then search the living room. Once the apple is found&#x27;, &#x27;pick it up&#x27;, &#x27;go back to the pantry&#x27;, &#x27;open the cupboard there&#x27;, &#x27;put the apple in the cupboard. Then proceed to find the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;look&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now open. There is a plate in the cupboard.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look around kitchen<br/>Next actions: If the apple isn&#x27;t visible, check the living room next. Once the apple is located, pick it up and return to the pantry to place it in the cupboard. After that, search for the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the apple isn&#x27;t visible&quot;, &#x27;check the living room next. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the apple isn&#x27;t visible&quot;, &#x27;check the living room next. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 17\n\nif the apple isn&#x27;t visible\n                ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search kitchen for apple<br/>Next actions: If the apple isn&#x27;t found in the kitchen, move on to search the living room. Once the apple is located, pick it up and return to the pantry to place it in the cupboard. After that, search for the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the apple isn&#x27;t found in the kitchen&quot;, &#x27;move on to search the living room. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the apple isn&#x27;t found in the kitchen&quot;, &#x27;move on to search the living room. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 17\n\nif the apple isn&#x27;t found in the kitchen\n                ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine counter<br/>Next actions: If the apple isn&#x27;t on the counter, examine other areas in the kitchen such as the floor or any visible surfaces. If still not found, move on to the living room. Once the apple is located, pick it up and return to the pantry to place it in the cupboard. After that, search for the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;If the apple isn&#x27;t on the counter&quot;, &#x27;examine other areas in the kitchen such as the floor or any visible surfaces. If still not found&#x27;, &#x27;move on to the living room. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;If the apple isn&#x27;t on the counter&quot;, &#x27;examine other areas in the kitchen such as the floor or any visible surfaces. If still not found&#x27;, &#x27;move on to the living room. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 17\n\nif the apple isn&#x27;t on the counter\n                ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check counter for apple<br/>Next actions: If the apple is not on the counter, check other places in the kitchen like under the sink, on the stove, or on the table. If the apple is not found in the kitchen, move on to the living room. Once the apple is located, pick it up and return to the pantry to place it in the cupboard. After that, search for the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;If the apple is not on the counter&#x27;, &#x27;check other places in the kitchen like under the sink&#x27;, &#x27;on the stove&#x27;, &#x27;or on the table. If the apple is not found in the kitchen&#x27;, &#x27;move on to the living room. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;If the apple is not on the counter&#x27;, &#x27;check other places in the kitchen like under the sink&#x27;, &#x27;on the stove&#x27;, &#x27;or on the table. If the apple is not found in the kitchen&#x27;, &#x27;move on to the living room. Once the apple is located&#x27;, &#x27;pick it up and return to the pantry to place it in the cupboard. After that&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to pantry<br/>Next actions: Since looking for the apple in the kitchen didn&#x27;t yield results due to unclear commands, I&#x27;ll return to the pantry. I&#x27;ll try opening the refrigerator to see if the apple is inside. If not, I&#x27;ll continue searching in the living room. Once the apple is found, I&#x27;ll pick it up and place it in the cupboard. Then, I&#x27;ll search for the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Since looking for the apple in the kitchen didn&#x27;t yield results due to unclear commands&quot;, &quot;I&#x27;ll return to the pantry. I&#x27;ll try opening the refrigerator to see if the apple is inside. If not&quot;, &quot;I&#x27;ll continue searching in the living room. Once the apple is found&quot;, &quot;I&#x27;ll pick it up and place it in the cupboard. Then&quot;, &quot;I&#x27;ll search for the book and the broom.&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Since looking for the apple in the kitchen didn&#x27;t yield results due to unclear commands&quot;, &quot;I&#x27;ll return to the pantry. I&#x27;ll try opening the refrigerator to see if the apple is inside. If not&quot;, &quot;I&#x27;ll continue searching in the living room. Once the apple is found&quot;, &quot;I&#x27;ll pick it up and place it in the cupboard. Then&quot;, &quot;I&#x27;ll search for the book and the broom.&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 48\n\nooking for the apple in the kitchen didn&#x27;t yield results due to unclear commands\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a pantry now. There are a refrigerator and a freezer. The refrigerator is closed. The freezer is closed. There is a passage to a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open refrigerator<br/>Next actions: Check if the apple is inside the refrigerator. If not, go to the living room to search for it. Once the apple is found, pick it up and place it in the cupboard. Then, search for the book and the broom.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Check if the apple is inside the refrigerator. If not&#x27;, &#x27;go to the living room to search for it. Once the apple is found&#x27;, &#x27;pick it up and place it in the cupboard. Then&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Check if the apple is inside the refrigerator. If not&#x27;, &#x27;go to the living room to search for it. Once the apple is found&#x27;, &#x27;pick it up and place it in the cupboard. Then&#x27;, &#x27;search for the book and the broom.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 46\n\n if the apple is inside the refrigerator. if not\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The refrigerator is now open. There is a orange in the refrigerator. There is a apple in the refrigerator. There is a peach in the refrigerator. There is a banana in the refrigerator. There is a sandwich in the refrigerator.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take apple<br/>Next actions: Close the refrigerator, then open the cupboard in the pantry and put the apple inside. Next, search for the book, likely in the living room or another area suitable for reading. Once the book is found, take it to the wardrobe in the bedroom. Finally, locate the broom, which might be in a utility closet or the kitchen, and put it in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Close the refrigerator&#x27;, &#x27;then open the cupboard in the pantry and put the apple inside. Next&#x27;, &#x27;search for the book&#x27;, &#x27;likely in the living room or another area suitable for reading. Once the book is found&#x27;, &#x27;take it to the wardrobe in the bedroom. Finally&#x27;, &#x27;locate the broom&#x27;, &#x27;which might be in a utility closet or the kitchen&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Close the refrigerator&#x27;, &#x27;then open the cupboard in the pantry and put the apple inside. Next&#x27;, &#x27;search for the book&#x27;, &#x27;likely in the living room or another area suitable for reading. Once the book is found&#x27;, &#x27;take it to the wardrobe in the bedroom. Finally&#x27;, &#x27;locate the broom&#x27;, &#x27;which might be in a utility closet or the kitchen&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;The refrigerator is now closed.&#x27;, {}], [[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 62\n\nd in the pantry and put the apple inside. next\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.125</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the apple. In your inventory you have a apple.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: Place the apple in the cupboard. Then, head to the living room to search for the book. Once the book is found, take it to the wardrobe in the bedroom. Lastly, find the broom, possibly in the kitchen or a utility closet, and put it in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Place the apple in the cupboard. Then&#x27;, &#x27;head to the living room to search for the book. Once the book is found&#x27;, &#x27;take it to the wardrobe in the bedroom. Lastly&#x27;, &#x27;find the broom&#x27;, &#x27;possibly in the kitchen or a utility closet&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;cupboard&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Place the apple in the cupboard. Then&#x27;, &#x27;head to the living room to search for the book. Once the book is found&#x27;, &#x27;take it to the wardrobe in the bedroom. Lastly&#x27;, &#x27;find the broom&#x27;, &#x27;possibly in the kitchen or a utility closet&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 32\n\nplace the apple in the cupboard. then\n                               ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You can&#x27;t see a cupboard here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: Since the cupboard wasn&#x27;t found in the pantry, I&#x27;ll check the kitchen. I&#x27;ll look for the cupboard there and place the apple inside. Then, I&#x27;ll search for the book, likely in the living room, and once found, take it to the wardrobe in the bedroom. Finally, locate the broom, which might be in a utility closet or the kitchen itself, and put it in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Since the cupboard wasn&#x27;t found in the pantry&quot;, &quot;I&#x27;ll check the kitchen. I&#x27;ll look for the cupboard there and place the apple inside. Then&quot;, &quot;I&#x27;ll search for the book&quot;, &#x27;likely in the living room&#x27;, &#x27;and once found&#x27;, &#x27;take it to the wardrobe in the bedroom. Finally&#x27;, &#x27;locate the broom&#x27;, &#x27;which might be in a utility closet or the kitchen itself&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Since the cupboard wasn&#x27;t found in the pantry&quot;, &quot;I&#x27;ll check the kitchen. I&#x27;ll look for the cupboard there and place the apple inside. Then&quot;, &quot;I&#x27;ll search for the book&quot;, &#x27;likely in the living room&#x27;, &#x27;and once found&#x27;, &#x27;take it to the wardrobe in the bedroom. Finally&#x27;, &#x27;locate the broom&#x27;, &#x27;which might be in a utility closet or the kitchen itself&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 24\n\nsince the cupboard wasn&#x27;t found in the pantry\n                       ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter, a plate and a cupboard. The plate is in the cupboard. The cupboard is open. There are passages to a living room and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put apple in cupboard<br/>Next actions: Close the cupboard, then head to the living room to search for the book. Once the book is found, take it to the wardrobe in the bedroom. Afterward, find the broom, which could be in the kitchen or a utility closet, and put it in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Close the cupboard&#x27;, &#x27;then head to the living room to search for the book. Once the book is found&#x27;, &#x27;take it to the wardrobe in the bedroom. Afterward&#x27;, &#x27;find the broom&#x27;, &#x27;which could be in the kitchen or a utility closet&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Close the cupboard&#x27;, &#x27;then head to the living room to search for the book. Once the book is found&#x27;, &#x27;take it to the wardrobe in the bedroom. Afterward&#x27;, &#x27;find the broom&#x27;, &#x27;which could be in the kitchen or a utility closet&#x27;, &#x27;and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[&#x27;in(apple1,cupboard1)&#x27;], &#x27;The cupboard is now closed.&#x27;, {}], [[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 52\n\no the living room to search for the book. once the book is found\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.16666666666666666</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You put the apple in the cupboard. There is a apple in the cupboard.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: Search the living room for the book. Once found, take it to the bedroom and put it in the wardrobe. Then, return to the kitchen or check other areas for the broom, and finally, place the broom in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Search the living room for the book. Once found&#x27;, &#x27;take it to the bedroom and put it in the wardrobe. Then&#x27;, &#x27;return to the kitchen or check other areas for the broom&#x27;, &#x27;and finally&#x27;, &#x27;place the broom in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Search the living room for the book. Once found&#x27;, &#x27;take it to the bedroom and put it in the wardrobe. Then&#x27;, &#x27;return to the kitchen or check other areas for the broom&#x27;, &#x27;and finally&#x27;, &#x27;place the broom in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 36\n\nsearch the living room for the book. once found\n                                   ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a book, a shelf, a table and a side table. The book is on the side table. There are passages to a hallway and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take book<br/>Next actions: With the book in hand, go to the bedroom and find the wardrobe. Place the book inside the wardrobe. Then, return to the kitchen or explore other areas to locate the broom. Once the broom is found, take it to the pantry and put it in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;With the book in hand&#x27;, &#x27;go to the bedroom and find the wardrobe. Place the book inside the wardrobe. Then&#x27;, &#x27;return to the kitchen or explore other areas to locate the broom. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;With the book in hand&#x27;, &#x27;go to the bedroom and find the wardrobe. Place the book inside the wardrobe. Then&#x27;, &#x27;return to the kitchen or explore other areas to locate the broom. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;with&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;with&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the book. In your inventory you have a book.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to bedroom<br/>Next actions: Find the wardrobe in the bedroom and place the book inside. Then, backtrack to the kitchen or explore other areas to find the broom. Once the broom is located, take it to the pantry and put it in the freezer. This completes the task of putting each item in its designated location.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Find the wardrobe in the bedroom and place the book inside. Then&#x27;, &#x27;backtrack to the kitchen or explore other areas to find the broom. Once the broom is located&#x27;, &#x27;take it to the pantry and put it in the freezer. This completes the task of putting each item in its designated location.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;bedroom&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Find the wardrobe in the bedroom and place the book inside. Then&#x27;, &#x27;backtrack to the kitchen or explore other areas to find the broom. Once the broom is located&#x27;, &#x27;take it to the pantry and put it in the freezer. This completes the task of putting each item in its designated location.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>3</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 59\n\nin the bedroom and place the book inside. then\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to hallway<br/>Next actions: Since there&#x27;s no direct passage to the bedroom from the living room, I&#x27;ll go through the hallway to reach the bedroom. Once in the bedroom, find the wardrobe and place the book inside. Then, return to the kitchen or explore other areas to locate the broom. Once the broom is found, take it to the pantry and put it in the freezer. This will complete the task of organizing all items as instructed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Since there&#x27;s no direct passage to the bedroom from the living room&quot;, &quot;I&#x27;ll go through the hallway to reach the bedroom. Once in the bedroom&quot;, &#x27;find the wardrobe and place the book inside. Then&#x27;, &#x27;return to the kitchen or explore other areas to locate the broom. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer. This will complete the task of organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Since there&#x27;s no direct passage to the bedroom from the living room&quot;, &quot;I&#x27;ll go through the hallway to reach the bedroom. Once in the bedroom&quot;, &#x27;find the wardrobe and place the book inside. Then&#x27;, &#x27;return to the kitchen or explore other areas to locate the broom. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer. This will complete the task of organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 12\n\nsince there&#x27;s no direct passage to the bedroom from\n           ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a broom closet, a living room and a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to bedroom<br/>Next actions: Upon entering the bedroom, locate the wardrobe and place the book inside. Then, head to the broom closet to find the broom. Once the broom is in hand, go to the pantry and put it in the freezer. This will conclude the task of placing all items in their respective locations.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon entering the bedroom&#x27;, &#x27;locate the wardrobe and place the book inside. Then&#x27;, &#x27;head to the broom closet to find the broom. Once the broom is in hand&#x27;, &#x27;go to the pantry and put it in the freezer. This will conclude the task of placing all items in their respective locations.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon entering the bedroom&#x27;, &#x27;locate the wardrobe and place the book inside. Then&#x27;, &#x27;head to the broom closet to find the broom. Once the broom is in hand&#x27;, &#x27;go to the pantry and put it in the freezer. This will conclude the task of placing all items in their respective locations.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a bedroom now. There are a wardrobe and a bed. The wardrobe is closed. There is a passage to a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open wardrobe<br/>Next actions: Place the book inside the now open wardrobe. Then, go to the broom closet to find the broom. Once the broom is located, take it to the pantry and put it in the freezer. This will finish the task of organizing all items according to the instructions.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Place the book inside the now open wardrobe. Then&#x27;, &#x27;go to the broom closet to find the broom. Once the broom is located&#x27;, &#x27;take it to the pantry and put it in the freezer. This will finish the task of organizing all items according to the instructions.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Place the book inside the now open wardrobe. Then&#x27;, &#x27;go to the broom closet to find the broom. Once the broom is located&#x27;, &#x27;take it to the pantry and put it in the freezer. This will finish the task of organizing all items according to the instructions.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>3</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 44\n\nce the book inside the now open wardrobe. then\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The wardrobe is now open. There is a pillow in the wardrobe.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put book in wardrobe<br/>Next actions: Close the wardrobe after placing the book inside. Proceed to the broom closet to find the broom. Once the broom is in hand, go to the pantry and put it in the freezer. This will complete the task of organizing all items as directed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Close the wardrobe after placing the book inside. Proceed to the broom closet to find the broom. Once the broom is in hand&#x27;, &#x27;go to the pantry and put it in the freezer. This will complete the task of organizing all items as directed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Close the wardrobe after placing the book inside. Proceed to the broom closet to find the broom. Once the broom is in hand&#x27;, &#x27;go to the pantry and put it in the freezer. This will complete the task of organizing all items as directed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 49\n\ne wardrobe after placing the book inside. proceed to the broom closet to find th\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 19</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You put the book in the wardrobe. There is a book in the wardrobe.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to broom closet<br/>Next actions: Find the broom in the broom closet. Once the broom is obtained, go to the pantry and put it in the freezer. This will be the final step in completing the task of placing all items in their specified locations.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Find the broom in the broom closet. Once the broom is obtained&#x27;, &#x27;go to the pantry and put it in the freezer. This will be the final step in completing the task of placing all items in their specified locations.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;broomcloset&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Find the broom in the broom closet. Once the broom is obtained&#x27;, &#x27;go to the pantry and put it in the freezer. This will be the final step in completing the task of placing all items in their specified locations.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>2</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 35\n\nfind the broom in the broom closet. once the broom is obtained\n                                  ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 20</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a broom closet here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: Since there&#x27;s no direct passage to a broom closet from the bedroom, I&#x27;ll check the kitchen. Brooms are often stored near cleaning supplies, which might be in the kitchen. If the broom isn&#x27;t there, I&#x27;ll need to explore other areas. Once the broom is found, take it to the pantry and put it in the freezer. This will conclude the task of organizing all items as instructed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Since there&#x27;s no direct passage to a broom closet from the bedroom&quot;, &quot;I&#x27;ll check the kitchen. Brooms are often stored near cleaning supplies&quot;, &quot;which might be in the kitchen. If the broom isn&#x27;t there&quot;, &quot;I&#x27;ll need to explore other areas. Once the broom is found&quot;, &#x27;take it to the pantry and put it in the freezer. This will conclude the task of organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;kitchen&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Since there&#x27;s no direct passage to a broom closet from the bedroom&quot;, &quot;I&#x27;ll check the kitchen. Brooms are often stored near cleaning supplies&quot;, &quot;which might be in the kitchen. If the broom isn&#x27;t there&quot;, &quot;I&#x27;ll need to explore other areas. Once the broom is found&quot;, &#x27;take it to the pantry and put it in the freezer. This will conclude the task of organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 12\n\nsince there&#x27;s no direct passage to a broom closet f\n           ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 21</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: Since there seems to be no direct path to the kitchen or broom closet from the bedroom, I&#x27;ll return to the living room. From there, I can retrace my steps to find the kitchen or any other area where the broom might be stored. Once the broom is located, take it to the pantry and put it in the freezer. This will be the last step in completing the task of organizing all items as directed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Since there seems to be no direct path to the kitchen or broom closet from the bedroom&#x27;, &quot;I&#x27;ll return to the living room. From there&quot;, &#x27;I can retrace my steps to find the kitchen or any other area where the broom might be stored. Once the broom is located&#x27;, &#x27;take it to the pantry and put it in the freezer. This will be the last step in completing the task of organizing all items as directed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;livingroom&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Since there seems to be no direct path to the kitchen or broom closet from the bedroom&#x27;, &quot;I&#x27;ll return to the living room. From there&quot;, &#x27;I can retrace my steps to find the kitchen or any other area where the broom might be stored. Once the broom is located&#x27;, &#x27;take it to the pantry and put it in the freezer. This will be the last step in completing the task of organizing all items as directed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 22</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a living room here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to hallway<br/>Next actions: Since there are no direct passages to either the kitchen or the living room from the bedroom, I&#x27;ll return to the hallway. From the hallway, I can navigate to the kitchen or any other area where the broom might be stored. Once the broom is found, take it to the pantry and put it in the freezer. This will be the final step in organizing all items as instructed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Since there are no direct passages to either the kitchen or the living room from the bedroom&#x27;, &quot;I&#x27;ll return to the hallway. From the hallway&quot;, &#x27;I can navigate to the kitchen or any other area where the broom might be stored. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer. This will be the final step in organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Since there are no direct passages to either the kitchen or the living room from the bedroom&#x27;, &quot;I&#x27;ll return to the hallway. From the hallway&quot;, &#x27;I can navigate to the kitchen or any other area where the broom might be stored. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer. This will be the final step in organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 23</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a broom closet, a living room and a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to broom closet<br/>Next actions: Look for the broom in the broom closet. Once the broom is found, take it to the pantry and put it in the freezer. This will be the last action needed to complete the task of organizing all items as directed. If the broom is not in the broom closet, I will have to check other areas such as the kitchen or utility room.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Look for the broom in the broom closet. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer. This will be the last action needed to complete the task of organizing all items as directed. If the broom is not in the broom closet&#x27;, &#x27;I will have to check other areas such as the kitchen or utility room.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Look for the broom in the broom closet. Once the broom is found&#x27;, &#x27;take it to the pantry and put it in the freezer. This will be the last action needed to complete the task of organizing all items as directed. If the broom is not in the broom closet&#x27;, &#x27;I will have to check other areas such as the kitchen or utility room.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>3</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 39\n\nlook for the broom in the broom closet. once the broom is found\n                                      ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 24</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a broom closet now. There are a broom and a mop. The broom is on the floor. The mop is on the floor. There is a passage to a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take broom<br/>Next actions: With the broom in hand, go back to the hallway and then proceed to the pantry. Once in the pantry, open the freezer and put the broom inside. This will be the final step in organizing all items as instructed, completing the task.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;With the broom in hand&#x27;, &#x27;go back to the hallway and then proceed to the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside. This will be the final step in organizing all items as instructed&#x27;, &#x27;completing the task.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;With the broom in hand&#x27;, &#x27;go back to the hallway and then proceed to the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside. This will be the final step in organizing all items as instructed&#x27;, &#x27;completing the task.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;with&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;with&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 25</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the broom. In your inventory you have a broom.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to pantry<br/>Next actions: Upon arriving at the pantry, open the freezer and put the broom inside. This action will conclude the task of organizing all items as directed, with the apple in the cupboard, the book in the wardrobe, and the broom in the freezer.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Upon arriving at the pantry&#x27;, &#x27;open the freezer and put the broom inside. This action will conclude the task of organizing all items as directed&#x27;, &#x27;with the apple in the cupboard&#x27;, &#x27;the book in the wardrobe&#x27;, &#x27;and the broom in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;pantry&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Upon arriving at the pantry&#x27;, &#x27;open the freezer and put the broom inside. This action will conclude the task of organizing all items as directed&#x27;, &#x27;with the apple in the cupboard&#x27;, &#x27;the book in the wardrobe&#x27;, &#x27;and the broom in the freezer.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;upon&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;upon&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 26</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to hallway<br/>Next actions: Since there&#x27;s no direct passage to the pantry from the broom closet, I&#x27;ll return to the hallway. From there, I can find the correct path to the pantry. Once in the pantry, open the freezer and put the broom inside, thus completing the task of organizing all items as instructed.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Since there&#x27;s no direct passage to the pantry from the broom closet&quot;, &quot;I&#x27;ll return to the hallway. From there&quot;, &#x27;I can find the correct path to the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside&#x27;, &#x27;thus completing the task of organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Since there&#x27;s no direct passage to the pantry from the broom closet&quot;, &quot;I&#x27;ll return to the hallway. From there&quot;, &#x27;I can find the correct path to the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside&#x27;, &#x27;thus completing the task of organizing all items as instructed.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 12\n\nsince there&#x27;s no direct passage to the pantry from \n           ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 27</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a broom closet, a living room and a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: Since the pantry passage is not available directly from the hallway, I&#x27;ll go to the living room. From there, I can find the correct path to the pantry. Once in the pantry, open the freezer and put the broom inside, thereby finishing the task of organizing all items as directed. If the pantry is not accessible from the living room, I will continue to search for the correct route.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Since the pantry passage is not available directly from the hallway&#x27;, &quot;I&#x27;ll go to the living room. From there&quot;, &#x27;I can find the correct path to the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside&#x27;, &#x27;thereby finishing the task of organizing all items as directed. If the pantry is not accessible from the living room&#x27;, &#x27;I will continue to search for the correct route.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Since the pantry passage is not available directly from the hallway&#x27;, &quot;I&#x27;ll go to the living room. From there&quot;, &#x27;I can find the correct path to the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside&#x27;, &#x27;thereby finishing the task of organizing all items as directed. If the pantry is not accessible from the living room&#x27;, &#x27;I will continue to search for the correct route.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 28</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a shelf, a table and a side table. There are passages to a hallway and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: Since the pantry passage hasn&#x27;t been found yet, I&#x27;ll go to the kitchen. From there, I should be able to locate the pantry. Once in the pantry, open the freezer and put the broom inside, thus completing the task of organizing all items as directed. If the pantry is not accessible from the kitchen, I will continue to search for the correct route.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Since the pantry passage hasn&#x27;t been found yet&quot;, &quot;I&#x27;ll go to the kitchen. From there&quot;, &#x27;I should be able to locate the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside&#x27;, &#x27;thus completing the task of organizing all items as directed. If the pantry is not accessible from the kitchen&#x27;, &#x27;I will continue to search for the correct route.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Since the pantry passage hasn&#x27;t been found yet&quot;, &quot;I&#x27;ll go to the kitchen. From there&quot;, &#x27;I should be able to locate the pantry. Once in the pantry&#x27;, &#x27;open the freezer and put the broom inside&#x27;, &#x27;thus completing the task of organizing all items as directed. If the pantry is not accessible from the kitchen&#x27;, &#x27;I will continue to search for the correct route.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 30\n\nsince the pantry passage hasn&#x27;t been found yet\n                             ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 29</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter, a plate, a apple and a cupboard. The plate is in the cupboard. The apple is in the cupboard. The cupboard is open. There are passages to a living room and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to pantry<br/>Next actions: Now that I&#x27;ve found the pantry passage, I&#x27;ll go there. Upon arrival, open the freezer and put the broom inside. This will be the final step in organizing all items as directed, completing the task. If the freezer is locked or inaccessible, I will attempt to find an alternative way to store the broom as required.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;Now that I&#x27;ve found the pantry passage&quot;, &quot;I&#x27;ll go there. Upon arrival&quot;, &#x27;open the freezer and put the broom inside. This will be the final step in organizing all items as directed&#x27;, &#x27;completing the task. If the freezer is locked or inaccessible&#x27;, &#x27;I will attempt to find an alternative way to store the broom as required.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;Now that I&#x27;ve found the pantry passage&quot;, &quot;I&#x27;ll go there. Upon arrival&quot;, &#x27;open the freezer and put the broom inside. This will be the final step in organizing all items as directed&#x27;, &#x27;completing the task. If the freezer is locked or inaccessible&#x27;, &#x27;I will attempt to find an alternative way to store the broom as required.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 11\n\nnow that i&#x27;ve found the pantry passage\n          ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 30</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a pantry now. There are a orange, a refrigerator, a peach, a freezer, a sandwich and a banana. The orange is in the refrigerator. The refrigerator is open. The peach is in the refrigerator. The freezer is closed. The sandwich is in the refrigerator. The banana is in the refrigerator. There is a passage to a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open freezer<br/>Next actions: Once the freezer is open, put the broom inside. This will be the last step in organizing all items as directed, completing the task. If the freezer doesn&#x27;t open or there&#x27;s an issue storing the broom there, I will look for an alternative solution while staying true to the original instructions as much as possible.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;Once the freezer is open&#x27;, &#x27;put the broom inside. This will be the last step in organizing all items as directed&#x27;, &quot;completing the task. If the freezer doesn&#x27;t open or there&#x27;s an issue storing the broom there&quot;, &#x27;I will look for an alternative solution while staying true to the original instructions as much as possible.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;Once the freezer is open&#x27;, &#x27;put the broom inside. This will be the last step in organizing all items as directed&#x27;, &quot;completing the task. If the freezer doesn&#x27;t open or there&#x27;s an issue storing the broom there&quot;, &#x27;I will look for an alternative solution while staying true to the original instructions as much as possible.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 31</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The freezer is now open.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put broom in freezer<br/>Next actions: With the broom placed in the freezer, the task of organizing all items as directed is now complete. The apple is in the cupboard, the book is in the wardrobe, and the broom is in the freezer. I will now ensure that all items are secure in their locations and that no further tasks need to be addressed. If everything is in order, the mission is successfully concluded.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;With the broom placed in the freezer&#x27;, &#x27;the task of organizing all items as directed is now complete. The apple is in the cupboard&#x27;, &#x27;the book is in the wardrobe&#x27;, &#x27;and the broom is in the freezer. I will now ensure that all items are secure in their locations and that no further tasks need to be addressed. If everything is in order&#x27;, &#x27;the mission is successfully concluded.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;, &#x27;in(broom1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;With the broom placed in the freezer&#x27;, &#x27;the task of organizing all items as directed is now complete. The apple is in the cupboard&#x27;, &#x27;the book is in the wardrobe&#x27;, &#x27;and the broom is in the freezer. I will now ensure that all items are secure in their locations and that no further tasks need to be addressed. If everything is in order&#x27;, &#x27;the mission is successfully concluded.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;book1&#x27;, &#x27;wardrobe1&#x27;], [&#x27;in&#x27;, &#x27;apple1&#x27;, &#x27;cupboard1&#x27;], [&#x27;in&#x27;, &#x27;broom1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;with&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;with&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: adventure_finished" class="msg gm-gm">
+        <p>[&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;, &#x27;in(broom1,freezer1)&#x27;]</p>
     </div>
 
     <div speaker="Game Master: game_result" class="msg gm-gm">
-        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;game_successfully_finished&#x27;: False}</p>
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(apple1,cupboard1)&#x27;, &#x27;in(book1,wardrobe1)&#x27;, &#x27;in(broom1,freezer1)&#x27;], &#x27;game_successfully_finished&#x27;: True}</p>
     </div>
 
 </div>

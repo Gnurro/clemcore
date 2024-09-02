@@ -137,23 +137,1463 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the potted plant in the freezer, the plate on the table and the mop in the refrigerator.<br/><br/>You are in a bedroom now. There are a bed and a wardrobe. The wardrobe is closed. There is a passage to a hallway here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the potted plant in the freezer, the plate on the table and the mop in the refrigerator.<br/><br/>You are in a bedroom now. There are a wardrobe and a bed. The wardrobe is closed. There is a passage to a hallway here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> go to hallway<br/>Next actions: find the potted plant, pick up potted plant, go to freezer, put potted plant in freezer, find plate, pick up plate, go to table, put plate on table, find mop, pick up mop, go to refrigerator, put mop in refrigerator.||</p>
+        <p>&gt; go to hallway<br/>Next actions: check if there&#x27;s a potted plant, a plate, or a mop in the hallway, pick it up if found, then proceed to find the freezer and refrigerator based on where the item should go. If none of those items are found, explore other rooms from the hallway.</p>
     </div>
 
-    <div speaker="Game Master: invalid_format" class="msg gm-gm">
-        <p>command_tag_missing</p>
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&quot;check if there&#x27;s a potted plant&quot;, &#x27;a plate&#x27;, &#x27;or a mop in the hallway&#x27;, &#x27;pick it up if found&#x27;, &#x27;then proceed to find the freezer and refrigerator based on where the item should go. If none of those items are found&#x27;, &#x27;explore other rooms from the hallway.&#x27;]</p>
     </div>
 
-    <div speaker="Game Master: invalid_format" class="msg gm-gm">
-        <p>command_tag_missing</p>
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&quot;check if there&#x27;s a potted plant&quot;, &#x27;a plate&#x27;, &#x27;or a mop in the hallway&#x27;, &#x27;pick it up if found&#x27;, &#x27;then proceed to find the freezer and refrigerator based on where the item should go. If none of those items are found&#x27;, &#x27;explore other rooms from the hallway.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;&#x27;&#x27; in the current parser context, at line 1 col 15\n\ncheck if there&#x27;s a potted plant\n              ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a hallway now. There is a potted plant. The potted plant is on the floor. There are passages to a kitchen, a broom closet, a living room and a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take potted plant<br/>Next actions: go to the kitchen to look for the freezer, if not found, check the living room and the broom closet as alternative locations. Once the freezer is found, place the potted plant inside. Then, search for the plate and the mop in the remaining areas.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to the kitchen to look for the freezer&#x27;, &#x27;if not found&#x27;, &#x27;check the living room and the broom closet as alternative locations. Once the freezer is found&#x27;, &#x27;place the potted plant inside. Then&#x27;, &#x27;search for the plate and the mop in the remaining areas.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to the kitchen to look for the freezer&#x27;, &#x27;if not found&#x27;, &#x27;check the living room and the broom closet as alternative locations. Once the freezer is found&#x27;, &#x27;place the potted plant inside. Then&#x27;, &#x27;search for the plate and the mop in the remaining areas.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;malformed_command&#x27;, &#x27;arg&#x27;: &quot;{&#x27;type&#x27;: &#x27;unknown&#x27;, &#x27;arg1&#x27;: &#x27;go&#x27;}&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the potted plant. In your inventory you have a potted plant.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: look for the freezer in the kitchen and place the potted plant inside. Then, search for the plate and the mop in the kitchen. If not found, move on to the living room and the broom closet. Once all items are located, place them in their respective locations according to the goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;look for the freezer in the kitchen and place the potted plant inside. Then&#x27;, &#x27;search for the plate and the mop in the kitchen. If not found&#x27;, &#x27;move on to the living room and the broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;look for the freezer in the kitchen and place the potted plant inside. Then&#x27;, &#x27;search for the plate and the mop in the kitchen. If not found&#x27;, &#x27;move on to the living room and the broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>4</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 70\n\nitchen and place the potted plant inside. then\n                                        ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for freezer<br/>Next actions: if the freezer is found, put the potted plant inside. If not, check the pantry and the living room for the freezer. After finding the freezer, continue searching for the plate and the mop in the kitchen, living room, and broom closet. Once all items are located, place them in their respective locations according to the goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search for freezer<br/>Next actions: if the freezer is found, put the potted plant inside. If not, check the pantry and the living room for the freezer. After finding the freezer, continue searching for the plate and the mop in the kitchen, living room, and broom closet. Once all items are located, place them in their respective locations according to the goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine room for freezer<br/>Next actions: if the freezer is found, put the potted plant inside. If not, check the pantry and the living room for the freezer by examining those rooms as well. After finding the freezer, continue searching for the plate and the mop in the kitchen, living room, and broom closet by examining each room thoroughly. Once all items are located, place them in their respective locations according to the goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer by examining those rooms as well. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet by examining each room thoroughly. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer by examining those rooms as well. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet by examining each room thoroughly. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look around for freezer<br/>Next actions: if the freezer is found, put the potted plant inside. If not, check the pantry and the living room for the freezer by looking around those rooms as well. After finding the freezer, continue searching for the plate and the mop in the kitchen, living room, and broom closet by looking around each room thoroughly. Once all items are located, place them in their respective locations according to the goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer by looking around those rooms as well. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet by looking around each room thoroughly. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer by looking around those rooms as well. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet by looking around each room thoroughly. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check room for freezer<br/>Next actions: if the freezer is found, open it and put the potted plant inside. If not, check the pantry and the living room for the freezer by carefully inspecting those rooms. After finding the freezer, continue searching for the plate and the mop in the kitchen, living room, and broom closet by carefully inspecting each room. Once all items are located, place them in their respective locations according to the goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;open it and put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer by carefully inspecting those rooms. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet by carefully inspecting each room. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;open it and put the potted plant inside. If not&#x27;, &#x27;check the pantry and the living room for the freezer by carefully inspecting those rooms. After finding the freezer&#x27;, &#x27;continue searching for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet by carefully inspecting each room. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; investigate room for freezer<br/>Next actions: if the freezer is found, open it and put the potted plant inside. If not, investigate the pantry and the living room for the freezer. After finding the freezer, continue investigating for the plate and the mop in the kitchen, living room, and broom closet. Once all items are located, place them in their respective locations according to the goal. Since the game seems to be interpreting these actions as similar, I will simply try to open a</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;open it and put the potted plant inside. If not&#x27;, &#x27;investigate the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue investigating for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal. Since the game seems to be interpreting these actions as similar&#x27;, &#x27;I will simply try to open a&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;investigate&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;open it and put the potted plant inside. If not&#x27;, &#x27;investigate the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue investigating for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal. Since the game seems to be interpreting these actions as similar&#x27;, &#x27;I will simply try to open a&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;investigate&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inspect room for freezer<br/>Next actions: if the freezer is found, open it and put the potted plant inside. If not, inspect the pantry and the living room for the freezer. After finding the freezer, continue inspecting for the plate and the mop in the kitchen, living room, and broom closet. Once all items are located, place them in their respective locations according to the goal. Since the game seems to be interpreting these actions as similar, I will simply try to open</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;open it and put the potted plant inside. If not&#x27;, &#x27;inspect the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue inspecting for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal. Since the game seems to be interpreting these actions as similar&#x27;, &#x27;I will simply try to open&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inspect&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if the freezer is found&#x27;, &#x27;open it and put the potted plant inside. If not&#x27;, &#x27;inspect the pantry and the living room for the freezer. After finding the freezer&#x27;, &#x27;continue inspecting for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal. Since the game seems to be interpreting these actions as similar&#x27;, &#x27;I will simply try to open&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inspect&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to pantry<br/>Next actions: since the previous actions were not recognized, I will now search for the freezer by checking each room manually. In the pantry, look for the freezer. If not found, go to the living room and search for the freezer there. Continue this process until the freezer is found, then place the potted plant inside. After that, search for the plate and the mop in the remaining rooms. Once all items are located, place them in their respective locations according to</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the previous actions were not recognized&#x27;, &#x27;I will now search for the freezer by checking each room manually. In the pantry&#x27;, &#x27;look for the freezer. If not found&#x27;, &#x27;go to the living room and search for the freezer there. Continue this process until the freezer is found&#x27;, &#x27;then place the potted plant inside. After that&#x27;, &#x27;search for the plate and the mop in the remaining rooms. Once all items are located&#x27;, &#x27;place them in their respective locations according to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the previous actions were not recognized&#x27;, &#x27;I will now search for the freezer by checking each room manually. In the pantry&#x27;, &#x27;look for the freezer. If not found&#x27;, &#x27;go to the living room and search for the freezer there. Continue this process until the freezer is found&#x27;, &#x27;then place the potted plant inside. After that&#x27;, &#x27;search for the plate and the mop in the remaining rooms. Once all items are located&#x27;, &#x27;place them in their respective locations according to&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a pantry now. There are a refrigerator and a freezer. The refrigerator is closed. The freezer is closed. There is a passage to a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open freezer<br/>Next actions: once the freezer is opened, put the potted plant inside. Then, search for the plate and the mop in the kitchen, living room, and broom closet. Once all items are located, place them in their respective locations according to the goal. After placing the potted plant, return to the kitchen to continue the search for the remaining items.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once the freezer is opened&#x27;, &#x27;put the potted plant inside. Then&#x27;, &#x27;search for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal. After placing the potted plant&#x27;, &#x27;return to the kitchen to continue the search for the remaining items.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once the freezer is opened&#x27;, &#x27;put the potted plant inside. Then&#x27;, &#x27;search for the plate and the mop in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once all items are located&#x27;, &#x27;place them in their respective locations according to the goal. After placing the potted plant&#x27;, &#x27;return to the kitchen to continue the search for the remaining items.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The freezer is now open.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put potted plant in freezer<br/>Next actions: after placing the potted plant in the freezer, close the freezer. Then, search for the plate in the kitchen, living room, and broom closet. Once the plate is found, take it and go to the table in the living room or dining area to place it there. After placing the plate, search for the mop in the remaining areas. Once the mop is found, take it to the refrigerator in the kitchen and place it inside</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after placing the potted plant in the freezer&#x27;, &#x27;close the freezer. Then&#x27;, &#x27;search for the plate in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once the plate is found&#x27;, &#x27;take it and go to the table in the living room or dining area to place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after placing the potted plant in the freezer&#x27;, &#x27;close the freezer. Then&#x27;, &#x27;search for the plate in the kitchen&#x27;, &#x27;living room&#x27;, &#x27;and broom closet. Once the plate is found&#x27;, &#x27;take it and go to the table in the living room or dining area to place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You put the potted plant in the freezer. There is a potted plant in the freezer.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; close freezer<br/>Next actions: after closing the freezer, go back to the kitchen and search for the plate. Check the counter, cupboard, and any other surfaces in the kitchen. If the plate is not found, move on to the living room and broom closet. Once the plate is located, take it to the table in the living room or dining area and place it there. After placing the plate, search for the mop in the remaining areas. Once the mop is found, take it</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after closing the freezer&#x27;, &#x27;go back to the kitchen and search for the plate. Check the counter&#x27;, &#x27;cupboard&#x27;, &#x27;and any other surfaces in the kitchen. If the plate is not found&#x27;, &#x27;move on to the living room and broom closet. Once the plate is located&#x27;, &#x27;take it to the table in the living room or dining area and place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after closing the freezer&#x27;, &#x27;go back to the kitchen and search for the plate. Check the counter&#x27;, &#x27;cupboard&#x27;, &#x27;and any other surfaces in the kitchen. If the plate is not found&#x27;, &#x27;move on to the living room and broom closet. Once the plate is located&#x27;, &#x27;take it to the table in the living room or dining area and place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The freezer is now closed.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: search the kitchen for the plate by checking the counter, cupboard, and any other surfaces. If the plate is not found, move on to the living room and broom closet. Once the plate is located, take it to the table in the living room or dining area and place it there. After placing the plate, search for the mop in the remaining areas. Once the mop is found, take it to the refrigerator in the kitchen and place it inside.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;search the kitchen for the plate by checking the counter&#x27;, &#x27;cupboard&#x27;, &#x27;and any other surfaces. If the plate is not found&#x27;, &#x27;move on to the living room and broom closet. Once the plate is located&#x27;, &#x27;take it to the table in the living room or dining area and place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;search the kitchen for the plate by checking the counter&#x27;, &#x27;cupboard&#x27;, &#x27;and any other surfaces. If the plate is not found&#x27;, &#x27;move on to the living room and broom closet. Once the plate is located&#x27;, &#x27;take it to the table in the living room or dining area and place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;search&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: after opening the cupboard, check inside for the plate. If the plate is not found, search the counter and any other surfaces in the kitchen. If the plate is still not found, move on to the living room and broom closet. Once the plate is located, take it to the table in the living room or dining area and place it there. After placing the plate, search for the mop in the remaining areas. Once the mop is found, take it</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after opening the cupboard&#x27;, &#x27;check inside for the plate. If the plate is not found&#x27;, &#x27;search the counter and any other surfaces in the kitchen. If the plate is still not found&#x27;, &#x27;move on to the living room and broom closet. Once the plate is located&#x27;, &#x27;take it to the table in the living room or dining area and place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after opening the cupboard&#x27;, &#x27;check inside for the plate. If the plate is not found&#x27;, &#x27;search the counter and any other surfaces in the kitchen. If the plate is still not found&#x27;, &#x27;move on to the living room and broom closet. Once the plate is located&#x27;, &#x27;take it to the table in the living room or dining area and place it there. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas. Once the mop is found&#x27;, &#x27;take it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now open. There is a plate in the cupboard.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take plate<br/>Next actions: after taking the plate from the cupboard, go to the living room or dining area and find the table. Place the plate on the table. Once the plate is placed, search for the mop in the remaining areas, including the broom closet. Once the mop is found, take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations, the goal of the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after taking the plate from the cupboard&#x27;, &#x27;go to the living room or dining area and find the table. Place the plate on the table. Once the plate is placed&#x27;, &#x27;search for the mop in the remaining areas&#x27;, &#x27;including the broom closet. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after taking the plate from the cupboard&#x27;, &#x27;go to the living room or dining area and find the table. Place the plate on the table. Once the plate is placed&#x27;, &#x27;search for the mop in the remaining areas&#x27;, &#x27;including the broom closet. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the plate. In your inventory you have a plate.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: once in the living room, find the table and place the plate on it. After placing the plate, search for the mop in the remaining areas, including the broom closet. Once the mop is found, take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations, the goal of the game will be completed. After placing the plate, return</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once in the living room&#x27;, &#x27;find the table and place the plate on it. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas&#x27;, &#x27;including the broom closet. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After placing the plate&#x27;, &#x27;return&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once in the living room&#x27;, &#x27;find the table and place the plate on it. After placing the plate&#x27;, &#x27;search for the mop in the remaining areas&#x27;, &#x27;including the broom closet. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After placing the plate&#x27;, &#x27;return&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a book, a shelf, a table and a side table. The book is on the side table. There are passages to a hallway and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put plate on table<br/>Next actions: after placing the plate on the table, search for the mop in the remaining areas, including the broom closet. Once the mop is found, take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations, the goal of the game will be completed. After placing the plate, return to the kitchen or check the broom closet to locate the mop</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after placing the plate on the table&#x27;, &#x27;search for the mop in the remaining areas&#x27;, &#x27;including the broom closet. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After placing the plate&#x27;, &#x27;return to the kitchen or check the broom closet to locate the mop&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after placing the plate on the table&#x27;, &#x27;search for the mop in the remaining areas&#x27;, &#x27;including the broom closet. Once the mop is found&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After placing the plate&#x27;, &#x27;return to the kitchen or check the broom closet to locate the mop&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 19</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You put the plate on the table.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to broom closet<br/>Next actions: search the broom closet for the mop. If the mop is not found, check the remaining areas in the house, such as under the furniture or in other closets. Once the mop is located, take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations, the goal of the game will be completed. After searching the broom closet,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;search the broom closet for the mop. If the mop is not found&#x27;, &#x27;check the remaining areas in the house&#x27;, &#x27;such as under the furniture or in other closets. Once the mop is located&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After searching the broom closet&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;broomcloset&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;search the broom closet for the mop. If the mop is not found&#x27;, &#x27;check the remaining areas in the house&#x27;, &#x27;such as under the furniture or in other closets. Once the mop is located&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After searching the broom closet&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 36\n\nsearch the broom closet for the mop. if the mop is not found\n                                   ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 20</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a broom closet here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to hallway<br/>Next actions: since there is no broom closet in the living room, check the hallway for any other rooms or closets that may contain the mop. If the mop is not found in the hallway, check the remaining areas in the house, such as under the furniture or in other closets. Once the mop is located, take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since there is no broom closet in the living room&#x27;, &#x27;check the hallway for any other rooms or closets that may contain the mop. If the mop is not found in the hallway&#x27;, &#x27;check the remaining areas in the house&#x27;, &#x27;such as under the furniture or in other closets. Once the mop is located&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since there is no broom closet in the living room&#x27;, &#x27;check the hallway for any other rooms or closets that may contain the mop. If the mop is not found in the hallway&#x27;, &#x27;check the remaining areas in the house&#x27;, &#x27;such as under the furniture or in other closets. Once the mop is located&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 21</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a hallway now. There are passages to a kitchen, a broom closet, a living room and a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to broom closet<br/>Next actions: search the broom closet for the mop. If the mop is not found, check the remaining areas in the house, such as under the furniture or in other closets. Once the mop is located, take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations, the goal of the game will be completed. After searching the broom closet,</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;search the broom closet for the mop. If the mop is not found&#x27;, &#x27;check the remaining areas in the house&#x27;, &#x27;such as under the furniture or in other closets. Once the mop is located&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After searching the broom closet&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;search the broom closet for the mop. If the mop is not found&#x27;, &#x27;check the remaining areas in the house&#x27;, &#x27;such as under the furniture or in other closets. Once the mop is located&#x27;, &#x27;take it to the refrigerator in the kitchen and place it inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After searching the broom closet&#x27;, &#x27;&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know what you mean.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;lark_exception&#x27;, &#x27;arg&#x27;: &quot;No terminal matches &#x27;.&#x27; in the current parser context, at line 1 col 36\n\nsearch the broom closet for the mop. if the mop is not found\n                                   ^\nExpected one of: \n\t* WS\n\t* WORD\n&quot;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 22</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a broom closet now. There are a broom and a mop. The broom is on the floor. The mop is on the floor. There is a passage to a hallway here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take mop<br/>Next actions: after taking the mop, go to the kitchen and find the refrigerator. Open the refrigerator and place the mop inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations, the goal of the game will be completed. After placing the mop, review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order, the game should</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after taking the mop&#x27;, &#x27;go to the kitchen and find the refrigerator. Open the refrigerator and place the mop inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After placing the mop&#x27;, &quot;review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after taking the mop&#x27;, &#x27;go to the kitchen and find the refrigerator. Open the refrigerator and place the mop inside. Make sure to close the refrigerator door after placing the mop. With all items placed in their respective locations&#x27;, &#x27;the goal of the game will be completed. After placing the mop&#x27;, &quot;review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 23</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the mop. In your inventory you have a mop.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: once in the kitchen, find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order, the game should</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once in the kitchen&#x27;, &#x27;find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;no_exit_to&#x27;, &#x27;arg&#x27;: &#x27;kitchen&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once in the kitchen&#x27;, &#x27;find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 24</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>There is no passage to a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to hallway<br/>Next actions: since there is no direct passage to the kitchen from the broom closet, return to the hallway and find the passage to the kitchen. Once in the kitchen, find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be completed. Review the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since there is no direct passage to the kitchen from the broom closet&#x27;, &#x27;return to the hallway and find the passage to the kitchen. Once in the kitchen&#x27;, &#x27;find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will be completed. Review the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since there is no direct passage to the kitchen from the broom closet&#x27;, &#x27;return to the hallway and find the passage to the kitchen. Once in the kitchen&#x27;, &#x27;find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will be completed. Review the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 25</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a hallway now. There are passages to a kitchen, a broom closet, a living room and a bedroom here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to kitchen<br/>Next actions: once in the kitchen, find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order, the game should</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;once in the kitchen&#x27;, &#x27;find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;once in the kitchen&#x27;, &#x27;find the refrigerator and open it. Place the mop inside the refrigerator and make sure to close the door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;once&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;once&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 26</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is open. There are passages to a living room, a hallway and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; find refrigerator<br/>Next actions: since the refrigerator was not mentioned in the current room description, search the kitchen for the refrigerator. Look around the kitchen, checking behind doors, against walls, and in corners. Once the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be completed</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;search the kitchen for the refrigerator. Look around the kitchen&#x27;, &#x27;checking behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will be completed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;find&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;search the kitchen for the refrigerator. Look around the kitchen&#x27;, &#x27;checking behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will be completed&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 27</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;find&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look for refrigerator<br/>Next actions: since the refrigerator was not mentioned in the current room description, search the kitchen for the refrigerator by looking around the room. Check behind doors, against walls, and in corners. Once the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;search the kitchen for the refrigerator by looking around the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will be&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;search the kitchen for the refrigerator by looking around the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will be&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 28</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search kitchen for refrigerator<br/>Next actions: since the refrigerator was not mentioned in the current room description, search the kitchen for the refrigerator by carefully examining the room. Check behind doors, against walls, and in corners. Once the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;search the kitchen for the refrigerator by carefully examining the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;search the kitchen for the refrigerator by carefully examining the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 29</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine kitchen for refrigerator<br/>Next actions: since the refrigerator was not mentioned in the current room description, examine the kitchen for the refrigerator by carefully looking around the room. Check behind doors, against walls, and in corners. Once the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;examine the kitchen for the refrigerator by carefully looking around the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;examine the kitchen for the refrigerator by carefully looking around the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 30</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check kitchen for refrigerator<br/>Next actions: since the refrigerator was not mentioned in the current room description, check the kitchen for the refrigerator by looking around the room. Check behind doors, against walls, and in corners. Once the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;check the kitchen for the refrigerator by looking around the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;check the kitchen for the refrigerator by looking around the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 31</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scan kitchen for refrigerator<br/>Next actions: since the refrigerator was not mentioned in the current room description, scan the kitchen for the refrigerator by visually searching the room. Check behind doors, against walls, and in corners. Once the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;scan the kitchen for the refrigerator by visually searching the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scan&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator was not mentioned in the current room description&#x27;, &#x27;scan the kitchen for the refrigerator by visually searching the room. Check behind doors&#x27;, &#x27;against walls&#x27;, &#x27;and in corners. Once the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &#x27;the goal of the game will&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 32</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scan&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to pantry<br/>Next actions: since the refrigerator has not been found in the kitchen, it might be located in another room. Go to the pantry and check if the refrigerator is there. If the refrigerator is found, open it and place the mop inside. Make sure to close the refrigerator door afterward. If the refrigerator is not in the pantry, continue searching other rooms until it is found. With all items placed in their respective locations (potted plant in the freezer, plate on the table</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator has not been found in the kitchen&#x27;, &#x27;it might be located in another room. Go to the pantry and check if the refrigerator is there. If the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. If the refrigerator is not in the pantry&#x27;, &#x27;continue searching other rooms until it is found. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;since the refrigerator has not been found in the kitchen&#x27;, &#x27;it might be located in another room. Go to the pantry and check if the refrigerator is there. If the refrigerator is found&#x27;, &#x27;open it and place the mop inside. Make sure to close the refrigerator door afterward. If the refrigerator is not in the pantry&#x27;, &#x27;continue searching other rooms until it is found. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>5</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;since&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;since&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 33</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a pantry now. There are a refrigerator and a freezer. The refrigerator is closed. The freezer is closed. There is a passage to a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open refrigerator<br/>Next actions: after opening the refrigerator, place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order, the game should end successfully. After placing the mop</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after opening the refrigerator&#x27;, &#x27;place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should end successfully. After placing the mop&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after opening the refrigerator&#x27;, &#x27;place the mop inside. Make sure to close the refrigerator door afterward. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should end successfully. After placing the mop&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>6</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 34</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The refrigerator is now open. There is a orange in the refrigerator. There is a apple in the refrigerator. There is a peach in the refrigerator. There is a banana in the refrigerator. There is a sandwich in the refrigerator.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put mop in refrigerator<br/>Next actions: after placing the mop in the refrigerator, close the refrigerator door. With all items placed in their respective locations (potted plant in the freezer, plate on the table, and mop in the refrigerator), the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order, the game should end successfully. After placing the mop in the refrigerator, double-check</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;after placing the mop in the refrigerator&#x27;, &#x27;close the refrigerator door. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should end successfully. After placing the mop in the refrigerator&#x27;, &#x27;double-check&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(mop1,refrigerator1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;after placing the mop in the refrigerator&#x27;, &#x27;close the refrigerator door. With all items placed in their respective locations (potted plant in the freezer&#x27;, &#x27;plate on the table&#x27;, &#x27;and mop in the refrigerator)&#x27;, &quot;the goal of the game will be completed. Review the game&#x27;s objective to ensure that everything has been done correctly and the goal has been achieved. If everything is in order&quot;, &#x27;the game should end successfully. After placing the mop in the refrigerator&#x27;, &#x27;double-check&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>7</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;in&#x27;, &#x27;mop1&#x27;, &#x27;refrigerator1&#x27;], [&#x27;in&#x27;, &#x27;pottedplant1&#x27;, &#x27;freezer1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;after&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;after&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: adventure_finished" class="msg gm-gm">
+        <p>[&#x27;on(plate1,table1)&#x27;, &#x27;in(mop1,refrigerator1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;]</p>
     </div>
 
     <div speaker="Game Master: game_result" class="msg gm-gm">
-        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;game_successfully_finished&#x27;: False}</p>
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;, &#x27;in(mop1,refrigerator1)&#x27;, &#x27;in(pottedplant1,freezer1)&#x27;], &#x27;game_successfully_finished&#x27;: True}</p>
     </div>
 
 </div>

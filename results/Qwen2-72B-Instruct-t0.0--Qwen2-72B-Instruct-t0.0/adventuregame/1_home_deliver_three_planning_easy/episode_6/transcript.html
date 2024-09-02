@@ -137,11 +137,823 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master to Player 1" class="msg gm-a">
-        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the pillow on the table, the book on the table and the plate on the table.<br/><br/>You are in a kitchen now. There are a cupboard, a plate and a counter. The cupboard is closed. The plate is on the counter. There are passages to a hallway, a pantry and a living room here.</p>
+        <p>You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with &gt;. Write your plan for your next actions on the line below your action, starting with &quot;Next actions:&quot;.<br/>For example:<br/>&gt; open cupboard<br/>Next actions: take orange, eat orange<br/><br/>Your goal for this game is: Put the pillow on the table, the book on the table and the plate on the table.<br/><br/>You are in a kitchen now. There are a counter, a plate and a cupboard. The plate is on the counter. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.</p>
     </div>
 
     <div speaker="Player 1 to Game Master" class="msg a-gm">
-        <p> take plate from counter<br/>Next actions: go to living room, put plate on table, go to hallway, find pillow, take pillow, go to living room, put pillow on table, go to pantry, find book, take book, go to living room, put book on table.||</p>
+        <p>&gt; take plate from counter<br/>Next actions: open cupboard, check inside cupboard, go to living room, put plate on table, go back to kitchen, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. <br/><br/>Since the pillow and book are not currently visible, I assume they are inside the closed cupboard. Once I have all three items, I will place them on the table</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;open cupboard&#x27;, &#x27;check inside cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put plate on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. \n\nSince the pillow and book are not currently visible&#x27;, &#x27;I assume they are inside the closed cupboard. Once I have all three items&#x27;, &#x27;I will place them on the table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;open cupboard&#x27;, &#x27;check inside cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put plate on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. \n\nSince the pillow and book are not currently visible&#x27;, &#x27;I assume they are inside the closed cupboard. Once I have all three items&#x27;, &#x27;I will place them on the table&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>14</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[], &#x27;The cupboard is now open.&#x27;, {}], [[], &quot;I don&#x27;t know how to interpret this &#x27;check&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.07142857142857142</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 1</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You take the plate. In your inventory you have a plate.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go to living room<br/>Next actions: put plate on table, go back to kitchen, open cupboard, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table.<br/>Now that I have the plate, I will go to the living room and put it on the table. Then I will return to the kitchen to retrieve the remaining items.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;put plate on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;open cupboard&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nNow that I have the plate&#x27;, &#x27;I will go to the living room and put it on the table. Then I will return to the kitchen to retrieve the remaining items.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;put plate on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;open cupboard&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nNow that I have the plate&#x27;, &#x27;I will go to the living room and put it on the table. Then I will return to the kitchen to retrieve the remaining items.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>11</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[&#x27;on(plate1,table1)&#x27;], &#x27;You put the plate on the table.&#x27;, {}], [[&#x27;on(plate1,table1)&#x27;], &#x27;You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.&#x27;, {}], [[&#x27;on(plate1,table1)&#x27;], &#x27;The cupboard is now open.&#x27;, {}], [[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;]], &quot;You can&#x27;t see a book here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.2727272727272727</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 2</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a living room now. There are a couch, a chair, a book, a shelf, a table and a side table. The book is on the side table. There are passages to a hallway and a kitchen here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; put plate on table<br/>Next actions: go back to kitchen, open cupboard, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table.<br/>I have successfully placed the plate on the table in the living room. Now I need to return to the kitchen to retrieve the book and pillow from the cupboard. Once I have all three items on the table, my goal will be complete.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go back to kitchen&#x27;, &#x27;open cupboard&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI have successfully placed the plate on the table in the living room. Now I need to return to the kitchen to retrieve the book and pillow from the cupboard. Once I have all three items on the table&#x27;, &#x27;my goal will be complete.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go back to kitchen&#x27;, &#x27;open cupboard&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI have successfully placed the plate on the table in the living room. Now I need to return to the kitchen to retrieve the book and pillow from the cupboard. Once I have all three items on the table&#x27;, &#x27;my goal will be complete.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>10</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[&#x27;on(plate1,table1)&#x27;], &#x27;You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.&#x27;, {}], [[&#x27;on(plate1,table1)&#x27;], &#x27;The cupboard is now open.&#x27;, {}], [[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;]], &quot;You can&#x27;t see a book here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.2</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 3</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You put the plate on the table.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; go back to kitchen<br/>Next actions: open cupboard, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table.<br/>The plate is now on the table in the living room. I will now return to the kitchen to open the cupboard and retrieve the book and pillow. Once I have all three items on the table, my goal will be complete.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;open cupboard&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nThe plate is now on the table in the living room. I will now return to the kitchen to open the cupboard and retrieve the book and pillow. Once I have all three items on the table&#x27;, &#x27;my goal will be complete.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;open cupboard&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nThe plate is now on the table in the living room. I will now return to the kitchen to open the cupboard and retrieve the book and pillow. Once I have all three items on the table&#x27;, &#x27;my goal will be complete.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>9</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[&#x27;on(plate1,table1)&#x27;], &#x27;The cupboard is now open.&#x27;, {}], [[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;]], &quot;You can&#x27;t see a book here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.1111111111111111</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 4</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You are in a kitchen now. There are a counter and a cupboard. The cupboard is closed. There are passages to a living room, a hallway and a pantry here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; open cupboard<br/>Next actions: take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table.<br/>I am back in the kitchen and ready to open the cupboard to retrieve the book and pillow. Once I have both items, I will place them on the table in the living room to complete my goal.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI am back in the kitchen and ready to open the cupboard to retrieve the book and pillow. Once I have both items&#x27;, &#x27;I will place them on the table in the living room to complete my goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [&#x27;on(plate1,table1)&#x27;], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI am back in the kitchen and ready to open the cupboard to retrieve the book and pillow. Once I have both items&#x27;, &#x27;I will place them on the table in the living room to complete my goal.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;]], &quot;You can&#x27;t see a book here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 5</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>The cupboard is now open.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; take book from cupboard<br/>Next actions: go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table.<br/>The cupboard is now open, so I will take the book from inside. After that, I will head to the living room to put the book on the table. Then I will return to the kitchen to retrieve the pillow and place it on the table as well. This will complete my goal of putting all</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nThe cupboard is now open&#x27;, &#x27;so I will take the book from inside. After that&#x27;, &#x27;I will head to the living room to put the book on the table. Then I will return to the kitchen to retrieve the pillow and place it on the table as well. This will complete my goal of putting all&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;book&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nThe cupboard is now open&#x27;, &#x27;so I will take the book from inside. After that&#x27;, &#x27;I will head to the living room to put the book on the table. Then I will return to the kitchen to retrieve the pillow and place it on the table as well. This will complete my goal of putting all&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>8</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[&#x27;on(plate1,table1)&#x27;], &#x27;You are in a living room now. There are a couch, a chair, a book, a shelf, a table, a side table and a plate. The book is on the side table. The plate is on the table. There are passages to a hallway and a kitchen here.&#x27;, {}], [[&#x27;on(plate1,table1)&#x27;, &#x27;on(book1,table1)&#x27;], &#x27;You put the book on the table.&#x27;, {}], [[&#x27;on(plate1,table1)&#x27;, &#x27;on(book1,table1)&#x27;], &#x27;You are in a kitchen now. There are a counter and a cupboard. The cupboard is open. There are passages to a living room, a hallway and a pantry here.&#x27;, {}], [[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;You can&#x27;t see a pillow here.&quot;, {&#x27;phase&#x27;: &#x27;resolution&#x27;, &#x27;fail_type&#x27;: &#x27;entity_not_accessible&#x27;, &#x27;arg&#x27;: &#x27;pillow&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.375</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>1</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 6</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>You can&#x27;t see a book here.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look in cupboard<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>It seems that the book is not in the cupboard. I will first double-check the cupboard to make</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nIt seems that the book is not in the cupboard. I will first double-check the cupboard to make&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 1}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nIt seems that the book is not in the cupboard. I will first double-check the cupboard to make&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 7</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search cupboard<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I apologize for the confusion. Instead of &quot;look,&quot; I will use &quot;search&quot; to check if the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI apologize for the confusion. Instead of &quot;look&#x27;, &#x27;&quot; I will use &quot;search&quot; to check if the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI apologize for the confusion. Instead of &quot;look&#x27;, &#x27;&quot; I will use &quot;search&quot; to check if the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>13</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 8</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine cupboard<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;examine&quot; instead of &quot;search&quot; to check if the book is inside the</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;examine&quot; instead of &quot;search&quot; to check if the book is inside the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;examine&quot; instead of &quot;search&quot; to check if the book is inside the&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 9</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check inside cupboard<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;check inside&quot; to look for the book in the cupboard. If it&#x27;s</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;check inside&quot; to look for the book in the cupboard. If it\&#x27;s&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;check inside&quot; to look for the book in the cupboard. If it\&#x27;s&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 10</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; investigate cupboard<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;investigate&quot; to look for the book in the cupboard. If it&#x27;s not</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;investigate&quot; to look for the book in the cupboard. If it\&#x27;s not&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;investigate&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;investigate&quot; to look for the book in the cupboard. If it\&#x27;s not&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 11</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;investigate&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; peek inside cupboard<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;peek inside&quot; to look for the book in the cupboard. If it&#x27;s</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;peek inside&quot; to look for the book in the cupboard. If it\&#x27;s&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;peek&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;peek inside&quot; to look for the book in the cupboard. If it\&#x27;s&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 12</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;peek&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look in cupboard for book<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will explicitly ask to look for the book in the cupboard. If it&#x27;s not there</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &quot;put pillow on table.\nI will explicitly ask to look for the book in the cupboard. If it&#x27;s not there&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &quot;put pillow on table.\nI will explicitly ask to look for the book in the cupboard. If it&#x27;s not there&quot;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 13</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; inspect cupboard for book<br/>Next actions: if book is found, take book from cupboard, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;inspect&quot; to specifically look for the book in the cupboard. If it</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;inspect&quot; to specifically look for the book in the cupboard. If it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;inspect&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;inspect&quot; to specifically look for the book in the cupboard. If it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 14</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;inspect&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; search kitchen for book<br/>Next actions: if book is found, take book, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search living room and other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>Since looking in the cupboard did not reveal the book, I will search the entire kitchen for</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nSince looking in the cupboard did not reveal the book&#x27;, &#x27;I will search the entire kitchen for&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;search&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nSince looking in the cupboard did not reveal the book&#x27;, &#x27;I will search the entire kitchen for&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>13</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 15</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;search&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; look around kitchen for book<br/>Next actions: if book is found, take book, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search living room and other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;look around&quot; to search the entire kitchen for the book.</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;look around&quot; to search the entire kitchen for the book.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;look&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;look around&quot; to search the entire kitchen for the book.&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 16</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;look&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; scan kitchen for book<br/>Next actions: if book is found, take book, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search living room and other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;scan&quot; to search the entire kitchen for the book. If it</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;scan&quot; to search the entire kitchen for the book. If it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;scan&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;scan&quot; to search the entire kitchen for the book. If it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 17</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;scan&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; check kitchen for book<br/>Next actions: if book is found, take book, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search living room and other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;check&quot; to search the entire kitchen for the book. If it</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;check&quot; to search the entire kitchen for the book. If it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;check&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;check&quot; to search the entire kitchen for the book. If it&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 18</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;check&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>&gt; examine kitchen for book<br/>Next actions: if book is found, take book, go to living room, put book on table, go back to kitchen, take pillow from cupboard, go to living room, put pillow on table. If book is not found, search living room and other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow on table.<br/>I will try using &quot;examine&quot; to search the entire kitchen for the book. If</p>
+    </div>
+
+    <div speaker="Game Master: turn_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;examine&quot; to search the entire kitchen for the book. If&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: action_fail" class="msg gm-gm">
+        <p>{&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;examine&#x27;}</p>
+    </div>
+
+    <div speaker="Game Master: goal_status" class="msg gm-gm">
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;turn_goal_score&#x27;: 0}</p>
+    </div>
+
+    <div speaker="Game Master: current_plan" class="msg gm-gm">
+        <p>[&#x27;if book is found&#x27;, &#x27;take book&#x27;, &#x27;go to living room&#x27;, &#x27;put book on table&#x27;, &#x27;go back to kitchen&#x27;, &#x27;take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table. If book is not found&#x27;, &#x27;search living room and other locations for book&#x27;, &#x27;then return to kitchen to take pillow from cupboard&#x27;, &#x27;go to living room&#x27;, &#x27;put pillow on table.\nI will try using &quot;examine&quot; to search the entire kitchen for the book. If&#x27;]</p>
+    </div>
+
+    <div speaker="Game Master: plan_length" class="msg gm-gm">
+        <p>12</p>
+    </div>
+
+    <div speaker="Game Master: plan_results" class="msg gm-gm">
+        <p>[[[[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &quot;I don&#x27;t know how to interpret this &#x27;if&#x27; action.&quot;, {&#x27;phase&#x27;: &#x27;parsing&#x27;, &#x27;fail_type&#x27;: &#x27;undefined_action_verb&#x27;, &#x27;arg&#x27;: &#x27;if&#x27;}]]</p>
+    </div>
+
+    <div speaker="Game Master: plan_command_success_ratio" class="msg gm-gm">
+        <p>0.0</p>
+    </div>
+
+    <div speaker="Game Master: plan_followed" class="msg gm-gm">
+        <p>0</p>
+    </div>
+
+    <div speaker="Game Master: metadata" class="msg gm-gm">
+        <p>Turn 19</p>
+    </div>
+
+    <div speaker="Game Master to Player 1" class="msg gm-a">
+        <p>I don&#x27;t know how to interpret this &#x27;examine&#x27; action.</p>
+    </div>
+
+    <div speaker="Player 1 to Game Master" class="msg a-gm">
+        <p>It appears that the game does not recognize some of the actions I&#x27;ve been trying to use. Let me try a different approach:<br/><br/>&gt; go to living room<br/>Next actions: search living room for book, if book is found, take book, go back to kitchen, take pillow from cupboard, go to living room, put pillow and book on table. If book is not found, search other locations for book, then return to kitchen to take pillow from cupboard, go to living room, put pillow</p>
     </div>
 
     <div speaker="Game Master: invalid_format" class="msg gm-gm">
@@ -153,7 +965,7 @@ body {background-color: rgb(157, 152, 150);}
     </div>
 
     <div speaker="Game Master: game_result" class="msg gm-gm">
-        <p>{&#x27;goal_states_achieved&#x27;: [], &#x27;game_successfully_finished&#x27;: False}</p>
+        <p>{&#x27;goal_states_achieved&#x27;: [[&#x27;on&#x27;, &#x27;plate1&#x27;, &#x27;table1&#x27;], [&#x27;on&#x27;, &#x27;book1&#x27;, &#x27;table1&#x27;]], &#x27;game_successfully_finished&#x27;: False}</p>
     </div>
 
 </div>
