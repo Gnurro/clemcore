@@ -983,6 +983,334 @@ adventuregame,Mistral-Large-Instruct-2407,planning-hard,undefined_action,0.0,0.0
 adventuregame,Mistral-Large-Instruct-2407,planning-hard,undefined_action_verb,3.1875,2.315707235381882,5.362499999999999,3.0,7.0,0.0,-0.11259595200783763
 adventuregame,Mistral-Large-Instruct-2407,planning-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,Mistral-Large-Instruct-2407,planning-hard,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Aborted,0.8125,0.40311288741492746,0.16249999999999998,1.0,1.0,0.0,-1.7719247798458353
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Lose,0.125,0.3415650255319866,0.11666666666666664,0.0,1.0,0.0,2.5094573304390857
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Main Score,33.33333333333333,32.20305943597653,1037.0370370370367,33.33333333333333,100.0,0.0,0.5069869415576483
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Parsed Request Count,23.9375,11.351761977772437,128.86249999999998,20.5,50.0,9.0,1.5810559676578797
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Played,0.1875,0.40311288741492746,0.16249999999999998,0.0,1.0,0.0,1.7719247798458353
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Request Count,24.75,11.138521745126983,124.06666666666665,21.5,50.0,9.0,1.475711597691855
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Request Success Ratio,0.9618427365992369,0.020568897818458175,0.0004230795574661735,0.9545454545454546,1.0,0.9375,1.1605975732633522
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Success,0.0625,0.24999999999999997,0.062499999999999986,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,Violated Request Count,0.8125,0.40311288741492746,0.16249999999999998,1.0,1.0,0.0,-1.7719247798458353
+adventuregame,Qwen1.5-72B-Chat,basic-easy,achieved_goal_ratio,0.3333333333333333,0.3220305943597653,0.10370370370370367,0.3333333333333333,1.0,0.0,0.5069869415576482
+adventuregame,Qwen1.5-72B-Chat,basic-easy,action_parsing_fail,1.8125,2.7861263431510066,7.7625,0.5,10.0,0.0,1.953796633448719
+adventuregame,Qwen1.5-72B-Chat,basic-easy,action_resolution_fail,5.125,4.272001872658765,18.249999999999996,4.0,15.0,0.0,1.6196112721199187
+adventuregame,Qwen1.5-72B-Chat,basic-easy,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,entity_not_accessible,1.25,1.1254628677422756,1.2666666666666668,1.0,3.0,0.0,0.4008375864535212
+adventuregame,Qwen1.5-72B-Chat,basic-easy,finish_speed,0.0238095238095238,,,0.0238095238095238,0.0238095238095238,0.0238095238095238,
+adventuregame,Qwen1.5-72B-Chat,basic-easy,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,hallucination_count,0.3125,0.47871355387816905,0.22916666666666666,0.0,1.0,0.0,0.8952565163435889
+adventuregame,Qwen1.5-72B-Chat,basic-easy,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,no_exit_to,3.6875,3.682729965664058,13.562499999999996,3.0,13.0,0.0,1.922358160917565
+adventuregame,Qwen1.5-72B-Chat,basic-easy,not_room_type,0.125,0.3415650255319866,0.11666666666666667,0.0,1.0,0.0,2.5094573304390857
+adventuregame,Qwen1.5-72B-Chat,basic-easy,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,pre_state_mismatch,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,successful_actions,17.0,6.356099432828282,40.40000000000001,15.5,32.0,9.0,1.5203296359279488
+adventuregame,Qwen1.5-72B-Chat,basic-easy,taking_from_inventory,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,turn_limit_loss,0.125,0.3415650255319866,0.11666666666666664,0.0,1.0,0.0,2.5094573304390857
+adventuregame,Qwen1.5-72B-Chat,basic-easy,turn_ratio,0.9761904761904762,,,0.9761904761904762,0.9761904761904762,0.9761904761904762,
+adventuregame,Qwen1.5-72B-Chat,basic-easy,turns_over_par,1.0,,,1.0,1.0,1.0,
+adventuregame,Qwen1.5-72B-Chat,basic-easy,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,undefined_action_verb,1.6875,2.6259918760981216,6.895833333333333,0.0,9.0,0.0,1.7270001928630294
+adventuregame,Qwen1.5-72B-Chat,basic-easy,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-easy,undefined_repr_str,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Aborted,0.625,0.49999999999999994,0.24999999999999997,1.0,1.0,0.0,-0.5714285714285715
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Lose,0.375,0.5,0.25,0.0,1.0,0.0,0.5714285714285715
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Main Score,18.749999999999996,24.247947603105768,587.9629629629628,0.0,66.66666666666666,0.0,0.9417145749014478
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Parsed Request Count,33.5625,14.89057308053208,221.72916666666666,31.0,50.0,5.0,-0.20580304678747924
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Played,0.375,0.5,0.25,0.0,1.0,0.0,0.5714285714285715
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Request Count,34.1875,14.450922692571108,208.8291666666666,32.0,50.0,6.0,-0.25164183208771596
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Request Success Ratio,0.9673350604819749,0.04135111581442119,0.001709914779097674,0.9687194525904204,1.0,0.8333333333333334,-2.3951075777577313
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,Violated Request Count,0.625,0.49999999999999994,0.24999999999999997,1.0,1.0,0.0,-0.5714285714285715
+adventuregame,Qwen1.5-72B-Chat,basic-hard,achieved_goal_ratio,0.1875,0.24247947603105768,0.05879629629629628,0.0,0.6666666666666666,0.0,0.9417145749014479
+adventuregame,Qwen1.5-72B-Chat,basic-hard,action_parsing_fail,9.1875,13.42742839613503,180.29583333333332,2.5,43.0,0.0,1.6105289423104774
+adventuregame,Qwen1.5-72B-Chat,basic-hard,action_resolution_fail,7.0625,5.347507207412939,28.595833333333328,6.5,19.0,1.0,1.1532326527802148
+adventuregame,Qwen1.5-72B-Chat,basic-hard,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,entity_not_accessible,2.625,2.276693508870558,5.1833333333333345,2.0,8.0,0.0,1.0737714977727493
+adventuregame,Qwen1.5-72B-Chat,basic-hard,finish_speed,,,,,,,
+adventuregame,Qwen1.5-72B-Chat,basic-hard,going_to_current_room,0.25,0.5773502691896257,0.33333333333333326,0.0,2.0,0.0,2.3753839646658887
+adventuregame,Qwen1.5-72B-Chat,basic-hard,hallucination_count,0.3125,0.478713553878169,0.22916666666666663,0.0,1.0,0.0,0.8952565163435889
+adventuregame,Qwen1.5-72B-Chat,basic-hard,lark_exception,0.5,1.5491933384829664,2.399999999999999,0.0,6.0,0.0,3.442651863295482
+adventuregame,Qwen1.5-72B-Chat,basic-hard,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,no_exit_to,3.75,4.008324670815311,16.06666666666667,2.0,13.0,0.0,1.139300530931968
+adventuregame,Qwen1.5-72B-Chat,basic-hard,not_room_type,0.4375,1.2093386622447824,1.4625,0.0,4.0,0.0,2.6220448166721564
+adventuregame,Qwen1.5-72B-Chat,basic-hard,other_room_argument,0.625,2.5,6.25,0.0,10.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,successful_actions,17.3125,8.59239004390901,73.82916666666667,17.5,34.0,2.0,0.02645767473022971
+adventuregame,Qwen1.5-72B-Chat,basic-hard,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,turn_limit_loss,0.375,0.5,0.25,0.0,1.0,0.0,0.5714285714285715
+adventuregame,Qwen1.5-72B-Chat,basic-hard,turn_ratio,,,,,,,
+adventuregame,Qwen1.5-72B-Chat,basic-hard,turns_over_par,,,,,,,
+adventuregame,Qwen1.5-72B-Chat,basic-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,undefined_action_verb,7.625,12.306502346320826,151.45,1.0,37.0,0.0,1.613177121666962
+adventuregame,Qwen1.5-72B-Chat,basic-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,basic-hard,undefined_repr_str,0.4375,0.8139410298049854,0.6625000000000001,0.0,3.0,0.0,2.347898856254832
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Aborted,0.9375,0.24999999999999997,0.06249999999999999,1.0,1.0,0.0,-4.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Lose,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Main Score,8.333333333333332,25.81988897471611,666.6666666666666,0.0,100.0,0.0,3.4426518632954823
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Parsed Request Count,5.125,2.3345235059857505,5.450000000000001,4.0,11.0,2.0,1.2654095933463712
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Played,0.0625,0.24999999999999997,0.062499999999999986,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Request Count,6.0625,2.235136088325123,4.995833333333332,5.0,12.0,3.0,1.3028600795294227
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Request Success Ratio,0.8226934523809524,0.075135891943368,0.005645402258125473,0.8,1.0,0.6666666666666666,0.36537978275478805
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Success,0.0625,0.24999999999999997,0.062499999999999986,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,Violated Request Count,0.9375,0.24999999999999997,0.06249999999999999,1.0,1.0,0.0,-4.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,achieved_goal_ratio,0.08333333333333333,0.2581988897471611,0.06666666666666667,0.0,1.0,0.0,3.4426518632954815
+adventuregame,Qwen1.5-72B-Chat,planning-easy,action_parsing_fail,0.5,0.5163977794943222,0.26666666666666666,0.5,1.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,action_resolution_fail,0.9375,0.4425306015783918,0.19583333333333336,1.0,2.0,0.0,-0.3915035005880101
+adventuregame,Qwen1.5-72B-Chat,planning-easy,bad_plan_dismiss_ratio,0.7830357142857143,0.12272995446652789,0.015062641723356009,0.775,1.0,0.6,0.3211627558795184
+adventuregame,Qwen1.5-72B-Chat,planning-easy,bad_plan_follow_ratio,0.21696428571428572,0.1227299544665279,0.015062641723356012,0.225,0.4,0.0,-0.3211627558795182
+adventuregame,Qwen1.5-72B-Chat,planning-easy,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,entity_not_accessible,0.6875,0.47871355387816905,0.22916666666666666,1.0,1.0,0.0,-0.8952565163435889
+adventuregame,Qwen1.5-72B-Chat,planning-easy,finish_speed,0.0238095238095238,,,0.0238095238095238,0.0238095238095238,0.0238095238095238,
+adventuregame,Qwen1.5-72B-Chat,planning-easy,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,no_exit_to,0.25,0.4472135954999579,0.2,0.0,1.0,0.0,1.2777531299998799
+adventuregame,Qwen1.5-72B-Chat,planning-easy,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,plan_average_viability_ratio,0.14015624999999998,0.17915610717812142,0.032096910739218526,0.1020833333333333,0.6111111111111112,0.0,1.797542879631094
+adventuregame,Qwen1.5-72B-Chat,planning-easy,plan_followed_ratio,0.3890128968253968,0.17514776295129503,0.030676738866843037,0.4,0.7777777777777778,0.0,0.4046960930150538
+adventuregame,Qwen1.5-72B-Chat,planning-easy,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,successful_actions,3.6875,2.4689741459426693,6.095833333333332,3.0,9.0,1.0,1.2008417292520086
+adventuregame,Qwen1.5-72B-Chat,planning-easy,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,turn_limit_loss,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,turn_ratio,0.9761904761904762,,,0.9761904761904762,0.9761904761904762,0.9761904761904762,
+adventuregame,Qwen1.5-72B-Chat,planning-easy,turns_over_par,1.0,,,1.0,1.0,1.0,
+adventuregame,Qwen1.5-72B-Chat,planning-easy,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,undefined_action_verb,0.5,0.5163977794943222,0.26666666666666666,0.5,1.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-easy,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Aborted,0.9375,0.24999999999999997,0.06249999999999999,1.0,1.0,0.0,-4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Lose,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Main Score,2.083333333333333,8.333333333333332,69.44444444444443,0.0,33.33333333333333,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Parsed Request Count,9.5625,11.575656928802498,133.9958333333333,6.5,50.0,1.0,3.1864727420154124
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Played,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Request Count,10.5,11.343133018115703,128.66666666666666,7.5,50.0,2.0,3.1555594353645082
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Request Success Ratio,0.836641081871345,0.12099669513429939,0.014640200233422591,0.8660714285714286,1.0,0.5,-1.5947735803702618
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,Violated Request Count,0.9375,0.24999999999999997,0.06249999999999999,1.0,1.0,0.0,-4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,achieved_goal_ratio,0.020833333333333332,0.08333333333333333,0.006944444444444444,0.0,0.3333333333333333,0.0,4.000000000000001
+adventuregame,Qwen1.5-72B-Chat,planning-hard,action_parsing_fail,3.9375,11.874166637424848,140.99583333333334,1.0,48.0,0.0,3.8677360069933058
+adventuregame,Qwen1.5-72B-Chat,planning-hard,action_resolution_fail,1.0,1.3165611772087666,1.7333333333333332,1.0,4.0,0.0,1.6025765808796484
+adventuregame,Qwen1.5-72B-Chat,planning-hard,bad_plan_dismiss_ratio,0.8995553989139515,0.10026484957781173,0.010053040060861215,0.9,1.0,0.6666666666666667,-0.8969968858842395
+adventuregame,Qwen1.5-72B-Chat,planning-hard,bad_plan_follow_ratio,0.10044460108604844,0.10026484957781173,0.010053040060861213,0.1,0.3333333333333333,0.0,0.8969968858842411
+adventuregame,Qwen1.5-72B-Chat,planning-hard,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,entity_not_accessible,0.3125,0.478713553878169,0.22916666666666663,0.0,1.0,0.0,0.8952565163435889
+adventuregame,Qwen1.5-72B-Chat,planning-hard,finish_speed,,,,,,,
+adventuregame,Qwen1.5-72B-Chat,planning-hard,going_to_current_room,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,lark_exception,2.0,8.0,64.0,0.0,32.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,malformed_command,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,no_exit_to,0.375,0.8850612031567835,0.7833333333333332,0.0,3.0,0.0,2.4108373457261676
+adventuregame,Qwen1.5-72B-Chat,planning-hard,not_room_type,0.25,0.5773502691896257,0.33333333333333326,0.0,2.0,0.0,2.3753839646658887
+adventuregame,Qwen1.5-72B-Chat,planning-hard,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,plan_average_viability_ratio,0.06399377784739625,0.08003326675664264,0.00640532378773992,0.04861111111111105,0.3166666666666667,0.0,2.292422375243393
+adventuregame,Qwen1.5-72B-Chat,planning-hard,plan_followed_ratio,0.2375237573099415,0.15878508890826376,0.025212704459605224,0.25,0.6,0.0,0.4165813093014493
+adventuregame,Qwen1.5-72B-Chat,planning-hard,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,successful_actions,4.625,2.7294688127912363,7.45,4.5,10.0,0.0,0.22691858836000162
+adventuregame,Qwen1.5-72B-Chat,planning-hard,taking_from_inventory,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,turn_limit_loss,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,turn_ratio,,,,,,,
+adventuregame,Qwen1.5-72B-Chat,planning-hard,turns_over_par,,,,,,,
+adventuregame,Qwen1.5-72B-Chat,planning-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,undefined_action_verb,1.625,3.2634337744161437,10.649999999999999,0.5,12.0,0.0,2.7107679872379156
+adventuregame,Qwen1.5-72B-Chat,planning-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen1.5-72B-Chat,planning-hard,undefined_repr_str,0.1875,0.75,0.5625,0.0,3.0,0.0,4.000000000000001
+adventuregame,Qwen2-72B-Instruct,basic-easy,Aborted,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,Lose,0.1875,0.4031128874149275,0.1625,0.0,1.0,0.0,1.7719247798458353
+adventuregame,Qwen2-72B-Instruct,basic-easy,Main Score,81.25,36.45138822738723,1328.703703703704,100.0,100.0,0.0,-1.7410697710169125
+adventuregame,Qwen2-72B-Instruct,basic-easy,Parsed Request Count,26.0625,16.538717201363188,273.52916666666664,19.0,50.0,9.0,0.644001579749037
+adventuregame,Qwen2-72B-Instruct,basic-easy,Played,0.9375,0.24999999999999997,0.06249999999999999,1.0,1.0,0.0,-4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,Request Count,26.125,16.62077013859466,276.25,19.0,50.0,9.0,0.6424154908476932
+adventuregame,Qwen2-72B-Instruct,basic-easy,Request Success Ratio,0.9986702127659575,0.005319148936170203,2.8293345405160604e-05,1.0,1.0,0.9787234042553192,-4.00000000000001
+adventuregame,Qwen2-72B-Instruct,basic-easy,Success,0.75,0.4472135954999579,0.2,1.0,1.0,0.0,-1.2777531299998799
+adventuregame,Qwen2-72B-Instruct,basic-easy,Violated Request Count,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,achieved_goal_ratio,0.8125,0.3645138822738722,0.13287037037037036,1.0,1.0,0.0,-1.741069771016912
+adventuregame,Qwen2-72B-Instruct,basic-easy,action_parsing_fail,8.0,12.997435644515935,168.93333333333337,0.0,34.0,0.0,1.3868144070775432
+adventuregame,Qwen2-72B-Instruct,basic-easy,action_resolution_fail,1.75,1.4375905768565216,2.0666666666666664,2.0,4.0,0.0,0.3462013876181902
+adventuregame,Qwen2-72B-Instruct,basic-easy,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,entity_not_accessible,0.6875,1.0144785195688801,1.0291666666666666,0.0,3.0,0.0,1.6025920963463223
+adventuregame,Qwen2-72B-Instruct,basic-easy,finish_speed,0.1963478792813158,0.26647517767989476,0.07100902031953148,0.09999999999999995,0.9411764705882352,-0.0249999999999999,2.2487853663105124
+adventuregame,Qwen2-72B-Instruct,basic-easy,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,hallucination_count,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,lark_exception,0.375,1.0878112581387145,1.1833333333333331,0.0,4.0,0.0,3.0297302250084424
+adventuregame,Qwen2-72B-Instruct,basic-easy,malformed_command,0.3125,1.25,1.5625,0.0,5.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,no_exit_to,0.9375,0.7719024117939607,0.5958333333333333,1.0,2.0,0.0,0.11259595200783763
+adventuregame,Qwen2-72B-Instruct,basic-easy,not_room_type,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,other_room_argument,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,successful_actions,16.3125,6.620360010351905,43.82916666666667,14.5,33.0,9.0,1.3013722510151586
+adventuregame,Qwen2-72B-Instruct,basic-easy,taking_from_inventory,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,turn_limit_loss,0.1875,0.4031128874149275,0.1625,0.0,1.0,0.0,1.7719247798458353
+adventuregame,Qwen2-72B-Instruct,basic-easy,turn_ratio,0.8036521207186841,0.26647517767989476,0.07100902031953149,0.9,1.025,0.0588235294117647,-2.2487853663105115
+adventuregame,Qwen2-72B-Instruct,basic-easy,turns_over_par,7.25,9.215846037224049,84.93181818181819,4.0,32.0,-1.0,1.9824785133789122
+adventuregame,Qwen2-72B-Instruct,basic-easy,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,undefined_action_verb,7.125,11.45352929595648,131.18333333333334,0.0,32.0,0.0,1.4060547088693942
+adventuregame,Qwen2-72B-Instruct,basic-easy,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-easy,undefined_repr_str,0.125,0.3415650255319866,0.11666666666666665,0.0,1.0,0.0,2.5094573304390857
+adventuregame,Qwen2-72B-Instruct,basic-hard,Aborted,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,Lose,0.75,0.4472135954999579,0.2,1.0,1.0,0.0,-1.2777531299998799
+adventuregame,Qwen2-72B-Instruct,basic-hard,Main Score,47.916666666666664,38.42983023449169,1476.8518518518517,33.33333333333333,100.0,0.0,0.17363172479309177
+adventuregame,Qwen2-72B-Instruct,basic-hard,Parsed Request Count,45.75,8.582928793055821,73.66666666666666,50.0,50.0,26.0,-1.7702944923736756
+adventuregame,Qwen2-72B-Instruct,basic-hard,Played,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,Request Count,45.75,8.582928793055821,73.66666666666666,50.0,50.0,26.0,-1.7702944923736756
+adventuregame,Qwen2-72B-Instruct,basic-hard,Request Success Ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,Success,0.25,0.447213595499958,0.20000000000000004,0.0,1.0,0.0,1.2777531299998799
+adventuregame,Qwen2-72B-Instruct,basic-hard,Violated Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,achieved_goal_ratio,0.47916666666666663,0.3842983023449169,0.14768518518518517,0.3333333333333333,1.0,0.0,0.1736317247930911
+adventuregame,Qwen2-72B-Instruct,basic-hard,action_parsing_fail,14.3125,12.954889681763664,167.82916666666662,10.5,42.0,0.0,0.9447699874706499
+adventuregame,Qwen2-72B-Instruct,basic-hard,action_resolution_fail,4.8125,2.5876308340513594,6.695833333333334,4.0,10.0,1.0,1.00084995628017
+adventuregame,Qwen2-72B-Instruct,basic-hard,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,entity_already_inventory,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,entity_not_accessible,1.6875,1.7017148213885114,2.8958333333333335,1.0,6.0,0.0,1.5802933601408429
+adventuregame,Qwen2-72B-Instruct,basic-hard,finish_speed,0.45075604838709676,0.28976333041064345,0.08396278765066771,0.353125,0.8709677419354839,0.2258064516129032,1.6249974270517424
+adventuregame,Qwen2-72B-Instruct,basic-hard,going_to_current_room,0.0625,0.24999999999999997,0.062499999999999986,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,lark_exception,2.3125,6.01906692658145,36.229166666666664,0.0,23.0,0.0,3.119037570661599
+adventuregame,Qwen2-72B-Instruct,basic-hard,malformed_command,0.4375,0.8139410298049854,0.6625000000000001,0.0,2.0,0.0,1.5001384793842583
+adventuregame,Qwen2-72B-Instruct,basic-hard,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,no_exit_to,2.75,2.463060426921489,6.066666666666666,2.0,10.0,0.0,1.7667647549708545
+adventuregame,Qwen2-72B-Instruct,basic-hard,not_room_type,0.25,0.447213595499958,0.20000000000000004,0.0,1.0,0.0,1.2777531299998799
+adventuregame,Qwen2-72B-Instruct,basic-hard,other_room_argument,0.1875,0.5439056290693574,0.29583333333333334,0.0,2.0,0.0,3.0297302250084424
+adventuregame,Qwen2-72B-Instruct,basic-hard,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,successful_actions,26.625,10.391502939100452,107.98333333333333,26.0,42.0,5.0,-0.41968161619911415
+adventuregame,Qwen2-72B-Instruct,basic-hard,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,turn_limit_loss,0.75,0.4472135954999579,0.2,1.0,1.0,0.0,-1.2777531299998799
+adventuregame,Qwen2-72B-Instruct,basic-hard,turn_ratio,0.5492439516129032,0.2897633304106434,0.08396278765066768,0.646875,0.7741935483870968,0.1290322580645161,-1.624997427051742
+adventuregame,Qwen2-72B-Instruct,basic-hard,turns_over_par,14.0,9.018499505645789,81.33333333333334,11.0,27.0,7.0,1.5705422412411907
+adventuregame,Qwen2-72B-Instruct,basic-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,undefined_action_verb,11.3125,8.553508052255518,73.1625,10.5,30.0,0.0,0.5385797507874156
+adventuregame,Qwen2-72B-Instruct,basic-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,basic-hard,undefined_repr_str,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,Aborted,0.6875,0.478713553878169,0.22916666666666663,1.0,1.0,0.0,-0.8952565163435889
+adventuregame,Qwen2-72B-Instruct,planning-easy,Lose,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,Main Score,39.58333333333333,47.48294040631466,2254.6296296296296,0.0,100.0,0.0,0.4157674232891888
+adventuregame,Qwen2-72B-Instruct,planning-easy,Parsed Request Count,17.75,10.318268588608587,106.46666666666667,14.5,44.0,6.0,1.2775262370108607
+adventuregame,Qwen2-72B-Instruct,planning-easy,Played,0.3125,0.478713553878169,0.22916666666666663,0.0,1.0,0.0,0.8952565163435889
+adventuregame,Qwen2-72B-Instruct,planning-easy,Request Count,18.4375,10.31483559410102,106.39583333333334,15.0,44.0,7.0,1.206252913138556
+adventuregame,Qwen2-72B-Instruct,planning-easy,Request Success Ratio,0.9529131212751779,0.04509398806633326,0.0020334677597266065,0.9590301003344481,1.0,0.8571428571428571,-0.8210182806698577
+adventuregame,Qwen2-72B-Instruct,planning-easy,Success,0.3125,0.478713553878169,0.22916666666666663,0.0,1.0,0.0,0.8952565163435889
+adventuregame,Qwen2-72B-Instruct,planning-easy,Violated Request Count,0.6875,0.478713553878169,0.22916666666666663,1.0,1.0,0.0,-0.8952565163435889
+adventuregame,Qwen2-72B-Instruct,planning-easy,achieved_goal_ratio,0.3958333333333333,0.4748294040631466,0.22546296296296298,0.0,1.0,0.0,0.41576742328918886
+adventuregame,Qwen2-72B-Instruct,planning-easy,action_parsing_fail,6.4375,5.5011362462676745,30.262500000000003,6.0,16.0,0.0,0.254398486313209
+adventuregame,Qwen2-72B-Instruct,planning-easy,action_resolution_fail,2.125,3.0083217912982647,9.05,1.0,10.0,0.0,1.6596949902761404
+adventuregame,Qwen2-72B-Instruct,planning-easy,bad_plan_dismiss_ratio,0.9564517683403553,0.059581989277348216,0.003550013446246038,1.0,1.0,0.8461538461538461,-0.9228935989346965
+adventuregame,Qwen2-72B-Instruct,planning-easy,bad_plan_follow_ratio,0.043548231659644686,0.0595819892773482,0.003550013446246036,0.0,0.1538461538461538,0.0,0.9228935989346974
+adventuregame,Qwen2-72B-Instruct,planning-easy,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,entity_not_accessible,0.375,0.5,0.25,0.0,1.0,0.0,0.5714285714285715
+adventuregame,Qwen2-72B-Instruct,planning-easy,finish_speed,0.20771408771408767,0.3531927889006422,0.1247451461314136,0.0749999999999999,0.8378378378378378,0.0238095238095238,2.206316660295084
+adventuregame,Qwen2-72B-Instruct,planning-easy,going_to_current_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,hallucination_count,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,lark_exception,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,malformed_command,0.1875,0.5439056290693572,0.2958333333333333,0.0,2.0,0.0,3.0297302250084424
+adventuregame,Qwen2-72B-Instruct,planning-easy,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,no_exit_to,1.4375,2.42126000256065,5.862499999999999,0.5,9.0,0.0,2.4381693694857836
+adventuregame,Qwen2-72B-Instruct,planning-easy,not_room_type,0.25,0.9999999999999999,0.9999999999999999,0.0,4.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,plan_average_viability_ratio,0.06975725696417326,0.11871412928588816,0.01409304449210657,0.0130416002126528,0.4002645502645502,0.0,2.024549623956723
+adventuregame,Qwen2-72B-Instruct,planning-easy,plan_followed_ratio,0.1741353528717659,0.2335687266781313,0.0545543500820436,0.054841897233201556,0.6666666666666666,0.0,1.2457642557792539
+adventuregame,Qwen2-72B-Instruct,planning-easy,pre_state_mismatch,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,successful_actions,9.1875,8.344409306036388,69.62916666666666,9.0,34.0,1.0,1.958007613785298
+adventuregame,Qwen2-72B-Instruct,planning-easy,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,turn_limit_loss,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,turn_ratio,0.7922859122859123,0.3531927889006422,0.1247451461314136,0.925,0.9761904761904762,0.1621621621621621,-2.2063166602950837
+adventuregame,Qwen2-72B-Instruct,planning-easy,turns_over_par,7.8,13.007690033207279,169.2,3.0,31.0,1.0,2.203097577566222
+adventuregame,Qwen2-72B-Instruct,planning-easy,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,undefined_action_verb,6.125,5.3650100962937,28.783333333333335,6.0,16.0,0.0,0.2852094124374914
+adventuregame,Qwen2-72B-Instruct,planning-easy,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-easy,undefined_repr_str,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,Aborted,0.625,0.5,0.25000000000000006,1.0,1.0,0.0,-0.5714285714285715
+adventuregame,Qwen2-72B-Instruct,planning-hard,Lose,0.1875,0.4031128874149275,0.1625,0.0,1.0,0.0,1.7719247798458353
+adventuregame,Qwen2-72B-Instruct,planning-hard,Main Score,29.166666666666664,40.138648595974324,1611.1111111111115,0.0,100.0,0.0,1.055454867106646
+adventuregame,Qwen2-72B-Instruct,planning-hard,Parsed Request Count,34.25,14.205632685663812,201.8,38.0,50.0,9.0,-0.5564991577548661
+adventuregame,Qwen2-72B-Instruct,planning-hard,Played,0.375,0.5,0.25,0.0,1.0,0.0,0.5714285714285715
+adventuregame,Qwen2-72B-Instruct,planning-hard,Request Count,34.875,13.970802887927857,195.18333333333334,39.0,50.0,10.0,-0.5544561158155948
+adventuregame,Qwen2-72B-Instruct,planning-hard,Request Success Ratio,0.9723014383428957,0.03054207357697881,0.0009328182583815874,0.9776785714285714,1.0,0.9,-1.0989241660156326
+adventuregame,Qwen2-72B-Instruct,planning-hard,Success,0.1875,0.4031128874149275,0.1625,0.0,1.0,0.0,1.7719247798458353
+adventuregame,Qwen2-72B-Instruct,planning-hard,Violated Request Count,0.625,0.5,0.25000000000000006,1.0,1.0,0.0,-0.5714285714285715
+adventuregame,Qwen2-72B-Instruct,planning-hard,achieved_goal_ratio,0.29166666666666663,0.4013864859597432,0.1611111111111111,0.0,1.0,0.0,1.0554548671066466
+adventuregame,Qwen2-72B-Instruct,planning-hard,action_parsing_fail,19.9375,15.053100455830796,226.59583333333333,13.5,49.0,4.0,0.9931051702553277
+adventuregame,Qwen2-72B-Instruct,planning-hard,action_resolution_fail,2.75,2.3804761428476167,5.666666666666666,2.5,6.0,0.0,0.20333478867230262
+adventuregame,Qwen2-72B-Instruct,planning-hard,bad_plan_dismiss_ratio,0.9866325250836121,0.02644455518292609,0.0006993144988228231,1.0,1.0,0.9130434782608696,-1.9584474675183472
+adventuregame,Qwen2-72B-Instruct,planning-hard,bad_plan_follow_ratio,0.01336747491638795,0.026444555182926086,0.0006993144988228229,0.0,0.0869565217391304,0.0,1.9584474675183412
+adventuregame,Qwen2-72B-Instruct,planning-hard,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,entity_not_accessible,0.4375,0.6291528696058959,0.39583333333333337,0.0,2.0,0.0,1.1831161204460692
+adventuregame,Qwen2-72B-Instruct,planning-hard,finish_speed,0.511520737327189,0.16044875906501083,0.025743804285501895,0.5,0.6774193548387096,0.3571428571428572,0.3214486018092731
+adventuregame,Qwen2-72B-Instruct,planning-hard,going_to_current_room,0.0625,0.24999999999999997,0.062499999999999986,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,hallucination_count,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,lark_exception,0.3125,0.7932002689527194,0.6291666666666665,0.0,3.0,0.0,3.002101527307442
+adventuregame,Qwen2-72B-Instruct,planning-hard,malformed_command,1.8125,5.9466377054601205,35.362500000000004,0.0,24.0,0.0,3.9331013824807757
+adventuregame,Qwen2-72B-Instruct,planning-hard,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,no_exit_to,1.75,2.1756225162774294,4.733333333333333,0.5,6.0,0.0,0.8545392942331503
+adventuregame,Qwen2-72B-Instruct,planning-hard,not_room_type,0.5,1.0327955589886444,1.0666666666666667,0.0,3.0,0.0,2.074812506896831
+adventuregame,Qwen2-72B-Instruct,planning-hard,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,plan_average_viability_ratio,0.0035640535367816315,0.004531462446903363,2.0534151907695414e-05,0.0,0.0119047619047619,0.0,0.782581595957889
+adventuregame,Qwen2-72B-Instruct,planning-hard,plan_followed_ratio,0.0229048216276477,0.04561531219415367,0.0020807567065701045,0.0,0.1739130434782608,0.0,2.7147650644411714
+adventuregame,Qwen2-72B-Instruct,planning-hard,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,successful_actions,11.5625,11.159263715257682,124.52916666666668,9.0,33.0,0.0,0.6930130415293834
+adventuregame,Qwen2-72B-Instruct,planning-hard,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,turn_limit_loss,0.1875,0.4031128874149275,0.1625,0.0,1.0,0.0,1.7719247798458353
+adventuregame,Qwen2-72B-Instruct,planning-hard,turn_ratio,0.488479262672811,0.1604487590650109,0.025743804285501923,0.5,0.6428571428571428,0.3225806451612903,-0.32144860180927143
+adventuregame,Qwen2-72B-Instruct,planning-hard,turns_over_par,15.333333333333334,5.507570547286102,30.333333333333336,15.0,21.0,10.0,0.2713547618998579
+adventuregame,Qwen2-72B-Instruct,planning-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,undefined_action_verb,17.75,13.88764438868834,192.86666666666673,13.0,49.0,4.0,1.3940614104618658
+adventuregame,Qwen2-72B-Instruct,planning-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,Qwen2-72B-Instruct,planning-hard,undefined_repr_str,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
 adventuregame,gemma-2-9b-it-q5,basic-easy,Aborted,0.375,0.5,0.25,0.0,1.0,0.0,0.5714285714285715
 adventuregame,gemma-2-9b-it-q5,basic-easy,Lose,0.4375,0.5123475382979799,0.26249999999999996,0.0,1.0,0.0,0.27882859227100953
 adventuregame,gemma-2-9b-it-q5,basic-easy,Main Score,35.416666666666664,41.21982622566565,1699.0740740740737,16.666666666666664,100.0,0.0,0.5921030252119811
@@ -1475,6 +1803,170 @@ adventuregame,gemma2-9b-it,planning-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.
 adventuregame,gemma2-9b-it,planning-hard,undefined_action_verb,10.0625,6.6680206958287105,44.4625,9.5,23.0,0.0,0.13156290107247137
 adventuregame,gemma2-9b-it,planning-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,gemma2-9b-it,planning-hard,undefined_repr_str,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,basic-easy,Aborted,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,Lose,0.8125,0.4031128874149275,0.16250000000000003,1.0,1.0,0.0,-1.7719247798458353
+adventuregame,openchat3.5,basic-easy,Main Score,39.58333333333333,40.768088464349624,1662.0370370370367,33.33333333333333,100.0,0.0,0.3445576272718613
+adventuregame,openchat3.5,basic-easy,Parsed Request Count,44.875,12.60092589190704,158.78333333333327,50.0,50.0,13.0,-2.4007264266619988
+adventuregame,openchat3.5,basic-easy,Played,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-easy,Request Count,44.875,12.60092589190704,158.78333333333327,50.0,50.0,13.0,-2.4007264266619988
+adventuregame,openchat3.5,basic-easy,Request Success Ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-easy,Success,0.1875,0.4031128874149275,0.16250000000000003,0.0,1.0,0.0,1.7719247798458353
+adventuregame,openchat3.5,basic-easy,Violated Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,achieved_goal_ratio,0.3958333333333333,0.4076808846434963,0.16620370370370371,0.3333333333333333,1.0,0.0,0.3445576272718613
+adventuregame,openchat3.5,basic-easy,action_parsing_fail,5.9375,15.656601376629176,245.1291666666666,0.0,46.0,0.0,2.498484794333675
+adventuregame,openchat3.5,basic-easy,action_resolution_fail,15.5625,11.34882519617486,128.79583333333332,17.0,31.0,2.0,0.06807595502362264
+adventuregame,openchat3.5,basic-easy,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-easy,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,entity_not_accessible,8.3125,6.0411781411686025,36.49583333333333,7.5,19.0,0.0,0.3612203150771375
+adventuregame,openchat3.5,basic-easy,finish_speed,0.33134920634920634,0.4064606044601127,0.16521022297808016,0.119047619047619,0.8,0.0749999999999999,1.7091953909981814
+adventuregame,openchat3.5,basic-easy,going_to_current_room,0.125,0.3415650255319866,0.11666666666666667,0.0,1.0,0.0,2.5094573304390857
+adventuregame,openchat3.5,basic-easy,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,malformed_command,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,no_exit_to,5.6875,7.50749625374532,56.362500000000004,2.5,24.0,0.0,1.314087513017974
+adventuregame,openchat3.5,basic-easy,not_room_type,0.1875,0.4031128874149275,0.1625,0.0,1.0,0.0,1.7719247798458353
+adventuregame,openchat3.5,basic-easy,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,pre_state_mismatch,1.25,5.0,25.0,0.0,20.0,0.0,4.0
+adventuregame,openchat3.5,basic-easy,successful_actions,23.375,13.652228145373682,186.38333333333333,23.0,47.0,1.0,0.008022755870900582
+adventuregame,openchat3.5,basic-easy,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,turn_limit_loss,0.8125,0.4031128874149275,0.16250000000000003,1.0,1.0,0.0,-1.7719247798458353
+adventuregame,openchat3.5,basic-easy,turn_ratio,0.6686507936507936,0.40646060446011273,0.1652102229780802,0.8809523809523809,0.925,0.1999999999999999,-1.7091953909981814
+adventuregame,openchat3.5,basic-easy,turns_over_par,13.333333333333334,16.19670748434179,262.3333333333333,5.0,32.0,3.0,1.7023868763703873
+adventuregame,openchat3.5,basic-easy,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,undefined_action_verb,5.9375,15.656601376629176,245.1291666666666,0.0,46.0,0.0,2.498484794333675
+adventuregame,openchat3.5,basic-easy,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-easy,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,Aborted,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,Lose,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-hard,Main Score,12.499999999999998,20.637972912229678,425.92592592592587,0.0,66.66666666666666,0.0,1.504794136187419
+adventuregame,openchat3.5,basic-hard,Parsed Request Count,50.0,0.0,0.0,50.0,50.0,50.0,0.0
+adventuregame,openchat3.5,basic-hard,Played,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-hard,Request Count,50.0,0.0,0.0,50.0,50.0,50.0,0.0
+adventuregame,openchat3.5,basic-hard,Request Success Ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-hard,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,Violated Request Count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,achieved_goal_ratio,0.12499999999999999,0.2063797291222968,0.0425925925925926,0.0,0.6666666666666666,0.0,1.504794136187419
+adventuregame,openchat3.5,basic-hard,action_parsing_fail,7.9375,15.997786305194436,255.92916666666667,0.0,44.0,0.0,1.8285268018869085
+adventuregame,openchat3.5,basic-hard,action_resolution_fail,20.625,12.252210684879145,150.11666666666667,20.0,41.0,1.0,-0.12195115139683695
+adventuregame,openchat3.5,basic-hard,bad_plan_dismiss_ratio,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-hard,bad_plan_follow_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,entity_not_accessible,8.5,5.955389715767279,35.46666666666667,8.0,17.0,1.0,0.22941787021966775
+adventuregame,openchat3.5,basic-hard,finish_speed,,,,,,,
+adventuregame,openchat3.5,basic-hard,going_to_current_room,1.875,4.964876634922564,24.65,0.0,16.0,0.0,2.557869675922096
+adventuregame,openchat3.5,basic-hard,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,lark_exception,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,malformed_command,2.75,11.0,120.99999999999999,0.0,44.0,0.0,4.0
+adventuregame,openchat3.5,basic-hard,manipulating_room,0.375,1.5,2.25,0.0,6.0,0.0,4.000000000000001
+adventuregame,openchat3.5,basic-hard,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,no_exit_to,10.0625,9.553140844769326,91.26249999999999,9.5,27.0,0.0,0.5969022506746174
+adventuregame,openchat3.5,basic-hard,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,plan_average_viability_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,plan_followed_ratio,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,pre_state_mismatch,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,basic-hard,successful_actions,21.4375,13.396361446303246,179.4625,21.5,47.0,1.0,0.19244519967017004
+adventuregame,openchat3.5,basic-hard,taking_from_inventory,0.1875,0.5439056290693574,0.29583333333333334,0.0,2.0,0.0,3.0297302250084424
+adventuregame,openchat3.5,basic-hard,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,turn_limit_loss,1.0,0.0,0.0,1.0,1.0,1.0,0.0
+adventuregame,openchat3.5,basic-hard,turn_ratio,,,,,,,
+adventuregame,openchat3.5,basic-hard,turns_over_par,,,,,,,
+adventuregame,openchat3.5,basic-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,undefined_action_verb,2.6875,10.75,115.5625,0.0,43.0,0.0,4.0
+adventuregame,openchat3.5,basic-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,basic-hard,undefined_repr_str,2.0625,7.987229390303833,63.795833333333334,0.0,32.0,0.0,3.99343478151146
+adventuregame,openchat3.5,planning-easy,Aborted,0.3125,0.47871355387816905,0.22916666666666669,0.0,1.0,0.0,0.8952565163435889
+adventuregame,openchat3.5,planning-easy,Lose,0.6875,0.47871355387816905,0.22916666666666666,1.0,1.0,0.0,-0.8952565163435889
+adventuregame,openchat3.5,planning-easy,Main Score,10.416666666666664,23.471811304752894,550.9259259259258,0.0,66.66666666666666,0.0,2.081626474546225
+adventuregame,openchat3.5,planning-easy,Parsed Request Count,37.6875,20.735537128321514,429.9625,50.0,50.0,1.0,-1.2487026275832525
+adventuregame,openchat3.5,planning-easy,Played,0.6875,0.47871355387816905,0.22916666666666666,1.0,1.0,0.0,-0.8952565163435889
+adventuregame,openchat3.5,planning-easy,Request Count,38.0,20.301067295423984,412.13333333333327,50.0,50.0,2.0,-1.2564023490395775
+adventuregame,openchat3.5,planning-easy,Request Success Ratio,0.9134061653116531,0.17425358680448866,0.030364312514229462,1.0,1.0,0.5,-1.9914991920731047
+adventuregame,openchat3.5,planning-easy,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,Violated Request Count,0.3125,0.47871355387816905,0.22916666666666669,0.0,1.0,0.0,0.8952565163435889
+adventuregame,openchat3.5,planning-easy,achieved_goal_ratio,0.10416666666666666,0.234718113047529,0.0550925925925926,0.0,0.6666666666666666,0.0,2.081626474546226
+adventuregame,openchat3.5,planning-easy,action_parsing_fail,10.3125,18.197870754569063,331.16249999999997,0.0,48.0,0.0,1.462928618044743
+adventuregame,openchat3.5,planning-easy,action_resolution_fail,13.9375,14.030769757928466,196.86250000000004,12.0,48.0,0.0,0.8665955968563519
+adventuregame,openchat3.5,planning-easy,bad_plan_dismiss_ratio,0.8380623306233063,0.17545774644804152,0.03078542078862523,0.9299999999999999,1.0,0.52,-0.7692011424911569
+adventuregame,openchat3.5,planning-easy,bad_plan_follow_ratio,0.16193766937669377,0.17545774644804152,0.03078542078862523,0.07,0.48,0.0,0.7692011424911587
+adventuregame,openchat3.5,planning-easy,entity_already_inventory,0.1875,0.4031128874149275,0.16250000000000003,0.0,1.0,0.0,1.7719247798458353
+adventuregame,openchat3.5,planning-easy,entity_not_accessible,11.75,13.30413469565007,177.0,5.5,48.0,0.0,1.4107892421639536
+adventuregame,openchat3.5,planning-easy,finish_speed,,,,,,,
+adventuregame,openchat3.5,planning-easy,going_to_current_room,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,planning-easy,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,lark_exception,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,planning-easy,malformed_command,1.6875,6.75,45.5625,0.0,27.0,0.0,4.0
+adventuregame,openchat3.5,planning-easy,manipulating_room,0.125,0.5,0.25,0.0,2.0,0.0,4.0
+adventuregame,openchat3.5,planning-easy,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,no_exit_to,1.875,5.32760108616752,28.383333333333333,0.0,20.0,0.0,3.138859332041721
+adventuregame,openchat3.5,planning-easy,not_room_type,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,planning-easy,other_room_argument,0.0625,0.24999999999999997,0.06249999999999999,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,planning-easy,plan_average_viability_ratio,0.04873511904761904,0.08077060444448861,0.006523890542328043,0.0,0.23,0.0,1.6732067836897724
+adventuregame,openchat3.5,planning-easy,plan_followed_ratio,0.24832655826558264,0.278047133599987,0.07731020850316903,0.11,0.7,0.0,0.665331799078146
+adventuregame,openchat3.5,planning-easy,pre_state_mismatch,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,successful_actions,13.4375,12.209115447074778,149.06249999999997,11.5,33.0,1.0,0.4244659673068053
+adventuregame,openchat3.5,planning-easy,taking_from_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,turn_limit_loss,0.6875,0.47871355387816905,0.22916666666666666,1.0,1.0,0.0,-0.8952565163435889
+adventuregame,openchat3.5,planning-easy,turn_ratio,,,,,,,
+adventuregame,openchat3.5,planning-easy,turns_over_par,,,,,,,
+adventuregame,openchat3.5,planning-easy,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,undefined_action_verb,8.3125,17.51463673617012,306.76249999999993,0.0,48.0,0.0,1.8890187929619326
+adventuregame,openchat3.5,planning-easy,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-easy,undefined_repr_str,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,planning-hard,Aborted,0.4375,0.51234753829798,0.2625,0.0,1.0,0.0,0.27882859227100953
+adventuregame,openchat3.5,planning-hard,Lose,0.5625,0.51234753829798,0.2625,1.0,1.0,0.0,-0.27882859227100953
+adventuregame,openchat3.5,planning-hard,Main Score,6.249999999999999,18.130187635645242,328.7037037037036,0.0,66.66666666666666,0.0,3.0297302250084424
+adventuregame,openchat3.5,planning-hard,Parsed Request Count,29.9375,23.5979342316229,556.8625,50.0,50.0,1.0,-0.3067657058551152
+adventuregame,openchat3.5,planning-hard,Played,0.5625,0.51234753829798,0.2625,1.0,1.0,0.0,-0.27882859227100953
+adventuregame,openchat3.5,planning-hard,Request Count,30.375,23.087875606040498,533.05,50.0,50.0,2.0,-0.3079817182911864
+adventuregame,openchat3.5,planning-hard,Request Success Ratio,0.8779987373737373,0.17700493637256304,0.031330747500255086,1.0,1.0,0.5,-1.3455099947433475
+adventuregame,openchat3.5,planning-hard,Success,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,Violated Request Count,0.4375,0.51234753829798,0.2625,0.0,1.0,0.0,0.27882859227100953
+adventuregame,openchat3.5,planning-hard,achieved_goal_ratio,0.0625,0.18130187635645242,0.03287037037037036,0.0,0.6666666666666666,0.0,3.029730225008442
+adventuregame,openchat3.5,planning-hard,action_parsing_fail,3.375,11.644025649805712,135.58333333333334,0.5,47.0,0.0,3.9874309279998212
+adventuregame,openchat3.5,planning-hard,action_resolution_fail,13.125,14.582523787054146,212.65,9.5,48.0,0.0,0.8582695954144615
+adventuregame,openchat3.5,planning-hard,bad_plan_dismiss_ratio,0.8903724747474747,0.12029116304510572,0.014469963906744208,0.95,1.0,0.6599999999999999,-0.6265250476583765
+adventuregame,openchat3.5,planning-hard,bad_plan_follow_ratio,0.10962752525252525,0.12029116304510572,0.014469963906744208,0.05,0.34,0.0,0.6265250476583768
+adventuregame,openchat3.5,planning-hard,entity_already_inventory,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,entity_not_accessible,9.625,10.953690397913087,119.98333333333336,1.0,24.0,0.0,0.3824747912062457
+adventuregame,openchat3.5,planning-hard,finish_speed,,,,,,,
+adventuregame,openchat3.5,planning-hard,going_to_current_room,0.0625,0.25,0.0625,0.0,1.0,0.0,4.0
+adventuregame,openchat3.5,planning-hard,hallucination_count,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,lark_exception,0.1875,0.4031128874149275,0.16250000000000003,0.0,1.0,0.0,1.7719247798458353
+adventuregame,openchat3.5,planning-hard,malformed_command,2.875,11.499999999999998,132.24999999999997,0.0,46.0,0.0,4.0
+adventuregame,openchat3.5,planning-hard,manipulating_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,multiple_entity_ambiguity,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,multiple_exits_to,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,no_exit_to,1.75,3.8384024454626084,14.733333333333333,0.0,13.0,0.0,2.3603872920996087
+adventuregame,openchat3.5,planning-hard,not_room_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,other_room_argument,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,plan_average_viability_ratio,0.08221064814814813,0.15186089206378575,0.02306173053840879,0.004999999999999951,0.52,0.0,2.107291498949984
+adventuregame,openchat3.5,planning-hard,plan_followed_ratio,0.1715719696969697,0.1977334754629093,0.039098527318640955,0.08,0.66,0.0,1.1458911959987492
+adventuregame,openchat3.5,planning-hard,pre_state_mismatch,0.1875,0.75,0.5625,0.0,3.0,0.0,4.000000000000001
+adventuregame,openchat3.5,planning-hard,successful_actions,13.4375,13.251257801934628,175.59583333333333,6.0,34.0,0.0,0.3777529462038487
+adventuregame,openchat3.5,planning-hard,taking_from_inventory,1.5625,5.988530704605261,35.86249999999999,0.0,24.0,0.0,3.9883954794039447
+adventuregame,openchat3.5,planning-hard,thing_arg1_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,thing_arg2_room,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,turn_limit_loss,0.5625,0.51234753829798,0.2625,1.0,1.0,0.0,-0.27882859227100953
+adventuregame,openchat3.5,planning-hard,turn_ratio,,,,,,,
+adventuregame,openchat3.5,planning-hard,turns_over_par,,,,,,,
+adventuregame,openchat3.5,planning-hard,undefined_action,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,undefined_action_verb,0.25,0.44721359549995804,0.20000000000000007,0.0,1.0,0.0,1.2777531299998799
+adventuregame,openchat3.5,planning-hard,undefined_argument_type,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+adventuregame,openchat3.5,planning-hard,undefined_repr_str,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 adventuregame,openchat3.5-GGUF-q5,basic-easy,Aborted,0.125,0.3415650255319866,0.11666666666666665,0.0,1.0,0.0,2.5094573304390857
 adventuregame,openchat3.5-GGUF-q5,basic-easy,Lose,0.8125,0.4031128874149275,0.1625,1.0,1.0,0.0,-1.7719247798458353
 adventuregame,openchat3.5-GGUF-q5,basic-easy,Main Score,18.75,29.736497091272522,884.2592592592592,0.0,100.0,0.0,1.717906363344228
