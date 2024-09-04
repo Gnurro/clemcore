@@ -86,9 +86,15 @@ def load_config_and_tokenizer(model_spec: backends.ModelSpec) -> Union[AutoToken
                 f"bad results.")
 
     if use_api_key:
-        model_config = AutoConfig.from_pretrained(hf_model_str, token=api_key)
+        if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+            model_config = AutoConfig.from_pretrained(hf_model_str, token=api_key, trust_remote_code=True)
+        else:
+            model_config = AutoConfig.from_pretrained(hf_model_str, token=api_key)
     else:
-        model_config = AutoConfig.from_pretrained(hf_model_str)
+        if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+            model_config = AutoConfig.from_pretrained(hf_model_str, trust_remote_code=True)
+        else:
+            model_config = AutoConfig.from_pretrained(hf_model_str)
 
     # get context token limit for model:
     if hasattr(model_config, 'max_position_embeddings'):  # this is the standard attribute used by most
