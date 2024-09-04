@@ -48,8 +48,12 @@ def load_config_and_tokenizer(model_spec: backends.ModelSpec) -> Union[AutoToken
     # use 'slow' tokenizer for models that require it:
     if 'slow_tokenizer' in model_spec:
         if model_spec['slow_tokenizer']:
-            tokenizer = AutoTokenizer.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
-                                                      verbose=False, use_fast=False)
+            if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+                tokenizer = AutoTokenizer.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
+                                                          verbose=False, use_fast=False, trust_remote_code=True)
+            else:
+                tokenizer = AutoTokenizer.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
+                                                          verbose=False, use_fast=False)
         else:
             tokenizer = None
             slow_tokenizer_info = (f"{model_spec['model_name']} registry setting has slow_tokenizer, "
@@ -57,11 +61,19 @@ def load_config_and_tokenizer(model_spec: backends.ModelSpec) -> Union[AutoToken
             print(slow_tokenizer_info)
             logger.info(slow_tokenizer_info)
     elif use_api_key:
-        tokenizer = AutoTokenizer.from_pretrained(hf_model_str, token=api_key, device_map="auto",
-                                                  torch_dtype="auto", verbose=False)
+        if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+            tokenizer = AutoTokenizer.from_pretrained(hf_model_str, token=api_key, device_map="auto",
+                                                      torch_dtype="auto", verbose=False, trust_remote_code=True)
+        else:
+            tokenizer = AutoTokenizer.from_pretrained(hf_model_str, token=api_key, device_map="auto",
+                                                      torch_dtype="auto", verbose=False)
     else:
-        tokenizer = AutoTokenizer.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
-                                                  verbose=False)
+        if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+            tokenizer = AutoTokenizer.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
+                                                      verbose=False, trust_remote_code=True)
+        else:
+            tokenizer = AutoTokenizer.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
+                                                      verbose=False)
 
     # apply proper chat template:
     if not model_spec['premade_chat_template']:
