@@ -110,9 +110,18 @@ def load_model(model_spec: backends.ModelSpec) -> Any:
         creds = backends.load_credentials("huggingface")
         api_key = creds["huggingface"]["api_key"]
         # load model using its default configuration:
-        model = AutoModelForCausalLM.from_pretrained(hf_model_str, token=api_key, device_map="auto", torch_dtype="auto")
+        if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+            model = AutoModelForCausalLM.from_pretrained(hf_model_str, token=api_key, device_map="auto",
+                                                         torch_dtype="auto", trust_remote_code=True)
+        else:
+            model = AutoModelForCausalLM.from_pretrained(hf_model_str, token=api_key, device_map="auto",
+                                                         torch_dtype="auto")
     else:
-        model = AutoModelForCausalLM.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto")
+        if 'trust_remote_code' in model_spec and model_spec['trust_remote_code']:
+            model = AutoModelForCausalLM.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto",
+                                                         trust_remote_code=True)
+        else:
+            model = AutoModelForCausalLM.from_pretrained(hf_model_str, device_map="auto", torch_dtype="auto")
 
     logger.info(f"Finished loading huggingface model: {model_spec.model_name}")
     logger.info(f"Model device map: {model.hf_device_map}")
