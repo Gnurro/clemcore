@@ -1028,6 +1028,17 @@
     "parameters": "123B"
   },
   {
+    "model_name": "c4ai-command-r-08-2024",
+    "backend": "huggingface_local",
+    "requires_api_key": true,
+    "huggingface_id": "CohereForAI/c4ai-command-r-08-2024",
+    "premade_chat_template": true,
+    "eos_to_cull": "<\\|END_OF_TURN_TOKEN\\|>",
+    "release_date": "19-08-24",
+    "open_weight": true,
+    "parameters": "35B"
+  },
+  {
     "model_name": "Pharia-1-LLM-7B-control-hf",
     "backend": "huggingface_local",
     "huggingface_id": "Aleph-Alpha/Pharia-1-LLM-7B-control-hf",
