@@ -1,4 +1,0 @@
-{
-  "grammar_head": "%import common.WORD\n%import common.WS\n%ignore WS\n",
-  "grammar_foot": "PREP.1: \"on\" | \"in\" | \"from\" | \"out of\" | \"out\" | \"into\"\nDET.1: \"the\" | \"a\" | \"an\"\nthing: DET? ( ADJ+ WORD | ADJ+ WORD WORD | WORD WORD | WORD )\nunknown.-1: WORD+"
-}

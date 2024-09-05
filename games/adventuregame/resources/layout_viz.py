@@ -1,3 +1,7 @@
+"""
+Script using GraphViz to create graph plots of initial world states.
+"""
+
 import json
 
 import graphviz
