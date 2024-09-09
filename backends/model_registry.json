@@ -1028,6 +1028,16 @@
     "parameters": "123B"
   },
   {
+    "model_name": "Reflection-Llama-3.1-70B",
+    "backend": "huggingface_local",
+    "huggingface_id": "mattshumer/Reflection-Llama-3.1-70B",
+    "premade_chat_template": true,
+    "eos_to_cull": "<\\|eot_id\\|>",
+    "release_date": "06-09-24",
+    "open_weight": true,
+    "parameters": "70B"
+  },
+  {
     "model_name": "Qwen1.5-0.5B-Chat-GGUF-q8",
     "backend": "llamacpp",
     "huggingface_id": "Qwen/Qwen1.5-0.5B-Chat-GGUF",
