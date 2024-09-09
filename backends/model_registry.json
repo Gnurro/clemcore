@@ -1030,7 +1030,7 @@
   {
     "model_name": "Reflection-Llama-3.1-70B",
     "backend": "huggingface_local",
-    "huggingface_id": "mattshumer/Reflection-Llama-3.1-70B",
+    "huggingface_id": "mattshumer/ref_70_e3",
     "premade_chat_template": true,
     "eos_to_cull": "<\\|eot_id\\|>",
     "release_date": "06-09-24",
