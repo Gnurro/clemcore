@@ -6,8 +6,10 @@ import json
 import lark
 from lark import Lark, Transformer
 import jinja2
+
 import os
 from copy import deepcopy
+from typing import List, Set, Union
 
 from clemgame.clemgame import GameResourceLocator
 from clemgame import get_logger
@@ -25,26 +27,32 @@ class IFTransformer(Transformer):
     """
     IF action grammar transformer to convert Lark parse to python dict for further use.
     """
+    # since this is solely for action command parse conversion, any input is converted to a parsed action dict:
     def action(self, content):
         action: lark.Tree = content[0]
-        action_type = action.data
-        action_content = action.children
-        action_dict = {'type': action_type.value}
+        action_type = action.data  # main grammar rule the input was parsed as
+        action_content = action.children  # all parsed arguments of the action 'VP'
+        action_dict = {'type': action_type.value}  # value = string name of rule in grammar
 
         arguments = []
         arg_idx = 1
 
         for child in action_content:
+            # handle potentially multi-word 'thing' arguments; roughly equivalent to generic 'NP':
             if type(child) == lark.Tree and child.data == 'thing':
                 argument_words = [word.value for word in child.children if word.type == 'WORD']
                 arguments.append(" ".join(argument_words))
+                # extract defined adjectives:
                 argument_adjs = [adj.value.strip() for adj in child.children[:-1] if adj.type == 'ADJ']
                 if argument_adjs:
                     action_dict[f'arg{arg_idx}_adjs'] = argument_adjs
                 action_dict[f'arg{arg_idx}'] = arguments[-1]
                 arg_idx += 1
+            # extract defined prepositions:
             if type(child) == lark.Token and child.type == 'PREP':
                 action_dict['prep'] = child.value.strip()
+            # if the input can't be parsed as a defined action command, the grammar labels it as 'unknown'
+            # in this case, the first word is assumed to be the verb and is returned for feedback:
             if action_type.value == 'unknown' and type(child) == lark.Token and child.type == 'WORD':
                 action_dict[f'arg{arg_idx}'] = child.value
                 break
@@ -61,7 +69,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         super().__init__(name)
         # game instance is the instance data as passed by the GameMaster class
         self.game_instance: dict = game_instance
-
+        # surface strings (repr_str here) to spaceless internal identifiers:
         self.repr_str_to_type_dict: dict = dict()
 
         self.entity_types = dict()
@@ -84,6 +92,7 @@ class AdventureIFInterpreter(GameResourceLocator):
     def initialize_entity_types(self):
         """
         Load and process entity types in this adventure.
+        Definitions are loaded from external files.
         """
         # load entity type definitions in game instance:
         entity_definitions: list = list()
@@ -95,14 +104,17 @@ class AdventureIFInterpreter(GameResourceLocator):
             self.entity_types[entity_definition['type_name']] = dict()
             for entity_attribute in entity_definition:
                 if entity_attribute == 'type_name':
+                    # assign surface strings:
                     self.repr_str_to_type_dict[entity_definition['repr_str']] = entity_definition[entity_attribute]
                 else:
+                    # get all other attributes:
                     self.entity_types[entity_definition['type_name']][entity_attribute] = entity_definition[
                         entity_attribute]
 
     def initialize_room_types(self):
         """
         Load and process room types in this adventure.
+        Definitions are loaded from external files.
         """
         # load room type definitions in game instance:
         room_definitions: list = list()
@@ -114,14 +126,17 @@ class AdventureIFInterpreter(GameResourceLocator):
             self.room_types[room_definition['type_name']] = dict()
             for room_attribute in room_definition:
                 if room_attribute == 'type_name':
+                    # assign surface strings:
                     self.repr_str_to_type_dict[room_definition['repr_str']] = room_definition[room_attribute]
                 else:
+                    # get all other attributes:
                     self.room_types[room_definition['type_name']][room_attribute] = room_definition[
                         room_attribute]
 
     def initialize_action_types(self):
         """
         Load and process action types in this adventure.
+        Definitions are loaded from external files.
         """
         # load action type definitions in game instance:
         action_definitions: list = list()
@@ -131,6 +146,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         for action_definition in action_definitions:
             self.action_types[action_definition['type_name']] = dict()
+            # get all action attributes:
             for action_attribute in action_definition:
                 if not action_attribute == 'type_name':
                     self.action_types[action_definition['type_name']][action_attribute] = action_definition[
@@ -138,11 +154,13 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         for action_type in self.action_types:
             cur_action_type = self.action_types[action_type]
+            # convert fact to change from string to tuple:
             cur_action_type['object_post_state'] = fact_str_to_tuple(cur_action_type['object_post_state'])
 
     def initialize_action_parsing(self, print_lark_grammar: bool = False):
         """
         Initialize the lark action input parser and transformer.
+        Constructs a lark grammar string from action definition lark snippets.
         """
         act_grammar_rules = list()
         act_grammar_larks = list()
@@ -152,35 +170,38 @@ class AdventureIFInterpreter(GameResourceLocator):
             action_rule = cur_action_type['lark'].split(":")[0]
             act_grammar_rules.append(action_rule)
             act_grammar_larks.append(cur_action_type['lark'])
-
+        # root rule to parse any action command input, with fallback 'unknown':
         act_grammar_action_line = f"action: {' | '.join(act_grammar_rules)} | unknown\n"
+        # append all individual action lark grammar snippets:
         act_grammar_larks_str = "\n".join(act_grammar_larks)
-
+        # gather all possible adjectives from entity definitions:
         all_adjs = set()
         for entity_type, entity_def in self.entity_types.items():
             if 'possible_adjs' in entity_def:
                 new_adj_set = set(entity_def['possible_adjs'])
                 all_adjs.update(new_adj_set)
         all_adjs = [f'"{adj}"' for adj in all_adjs]
-
+        # adjective rule:
         act_grammar_adj_line = f"ADJ.1: ({' | '.join(all_adjs)}) WS\n"
-
+        # load the core grammar from file:
         grammar_core = self.load_json(f"resources{os.sep}grammar_core")
         grammar_head = grammar_core['grammar_head']
         grammar_foot = grammar_core['grammar_foot']
-
+        # combine adventure-specific grammar rules with core grammar:
         act_grammar = (f"{grammar_head}{act_grammar_action_line}"
                        f"{act_grammar_larks_str}\n{act_grammar_adj_line}{grammar_foot}")
-
+        # print grammar in verbose mode for inspection:
         if print_lark_grammar:
             print(act_grammar)
-
+        # initialize lark parser with the combined grammar:
         self.act_parser = Lark(act_grammar, start='action')
+        # initialize parse result transformer:
         self.act_transformer = IFTransformer()
 
     def initialize_states_from_strings(self):
         """
-        Convert List[Str] world state format into Set[Tuple].
+        Initialize the world state set from instance data.
+        Converts List[Str] world state format into Set[Tuple].
         """
         for fact_string in self.game_instance['initial_state']:
             self.world_state.add(fact_str_to_tuple(fact_string))
@@ -189,6 +210,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         # convenient. Initial adventure world states generated with the clingo adventure generator already cover these
         # augmentations.
 
+        # facts to add are gathered in a set to prevent duplicates
         facts_to_add = set()
 
         # add trait facts for objects:
@@ -204,19 +226,22 @@ class AdventureIFInterpreter(GameResourceLocator):
         for fact in self.world_state:
             if fact[0] == 'room':
                 facts_to_add.add(('type', f'{fact[1]}floor', 'floor'))
+                # add floor:
                 facts_to_add.add(('at', f'{fact[1]}floor', fact[1]))
 
         self.world_state = self.world_state.union(facts_to_add)
 
-        # get entity instance types from world state:
+        # dict with the type for each entity instance in the adventure:
         self.inst_to_type_dict = dict()
+        # get entity instance types from world state:
         for fact in self.world_state:
             # entity instance to entity type mapping:
             if fact[0] == 'type':
                 self.inst_to_type_dict[fact[1]] = fact[2]
 
-        # get room instance types from world state:
+        # dict with the type for each room instance in the adventure:
         self.room_to_type_dict = dict()
+        # get room instance types from world state:
         for fact in self.world_state:
             # room instance to room type mapping:
             if fact[0] == 'room':
@@ -242,61 +267,64 @@ class AdventureIFInterpreter(GameResourceLocator):
         self.world_state = self.world_state.union(facts_to_add)
         # add initial world state to world state history:
         self.world_state_history.append(deepcopy(self.world_state))
-
+        # get goal state fact set:
         for fact_string in self.game_instance['goal_state']:
             self.goal_state.add(fact_str_to_tuple(fact_string))
 
-    def _get_inst_str(self, inst):
+    def _get_inst_str(self, inst) -> str:
         """
-        Get a full string representation of an entity instance with adjectives.
+        Get a full string representation of an entity or room instance with adjectives.
         """
         inst_adjs = list()
-        # get adj facts:
+        # get instance adjectives from adj facts:
         for fact in self.world_state:
             if fact[0] == 'adj' and fact[1] == inst:
                 inst_adjs.append(fact[2])
-
+        # get type of instance:
         if inst in self.inst_to_type_dict:
             inst_type: str = self.inst_to_type_dict[inst]
         elif inst in self.room_to_type_dict:
             inst_type: str = self.room_to_type_dict[inst]
-
+        # get surface string for instance type:
         if inst_type in self.entity_types:
             inst_str: str = self.entity_types[inst_type]['repr_str']
         elif inst_type in self.room_types:
             inst_str: str = self.room_types[inst_type]['repr_str']
-
+        # combine into full surface string:
         inst_adjs.append(inst_str)
-
         adj_str = " ".join(inst_adjs)
 
         return adj_str
 
-    def get_player_room(self):
+    def get_player_room(self) -> str:
         """
-        Get the current room str.
+        Get the current player location's internal room string ID.
         """
         for fact in self.world_state:
             if fact[0] == 'at' and fact[1] == 'player1':
                 player_room = fact[2]
                 break
+
         return player_room
 
-    def get_player_room_contents(self):
+    def get_player_room_contents(self) -> List:
         """
-        Get all contents of the current room.
+        Get all contents of the current player location room.
         """
         player_room = self.get_player_room()
         room_contents = list()
         for fact in self.world_state:
+            # get all entities 'at' the player's location, except the player themselves:
             if fact[0] == 'at' and fact[2] == player_room and not fact[1] == 'player1':
                 room_contents.append(fact[1])
+
         return room_contents
 
-    def get_player_room_contents_visible(self):
+    def get_player_room_contents_visible(self) -> List:
         """
-        Get the 'visible' contents of the current room. This is also used to determine if an entity is accessible for
-        interaction.
+        Get the 'visible' contents of the current room.
+        This is also used to determine if an entity is accessible for interaction. Entities 'in' closed entities are not
+        returned.
         """
         room_contents = self.get_player_room_contents()
         visible_contents = list()
@@ -327,26 +355,28 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         return visible_contents
 
-    def get_player_room_exits(self):
+    def get_player_room_exits(self) -> List:
         """
         Get all passages in the current room.
         """
         player_room = self.get_player_room()
         room_exits = list()
         for fact in self.world_state:
+            # passage facts are 'exit' in the adventure/instance format
             if fact[0] == 'exit' and fact[1] == player_room:
                 room_exits.append(fact[2])
+
         return room_exits
 
-    def get_full_room_desc(self):
+    def get_full_room_desc(self) -> str:
         """
-        Full description of the room the player is at.
-        Handles entity visibility inside closed/open containers.
+        Creates and returns full description of the room the player is at.
         """
         # get player room:
         player_room = self.get_player_room()
         # create room description start:
         room_repr_str = self.room_types[self.room_to_type_dict[player_room]]['repr_str']
+        # using simple type surface string due to v1 not having multiple rooms of the same type:
         player_at_str = f"You are in a {room_repr_str} now."
 
         # get visible room content:
@@ -369,9 +399,8 @@ class AdventureIFInterpreter(GameResourceLocator):
             visible_contents_str = f"There is a {visible_contents[0]}."
             visible_contents_str = " " + visible_contents_str
 
-        # get predicate states of visible objects and create textual representations:
+        # get predicate state facts of visible objects and create textual representations:
         visible_content_state_strs = list()
-        # for thing in visible_contents:
         for thing in internal_visible_contents:
             for fact in self.world_state:
                 if fact[0] == 'closed' and fact[1] == thing:
@@ -389,13 +418,14 @@ class AdventureIFInterpreter(GameResourceLocator):
         else:
             visible_content_state_combined = str()
 
+        # get room passages and create textual representation:
         room_exits = self.get_player_room_exits()
-
         exits_str = str()
         if len(room_exits) == 1:
             exits_str = f" There is a passage to a {self._get_inst_str(room_exits[0])} here."
         elif len(room_exits) == 2:
-            exits_str = f" There are passages to a {self._get_inst_str(room_exits[0])} and a {self._get_inst_str(room_exits[1])} here."
+            exits_str = (f" There are passages to a {self._get_inst_str(room_exits[0])} and a "
+                         f"{self._get_inst_str(room_exits[1])} here.")
         elif len(room_exits) >= 3:
             comma_exits = ", a ".join([self._get_inst_str(room_exit) for room_exit in room_exits[:-1]])
             exits_str = f" There are passages to a {comma_exits} and a {self._get_inst_str(room_exits[-1])} here."
@@ -405,7 +435,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         return room_description
 
-    def get_inventory_content(self):
+    def get_inventory_content(self) -> Set:
         """
         Get set of inventory content.
         """
@@ -413,11 +443,13 @@ class AdventureIFInterpreter(GameResourceLocator):
         for fact in self.world_state:
             if fact[0] == 'in' and fact[2] == 'inventory':
                 inventory_content.add(fact[1])
+
         return inventory_content
 
-    def get_inventory_desc(self):
+    def get_inventory_desc(self) -> str:
         """
-        Get a text description of the inventory content.
+        Get a text description of the current inventory content.
+        Used for feedback for 'take' action.
         """
         inventory_content: set = self.get_inventory_content()
         inv_list = list(inventory_content)
@@ -435,10 +467,12 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         return inv_desc
 
-    def parse_action_input(self, action_input: str):
+    def parse_action_input(self, action_input: str) -> [bool, Union[dict, str], Union[dict, Set]]:
         """
-        Parse input action string to action tuple.
-        Fail if action/entities are not registered.
+        Parse input action command string to action dict.
+        Input is cleaned by removing trailing punctuation and lower-casing it.
+        Fail if action/entities are not defined or input command is not covered by grammar.
+        Returns tuple of: failure bool, parsed action dict or failure feedback, failure information dict or empty set.
         """
         # remove final punctuation:
         if action_input.endswith(".") or action_input.endswith("!"):
@@ -448,6 +482,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         logger.info(f"Cleaned action input: {action_input}")
 
+        # try parsing input, return lark_exception failure if parsing fails:
         try:
             parsed_command = self.act_parser.parse(action_input)
         except Exception as exception:
@@ -477,15 +512,16 @@ class AdventureIFInterpreter(GameResourceLocator):
             # convert arg1 from repr to internal type:
             action_dict['arg1'] = self.repr_str_to_type_dict[action_dict['arg1']]
         else:
+            # in this case, the action is defined, but the first argument isn't, leading to corresponding feedback
             fail_dict: dict = {'phase': "parsing", 'fail_type': "undefined_repr_str", 'arg': action_dict['arg1']}
             return False, f"I don't know what '{action_dict['arg1']}' means.", fail_dict
 
         if action_dict['arg1'] not in self.entity_types:
             logger.info(f"Action arg1 '{action_dict['arg1']}' is not an entity")
+            # handle manipulating rooms, ie "> take from kitchen":
             if action_dict['arg1'] in self.room_types:
                 if action_dict['type'] in ["take", "put", "open", "close"]:
-                    logger.info(
-                        f"Action type is '{action_dict['type']}', manipulating room")
+                    logger.info(f"Action type is '{action_dict['type']}', manipulating room")
                     fail_dict: dict = {'phase': "parsing", 'fail_type': "manipulating_room", 'arg': action_dict['arg1']}
                     if action_dict['type'] == "take":
                         fail_response = f"You can't {action_dict['type']} the '{action_dict['arg1']}'."
@@ -503,6 +539,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         if 'arg2' in action_dict:
             if action_dict['type'] == "take":
+                # handle unnecessary inventory interaction:
                 if action_dict['arg2'] == "inventory":
                     logger.info("Taking from inventory")
                     # get inventory content:
@@ -517,6 +554,7 @@ class AdventureIFInterpreter(GameResourceLocator):
             if action_dict['arg2'] in self.repr_str_to_type_dict:
                 # convert arg1 from repr to internal type:
                 action_dict['arg2'] = self.repr_str_to_type_dict[action_dict['arg2']]
+                # handle other room interaction attempts; ie "> take plate from kitchen" while player is elsewhere:
                 if action_dict['arg2'] in self.room_types:
                     cur_room_str = self.room_types[self.room_to_type_dict[self.get_player_room()]]['repr_str']
                     if not action_dict['arg2'] == cur_room_str:
@@ -529,36 +567,42 @@ class AdventureIFInterpreter(GameResourceLocator):
 
         return True, action_dict, {}
 
-    def resolve_action(self, action_dict: dict):
+    def resolve_action(self, action_dict: dict) -> [bool, Union[Set, str], Union[dict, Set]]:
         """
-        Check action viability and change world state.
+        Check action viability and change world state if applicable.
+        Returns tuple of: failure bool, changed state facts set or failure feedback, failure information dict or empty
+        set.
         """
+        # deepcopy the world state to prevent referential interaction:
         prior_world_state = deepcopy(self.world_state)
         # get state changes for current action:
         state_changes = self.action_types[action_dict['type']]['state_changes']
 
-        state_changed = False
-        facts_to_remove = list()
-        facts_to_add = list()
-        for state_change in state_changes:
+        state_changed = False  # main bool controlling final result world state fact set union/removal
+        facts_to_remove = list()  # facts to be removed by world state set removal
+        facts_to_add = list()  # facts to union with world state fact set
+        for state_change in state_changes:  # each state-change fact an action can result in is handled individually
             logger.info(f"Checking state change: {state_change}")
             # GO ACTION/ROOM TRAVERSAL
             if "HERE" in state_change['pre_state'] or "HERE" in state_change['post_state']:
                 logger.info(f"State change is location-based")
-                # check if arg is a room type:
+                # check if arg is a room type; handles "> go to table" and similar inputs:
                 if action_dict['arg1'] not in self.room_types:
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "not_room_type", 'arg': action_dict['arg1']}
                     not_room_type_str: str = f"I don't know what room '{action_dict['arg1']}' is."
                     return False, not_room_type_str, fail_dict
 
-                # get things here:
+                # get currently accessible entities:
                 things_here = set(self.get_player_room_contents_visible()) | self.get_inventory_content()
 
+                # get passages in current room:
                 present_exits = self.get_player_room_exits()
                 passable_exits = {self.room_to_type_dict[instance]: [] for instance in present_exits}
                 for instance in present_exits:
                     passable_exits[self.room_to_type_dict[instance]].append(instance)
+                # handle 'go' with argument for which no passages are present:
                 if action_dict['arg1'] not in passable_exits:
+                    # handle going to same room; simply use room type as v1 has only one room of each type:
                     if action_dict['arg1'] == self.room_to_type_dict[self.get_player_room()]:
                         logger.info(f"Traversal to current room type: {self.get_player_room()}")
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "going_to_current_room", 'arg': action_dict['arg1']}
@@ -569,29 +613,45 @@ class AdventureIFInterpreter(GameResourceLocator):
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "no_exit_to", 'arg': action_dict['arg1']}
                         no_exit_to_str: str = f"There is no passage to a {self.room_types[action_dict['arg1']]['repr_str']} here."
                         return False, no_exit_to_str, fail_dict
-
+                # handle multiple passages to argument room type; not used in v1:
                 elif len(passable_exits[action_dict['arg1']]) > 1:
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_exits_to", 'arg': action_dict['arg1']}
                     return False, f"There are multiple {self.room_types[action_dict['arg1']]['repr_str']}s here.", fail_dict
                 else:
+                    # get the internal instance ID of target adjacent room:
                     arg1_inst = passable_exits[action_dict['arg1']][0]
 
+                # get the main state-change fact and insert current player room:
                 pre_state: str = state_change['pre_state'].replace("HERE", self.get_player_room())
+                # Example: pre_state = "at(PLAYER,HERE)" -> pre_state = "at(PLAYER,kitchen1)"
+                # this is the fact to remove from the world state set when this state-change
+                # of the current action is resolved successfully
 
-                if "PLAYER" in pre_state:
+                if "PLAYER" in pre_state:  # handle PLAYER pre-states separately
+                    # insert player ID into state-change pre-state string template:
                     pre_state = pre_state.replace("PLAYER", "player1")
+                    # Example: pre_state = "at(PLAYER,kitchen1)" -> pre_state = "at(player1,kitchen1)"
+                    # in v1, the player entity ID is always player1
                     pre_state_tuple = fact_str_to_tuple(pre_state)
 
+                    # insert target room ID into state-change post-state string template:
                     post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
+                    # Example: post_state = "at(PLAYER,TARGET)" -> post_state = "at(PLAYER,pantry1)"
+                    # insert player ID into state-change post-state string template:
                     post_state = post_state.replace("PLAYER", "player1")
+                    # Example: post_state = "at(PLAYER,pantry1)" -> post_state = "at(player1,pantry1)"
                     post_state_tuple = fact_str_to_tuple(post_state)
 
-                    # check conditions:
-                    conditions_fulfilled: bool = True
+                    # each state-change has at least one world state fact condition
+                    # all condition facts must hold in the current world state for the state-change to be processed
+                    # check state-change fact conditions:
+                    conditions_fulfilled: bool = True  # conditions assumed to hold for straight-forward resolution
                     for condition in state_change['conditions']:
+                        # insert internal IDs into template and convert to fact tuple:
                         player_condition = condition.replace("HERE", self.get_player_room())
                         player_condition = player_condition.replace("TARGET", arg1_inst)
                         player_condition_tuple = fact_str_to_tuple(player_condition)
+                        # check if fact holds for current world state:
                         if player_condition_tuple not in self.world_state:
                             conditions_fulfilled = False
 
@@ -603,13 +663,18 @@ class AdventureIFInterpreter(GameResourceLocator):
                                 state_changed = True
 
                 if "THING" in pre_state:
+                    # handle entities in inventory 'following' the player:
+                    # at(apple1,pantry1), at(player1,pantry1) + "> go kitchen"
+                    # -> at(apple1,kitchen1), at(player1,kitchen1)
+
                     # check things at location:
                     internal_visible_contents = self.get_player_room_contents_visible()
                     for thing_here in things_here:
+                        # insert internal IDs into template and convert to fact tuple:
                         pre_state: str = state_change['pre_state'].replace("HERE", self.get_player_room())
                         pre_state = pre_state.replace("THING", thing_here)
                         pre_state_tuple = fact_str_to_tuple(pre_state)
-
+                        # insert internal IDs into template and convert to fact tuple:
                         post_state: str = state_change['post_state'].replace("TARGET", arg1_inst)
                         post_state = post_state.replace("THING", thing_here)
                         post_state_tuple = fact_str_to_tuple(post_state)
@@ -629,6 +694,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                                 if not facts_to_add == facts_to_remove:
                                     state_changed = True
 
+            # ENTITY INTERACTION / TAKE, PUT, OPEN, CLOSE
             elif "THING" in state_change['pre_state'] or "THING" in state_change['post_state']:
                 logger.info(f"State change is entity manipulation")
                 # ENTITY ACCESSIBILITY
@@ -646,11 +712,12 @@ class AdventureIFInterpreter(GameResourceLocator):
                     if self.inst_to_type_dict[inventory_item] not in accessible_contents:
                         accessible_contents[self.inst_to_type_dict[inventory_item]] = []
                     accessible_contents[self.inst_to_type_dict[inventory_item]].append(inventory_item)
-                # add floor to 'visible' contents to allow taking from floor:
+                # add floor to accessible room contents to allow taking from floor:
                 accessible_contents["floor"] = [f"{self.get_player_room()}floor"]
 
                 if action_dict['type'] == "take":
                     for inventory_item in inventory_content:
+                        # in v1, there is only one entity of each type, making resolution straight-forward
                         if self.inst_to_type_dict[inventory_item] == action_dict['arg1']:
                             fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_already_inventory",
                                                'arg': action_dict['arg1']}
@@ -659,6 +726,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 arg1 = action_dict['arg1']
                 if arg1 not in accessible_contents:
                     logger.info(f"THING action argument not accessible: {arg1}")
+                    # handle "> open pantry"-type actions:
                     if arg1 in self.room_types:
                         logger.info(f"THING action arg1 '{arg1}' is a room type")
                         logger.info(f"current player room: {self.get_player_room()}")
@@ -666,17 +734,19 @@ class AdventureIFInterpreter(GameResourceLocator):
                         thing_arg2_room_str: str = f"You can't do this with a room."
                         return False, thing_arg2_room_str, fail_dict
                     else:
+                        # handle inaccessible entity:
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "entity_not_accessible",
                                            'arg': action_dict['arg1']}
                         return False, f"You can't see a {self.entity_types[arg1]['repr_str']} here.", fail_dict
-
                 elif len(accessible_contents[arg1]) > 1:
+                    # in v1, there is only one entity of each type, so this is not used
                     fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                        'arg': action_dict['arg1']}
                     return False, f"There are multiple {self.entity_types[arg1]['repr_str']} here.", fail_dict
                 else:
                     arg1_inst = accessible_contents[arg1][0]
 
+                # handle "> take book from shelf"-type actions:
                 arg2_inst = None
                 if 'arg2' in action_dict:
                     arg2 = action_dict['arg2']
@@ -685,6 +755,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                         logger.info(f"THING action arg2 '{arg2}' is not accessible")
                         # check if arg2 is room:
                         if arg2 in self.room_types:
+                            # handle "> take book from living room"-type actions:
                             logger.info(f"THING action arg2 '{arg2}' is a room type")
                             logger.info(f"current player room: {self.get_player_room()}")
                             fail_dict: dict = {'phase': "resolution", 'fail_type': "thing_arg2_room", 'arg': arg2}
@@ -695,8 +766,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                                                'arg': arg2}
                             thing_not_accessible_str: str = f"You can't see a {self.entity_types[arg2]['repr_str']} here."
                             return False, thing_not_accessible_str, fail_dict
-
                     elif len(accessible_contents[arg2]) > 1:
+                        # in v1, there is only one entity of each type, so this is not used
                         fail_dict: dict = {'phase': "resolution", 'fail_type': "multiple_entity_ambiguity",
                                            'arg': arg2}
                         return False, f"There are multiple {self.entity_types[arg2]['repr_str']} here.", fail_dict
@@ -706,6 +777,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                 # replace string placeholders with fact IDs:
                 pre_state: str = state_change['pre_state'].replace("THING", arg1_inst)
 
+                # handle ANY templates; this is used to account for entities being 'in' or 'on' other entities:
                 if "ANY" in pre_state:
                     any_match = False
                     pred = fact_str_to_tuple(pre_state)[0]
@@ -715,15 +787,18 @@ class AdventureIFInterpreter(GameResourceLocator):
                             pre_state = pre_state.replace("ANY", state_pred[2])
                             break
                     if not any_match:
-                        continue
+                        continue  # with next state-change
 
                 post_state: str = state_change['post_state'].replace("THING", arg1_inst)
+                # Example: post_state = PREP(THING,TARGET) -> post_state = PREP(apple1,TARGET)
 
                 if "PREP" in post_state:
                     post_state = post_state.replace("PREP", action_dict['prep'])
+                    # Example: post_state = PREP(apple1,TARGET) -> post_state = on(apple1,TARGET)
 
                 if "TARGET" in post_state:
                     post_state = post_state.replace("TARGET", arg2_inst)
+                    # Example: post_state = on(apple1,TARGET) -> post_state = on(apple1,table1)
 
                 # convert to fact tuples:
                 pre_state_tuple = fact_str_to_tuple(pre_state)
@@ -733,7 +808,6 @@ class AdventureIFInterpreter(GameResourceLocator):
                 conditions_fulfilled: bool = True
                 for condition in state_change['conditions']:
                     thing_condition = condition.replace("THING", arg1_inst)
-
                     if arg2_inst:
                         thing_condition = thing_condition.replace("TARGET", arg2_inst)
                     logger.info(f"Checking state change condition: {thing_condition}")
@@ -741,7 +815,6 @@ class AdventureIFInterpreter(GameResourceLocator):
                     if thing_condition_tuple not in self.world_state:
                         logger.info(f"State change condition '{thing_condition}' is not in world state")
                         conditions_fulfilled = False
-
                     else:
                         logger.info(f"State change condition '{thing_condition}' is in world state")
 
@@ -762,9 +835,10 @@ class AdventureIFInterpreter(GameResourceLocator):
             for add_fact in facts_to_add:
                 self.world_state.add(add_fact)
 
-            # add current world state to world state history:
+            # add deepcopy of new current world state to world state history:
             self.world_state_history.append(deepcopy(self.world_state))
 
+            # get all changed facts:
             post_world_state = deepcopy(self.world_state)
             post_resolution_changes = post_world_state.difference(prior_world_state)
             if prior_world_state == self.world_state_history[-2]:
@@ -776,16 +850,16 @@ class AdventureIFInterpreter(GameResourceLocator):
                         f"added facts: {facts_to_add}")
             if facts_to_add:
                 return True, facts_to_add[0], {}
-        else:
+        else:  # fallback if world state hasn't been changed by action resolution
             logger.info(f"No state change fallback")
             pre_state_tuple = fact_str_to_tuple(pre_state)
             logger.info(f"Pre-state tuple: {pre_state_tuple}")
-
+            # sanity check for pre-state and world state:
             if pre_state_tuple not in self.world_state:
                 logger.info(f"Pre-state {pre_state_tuple} not in world state")
             else:
                 logger.info(f"Pre-state {pre_state_tuple} in world state")
-
+            # edge case handling:
             if len(pre_state_tuple) >= 3:
                 if pre_state_tuple[2] == "ANY":
                     pre_state_antecedent = "anything"
@@ -793,6 +867,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                     pre_state_antecedent = pre_state_tuple[1]
                 pre_state_response = f"{pre_state_tuple[0]} {pre_state_antecedent}"
                 response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_response}."
+                # this can result in rather cryptic responses; better feedback would require more hardcode like below
             elif action_dict['type'] in ["open", "close"]:
                 response_str = f"The {self.entity_types[action_dict['arg1']]['repr_str']} is not {pre_state_tuple[0]}."
             else:

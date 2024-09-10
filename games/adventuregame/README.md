@@ -4,11 +4,22 @@ The model is given descriptions of rooms and their contents, along with a task, 
 giving action commands. The IF interpreter changes the game world state based on the given action or returns a textual 
 failure response if that is not possible.
 ## Instantiation
-Initial world states and task goal sets are combined into adventures. Different prompts are used for the two game 
-variants, 'basic' and 'planning', to generate two instance sets from the same pool of adventures.
+### Adventure Generation
+The Clingo Answer Set solver is used to generate viable initial world state sets based on room and entity definitions. 
+These initial world states are used to create goal sets via script. Initial world states and task goal sets are combined 
+into adventures. As a last step, Clingo is used to generate the optimal solution for each adventure, using action 
+definitions.  
+Each step above can output intermediate adventures for manual editing, which was used to create the v1 set of adventures 
+with two difficulty levels. Difficulty is based on the accessibility of task objects and the complexity of tasks, which 
+are easy to manipulate at an intermediate stage that has generated initial world states and goal sets, but no optimal 
+solution yet. An example JSON file of that stage is `adventuregame/resources/adv_source.json`.
+### Instances
+Different prompts are used for the two game variants, 'basic' and 'planning', to generate two instance sets from the 
+same pool of adventures. This means that the initial world state and goal sets are identical between the 'basic' and 
+'planning' variants for each difficulty - 'basic-easy' instance 0 has the same adventure as 'planning-easy' instance 0.
 ## Evaluation
 ### Metrics
-Standard clembench metrics are implemented, metrics listed here are adventuregame-specific metrics.
+Standard clembench metrics are implemented, metrics listed here are AdventureGame-specific metrics.
 #### Turn-level
 goal_score: How many goal states have been achieved at this turn. Records **change** of the number of achieved goal 
 states, meaning that if less goal states are achieved at this turn, the number is negative.
