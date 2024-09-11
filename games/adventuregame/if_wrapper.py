@@ -472,6 +472,7 @@ class AdventureIFInterpreter(GameResourceLocator):
         Parse input action command string to action dict.
         Input is cleaned by removing trailing punctuation and lower-casing it.
         Fail if action/entities are not defined or input command is not covered by grammar.
+        This method is effectively the parsing phase mentioned in the paper.
         Returns tuple of: failure bool, parsed action dict or failure feedback, failure information dict or empty set.
         """
         # remove final punctuation:
@@ -570,6 +571,7 @@ class AdventureIFInterpreter(GameResourceLocator):
     def resolve_action(self, action_dict: dict) -> [bool, Union[Set, str], Union[dict, Set]]:
         """
         Check action viability and change world state if applicable.
+        This method is effectively the resolution phase mentioned in the paper.
         Returns tuple of: failure bool, changed state facts set or failure feedback, failure information dict or empty
         set.
         """
@@ -879,18 +881,23 @@ class AdventureIFInterpreter(GameResourceLocator):
     def process_action(self, action_input: str):
         """
         Fully process an action input.
+        First parses the input, then resolves the parsed action, and returns feedback and goal achievement.
         """
+        # PARSING PHASE
         parsed, parse_result, fail = self.parse_action_input(action_input)
         if not parsed:
             return self.goals_achieved, parse_result, fail
         else:
+            # RESOLUTION PHASE
+            # get visible/accessible entities before resolution:
             prior_visibles = set(self.get_player_room_contents_visible())
+            # resolve action:
             resolved, resolution_result, fail = self.resolve_action(parse_result)
             if not resolved:
                 return self.goals_achieved, resolution_result, fail
             else:
                 logger.info(f"Resolution result: {resolution_result}")
-                # get template:
+                # get action feedback template:
                 feedback_template = self.action_types[parse_result['type']]['feedback_template']
                 feedback_jinja = jinja2.Template(feedback_template)
                 template_tags = ["thing", "inventory_desc", "prep", "target", "room_desc"]
@@ -907,9 +914,8 @@ class AdventureIFInterpreter(GameResourceLocator):
                             jinja_args[template_tag] = self._get_inst_str(resolution_result[2])
                         if template_tag == "room_desc":
                             jinja_args[template_tag] = self.get_full_room_desc()
+                # fill feedback template:
                 base_result_str = feedback_jinja.render(jinja_args)
-
-
                 # check goal achievement:
                 self.goals_achieved = self.goal_state & self.world_state
                 goals_achieved_response = list(self.goal_state & self.world_state)
@@ -917,10 +923,10 @@ class AdventureIFInterpreter(GameResourceLocator):
                 for goal_state_idx, goal_state in enumerate(goals_achieved_response):
                     goals_achieved_response[goal_state_idx] = fact_tuple_to_str(goal_state)
                 goals_achieved_response = set(goals_achieved_response)
-
-                # check for new visibles:
+                # check for newly visible/accessible entities:
                 post_visibles = set(self.get_player_room_contents_visible())
                 changed_visibles = post_visibles.difference(prior_visibles)
+                # feedback on newly visible/accessible entities in current room:
                 if changed_visibles and not parse_result['type'] == "go":
                     visible_content_state_strs = list()
                     for thing in changed_visibles:
@@ -931,7 +937,7 @@ class AdventureIFInterpreter(GameResourceLocator):
                     if visible_content_state_combined:
                         visible_content_state_combined = " " + visible_content_state_combined
                     return goals_achieved_response, f"{base_result_str}{visible_content_state_combined}", {}
-                else:
+                else:  # 'go' feedback with description of newly entered room:
                     return goals_achieved_response, base_result_str, {}
 
     def execute_optimal_solution(self):
@@ -948,12 +954,14 @@ class AdventureIFInterpreter(GameResourceLocator):
             print("Fail:", fail)
             print()
 
-    def execute_plan_sequence(self, command_sequence: list):
+    def execute_plan_sequence(self, command_sequence: list) -> List:
         """
         Execute a command sequence plan and return results up to first failure.
+        Used for plan logging and evaluation.
+        Returns a list of action processing results including first failed plan action.
         """
         logger.info(f"Plan command sequence: {command_sequence}")
-
+        # deepcopy world state before plan execution to assure proper reversion:
         pre_plan_world_state = deepcopy(self.world_state)
 
         result_sequence: list = list()
@@ -964,9 +972,9 @@ class AdventureIFInterpreter(GameResourceLocator):
             result = list(self.process_action(command))
             # convert result goals achieved to list for JSON dumping:
             result[0] = list(result[0])
-            # result[2] is fail info; if it is truthy, the command failed
             result_sequence.append(result)
             # check for command failure:
+            # result[2] is fail info; if it is truthy, the command failed
             if result[2]:
                 # stop executing commands at the first failure
                 logger.info(f"Plan sequence failed at step {cmd_idx}")
@@ -980,30 +988,31 @@ class AdventureIFInterpreter(GameResourceLocator):
         # revert the world state to before plan execution if it changed:
         if world_state_change_count:
             logger.info(f"Plan world state change count: {world_state_change_count}; reverting changes")
+            # deepcopy world state after plan execution to prevent reference issues:
             post_plan_world_state = deepcopy(self.world_state)
             logger.info(f"World state history before reverting: {self.world_state_history}")
             logger.info(f"World state history length before reverting: {len(self.world_state_history)}")
+            # reset world state history to before executed plan:
             self.world_state_history = self.world_state_history[:-world_state_change_count]
             logger.info(f"World state history after reverting: {self.world_state_history}")
             logger.info(f"World state history length after reverting: {len(self.world_state_history)}")
-
+            # check that world state has been properly reset:
             if self.world_state_history[-1] == pre_plan_world_state:
                 logger.info(f"Last world state history item matches pre-plan world state")
             else:
                 logger.info(f"Last world state history item DOES NOT match pre-plan world state")
-
             if self.world_state_history[-1] == post_plan_world_state:
                 logger.info(f"Last world state history item DOES match post-plan world state")
             else:
                 logger.info(f"Last world state history item does not match post-plan world state")
-
+            # reset world state to before plan execution:
             self.world_state = deepcopy(self.world_state_history[-1])
-
+            # double-check that world state has been reset properly:
             if self.world_state == pre_plan_world_state:
                 logger.info(f"Pre-plan world state matches reverted post-plan world state")
             else:
                 logger.info(f"Pre-plan world state does not match reverted post-plan world state")
-
+            # log specific reverted fact changes from plan:
             post_plan_changes = post_plan_world_state.difference(self.world_state)
             logger.info(f"Reverted plan world state changes: {post_plan_changes}")
         else:
@@ -1016,7 +1025,7 @@ class AdventureIFInterpreter(GameResourceLocator):
 
 if __name__ == "__main__":
     PATH = ""
-
+    # example game instance:
     game_instance_exmpl = {"game_id": 11, "variant": "basic",
      "prompt": "You are playing a text adventure game. I will describe what you can perceive in the game. You write the single action you want to take in the game starting with >. Only reply with actions.\nFor example:\n> examine cupboard\n\nYour goal for this game is: Put the book on the table, the plate on the table and the mop on the table.\n\n",
      "initial_state": ["at(kitchen1floor,kitchen1)", "at(pantry1floor,pantry1)", "at(hallway1floor,hallway1)",
@@ -1072,7 +1081,7 @@ if __name__ == "__main__":
                           "put plate on table", "go hallway", "go broom closet", "take mop", "go hallway",
                           "go living room", "put mop on table"], "action_definitions": ["basic_actions.json"],
      "room_definitions": ["home_rooms.json"], "entity_definitions": ["home_entities.json"]}
-
+    # initialize test interpreter:
     test_interpreter = AdventureIFInterpreter(game_instance_exmpl)
-
+    # run optimal solution:
     test_interpreter.execute_optimal_solution()
