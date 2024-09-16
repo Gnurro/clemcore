@@ -1,5 +1,11 @@
 """
 Clingo-based adventure generation and optimal solving.
+Generates ASP logic program encoding strings which are then passed to the Clingo solver. Clingo outputs are filtered
+and limited to yield intermediate adventure parts like room layout in reasonable running time. Goals are generated using
+only Python code in this version ('home deliver' task type only in v1).
+Please refer to the ASP documentation for more information on the encodings: https://potassco.org/clingo/
+Adventure type definition file containing task goal settings etc is
+adventuregame/resources/definitions/adventure_types.json
 """
 
 from typing import List, Tuple, Union, Optional
@@ -13,10 +19,7 @@ from clingo.control import Control
 from games.adventuregame.adv_util import fact_str_to_tuple, fact_tuple_to_str
 
 
-# TODO: doc adventure generation config format and contents
-
-
-def convert_action_to_tuple(action: str):
+def convert_action_to_tuple(action: str) -> Tuple:
     action_splice = action[9:-1]
     action_split = action_splice.split(",")
     action_split[0] = int(action_split[0])
@@ -35,16 +38,11 @@ class ClingoAdventureGenerator(object):
             adventure_type_definitions = json.load(adventure_types_file)
             self.adv_type_def = adventure_type_definitions[self.adv_type]
 
-        # print("adv type:", self.adv_type)
-        # print("adv type def:", self.adv_type_def)
-
         # load room type definitions:
         room_definitions: list = list()
         for room_def_source in self.adv_type_def["room_definitions"]:
             with open(f"definitions/{room_def_source}", 'r', encoding='utf-8') as rooms_file:
                 room_definitions += json.load(rooms_file)
-
-        # print(room_definitions)
 
         self.room_definitions = dict()
         for type_def in room_definitions:
@@ -54,15 +52,12 @@ class ClingoAdventureGenerator(object):
                     type_def_dict[type_key] = type_value
             self.room_definitions[type_def['type_name']] = type_def_dict
 
-        # print(self.room_definitions)
-
         # load entity type definitions:
         entity_definitions: list = list()
         for entity_def_source in self.adv_type_def["entity_definitions"]:
             with open(f"definitions/{entity_def_source}", 'r', encoding='utf-8') as entities_file:
                 entity_definitions += json.load(entities_file)
 
-        # print(entity_definitions)
         self.entity_definitions = dict()
         for type_def in entity_definitions:
             type_def_dict = dict()
@@ -99,22 +94,27 @@ class ClingoAdventureGenerator(object):
         """
         clingo_str = str()
 
-        # generate with one room each:
+        # generate with one room of each type:
         for room_type_name, room_type_values in self.room_definitions.items():
             # basic atoms:
             room_id = f"{room_type_name}1"  # default to 'kitchen1' etc
             type_atom = f"room({room_id},{room_type_name})."
+            # Ex: room(kitchen1,kitchen) = there is a room with internal ID kitchen1 which has the room type kitchen
             clingo_str += "\n" + type_atom
 
             # add floor to room:
             floor_id = f"{room_id}floor"
             floor_atom = f"type({floor_id},floor)."
+            # Ex: type(kitchen1floor,floor) = there is an entity kitchen1floor which has the entity type floor
             clingo_str += "\n" + floor_atom
             # add at() for room floor:
             floor_at = f"at({floor_id},{room_id})."
+            # Ex: at(kitchen1floor,kitchen1) = at kitchen1 there is a floor with internal ID kitchen1floor
             clingo_str += "\n" + floor_at
             # add support trait atom for floor:
             floor_support = f"support({floor_id})."
+            # Ex: support(kitchen1floor) = the entity with internal ID kitchen1floor can support moveable entities,
+            # meaning it can be the second argument of put actions, and there can be on(X,kitchen1floor) facts
             clingo_str += "\n" + floor_support
 
             # add exit rule:
@@ -127,7 +127,6 @@ class ClingoAdventureGenerator(object):
             exit_rule = "1 { $PERMITTEDEXITS$ } $MAXCONNECTIONS$."
             exit_rule = exit_rule.replace("$PERMITTEDEXITS$", permitted_exits)
             exit_rule = exit_rule.replace("$MAXCONNECTIONS$", str(room_type_values['max_connections']))
-
             clingo_str += "\n" + exit_rule
         # exit pairing rule:
         # this makes sure that all passages are usable from both sides
@@ -154,13 +153,14 @@ class ClingoAdventureGenerator(object):
         clingo_str += "\n" + player_fact
         # add rule for random player start location:
         player_location_rule = "1 { at(player1,ROOM):room(ROOM,_) } 1."
+        # = there can be at() facts for the player for each room and there must be exactly one at() fact for the player
         clingo_str += "\n" + player_location_rule
 
         for entity_type_name, entity_type_values in self.entity_definitions.items():
             if "standard_locations" in entity_type_values:
                 # entity definitions contain a list of rooms the entity type is allowed to be at
                 # basic atoms:
-                entity_id = f"{entity_type_name}1"  # default to 'kitchen1' etc
+                entity_id = f"{entity_type_name}1"  # default to 'apple1' etc
                 type_atom = f"type({entity_id},{entity_type_name})."
                 # add type atom to asp encoding:
                 clingo_str += "\n" + type_atom
@@ -220,6 +220,7 @@ class ClingoAdventureGenerator(object):
         Generate goal facts based on task type and given adventure initial world state.
         Task types:
             'deliver': Bring takeable objects to support or container; goal facts are of type 'on' or 'in'.
+        Only 'deliver' with three objects in v1.
         """
         id_to_type_dict: dict = dict()
 
@@ -229,12 +230,12 @@ class ClingoAdventureGenerator(object):
         for fact in initial_facts:
             if fact[0] == "type":
                 id_to_type_dict[fact[1]] = {'type': fact[2],
-                                                 'repr_str': self.entity_definitions[fact[2]]['repr_str']}
+                                            'repr_str': self.entity_definitions[fact[2]]['repr_str']}
                 if 'traits' in self.entity_definitions[fact[2]]:
                     id_to_type_dict[fact[1]]['traits'] = self.entity_definitions[fact[2]]['traits']
             if fact[0] == "room":
                 id_to_type_dict[fact[1]] = {'type': fact[2],
-                                                 'repr_str': self.room_definitions[fact[2]]['repr_str']}
+                                            'repr_str': self.room_definitions[fact[2]]['repr_str']}
                 if 'traits' in self.room_definitions[fact[2]]:
                     id_to_type_dict[fact[1]]['traits'] = self.room_definitions[fact[2]]['traits']
 
@@ -314,6 +315,7 @@ class ClingoAdventureGenerator(object):
         """
         Set up initial world state and create ASP encoding of mutable facts.
         Turn facts have _t in the fact/atom type, and their first value is the turn at which they are true.
+        Mutable facts are defined in the adventure type definition.
         """
         mutable_fact_types: list = self.adv_type_def["mutable_fact_types"]
 
@@ -341,13 +343,16 @@ class ClingoAdventureGenerator(object):
                 # add turn 0 turn fact atom:
                 if len(fact) == 3:
                     turn_atom = f"{fact[0]}_t(0,{fact[1]},{fact[2]})."
+                    # Ex: in_t(0,apple1,refrigerator1) = the apple is in the refrigerator at turn 0
                     clingo_str += "\n" + turn_atom
                 if len(fact) == 2:
                     turn_atom = f"{fact[0]}_t(0,{fact[1]})."
+                    # Ex: closed_t(0,refrigerator1) = the refrigerator is closed at turn 0
                     clingo_str += "\n" + turn_atom
             else:
                 # add constant fact atom:
                 const_atom = f"{fact_tuple_to_str(fact)}."
+                # Ex: type(apple1,apple) = the entity with ID apple1 is of type apple (and will always be)
                 clingo_str += "\n" + const_atom
 
         return clingo_str
@@ -355,16 +360,13 @@ class ClingoAdventureGenerator(object):
     def _solve_optimally_asp(self, initial_world_state, goal_facts: list, return_only_actions: bool = True) \
             -> Tuple[bool, Union[List[str], List[List[str]]], Optional[str]]:
         """
-        Generates an optimized solution to an adventure.
+        Generates an optimal solution to an adventure.
         :param initial_world_state: Initial world state fact list.
         :param goal_facts: List of goal facts in string format, ie 'on(sandwich1,table1)'.
-        :param turn_limit: Limit number of turns/actions to solve adventure. NOTE: Main factor for solvability.
         :param return_only_actions: Return only a list of action-at-turn atoms. If False, ALL model atoms are returned.
-        :param return_only_optimal: Return only the optimal solution model's atoms.
-        :param return_encoding: Return the entire adventure solving ASP encoding generated.
         :return: Tuple of: Solvability, list of solution models or optimal solution model, ASP solving encoding.
         """
-
+        # get turn limit from adventure type definition:
         turn_limit: int = self.adv_type_def["optimal_solver_turn_limit"]
 
         clingo_str = str()
@@ -380,11 +382,11 @@ class ClingoAdventureGenerator(object):
 
         # add actions:
         for action_name, action_def in self.action_definitions.items():
-            action_asp = action_def['asp']
+            action_asp = action_def['asp']  # action ASP encodings were manually created
             clingo_str += "\n" + action_asp
 
         # add action/turn restraints:
-        actions_turns_clingo: str = self.clingo_templates["action_limits"]
+        actions_turns_clingo: str = self.clingo_templates["action_limits"]  # -> only one action per turn
         clingo_str += "\n" + actions_turns_clingo
 
         # add goals:
@@ -402,10 +404,11 @@ class ClingoAdventureGenerator(object):
             clingo_str += "\n" + goal_clingo
 
         # add optimization:
-        minimize_clingo = self.clingo_templates["minimize"]
+        minimize_clingo = self.clingo_templates["minimize"]  # -> least number of turns is optimal
         clingo_str += "\n" + minimize_clingo
 
         # add output only actions:
+        # this omits all intermediate information and full fact set as only the optimal action sequence is needed
         if return_only_actions:
             only_actions_clingo = self.clingo_templates["return_only_actions"]
             clingo_str += "\n" + only_actions_clingo
@@ -415,7 +418,9 @@ class ClingoAdventureGenerator(object):
     def _convert_adventure_solution(self, adventure_solution: str):
         """
         Convert a raw solution string into list of IF commands and get additional information. Expects only-actions raw
-        string from ClingoAdventureSolver.
+        string.
+        Returns both a 'abstract' tuple format of the optimal action sequence and action command strings to pass to the
+        IF interpreter directly, as well as the length of the optimal action sequence.
         """
         actions_list: list = adventure_solution.split()
         action_tuples = [convert_action_to_tuple(action) for action in actions_list]
@@ -450,7 +455,12 @@ class ClingoAdventureGenerator(object):
                             goal_set_picking: str = "iterative",
                             save_to_file: bool = True, indent_output_json: bool = True):
         """
-        Generate raw adventures based on various parameters.
+        Generate raw adventures based on various parameters. Main purpose of the parameters is to limit the runtime of
+        adventure generation - even for simple v1 deliver-three without adjectives the number of possible adventures is
+        highly exponential, and exhaustive generation would take a very long time.
+        The number of possible room layouts is limited based on the basic/home room definitions, so it is not
+        additionally limited here.
+        This method uses all ASP encoding strings created by other methods of this class.
         :param initial_states_per_layout: How many initial world states are generated per room layout.
         :param initial_state_limit: The maximum number of initial states to generate. This number should be kept low, as
             it is the main limiter preventing excessive computational resource use.
@@ -623,6 +633,7 @@ class ClingoAdventureGenerator(object):
                             goal_listing_str: str = ", ".join(goal_strings[:-1])
                             goal_desc: str = f"Put {goal_listing_str} and {goal_strings[-1]}."
 
+                    # full raw adventure data:
                     viable_adventure = {
                         'adventure_type': self.adv_type,
                         'goal': goal_desc, 'initial_state': initial_state, 'goal_state': goal_set,
@@ -639,7 +650,7 @@ class ClingoAdventureGenerator(object):
 
                     if adventures_per_initial_state and cur_adventure_count == adventures_per_initial_state:
                         keep_generating_adventures = False
-                else:
+                else:  # optimal turns not within bounds, discard this raw adventure
                     continue
 
         # adventures generated with this version have undefined difficulty
