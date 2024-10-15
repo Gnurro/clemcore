@@ -9,6 +9,8 @@ from transformers import AutoTokenizer
 with open("model_registry.json", 'r', encoding='utf-8') as registry_file:
     registry = json.load(registry_file)
 
+# TODO: also check custom registry?
+
 # print(registry)
 
 base_token_names = ["_bos_token", "_eos_token", "_unk_token", "_sep_token", "_pad_token", "_cls_token", "_mask_token"]
@@ -37,8 +39,11 @@ for model_entry in registry:
         tokenizer_data[model_entry['model_name']] = cur_tokenizer_data
         break
 
+# TODO: store tokenizer data to be used as resource?
+
 strings_to_check = ["assistant", "im_end"]
-# string_to_check = "assistant"
+
+# TODO: add argumentParser to make this usable via cli?
 
 for model_name, cur_tokenizer_data in tokenizer_data.items():
     for attribute, value in cur_tokenizer_data.items():
