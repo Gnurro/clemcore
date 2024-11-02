@@ -18,9 +18,9 @@ class AdventureGameInstanceGenerator(GameInstanceGenerator):
         super().__init__(GAME_NAME)
 
     def on_generate(self, raw_adventures_file: str):
-        """
-        Generate both basic and planning variant instances from raw adventures.
-        :param raw_adventures_file: File name of the JSON file containing raw adventures data.
+        """Generate both basic and planning variant instances from raw adventures.
+        Args:
+            raw_adventures_file: File name of the JSON file containing raw adventures data.
         """
         # load generated home_deliver_two adventures:
         adventures = self.load_json(f"resources/{raw_adventures_file}")

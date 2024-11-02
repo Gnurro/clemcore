@@ -30,6 +30,16 @@
     "parameters": "7B"
   },
   {
+    "model_name": "Llama-3.2-11b-Groq",
+    "model_id": "llama-3.2-11b-text-preview",
+    "backend": "openai_compatible"
+  },
+  {
+    "model_name": "Llama-3.2-90b-Groq",
+    "model_id": "llama-3.2-90b-text-preview",
+    "backend": "openai_compatible"
+  },
+  {
     "model_name": "Llama-3-8B-Instruct-Groq",
     "model_id": "llama3-8b-8192",
     "backend": "openai_compatible"
