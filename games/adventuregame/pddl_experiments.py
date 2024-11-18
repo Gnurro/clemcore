@@ -199,5 +199,5 @@ pddl_transformer = PDDLActionTransformer()
 
 action_def = pddl_transformer.transform(parsed_action)
 
-# print(action_def)
+print(action_def)
 

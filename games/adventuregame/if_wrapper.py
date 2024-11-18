@@ -138,6 +138,9 @@ class AdventureIFInterpreter(GameResourceLocator):
         Load and process action types in this adventure.
         Definitions are loaded from external files.
         """
+
+        # TODO: read and parse PDDL action representation
+
         # load action type definitions in game instance:
         action_definitions: list = list()
         for action_def_source in self.game_instance["action_definitions"]:
@@ -577,12 +580,18 @@ class AdventureIFInterpreter(GameResourceLocator):
         """
         # deepcopy the world state to prevent referential interaction:
         prior_world_state = deepcopy(self.world_state)
+
+        # TODO: convert to use PDDL-based action representation
+        # TODO: improve feedback
+        # TODO: align feedback with action parameters, preconditions (and conditional effects?)
+
         # get state changes for current action:
         state_changes = self.action_types[action_dict['type']]['state_changes']
 
         state_changed = False  # main bool controlling final result world state fact set union/removal
         facts_to_remove = list()  # facts to be removed by world state set removal
         facts_to_add = list()  # facts to union with world state fact set
+
         for state_change in state_changes:  # each state-change fact an action can result in is handled individually
             logger.info(f"Checking state change: {state_change}")
             # GO ACTION/ROOM TRAVERSAL
