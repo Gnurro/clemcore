@@ -236,8 +236,10 @@ class HuggingfaceLocalModel(backends.Model):
 
         response = {'response': model_output}
 
+
+
         # handle CoT output:
-        if 'cot_output' in self.model_spec.model_config and self.model_spec.model_config.cot_output:
+        if 'cot_output' in self.model_spec.model_config and self.model_spec.model_config['cot_output']:
             if not 'eos_string' in self.model_spec.model_config:
                 eos_string = self.model.tokenizer_config['eos_token']
             else:
