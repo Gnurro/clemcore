@@ -246,7 +246,7 @@ class HuggingfaceLocalModel(backends.Model):
             print(f"{self.model_spec.model_name} is CoT output model.")
             if not 'eos_string' in self.model_spec.model_config:
                 print("eos_string not in self.model_spec.model_config")
-                eos_string = self.model.tokenizer_config['eos_token']
+                eos_string = self.tokenizer.eos_token
                 print("eos_string assigned from tokenizer config")
             else:
                 eos_string = self.model_spec.model_config['eos_string']
