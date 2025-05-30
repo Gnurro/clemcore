@@ -243,6 +243,7 @@ class HuggingfaceLocalModel(backends.Model):
             else:
                 eos_string = self.model_spec.model_config.eos_string
             logger.info(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
+            print(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
             # check for CoT end:
             cot_end_tag = self.model_spec.model_config.cot_end_tag
             cot_done = False
