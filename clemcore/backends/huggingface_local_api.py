@@ -245,7 +245,9 @@ class HuggingfaceLocalModel(backends.Model):
         if 'cot_output' in self.model_spec.model_config and self.model_spec.model_config['cot_output'] == True:
             print(f"{self.model_spec.model_name} is CoT output model.")
             if not 'eos_string' in self.model_spec.model_config:
+                print("eos_string not in self.model_spec.model_config")
                 eos_string = self.model.tokenizer_config['eos_token']
+                print("eos_string assigned from tokenizer config")
             else:
                 eos_string = self.model_spec.model_config['eos_string']
             logger.info(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
