@@ -236,18 +236,88 @@ class HuggingfaceLocalModel(backends.Model):
 
         response = {'response': model_output}
 
+        # handle CoT output:
+        if hasattr(self.model_spec.model_config, 'cot_output') and self.model_spec.model_config.cot_output:
+            if not 'eos_string' in self.model_spec.model_config:
+                eos_string = self.model.tokenizer_config['eos_token']
+            else:
+                eos_string = self.model_spec.model_config.eos_string
+            logger.info(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
+            # check for CoT end:
+            cot_end_tag = self.model_spec.model_config.cot_end_tag
+            cot_done = False
+            if cot_end_tag in model_output:
+                logger.info(f"CoT end tag {cot_end_tag} in model output, CoT done.")
+                cot_done = True
+            # extra generation count and limit:
+            extra_generation_count = 0
+            if hasattr(self.model_spec.model_config, 'cot_extra_generation_limit') and self.model_spec.model_config.cot_extra_generation_limit:
+                extra_generation_limit = self.model_spec.model_config.cot_extra_generation_limit
+            else:  # default to limit of 50 extra generations:
+                extra_generation_limit = 50
+            eos_generated = False
+            # keep generating until EOS is produced or limit is reached:
+            while not model_output.endswith(eos_string) and extra_generation_count < extra_generation_limit:
+                # concatenate output and remove leading BOS string to prevent BOS stacking:
+                # prompt_text = model_output.replace("<｜begin▁of▁sentence｜>", "")
+                if self.model.tokenizer_config['bos_token']:
+                    if type(self.model.tokenizer_config['bos_token']) == dict:
+                        prompt_text = model_output.replace(self.model.tokenizer_config['bos_token']['content'], "")
+                    elif type(self.model.tokenizer_config['bos_token']) == str:
+                        prompt_text = model_output.replace(self.model.tokenizer_config['bos_token'], "")
+                # tokenize new input context:
+                incomplete_cot_prompt_tokens = self.tokenizer.encode(prompt_text, return_tensors="pt")
+                incomplete_cot_prompt_tokens = incomplete_cot_prompt_tokens.to(self.device)
+                # generate more:
+                if do_sample:
+                    model_output_ids = self.model.generate(
+                        incomplete_cot_prompt_tokens,
+                        temperature=self.get_temperature(),
+                        max_new_tokens=self.get_max_tokens(),
+                        do_sample=do_sample
+                    )
+                else:
+                    model_output_ids = self.model.generate(
+                        incomplete_cot_prompt_tokens,
+                        max_new_tokens=self.get_max_tokens(),
+                        do_sample=do_sample
+                    )
+                model_output = self.tokenizer.batch_decode(model_output_ids)[0]
+                extra_generation_count += 1
+                if cot_end_tag in model_output and not cot_done:
+                    logger.info(
+                        f"CoT end tag {cot_end_tag} in model output, CoT done with {extra_generation_count} extra generations.")
+                    cot_done = True
+                if model_output.endswith(eos_string):
+                    logger.info(f"Model output ends with EOS, extra generations done.")
+                    eos_generated = True
+            if eos_generated:
+                logger.info(f"Generated {extra_generation_count} additional times to reach EOS after CoT.")
+            else:
+                logger.info(
+                    f"Generated {extra_generation_count} additional times without reaching EOS - extra generation limit reached.")
+            # split complete output:
+            cot_split = model_output.rsplit(cot_end_tag, maxsplit=1)
+            cot_content = cot_split[0]
+            result_content = cot_split[1].strip()
+            response['response'] = model_output
+            response['cot_content'] = cot_content
+        else:
+            # assign proper response for non-/CoT:
+            result_content = model_output
+
         # cull input context; equivalent to transformers.pipeline method:
         if not return_full_text:
-            response_text = model_output.replace(prompt_text, '').strip()
+            response_text = result_content.replace(prompt_text, '').strip()
 
             if 'output_split_prefix' in self.model_spec.model_config:
-                response_text = model_output.rsplit(self.model_spec['model_config']['output_split_prefix'], maxsplit=1)[1]
+                response_text = result_content.rsplit(self.model_spec['model_config']['output_split_prefix'], maxsplit=1)[1]
 
             # remove eos token string:
             eos_to_cull = self.model_spec['model_config']['eos_to_cull']
             response_text = re.sub(eos_to_cull, "", response_text)
         else:
-            response_text = model_output.strip()
+            response_text = result_content.strip()
 
         if log_messages:
             logger.info(f"Response message: {response_text}")
