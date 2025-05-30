@@ -269,11 +269,11 @@ class HuggingfaceLocalModel(backends.Model):
             while not model_output.endswith(eos_string) and extra_generation_count < extra_generation_limit:
                 # concatenate output and remove leading BOS string to prevent BOS stacking:
                 # prompt_text = model_output.replace("<｜begin▁of▁sentence｜>", "")
-                if self.model.tokenizer_config['bos_token']:
-                    if type(self.model.tokenizer_config['bos_token']) == dict:
-                        prompt_text = model_output.replace(self.model.tokenizer_config['bos_token']['content'], "")
-                    elif type(self.model.tokenizer_config['bos_token']) == str:
-                        prompt_text = model_output.replace(self.model.tokenizer_config['bos_token'], "")
+                if self.tokenizer.bos_token:
+                    if type(self.tokenizer.bos_token) == dict:
+                        prompt_text = model_output.replace(self.tokenizer.bos_token['content'], "")
+                    elif type(self.tokenizer.bos_token) == str:
+                        prompt_text = model_output.replace(self.tokenizer.bos_token, "")
                 # tokenize new input context:
                 incomplete_cot_prompt_tokens = self.tokenizer.encode(prompt_text, return_tensors="pt")
                 incomplete_cot_prompt_tokens = incomplete_cot_prompt_tokens.to(self.device)
