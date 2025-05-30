@@ -236,26 +236,23 @@ class HuggingfaceLocalModel(backends.Model):
 
         response = {'response': model_output}
 
-        print("self.model_spec.model_config:", self.model_spec.model_config)
-        print("self.model_spec.model_config type:", type(self.model_spec.model_config))
-
         # handle CoT output:
-        if hasattr(self.model_spec.model_config, 'cot_output') and self.model_spec.model_config.cot_output:
+        if 'cot_output' in self.model_spec.model_config and self.model_spec.model_config.cot_output:
             if not 'eos_string' in self.model_spec.model_config:
                 eos_string = self.model.tokenizer_config['eos_token']
             else:
-                eos_string = self.model_spec.model_config.eos_string
+                eos_string = self.model_spec.model_config['eos_string']
             logger.info(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
             print(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
             # check for CoT end:
-            cot_end_tag = self.model_spec.model_config.cot_end_tag
+            cot_end_tag = self.model_spec.model_config['cot_end_tag']
             cot_done = False
             if cot_end_tag in model_output:
                 logger.info(f"CoT end tag {cot_end_tag} in model output, CoT done.")
                 cot_done = True
             # extra generation count and limit:
             extra_generation_count = 0
-            if hasattr(self.model_spec.model_config, 'cot_extra_generation_limit') and self.model_spec.model_config.cot_extra_generation_limit:
+            if 'cot_extra_generation_limit' in self.model_spec.model_config and self.model_spec.model_config['cot_extra_generation_limit']:
                 extra_generation_limit = self.model_spec.model_config.cot_extra_generation_limit
             else:  # default to limit of 50 extra generations:
                 extra_generation_limit = 50
@@ -318,7 +315,7 @@ class HuggingfaceLocalModel(backends.Model):
                 response_text = result_content.rsplit(self.model_spec['model_config']['output_split_prefix'], maxsplit=1)[1]
 
             # remove eos token string:
-            eos_to_cull = self.model_spec['model_config']['eos_to_cull']
+            eos_to_cull = self.model_spec.model_config['eos_to_cull']
             response_text = re.sub(eos_to_cull, "", response_text)
         else:
             response_text = result_content.strip()
