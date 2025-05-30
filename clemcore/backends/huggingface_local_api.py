@@ -236,6 +236,8 @@ class HuggingfaceLocalModel(backends.Model):
 
         response = {'response': model_output}
 
+        print("TEST TEST TEST")
+
         # handle CoT output:
         if hasattr(self.model_spec.model_config, 'cot_output') and self.model_spec.model_config.cot_output:
             if not 'eos_string' in self.model_spec.model_config:
