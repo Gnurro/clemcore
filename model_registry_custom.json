@@ -1,0 +1,44 @@
+[
+  {
+    "model_name": "QwQ-32B",
+    "backend": "huggingface_local",
+    "huggingface_id": "Qwen/QwQ-32B",
+    "model_config": {
+      "premade_chat_template": true,
+      "eos_to_cull": "<\\|im_end\\|>",
+      "cot_output": true,
+      "cot_end_tag": "</think>"
+    },
+    "release_date": "2025-03-05",
+    "open_weight": true,
+    "parameters": "32B"
+  },
+  {
+    "model_name": "DeepSeek-R1-0528-Qwen3-8B",
+    "backend": "huggingface_local",
+    "huggingface_id": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+    "model_config": {
+      "premade_chat_template": true,
+      "eos_to_cull": "<｜end▁of▁sentence｜>",
+      "cot_output": true,
+      "cot_end_tag": "</think>"
+    },
+    "release_date": "2025-05-29",
+    "open_weight": true,
+    "parameters": "8B"
+  },
+  {
+    "model_name": "deepseek-llm-7b-chat",
+    "backend": "huggingface_local",
+    "huggingface_id": "deepseek-ai/deepseek-llm-7b-chat",
+    "model_config": {
+      "premade_chat_template": true,
+      "eos_to_cull": "<｜end▁of▁sentence｜>",
+      "cot_output": true,
+      "cot_end_tag": "</think>"
+    },
+    "release_date": "2025-05-29",
+    "open_weight": true,
+    "parameters": "7B"
+  }
+]
