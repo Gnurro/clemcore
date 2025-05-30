@@ -236,7 +236,8 @@ class HuggingfaceLocalModel(backends.Model):
 
         response = {'response': model_output}
 
-        print("TEST TEST TEST")
+        print("self.model_spec.model_config:", self.model_spec.model_config)
+        print("self.model_spec.model_config type:", type(self.model_spec.model_config))
 
         # handle CoT output:
         if hasattr(self.model_spec.model_config, 'cot_output') and self.model_spec.model_config.cot_output:
