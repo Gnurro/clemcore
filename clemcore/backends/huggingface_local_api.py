@@ -292,6 +292,7 @@ class HuggingfaceLocalModel(backends.Model):
                         do_sample=do_sample
                     )
                 model_output = self.tokenizer.batch_decode(model_output_ids)[0]
+                print("incomplete CoT output:\n", model_output)
                 extra_generation_count += 1
                 if cot_end_tag in model_output and not cot_done:
                     logger.info(
@@ -305,6 +306,7 @@ class HuggingfaceLocalModel(backends.Model):
             else:
                 logger.info(
                     f"Generated {extra_generation_count} additional times without reaching EOS - extra generation limit reached.")
+            # TODO: catch not generating cot_end_tag
             # split complete output:
             cot_split = model_output.rsplit(cot_end_tag, maxsplit=1)
             cot_content = cot_split[0]
