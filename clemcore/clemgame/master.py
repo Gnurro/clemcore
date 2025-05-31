@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple, Any, Union, final, Optional
 
 from clemcore import backends
 from clemcore.clemgame.environment import Action, GameEnvironment
-from clemcore.clemgame.player import Player
+from clemcore.clemgame.player import Player, ReasoningPlayer
 from clemcore.clemgame.recorder import NoopGameRecorder
 from clemcore.clemgame.resources import GameResourceLocator
 from clemcore.utils.string_utils import to_pretty_json
