@@ -274,6 +274,8 @@ class HuggingfaceLocalModel(backends.Model):
                         prompt_text = model_output.replace(self.tokenizer.bos_token['content'], "")
                     elif type(self.tokenizer.bos_token) == str:
                         prompt_text = model_output.replace(self.tokenizer.bos_token, "")
+                else:
+                    prompt_text = model_output
                 # tokenize new input context:
                 incomplete_cot_prompt_tokens = self.tokenizer.encode(prompt_text, return_tensors="pt")
                 incomplete_cot_prompt_tokens = incomplete_cot_prompt_tokens.to(self.device)
@@ -292,7 +294,7 @@ class HuggingfaceLocalModel(backends.Model):
                         do_sample=do_sample
                     )
                 model_output = self.tokenizer.batch_decode(model_output_ids)[0]
-                print("incomplete CoT output:\n", model_output)
+                print("\nincomplete CoT output:\n", model_output)
                 extra_generation_count += 1
                 if cot_end_tag in model_output and not cot_done:
                     logger.info(
