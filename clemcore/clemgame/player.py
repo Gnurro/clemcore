@@ -246,6 +246,13 @@ class ReasoningPlayer(Player):
     - human players are called via the _terminal_response() method
     - backend players are called via the generate_response() method of a backend
     """
+    def __init__(self, model: backends.Model, name: str = None, game_role: str = None,
+                 game_recorder: GameRecorder = None, initial_prompt: Union[str, Dict] = None,
+                 forget_extras: List[str] = None):
+        super().__init__(model = model, name = name, game_role = game_role,
+                 game_recorder = game_recorder, initial_prompt = initial_prompt,
+                 forget_extras = forget_extras)
+
     def __call__(self, context: Dict, memorize: bool = True) -> str:
         """
         Let the player respond (act verbally) to a given context.
@@ -311,3 +318,15 @@ class ReasoningPlayer(Player):
             "model_name": self.model.get_name()
         }
         return prompt, response_object, response_text
+
+    @abc.abstractmethod
+    def _custom_response(self, context: Dict) -> str:
+        """Response for programmatic Player interaction.
+
+        Overwrite this method to implement programmatic behavior (model_name: mock, dry_run, programmatic, custom).
+        Args:
+            context: The dialogue context to which the player should respond.
+        Returns:
+            The programmatic response as text.
+        """
+        pass
