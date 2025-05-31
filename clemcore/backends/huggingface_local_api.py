@@ -236,22 +236,13 @@ class HuggingfaceLocalModel(backends.Model):
 
         response = {'response': model_output}
 
-        print("self.model_spec.model_config:", self.model_spec.model_config)
-        print("self.model_spec.model_config type:", type(self.model_spec.model_config))
-        print("self.model_spec.model_config['cot_output']:", self.model_spec.model_config['cot_output'])
-        # print("self.model_spec.model_config.cot_output:", self.model_spec.model_config.cot_output)
-
         # handle CoT output:
         if 'cot_output' in self.model_spec.model_config and self.model_spec.model_config['cot_output'] == True:
-            print(f"{self.model_spec.model_name} is CoT output model.")
             if not 'eos_string' in self.model_spec.model_config:
-                print("eos_string not in self.model_spec.model_config")
                 eos_string = self.tokenizer.eos_token
-                print("eos_string assigned from tokenizer config")
             else:
                 eos_string = self.model_spec.model_config['eos_string']
             logger.info(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
-            print(f"{self.model_spec.model_name} is CoT output model, keep generating until EOS '{eos_string}'.")
             # check for CoT end:
             cot_end_tag = self.model_spec.model_config['cot_end_tag']
             cot_done = False
@@ -294,7 +285,6 @@ class HuggingfaceLocalModel(backends.Model):
                         do_sample=do_sample
                     )
                 model_output = self.tokenizer.batch_decode(model_output_ids)[0]
-                print("\nincomplete CoT output:\n", model_output)
                 extra_generation_count += 1
                 if cot_end_tag in model_output and not cot_done:
                     logger.info(
@@ -308,13 +298,12 @@ class HuggingfaceLocalModel(backends.Model):
             else:
                 logger.info(
                     f"Generated {extra_generation_count} additional times without reaching EOS - extra generation limit reached.")
-            # TODO: catch not generating cot_end_tag
             # split complete output:
             cot_split = model_output.rsplit(cot_end_tag, maxsplit=1)
             cot_content = cot_split[0]
             result_content = cot_split[1].strip()
             response['response'] = model_output
-            response['cot_content'] = cot_content
+            response['reasoning'] = cot_content
         else:
             # assign proper response for non-/CoT:
             result_content = model_output

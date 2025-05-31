@@ -235,3 +235,79 @@ class Player(abc.ABC):
             The programmatic response as text.
         """
         pass
+
+
+class ReasoningPlayer(Player):
+    """A participant of a game, extended to handle reasoning/CoT model outputs.
+
+    A player can respond via a custom implementation, human input or a language model:
+
+    - programmatic players are called via the _custom_response() method
+    - human players are called via the _terminal_response() method
+    - backend players are called via the generate_response() method of a backend
+    """
+    def __call__(self, context: Dict, memorize: bool = True) -> str:
+        """
+        Let the player respond (act verbally) to a given context.
+
+        Args:
+            context: The context to which the player should respond.
+            memorize: Whether the context and response are to be added to the player's message history.
+        Returns:
+            The textual response.
+        """
+        assert context["role"] == "user", f"The context must be given by the user role, but is {context['role']}"
+        memorized_initial_prompt = None
+        # handle initial/first call, with only the initial prompt user message in history:
+        if self._is_initial_call and self._initial_prompt is not None:
+            assert len(self._messages) == 0, ("There must be no entry in the player's message history "
+                                              "on the first call, when the initial prompt is set.")
+            memorized_initial_prompt = deepcopy(self._initial_prompt)  # see explanation below
+            self._messages.append(memorized_initial_prompt)  # merged with context in ensure_alternating_roles (backend)
+            self.__log_send_context_event(memorized_initial_prompt["content"], label="initial prompt")
+
+        self._last_context = deepcopy(context)
+
+        self.__log_send_context_event(context["content"], label="context" if memorize else "forget")
+        self._prompt, self._response_object, response_text = self.__call_model(context)
+        self.__log_response_received_event(self._response_object['reasoning'], label="reasoning" if memorize else "forget")
+        self.__log_response_received_event(response_text, label="response" if memorize else "forget")
+
+        # Copy context, so that original context given to the player is kept on forget extras. This is, for
+        # example, necessary to collect the original contexts in the rollout buffer for playpen training.
+        memorized_context = deepcopy(context)
+        # forget must happen only after the model has been called with the extras
+        # we forget extras here in any case, so that the prompt is also handled
+        for extra in self._forget_extras:
+            if extra in memorized_context:
+                del memorized_context[extra]
+            if memorized_initial_prompt is not None and extra in memorized_initial_prompt:
+                del memorized_initial_prompt[extra]
+
+        if memorize:
+            self._messages.append(memorized_context)
+            self._messages.append(dict(role="assistant", content=response_text))
+
+        self._is_initial_call = False
+        return response_text
+
+    def __call_model(self, context: Dict):
+        call_start = datetime.now()
+        response_object = dict()
+        prompt = context
+        if isinstance(self.model, backends.CustomResponseModel):
+            response_text = self._custom_response(context)
+        elif isinstance(self.model, backends.HumanModel):
+            response_text = self._terminal_response(context)
+        else:
+            prompt, response_object, response_text = self.model.generate_response(self._messages + [context])
+        call_duration = datetime.now() - call_start
+        self._game_recorder.count_request()
+        response_object["clem_player"] = {
+            "call_start": str(call_start),
+            "call_duration": str(call_duration),
+            "response": response_text,
+            "reasoning": response_object['reasoning'],
+            "model_name": self.model.get_name()
+        }
+        return prompt, response_object, response_text
