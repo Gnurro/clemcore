@@ -8,7 +8,7 @@ from typing import List, Dict, Tuple, Any, Union, final, Optional
 from clemcore import backends
 from clemcore.clemgame.environment import Action, GameEnvironment
 from clemcore.clemgame.registry import GameSpec
-from clemcore.clemgame.player import Player
+from clemcore.clemgame.player import Player, ReasoningPlayer
 from clemcore.clemgame.recorder import NoopGameRecorder
 from clemcore.clemgame.resources import GameResourceLocator
 from clemcore.utils.string_utils import to_pretty_json
@@ -77,25 +77,19 @@ class NotApplicableError(GameError):
 class GameMaster(abc.ABC):
     """Base class to contain game-specific functionality."""
 
-    def __init__(self, game_spec: GameSpec, experiment: Dict, player_models: List[backends.Model]):
+    def __init__(self, name: str, path: str, experiment: Dict, player_models: List[backends.Model]):
         """
         Args:
-            game_spec: the game specifications for this game as given in the clemgame.json file
+            name: The name of the game (as specified in game_registry).
+            path: Path to the game (as specified in game_registry).
             experiment: The parameter of the experiment, that is, parameters that are the same for all game instances.
             player_models: Player models to use for one or two players.
         """
-        self.game_spec = game_spec
+        self.game_name = name
         self.experiment: Dict = experiment
-        # Automatic player expansion: When only a single model is given, then use this model given for each game role.
-        if len(player_models) == 1 and game_spec.players > 1:
-            player_models = [player_models[0]] * game_spec.players  # keeps original list untouched
-        if len(player_models) != game_spec.players:
-            raise ValueError(f"{game_spec.game_name} requires {game_spec.players} players, "
-                             f"but {len(player_models)} were given: {[m.model_name for m in player_models]}")
         self.player_models: List[backends.Model] = player_models
         self._game_recorder = NoopGameRecorder()
-        # Note: Using GameResourceLocator could be obsolete, when all necessary info is in the instances file.
-        self.game_resources = GameResourceLocator(game_spec.game_name, game_spec.game_path)
+        self.game_resources = GameResourceLocator(name, path)  # could be obsolete, when all info is in the instances
 
     @property
     def game_recorder(self):
@@ -156,7 +150,7 @@ class DialogueGameMaster(GameMaster):
     Has most logging and gameplay procedures implemented, including convenient logging methods.
     """
 
-    def __init__(self, game_spec: GameSpec, experiment: dict, player_models: List[backends.Model]):
+    def __init__(self, name: str, path: str, experiment: dict, player_models: List[backends.Model]):
         """
         Args:
             name: The name of the game (as specified in game_registry).
@@ -164,7 +158,7 @@ class DialogueGameMaster(GameMaster):
             experiment: The experiment (set of instances) to use.
             player_models: Player models to use for one or two players.
         """
-        super().__init__(game_spec, experiment, player_models)
+        super().__init__(name, path, experiment, player_models)
         # the logging works with an internal mapping of "Player N" -> Player
         self.players_by_names: Dict[str, Player] = collections.OrderedDict()
         self.context_for_player: Dict[str, Dict] = dict()  # context entries look like {"role":"user", "content": ...}
@@ -317,16 +311,15 @@ class DialogueGameMaster(GameMaster):
         # determine if the current player should pass the turn to the next player or get another turn:
         if self._should_pass_turn():  # True = move on to next player
             self._current_player = self._next_player()
-
-        if self._start_next_round():
-            self._on_after_round()
-            self.current_round += 1  # already increment here b.c. _does_game_proceed might rely on it
+            if self._start_next_round():
+                self._on_after_round()
+                self.current_round += 1
 
         done = not self._does_game_proceed()
         if done:
             self._on_after_game()
             self.info["episode_score"] = self.compute_episode_score()
-        elif self._start_next_round():  # prepare next round only when game has not ended yet
+        elif self._start_next_round():
             self.__prepare_next_round()
 
         info = deepcopy(self.info)
@@ -490,7 +483,8 @@ class EnvGameMaster(GameMaster):
 
     def __init__(
         self,
-        game_spec: GameSpec,
+        name: str,
+        path: str,
         experiment: dict,
         player_models: List[backends.Model],
         game_environment: GameEnvironment,
@@ -503,7 +497,7 @@ class EnvGameMaster(GameMaster):
             player_models: Player models to use for one or two players.
             game_environment: The environment that maintains the game state.
         """
-        super().__init__(game_spec, experiment, player_models)
+        super().__init__(name, path, experiment, player_models)
         self.game_environment = game_environment
 
         # set players
