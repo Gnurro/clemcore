@@ -253,6 +253,20 @@ class ReasoningPlayer(Player):
                  game_recorder = game_recorder, initial_prompt = initial_prompt,
                  forget_extras = forget_extras)
 
+    def __log_send_context_event(self, content: str, label=None):
+        """Record a 'send message' event with the current message content."""
+        assert self._game_recorder is not None, "Cannot log player event, because game_recorder has not been set"
+        action = {'type': 'send message', 'content': content, 'label': label}
+        self._game_recorder.log_event(from_='GM', to=self.name, action=action)
+
+    def __log_response_received_event(self, response, label=None):
+        """Record a 'get message' event with the current response content."""
+        assert self._game_recorder is not None, "Cannot log player event, because game_recorder has not been set"
+        action = {'type': 'get message', 'content': response, 'label': label}
+        _prompt, _response = self.get_last_call_info()  # log 'get message' event including backend/API call
+        self._game_recorder.log_event(from_=self.name, to="GM", action=action,
+                                      call=(deepcopy(_prompt), deepcopy(_response)))
+
     def __call__(self, context: Dict, memorize: bool = True) -> str:
         """
         Let the player respond (act verbally) to a given context.
