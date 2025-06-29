@@ -166,6 +166,9 @@ class HuggingfaceLocalModel(backends.Model):
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
+        if 'cot_custom' in self.model_spec.model_config:
+            self.custom_cot = self.model_spec.model_config['cot_custom']
+
     def generate_response(self, messages: List[Dict],
                           return_full_text: bool = False,
                           log_messages: bool = False) -> Tuple[Any, Any, str]:
@@ -193,9 +196,20 @@ class HuggingfaceLocalModel(backends.Model):
         if log_messages:
             logger.info(f"Flattened messages: {current_messages}")
 
-        # apply chat template & tokenize:
-        prompt_tokens = self.tokenizer.apply_chat_template(current_messages, add_generation_prompt=True,
-                                                           return_tensors="pt")
+        if self.custom_cot:
+            # insert custom CoT prompt at start of last message:
+            messages.append({"role": "assistant", "content": self.model_spec.model_config['cot_custom_prompt']})
+            # apply chat template using last message with custom CoT prompt and tokenize:
+            prompt_tokens = self.tokenizer.apply_chat_template(current_messages, continue_final_message=True,
+                                                               return_tensors="pt")
+            # continue_final_message=True leaves the final message open, only applying the message start tokens/tags,
+            # but NOT adding EOS/end-of-message tokens at the end,
+            # leading to the model's response starting after the custom CoT prompt
+        else:
+            # apply chat template & tokenize:
+            prompt_tokens = self.tokenizer.apply_chat_template(current_messages, add_generation_prompt=True,
+                                                               return_tensors="pt")
+
         prompt_tokens = prompt_tokens.to(self.device)
 
         prompt_text = self.tokenizer.batch_decode(prompt_tokens)[0]
@@ -301,6 +315,9 @@ class HuggingfaceLocalModel(backends.Model):
             # split complete output:
             cot_split = model_output.rsplit(cot_end_tag, maxsplit=1)
             cot_content = cot_split[0]
+            if self.custom_cot:
+                # cull custom CoT prompt:
+                cot_content.replace(self.model_spec.model_config['cot_custom_prompt'], "")
             result_content = cot_split[1].strip()
             response['response'] = model_output
             response['reasoning'] = cot_content

@@ -19,7 +19,7 @@ class Player(abc.ABC):
 
     def __init__(self, model: backends.Model, name: str = None, game_role: str = None,
                  game_recorder: GameRecorder = None, initial_prompt: Union[str, Dict] = None,
-                 forget_extras: List[str] = None):
+                 forget_extras: List[str] = None, reasoning_interactions: bool = False):
         """
         Args:
             model: The model used by this player.
@@ -36,6 +36,8 @@ class Player(abc.ABC):
             forget_extras: A list of context entries (keys) to forget after response generation.
                            This is useful to not keep image extras in the player's message history,
                            but still to prompt the model with an image given in the context.
+            reasoning_interactions: If this True, CoT/reasoning model outputs are recorded in the interactions log, so
+                                    they will be accessible for scoring and the like, as well as show up in transcripts.
         """
         self._model: backends.Model = model
         self._name: str = name  # set by master
@@ -48,6 +50,11 @@ class Player(abc.ABC):
         self._prompt = None  # internal state
         self._response_object = None  # internal state
         self._last_context = None  # internal state
+        # CoT output handling:
+        self.cot_output: bool = False
+        if 'cot_output' in self.model.model_spec.model_config:
+            self.cot_output = self.model.model_spec.model_config['cot_output']
+        self.reasoning_interactions = reasoning_interactions
 
     def __deepcopy__(self, memo):
         """Deepcopy override method.
@@ -168,6 +175,9 @@ class Player(abc.ABC):
 
         self.__log_send_context_event(context["content"], label="context" if memorize else "forget")
         self._prompt, self._response_object, response_text = self.__call_model(context)
+        if self.cot_output and self.reasoning_interactions:
+            self.__log_response_received_event(self._response_object['reasoning'],
+                                               label="reasoning" if memorize else "forget")
         self.__log_response_received_event(response_text, label="response" if memorize else "forget")
 
         # Copy context, so that original context given to the player is kept on forget extras. This is, for
@@ -201,12 +211,24 @@ class Player(abc.ABC):
             # TODO: add default ContextExceededError handling here or above
         call_duration = datetime.now() - call_start
         self._game_recorder.count_request()
-        response_object["clem_player"] = {
-            "call_start": str(call_start),
-            "call_duration": str(call_duration),
-            "response": response_text,
-            "model_name": self.model.get_name()
-        }
+
+        # CoT models return separate 'reasoning' value, to be recorded in requests log:
+        if self.cot_output:
+            response_object["clem_player"] = {
+                "call_start": str(call_start),
+                "call_duration": str(call_duration),
+                "response": response_text,
+                "reasoning": response_object['reasoning'],
+                "model_name": self.model.get_name()
+            }
+        else:
+            response_object["clem_player"] = {
+                "call_start": str(call_start),
+                "call_duration": str(call_duration),
+                "response": response_text,
+                "model_name": self.model.get_name()
+            }
+
         return prompt, response_object, response_text
 
     def _terminal_response(self, context: Dict) -> str:
@@ -238,7 +260,7 @@ class Player(abc.ABC):
 
 
 class ReasoningPlayer(Player):
-    """A participant of a game, extended to handle reasoning/CoT model outputs.
+    """A participant of a game, extended to integrate custom reasoning/CoT.
 
     A player can respond via a custom implementation, human input or a language model:
 
@@ -248,10 +270,26 @@ class ReasoningPlayer(Player):
     """
     def __init__(self, model: backends.Model, name: str = None, game_role: str = None,
                  game_recorder: GameRecorder = None, initial_prompt: Union[str, Dict] = None,
-                 forget_extras: List[str] = None):
+                 forget_extras: List[str] = None, reasoning_interactions: bool = True,
+                 cot_start_tag: str = "<think>", cot_end_tag: str = "</think>",
+                 cot_prompt: str = ("Let's think step by step. The thinking process starts with COT_START_TAG"
+                                    "and ends with COT_END_TAG.COT_START_TAG")):
         super().__init__(model = model, name = name, game_role = game_role,
                  game_recorder = game_recorder, initial_prompt = initial_prompt,
-                 forget_extras = forget_extras)
+                 forget_extras = forget_extras, reasoning_interactions = reasoning_interactions)
+        # set up CoT delimiters and prompting:
+        self.cot_start_tag: str = cot_start_tag
+        self.cot_end_tag: str = cot_end_tag
+        self.cot_prompt: str = (cot_prompt
+                                .replace("COT_START_TAG", self.cot_start_tag)
+                                .replace("COT_END_TAG", self.cot_end_tag))
+        # apply CoT settings to the model's model config:
+        # this is required to tell the backends how to handle custom CoT
+        # as the backends only check the model spec/config and not the Player
+        self.model.model_spec.model_config['cot_output'] = True
+        self.model.model_spec.model_config['cot_end_tag'] = self.cot_end_tag
+        self.model.model_spec.model_config['cot_custom'] = True
+        self.model.model_spec.model_config['cot_custom_prompt'] = self.cot_prompt
 
     def __log_send_context_event(self, content: str, label=None):
         """Record a 'send message' event with the current message content."""
@@ -291,7 +329,8 @@ class ReasoningPlayer(Player):
 
         self.__log_send_context_event(context["content"], label="context" if memorize else "forget")
         self._prompt, self._response_object, response_text = self.__call_model(context)
-        self.__log_response_received_event(self._response_object['reasoning'], label="reasoning" if memorize else "forget")
+        if self.reasoning_interactions:
+            self.__log_response_received_event(self._response_object['reasoning'], label="reasoning" if memorize else "forget")
         self.__log_response_received_event(response_text, label="response" if memorize else "forget")
 
         # Copy context, so that original context given to the player is kept on forget extras. This is, for
