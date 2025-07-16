@@ -227,24 +227,13 @@ class HuggingfaceLocalModel(backends.Model):
                                                 tokens_used=context_check[1], tokens_left=context_check[2],
                                                 context_size=context_check[3])
 
-        # greedy decoding:
-        do_sample: bool = False
+        # by default assume greedy decoding (set values to None to avoid warnings)
+        gen_args = dict(do_sample=False, temperature=None, top_p=None, max_new_tokens=self.max_tokens)
         if self.temperature > 0.0:
-            do_sample = True
-
-        if do_sample:
-            model_output_ids = self.model.generate(
-                prompt_tokens,
-                temperature=self.temperature,
-                max_new_tokens=self.max_tokens,
-                do_sample=do_sample
-            )
-        else:
-            model_output_ids = self.model.generate(
-                prompt_tokens,
-                max_new_tokens=self.max_tokens,
-                do_sample=do_sample
-            )
+            gen_args["do_sample"] = True
+            gen_args["top_p"] = getattr(self.model.generation_config, "top_p", None)
+            gen_args["temperature"] = self.temperature
+        model_output_ids = self.model.generate(prompt_tokens, **gen_args)
 
         model_output = self.tokenizer.batch_decode(model_output_ids)[0]
 
