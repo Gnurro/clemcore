@@ -132,6 +132,7 @@ def load_model(model_spec: backends.ModelSpec) -> Any:
 
 class HuggingfaceLocal(backends.Backend):
     """Model/backend handler class for locally-run Huggingface models."""
+
     def __init__(self):
         super().__init__()
 
@@ -149,6 +150,7 @@ class HuggingfaceLocal(backends.Backend):
 
 class HuggingfaceLocalModel(backends.Model):
     """Class for loaded HuggingFace transformers models ready for generation."""
+
     def __init__(self, model_spec: backends.ModelSpec):
         """
         Args:
@@ -205,15 +207,16 @@ class HuggingfaceLocalModel(backends.Model):
             # the chat template and then use the tokenizer to receive the proper masks, also feasible for batches.
             rendered_chat: str = self.tokenizer.apply_chat_template(messages, add_generation_prompt=True,
                                                                     tokenize=False)
-        encoding_dict = self.tokenizer(rendered_chat, return_tensors="pt", padding=True, return_attention_mask=True)
+        # The rendered chat (with system message already removed before) will, for example, look like:
+        # <|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\nWho won the world series in 2020?<|eot_id|>
+        # Followed by the added generation prompt: <|start_header_id|>assistant<|end_header_id|>\n\n
+        encoding_dict = self.tokenizer(rendered_chat,
+                                       add_special_tokens=False,  # <|begin_of_text|> already added above
+                                       return_tensors="pt",
+                                       padding=True, # pad to the longest sequence (necessary for batching)
+                                       return_attention_mask=True) # with 1's up to sample length, followed by 0's
         prompt_token_ids: torch.Tensor = encoding_dict["input_ids"].to(self.device)
         attention_mask: torch.Tensor = encoding_dict["attention_mask"].to(self.device)
-
-        prompt_tokens = prompt_tokens.to(self.device)
-
-        prompt_text = self.tokenizer.batch_decode(prompt_tokens)[0]
-        prompt = {"inputs": prompt_text, "max_new_tokens": self.max_tokens,
-                  "temperature": self.temperature, "return_full_text": return_full_text}
 
         # check context limit:
         context_check = _check_context_limit(self.context_size, prompt_token_ids[0],
@@ -229,8 +232,8 @@ class HuggingfaceLocalModel(backends.Model):
         # by default assume greedy decoding (set values to None to avoid warnings)
         gen_args = {
             "do_sample": False,
-            "temperature": None,
-            "top_p": None,
+            "temperature": None,  # avoid warning
+            "top_p": None,  # avoid warning
             "max_new_tokens": self.max_tokens,
             "attention_mask": attention_mask
         }
