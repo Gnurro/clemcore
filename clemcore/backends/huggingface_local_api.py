@@ -336,7 +336,7 @@ class HuggingfaceLocalModel(backends.Model):
 
         prompt = {"inputs": prompt_text, "max_new_tokens": self.max_tokens,
                   "temperature": self.temperature, "return_full_text": return_full_text}
-        response = {'response': model_output}
+        # response = {'response': model_output}
         return prompt, response, response_text
 
 
