@@ -192,7 +192,9 @@ class HuggingfaceLocalModel(backends.Model):
             messages.append({"role": "assistant", "content": self.model_spec.model_config['cot_custom_prompt']})
             # apply chat template using last message with custom CoT prompt and tokenize:
             prompt_tokens = self.tokenizer.apply_chat_template(messages, continue_final_message=True,
-                                                               return_tensors="pt")
+                                                               tokenize=False,
+                                                               # return_tensors="pt"
+                                                               )
             # continue_final_message=True leaves the final message open, only applying the message start tokens/tags,
             # but NOT adding EOS/end-of-message tokens at the end,
             # leading to the model's response starting after the custom CoT prompt
