@@ -283,18 +283,18 @@ class HuggingfaceLocalModel(backends.Model):
                 incomplete_cot_prompt_tokens = self.tokenizer.encode(prompt_text, return_tensors="pt")
                 incomplete_cot_prompt_tokens = incomplete_cot_prompt_tokens.to(self.device)
                 # generate more:
-                if do_sample:
+                if gen_args['do_sample']:
                     model_output_ids = self.model.generate(
                         incomplete_cot_prompt_tokens,
-                        temperature=self.get_temperature(),
-                        max_new_tokens=self.get_max_tokens(),
-                        do_sample=do_sample
+                        temperature=self.temperature,
+                        max_new_tokens=self.max_tokens,
+                        do_sample=gen_args['do_sample']
                     )
                 else:
                     model_output_ids = self.model.generate(
                         incomplete_cot_prompt_tokens,
-                        max_new_tokens=self.get_max_tokens(),
-                        do_sample=do_sample
+                        max_new_tokens=self.max_tokens,
+                        do_sample=gen_args['do_sample']
                     )
                 model_output = self.tokenizer.batch_decode(model_output_ids)[0]
                 extra_generation_count += 1
