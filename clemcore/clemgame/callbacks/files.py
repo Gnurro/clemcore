@@ -4,13 +4,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, TYPE_CHECKING
 
+from clemcore import get_version
+
 if TYPE_CHECKING:  # to satisfy pycharm
-    from clemcore.clemgame import GameMaster
+    from clemcore.clemgame import GameMaster, GameBenchmark
 
 from clemcore.backends import Model
 from clemcore.clemgame.recorder import GameInteractionsRecorder
 from clemcore.clemgame.callbacks.base import GameBenchmarkCallback
-from clemcore.clemgame.resources import store_json
+from clemcore.clemgame.resources import store_json, load_json
 
 
 def to_model_results_folder(player_models: List[Model]):
@@ -69,6 +71,46 @@ class ResultsFolder:
     @staticmethod
     def to_instance_dir(game_instance: Dict) -> str:
         return f"instance_{game_instance['game_id']:05d}"
+
+
+class RunFileSaver(GameBenchmarkCallback):
+
+    def __init__(self, result_dir_path: Path, player_models: List[Model]):
+        self.results_folder = ResultsFolder(result_dir_path, player_models)
+        self.game_info = None
+        self.benchmark_start = None
+        self.num_instances = 0
+        self.data = dict(clem_version=get_version(),
+                         created=datetime.now().isoformat(),
+                         player_models=Model.to_infos(player_models),
+                         games={})
+
+        model_dir_path = self.results_folder.to_models_dir_path()
+        run_file_path = Path(model_dir_path / "run.json")
+        if run_file_path.exists():
+            self.data = load_json(str(run_file_path))  # keep already stored values
+        else:
+            store_json(self.data, "run.json", model_dir_path)  # create file
+
+    def on_benchmark_start(self, game_benchmark: "GameBenchmark"):
+        self.benchmark_start = datetime.now()
+        self.game_info = dict(game_path=game_benchmark.game_path, benchmark_start=self.benchmark_start.isoformat())
+        self.data["games"][game_benchmark.game_name] = self.game_info
+        store_json(self.data, "run.json", self.results_folder.to_models_dir_path())  # overwrite
+
+    def on_game_start(self, game_master: "GameMaster", game_instance: Dict):
+        self.num_instances += 1  # the instance iterator is not necessarily yet initialized, so we count here
+
+    def on_benchmark_end(self, game_benchmark: "GameBenchmark"):
+        benchmark_end = datetime.now()
+        benchmark_duration = benchmark_end - self.benchmark_start
+        self.game_info["benchmark_end"] = benchmark_end.isoformat()
+        self.game_info["duration"] = str(benchmark_duration)
+        self.game_info["duration_seconds"] = benchmark_duration.total_seconds()
+        self.game_info["num_instances"] = self.num_instances
+        store_json(self.data, "run.json", self.results_folder.to_models_dir_path())  # overwrite
+        self.num_instances = 0
+        self.game_info = None
 
 
 class InstanceFileSaver(GameBenchmarkCallback):

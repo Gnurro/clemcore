@@ -9,7 +9,7 @@ from typing import List, Dict, Union, Callable, Optional
 import clemcore.backends as backends
 from clemcore.backends import ModelRegistry, BackendRegistry
 from clemcore.clemgame import GameRegistry, GameSpec, InstanceFileSaver, ExperimentFileSaver, \
-    InteractionsFileSaver, GameBenchmarkCallbackList, ImageFileSaver
+    InteractionsFileSaver, GameBenchmarkCallbackList, ImageFileSaver, RunFileSaver
 from clemcore.clemgame import benchmark
 from clemcore import clemeval, get_version
 from clemcore.clemgame.runners import dispatch
@@ -142,6 +142,7 @@ def run(game_selector: Union[str, Dict, GameSpec],
     logger.info("Loading models took: %s", datetime.now() - start)
 
     all_start = datetime.now()
+    run_file_saver = RunFileSaver(results_dir_path, player_models)
     for game_spec in game_specs:
         try:
             if experiment_name:  # establish experiment filter, if given
@@ -162,6 +163,7 @@ def run(game_selector: Union[str, Dict, GameSpec],
                 callbacks.append(ExperimentFileSaver(results_dir_path, player_models))
                 callbacks.append(InteractionsFileSaver(results_dir_path, player_models))
                 callbacks.append(ImageFileSaver(results_dir_path, player_models))
+                callbacks.append(run_file_saver)
                 dispatch.run(game_benchmark, player_models, callbacks=callbacks, batch_size=batch_size)
                 logger.info(f"Running {game_spec['game_name']} took: %s", datetime.now() - time_start)
         except Exception as e:
