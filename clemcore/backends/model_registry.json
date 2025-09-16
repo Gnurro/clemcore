@@ -4970,6 +4970,7 @@
             "url": "https://choosealicense.com/licenses/mit/"
         },
         "model_config": {
+            "trust_remote_code": true,
             "premade_chat_template": true,
             "eos_to_cull": "\\[EOS\\]",
             "padding_side": "left"

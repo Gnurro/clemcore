@@ -147,6 +147,8 @@ def load_model(model_spec: backends.ModelSpec) -> Any:
         # load HF API key:
         creds = backends.load_credentials("huggingface")
         model_args["token"] = creds["huggingface"]["api_key"]
+    if 'trust_remote_code' in model_spec.model_config and model_spec['model_config']['trust_remote_code']:
+        model_args["trust_remote_code"] = True
 
     hf_model_str = model_spec['huggingface_id']
     model = AutoModelForCausalLM.from_pretrained(hf_model_str, **model_args)
