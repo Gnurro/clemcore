@@ -69,6 +69,14 @@ def load_config_and_tokenizer(model_spec: backends.ModelSpec) -> Tuple[PreTraine
             torch_dtype="auto",
             verbose=False
         )
+    elif 'trust_remote_code' in model_spec.model_config and model_spec.model_config['trust_remote_code']:
+        tokenizer: PreTrainedTokenizerBase = AutoTokenizer.from_pretrained(
+            hf_model_str,
+            trust_remote_code=True,
+            device_map="auto",
+            torch_dtype="auto",
+            verbose=False
+        )
     else:
         tokenizer: PreTrainedTokenizerBase = AutoTokenizer.from_pretrained(
             hf_model_str,
